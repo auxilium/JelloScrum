@@ -6,7 +6,11 @@ obj
 log
 *.suo
 JelloScrum.xml
+JelloScrum.XML
 partcover-*.xml
 *.bak
 JelloScrum/.xml
 *.user
+Release
+Debug
+TestResult.xml

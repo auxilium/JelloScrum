@@ -48,7 +48,7 @@
     <CreateItem Include="$(BinDir)\*.dll">
       <Output ItemName="Binaries" TaskParameter="Include"/>
     </CreateItem>    
-    <CreateItem Include="$(WebDir)\Windsor.boo;$(WebDir)\Global.asax;$(WebDir)\default.aspx;">
+    <CreateItem Include="$(WebDir)\Global.asax;$(WebDir)\default.aspx;">
       <Output ItemName="ExtraFiles" TaskParameter="Include"/>
     </CreateItem>    
 	  <Copy SourceFiles="@(Binaries)" DestinationFolder="$(TempBinDir)"/>	  
