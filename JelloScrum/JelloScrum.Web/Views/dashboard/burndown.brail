@@ -1,0 +1,13 @@
+﻿<div id="dashboardLeft">
+  <?brail OutputSubView("dashboardmenu")?>
+</div>
+
+<div id="dashboardContent">
+  <script type="text/javascript" src="/Content/javascript/js.open-flash-charts/json/json2.js"></script>
+  <script type="text/javascript" src="/Content/javascript/js.open-flash-charts/swfobject.js"></script>
+
+  <div id="burndown_chart" style="width: 600px; height: 400px;"></div>
+  <script type="text/javascript">
+    ${BurnDown2Helper.GenereerJavascript(sprint)}
+  </script>
+</div>

@@ -1,0 +1,59 @@
+﻿<div>
+  <table class="tablesorter" id="taskTable">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Titel</th>
+        <th>Omschrijving</th>
+        <th>Tijd</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?brail 
+        count = 0;
+        for task in tasks:
+      ?>
+        <tr rel="${task.Id}">
+          <td>${task.Id}</td>
+          <td>
+           ${task.Titel}
+          </td>
+          <td>
+              ${task.Omschrijving}
+          </td>
+          <td>
+            ${TimeSpanHelper.TimeSpanInMinuten(task.Schatting)}
+          </td>
+        </tr>
+        <?brail 
+        count++
+        end 
+      ?>
+      
+      <?brail if tasks.Count == 0 :?>
+      <tr>
+        <td colspan="4">
+          Deze story heeft nog geen taken.
+        </td>
+      </tr>
+      <?brail end?>
+
+    </tbody>
+  </table>
+
+ 
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+    $("#taskTable").tablesorter({
+    headers: {
+    4: { sorter: false}
+    },
+    widgets: ['zebra']
+    });
+   
+
+    });
+  </script>
+</div>  

@@ -1,0 +1,165 @@
+<div>
+	<table id="cardwall">
+		<thead>
+			<th>Story</th>
+			<th>NietOpgepakt</th>
+			<th>Opgepakt</th>
+			<th>Afgesloten</th>
+		</thead>
+		<tbody>
+
+			<?brail for sprintStory in sprintStories: ?>
+			<tr id="story_${sprintStory.Id}">
+				<td>
+					<div class="story_note_container storyTask_${sprintStory.Id}">
+						<div class="story_note">
+							<div class="story_note_content">
+								#${sprintStory.Story.Id}: ${sprintStory.Story.Titel}<br/>
+								<div class="details">
+									Prioriteit: ${sprintStory.SprintBacklogPrioriteit}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting)}
+								</div>
+								<div style="clear:both">&nbsp;</div>
+							</div>
+						</div>
+						<div class="story_note_footer">&nbsp;</div>
+						<br clear="all" />
+					</div>
+				</td>
+				<td class="droppable NietOpgepakt">
+					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.NietOpgepakt): ?>
+
+					<div class="task_note_container storyTask_${sprintStory.Id}">
+						<input type="hidden" value="${taak.Id}"/>
+						<div class="task_note">
+							<div class="task_note_content">
+								#${taak.Id}: ${taak.Titel}
+								<div class="details">
+									Behandelaar: ${taak.BehandelaarNaam}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+								</div>
+								<div style="clear:both">&nbsp;</div>
+							</div>
+						</div>
+						<div class="task_note_footer">&nbsp;</div>
+						<br clear="all" />
+					</div>
+
+					<?brail end?>
+				</td>
+				<td class="droppable Opgepakt">
+					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Opgepakt): ?>
+
+					<div class="task_note_container storyTask_${sprintStory.Id}">
+						<input type="hidden" value="${taak.Id}"/>
+						<div class="task_note">
+							<div class="task_note_content">
+								#${taak.Id}: ${taak.Titel}
+								<div class="details">
+									Behandelaar: ${taak.BehandelaarNaam}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+								</div>
+								<div style="clear:both">&nbsp;</div>
+							</div>
+						</div>
+						<div class="task_note_footer">&nbsp;</div>
+						<br clear="all" />
+					</div>
+
+					<?brail end?>
+				</td>
+				<td class="droppable Afgesloten">
+					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Afgesloten): ?>
+
+					<div class="task_note_container storyTask_${sprintStory.Id}">
+						<input type="hidden" value="${taak.Id}"/>
+						<div class="task_note">
+							<div class="task_note_content">
+								#${taak.Id}: ${taak.Titel}
+								<div class="details">
+									<br/>
+									Behandelaar: ${taak.BehandelaarNaam}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+								</div>
+								<div style="clear:both">&nbsp;</div>
+							</div>
+						</div>
+						<div class="task_note_footer">&nbsp;</div>
+						<br clear="all" />
+					</div>
+
+					<?brail end?>
+					<script type="text/javascript">
+						$(document).ready(function(){
+						
+						//In de tabel cellen NietOpgepakt, Opgepakt en Afgesloten kunnen taken worden gedropt.
+						//De taak moet precies in de cel worden gestopt
+						$(".droppable").droppable(
+						{
+						accept: '.task_note_container',
+						tolerance: 'fit',
+						//Zodra de taak precies boven de cell hangt wordt de achtergrond kleur geel.
+						over: function(event, ui)
+						{
+						$(this).css("background-color","#ffff99")
+						},
+						out: function(event, ui)
+						{
+						$(this).css("background-color","whitesmoke")
+						},
+						drop: function(event, ui)
+						{
+						//Haal het taak Id op uit de hidden input in de div task_note_container
+						var taskId = $(ui.draggable).find(":input").val();
+
+						//Haal status Id op door de tweede css class te pakken van de TD
+						var status = $(this).attr("class").split(' ')[1];
+						jQuery.ajax({
+						type: "POST",
+						url: "OpslaanTaak.rails",
+						data: {"task.Id":taskId, "task.Status":status, "sprintId":${sprint.Id}},
+						success: function(html){},
+						error: function(html) {}
+						});
+
+						//De clone van het draggable element wordt voor de andere inhoud
+						//in de nieuwe TD gestopt, het originele draggeble element wordt verwijderd.
+						var row = $(this).parent().attr("id");
+						$(this).prepend($(ui.draggable).clone().draggable({
+						opacity: 0.35 ,
+						zIndex: 2700,
+						containment: row,
+						revert: 'invalid',
+						helper: 'clone',
+						distance: 4
+						}));
+						$(ui.draggable).empty();
+						$(this).css("background-color","whitesmoke")
+						}
+						}
+						);
+
+						//Alle div's met class storyTask zijn draggable
+						//Er wordt een clone gemaakt bij het slepen.
+						$('.storyTask_${sprintStory.Id}').draggable(
+						{
+						opacity: 0.35 ,
+						zIndex: 2700,
+						containment: '#story_${sprintStory.Id}',
+						revert: 'invalid',
+						helper: 'clone',
+						distance: 4
+						}
+						);
+						});
+					</script>
+				</td>
+			</tr>
+
+			<?brail end?>
+		</tbody>
+	</table>
+	<script type="text/javascript"> $("#cardwall").removeClass("newButton").addClass("selectedButton");</script>
+</div>
+
+

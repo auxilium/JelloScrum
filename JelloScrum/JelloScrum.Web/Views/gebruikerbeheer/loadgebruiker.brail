@@ -1,0 +1,21 @@
+<div class="block cornered" id="buttonBar">
+  <div id="editProjectButton" class="button cornered">
+    <img src="/Content/Images/bigicons/edit.png" alt="Bewerk project" class="absmiddle" />Save
+  </div>
+  <div id="deleteButton" class="button cornered">
+    <img src="/Content/Images/bigicons/delete.png" alt="Verwijder project" class="absmiddle" />Verwijder van project
+  </div>
+</div>
+<div id="editContainer">
+  <div class="block cornered" id="bc">
+    <h4>Gebruiker: ${gebruiker.Naam}</h4>
+    Rol binnen Project
+    ${FormHelper.Select("gebruiker.GebruikerType", sprintRols)}
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.cornered').corner("10px");
+  });
+</script>
+<div class="clear"></div>

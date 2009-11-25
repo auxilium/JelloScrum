@@ -1,0 +1,31 @@
+﻿
+    
+    <?brail if IsDefined("projecten"): ?>
+      <div id="projectenOverzicht">
+        <?brail for project in projecten: ?>
+          <div id="project-${project.Id}" class="projectKaart">
+            <a href="overzicht.rails?projectId=${project.Id}" title="Open project ${project.Naam}">
+              <div class="projectKaartTitel">${project.Naam}<hr style="margin-right: 5px; margin-bottom: 0px;"/></div>
+            </a>
+            <div class="projectKaartOmschrijving">${project.Omschrijving}</div>            
+          </div>
+        <?brail end ?>
+      </div>
+      <div id="projectInformatie">
+        Kies een project
+      </div>
+      <br class="clear;"/>  
+    <?brail end ?>
+<script>
+  $(document).ready(function(){
+    $("#projectenOverzicht .projectKaart ").mouseenter(function(){
+      
+   
+        url = $(this).find("a").attr("href") + "&ajax=true";
+      
+        $("#projectInformatie").load(url);
+     
+    });
+  });
+</script>
+

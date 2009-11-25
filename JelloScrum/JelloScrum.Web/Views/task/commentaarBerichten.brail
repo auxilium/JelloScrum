@@ -1,0 +1,90 @@
+<style type="text/css">
+  .commentaarBerichten li{
+    list-style-type:circle !important;
+    margin-left: 20px;
+  }
+  
+  li.comment{
+  }
+  
+  div.head{
+    font-style: italic;
+  }
+  
+  div.body{
+  }
+  
+  div.commentText{
+    display: inline;
+  }
+</style>
+<fieldset class="commentaarBerichten">
+  <div id="new"></div>
+  <a href="#" class="nieuw">Nieuw taak Bericht</a>
+  <?brail if taskCommentaarBerichten.Count > 0:?>
+  <ul>
+    <?brail for comment in taskCommentaarBerichten:?>
+      <li id="${comment.Id}" class="comment">
+        <div class="head">${comment.Gebruiker.VolledigeNaam} - ${comment.Datum.ToShortDateString()}</div>
+        <div class="body">${comment.Tekst}</div>
+        <?brail if comment.Gebruiker == currentUser:?>
+          <div class="foot">
+            <button class='bewerk' type='button'><img src='/content/images/icons/edit.png' alt='Opslaan'/>Bewerk</button>
+            <button class='verwijder' type='button'><img src='/content/images/icons/delete.png' alt='Verwijder'/>Verwijder</button>
+          </div>  
+        <?brail end?>
+      </li>
+    <?brail end?>
+  </ul>
+  <?brail end?>
+</fieldset>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("a.nieuw").click(function() {
+      $(this).parent().html(
+        "<input type='hidden' name='commentId'/>"+
+        "<input type='hidden' name='taskId' value='${taak.Id}'/>"+
+        "<TEXTAREA name='beschrijving'></TEXTAREA><br/>"+
+        "<button class='save' type='button'><img src='/content/images/icons/ok.png' alt='Opslaan'/>Opslaan</button>"
+      );
+      ActionOnButton();
+    });
+    
+    $("button.verwijder").click(function() {
+      comment = $(this).parent().parent();
+      commentId = comment.attr('id');
+      document.location = "/CommentaarBericht/Verwijder.rails?commentId=" + commentId;
+    });
+    
+    $("button.bewerk").click(function() {
+      comment = $(this).parent().parent();
+      commentId = comment.attr('id');
+      comment.children("div.body").html(
+        "<input type='hidden' name='commentId' value='" + commentId + "'/>"+
+        "<input type='hidden' name='taskId' value='${taak.Id}'/>"+
+        "<TEXTAREA name='beschrijving'>" + comment.children("div.body").html() + "</TEXTAREA><br/>"+
+        "<button class='save' type='button'><img src='/content/images/icons/ok.png' alt='Opslaan'/>Opslaan</button>"
+      );
+      $(this).parent().hide();
+      ActionOnButton();
+    });
+  });
+  
+function ActionOnButton()
+{
+  $('button.save').click(function() {
+    //We gaan opslaan....
+    var text = $(this).parent().children("TEXTAREA[name=beschrijving]").val();
+    var taakId = $(this).parent().children("input[name=taskId]").val();
+    var commentId = $(this).parent().children("input[name=commentId]").val();
+    $.ajax({
+      type: "POST",
+      url: "/CommentaarBericht/taakOpslaan.rails",
+      data: "taskId=" + taakId + "&commentId=" + commentId + "&beschrijving=" + text,
+      success: function(msg){
+        document.location = "/sprint/mijntaken.rails";
+      },
+    });
+  });
+}
+</script>

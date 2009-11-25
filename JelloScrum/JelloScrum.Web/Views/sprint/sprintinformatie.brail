@@ -1,0 +1,7 @@
+${item.Doel}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.cornered').corner("10px");
+});
+</script>

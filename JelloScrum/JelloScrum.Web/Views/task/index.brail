@@ -1,0 +1,10 @@
+﻿<div id="taskOverzicht"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      setTitle("Task Overzicht");
+      $("#taskOverzicht").load("/task/overzicht.rails");
+  });
+
+
+</script>

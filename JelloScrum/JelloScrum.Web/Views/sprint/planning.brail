@@ -1,0 +1,211 @@
+<div id="developerBox" style="display: block;">
+    <?brail for sprintGebruiker in sprint.SprintGebruikers : ?>
+        <div class="developer" id="${sprintGebruiker.Gebruiker.Id}">
+            <?brail OutputSubView("planning_developer", {"sprintGebruiker": sprintGebruiker}) ?>
+        </div>
+    <?brail end ?>
+</div>
+
+<div id="planning">
+<?brail for sprintStory in sprint.SprintStories : ?>
+    <div class="story">
+        <span class="toggle" style="display: none;"><a class="switchTaskOmschrijving">taken/omschrijving</a></span>
+        <p class="${sprintStory.sprintBacklogPrioriteit} storytitle"> ${sprintStory.Story.Titel}</p>
+        <div class="omschrijving" style="display: none;">
+            <i>Omschrijving:</i><br />
+            ${sprintStory.Story.Omschrijving}
+            <br /><br />
+            <?brail if sprintStory.Status.Equals(JelloScrum.Model.Enumerations.Status.Afgesloten) :?>
+                <p class="task-done">Alle taken zijn afgesloten</p>
+            <?brail elif sprintStory.Status.Equals(JelloScrum.Model.Enumerations.Status.Opgepakt) :?>
+                <p class="task-inprogress">Enkele taken zijn opgepakt</p>
+            <?brail end ?>
+        </div>
+        <div class="tasks" style="display: none;">
+            <i>Taken:</i>
+            <?brail for task in sprintStory.Story.Tasks : ?>
+                <?brail if task.Status.Equals(JelloScrum.Model.Enumerations.Status.Opgepakt) : ?>
+                    <p class="task task-inprogress taskId_${task.Id}" id="${task.Id}" developer="${?task.Behandelaar.Id}">${task.Omschrijving}</p>
+                <?brail elif task.Status.Equals(JelloScrum.Model.Enumerations.Status.Afgesloten) : ?>
+                    <p class="task task-done taskId_${task.Id}" id="${task.Id}" developer="${?task.Behandelaar.Id}">${task.Omschrijving}</p>
+                <?brail else : ?>
+                    <p class="task taskId_${task.Id}" id="${task.Id}" developer="0">${task.Omschrijving}</p>
+                <?brail end ?>
+            <?brail end?>
+            <!-- TODO: maybe later -->
+            <!--a class="add">add task</a-->
+        </div>
+        <div class="details">
+            <span class="schatting">${sprintStory.Story.Schatting} geschat</span>
+            <span class="geregistreerd">${sprintStory.Story.TotaalBestedeTijd()} geregistreerd</span>
+            <span class="taskcount">${sprintStory.Story.GeefNogNietOpgepakteTaken().Count}/${sprintStory.Story.Tasks.Count} openstaande taken</span>
+        </div>
+    </div>
+<?brail end?>
+</div>
+
+<script type="text/javascript">
+var currentTask = 0;
+var developer = 0;
+var tempElm = null;
+
+$(document).ready(function() {
+    setTitle("Planning");
+    $("div.tasks").hide();
+    $("div.developer:last").addClass("last");
+    $("div.developer .title span").animate({"left": "-50px"});
+   
+    // irritant?
+    /*$("#contentblock").click(function() {
+        clearAll();
+    });*/
+    
+    // als we op een story klikken, de boel uitklappen, omschrijving tonen en de toggle knop showen
+    $(".storytitle").click(function(e) {
+        e.stopPropagation();
+        // show new stuff
+        toggleTaskDesc($(this).parent(), true);
+    });
+    bindDevelopers();
+    bindTasks();
+   
+});
+
+function bindToggle() {
+    var toggles = $(".toggle");
+    toggles.unbind();
+    toggles.click(function(e) {
+        e.stopPropagation();
+       
+        var elm = $(this).parent();
+        toggleTaskDesc(elm);
+    });
+}
+function bindTasks() {
+    var tasks = $(".task");
+    tasks.unbind();
+    tasks.hover(
+        function() {
+            $(this).addClass("task-hover");
+        },
+        function() {
+            if($(this).attr("id") != currentTask)
+                $(this).removeClass("task-hover");
+        }
+    ).click(function(e) {
+        e.stopPropagation();
+        var top = $(this).offset().top - 185;
+        
+        if($(this).hasClass("task-inprogress") || $(this).hasClass("task-done")) {
+            currentTask = 0;
+        }
+        else {
+            currentTask = $(this).attr("id");
+        }
+        
+        $(".task").removeClass("task-hover");
+        $(this).addClass("task-hover");
+        
+		positionDeveloperBox(top);
+		// blink the developer who is responsible for the task
+		var developer = $(this).attr("developer");
+		if(developer != 0)
+		    $("#"+developer+" .inner").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    });
+    bindToggle();
+}
+
+function bindDevelopers() {
+    var developers = $(".developer");
+    //unbind
+    developers.unbind();
+    //bind
+    developers.hover(
+        function() {
+            if(currentTask != 0) {
+                var elm = $(this).find(".title");
+                elm.animate({"paddingLeft": "20px" }, 300);
+                elm.find('span').animate({"left": "0px", "opacity": "show"}, 300);
+                elm.addClass("developer-hover");
+            }
+        }, function() {
+            if(currentTask != 0) {
+                var elm = $(this).find(".title");
+                elm.animate({"paddingLeft": "0px" }, 300);
+                elm.find('span').animate({"left": "-50px", "opacity": "hide"}, 300);
+                elm.removeClass("developer-hover");
+            }
+        }
+    ).click(function(e) {
+        tempElm = $(this);
+        e.stopPropagation();
+        if(currentTask != 0) {
+            developer = tempElm.attr("id");
+            jConfirm('Weet u zeker dat deze taak aan deze gebruiker gekoppeld dient te worden?', 'Bevestiging vereist', function(result) {
+                if(result) {
+                    tempElm.load("/sprint/KoppelTaskAanSprintGebruiker.rails", {sprintGebruiker: developer, task: currentTask}, function() {
+                        JelloGrowl('Task toegedeeld', 'Task is gekoppeld aan behandelaar', 'success');
+                        $("p.taskId_"+currentTask).addClass("task-inprogress").attr("developer", developer).removeClass("task-hover");
+                        bindTasks();
+                        bindDevelopers();
+                        currentTask = 0;
+                        //clearAll();
+                    });
+                }
+            });
+        }
+    });
+    bindToggle();
+}
+
+function toggleTaskDesc(elm, hideAll) {
+    if(elm.find(".omschrijving").is(":hidden") && elm.find(".tasks").is(":hidden")) {
+        $("#planning .omschrijving").slideUp(100);
+        $("#planning .tasks").slideUp(100);
+        $("#planning .toggle").hide();
+        
+        //var top = elm.offset().top - 185;
+        //positionDeveloperBox(top);
+        
+        elm.find(".toggle").show();
+        elm.find(".omschrijving").slideDown(100);
+        $("#planning .task").removeClass("task-hover");
+        currentTask = 0;
+    }
+    else {
+        if(hideAll == true) {
+            clearAll();
+        }
+        else {
+            elm.find(".omschrijving").slideToggle(300);
+            elm.find(".tasks").slideToggle(300);
+            currentTask = 0;
+        }
+    }
+}
+function positionDeveloperBox(topHeight) {
+    var box = $("div#developerBox");
+    // prevent box to show up to high. In this case 122px
+    var ratio = topHeight - box.height() / 2;
+    if(ratio  >= -2)
+        topHeight = topHeight - box.height() / 2 + 11;
+        
+    box.animate({
+        'marginTop': topHeight
+    }, 400, "easeOutExpo" );
+}
+
+function clearAll() {
+    // clear all we selected :)
+        $(".task").removeClass("task-hover");
+        $(".title").removeClass("developer-hover");
+        
+        $(".tasks").slideUp(100);
+        $("#planning .omschrijving").slideUp(100);
+        $("#planning .toggle").hide();
+        
+        currentTask = 0;
+        alert(currentTask);
+        positionDeveloperBox(0);
+}
+</script>

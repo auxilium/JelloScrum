@@ -1,0 +1,16 @@
+﻿<div>
+  <script type="text/javascript" src="/Content/javascript/js.open-flash-charts/json/json2.js"></script>
+  <script type="text/javascript" src="/Content/javascript/js.open-flash-charts/swfobject.js"></script>
+
+  <div id="burndown_chart" style="width: 600px;"></div>
+  <div id="burndown_uitleg"></div>
+  <br style="clear:both;"/>
+  <script type="text/javascript">
+    $("#burndown").removeClass("newButton").addClass("selectedButton");
+
+    ${BurnDown2Helper.GenereerJavascript(sprint)}
+  </script>
+
+
+</div>
+

@@ -1,0 +1,9 @@
+table.KeyTable {
+	border-collapse: separate;
+}
+table.KeyTable td {
+	border: 3px solid transparent;
+}
+table.KeyTable td.focus {
+	border: 3px solid #3366FF;
+}

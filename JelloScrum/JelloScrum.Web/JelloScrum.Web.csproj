@@ -1,0 +1,582 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DE73707D-AF49-44D5-B4D2-30DCC23AE115}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JelloScrum.Web</RootNamespace>
+    <AssemblyName>JelloScrum.Web</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\JelloScrum.Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>JelloScrum.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DocumentationFile>bin\JelloScrum.Web.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>JelloScrum.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Deploy|x86' ">
+    <OutputPath>bin\x86\Deploy\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="anrControls.Markdown.NET, Version=1.0.1.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\anrControls.Markdown.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.CodeDom, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Compiler, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Extensions, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Interpreter, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.Interpreter.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Parser, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.PatternMatching, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.PatternMatching.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Useful, Version=2.0.9.1, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Boo.Lang.Useful.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.ActiveRecord, Version=2.0.1000.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.ActiveRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Binder, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Common.EmailSender, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.Common.EmailSender.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Common.TemplateEngine, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.Common.TemplateEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.DictionaryAdapter, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.DictionaryAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Pagination, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.Pagination.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Components.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.ActiveRecordIntegration, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Facilities.ActiveRecordIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.AutomaticTransactionManagement, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Facilities.AutomaticTransactionManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Facilities.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.ActiveRecordSupport, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.MonoRail.ActiveRecordSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Views.Brail, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.MonoRail.Views.Brail.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Transaction, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\UrenRegistratieComponent.cs" />
+    <Compile Include="Controllers\CardwallController.cs" />
+    <Compile Include="Controllers\CommentaarBerichtController.cs" />
+    <Compile Include="Controllers\TakenOverzichtController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DatabaseController.cs" />
+    <Compile Include="Controllers\GebruikerBeheerController.cs" />
+    <Compile Include="Controllers\GebruikerController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JelloScrumControllerBase.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SecureController.cs" />
+    <Compile Include="Controllers\SprintController.cs" />
+    <Compile Include="Controllers\SprintStoryController.cs" />
+    <Compile Include="Controllers\StoryController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TijdRegistratieController.cs" />
+    <Compile Include="Filter\AuthenticationFilter.cs" />
+    <Compile Include="Filter\TitelFilter.cs" />
+    <Compile Include="Filter\VulDefaultPropertiesFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Avatar.cs" />
+    <Compile Include="Helpers\BurnDownHelper.cs" />
+    <Compile Include="Helpers\BurnDown2Helper.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\LDAPAuthenticationHelper.cs" />
+    <Compile Include="Helpers\OpmaakHelper.cs" />
+    <Compile Include="Helpers\TimeSpanHelper.cs" />
+    <Compile Include="Helpers\UrenRegistratieHelper.cs" />
+    <Compile Include="Modules\FlushNeverSessionScopeWebModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Images\avatars\big\hummel2_gr.jpg" />
+    <Content Include="Content\Images\avatars\default.jpg" />
+    <Content Include="Content\Images\avatars\small\hummel2_gr.jpg" />
+    <Content Include="Content\Images\bigicons\project.png" />
+    <Content Include="Content\Images\bigicons\settings.png" />
+    <Content Include="Content\Images\bigicons\users.png" />
+    <Content Include="Content\Images\burndown-example.jpg" />
+    <Content Include="Content\Images\error.png" />
+    <Content Include="Content\Images\excel.gif" />
+    <Content Include="Content\Images\heading_bg.png" />
+    <Content Include="Content\Images\icons\add.png" />
+    <Content Include="Content\Images\icons\delete.png" />
+    <Content Include="Content\Images\icons\down_arrow.png" />
+    <Content Include="Content\Images\icons\edit.png" />
+    <Content Include="Content\Images\icons\left_arrow.png" />
+    <Content Include="Content\Images\icons\remove_item.png" />
+    <Content Include="Content\Images\icons\right_arrow.png" />
+    <Content Include="Content\Images\icons\up_arrow.png" />
+    <Content Include="Content\Images\icons\view.png" />
+    <Content Include="Content\Images\jquery.jtip\arrow_left.gif" />
+    <Content Include="Content\Images\jquery.jtip\arrow_right.gif" />
+    <Content Include="Content\Images\jquery.progressbar\dt-arrow-dn.png" />
+    <Content Include="Content\Images\jquery.progressbar\dt-arrow-up.png" />
+    <Content Include="Content\Images\jquery.progressbar\progressbar.gif" />
+    <Content Include="Content\Images\jquery.progressbar\progressbg_black.gif" />
+    <Content Include="Content\Images\jquery.progressbar\progressbg_green.gif" />
+    <Content Include="Content\Images\jquery.progressbar\progressbg_orange.gif" />
+    <Content Include="Content\Images\jquery.progressbar\progressbg_red.gif" />
+    <Content Include="Content\Images\jquery.progressbar\progressbg_yellow.gif" />
+    <Content Include="Content\Images\jquery.progressbar\sprite.png" />
+    <Content Include="Content\Images\jquery.table\asc.gif" />
+    <Content Include="Content\Images\jquery.table\bg.gif" />
+    <Content Include="Content\Images\jquery.table\desc.gif" />
+    <Content Include="Content\Images\jquery.table\first.png" />
+    <Content Include="Content\Images\jquery.table\last.png" />
+    <Content Include="Content\Images\jquery.table\next.png" />
+    <Content Include="Content\Images\jquery.table\prev.png" />
+    <Content Include="Content\Images\loader.gif" />
+    <Content Include="Content\Images\menubackground.png" />
+    <Content Include="Content\Images\menuItemBackground.png" />
+    <Content Include="Content\Images\pokercards\2c.gif" />
+    <Content Include="Content\Images\pokercards\3d.gif" />
+    <Content Include="Content\Images\pokercards\4h.gif" />
+    <Content Include="Content\Images\pokercards\5s.gif" />
+    <Content Include="Content\Images\pokercards\6c.gif" />
+    <Content Include="Content\Images\pokercards\7d.gif" />
+    <Content Include="Content\Images\pokercards\8h.gif" />
+    <Content Include="Content\Images\pokercards\9s.gif" />
+    <Content Include="Content\Images\pokercards\ac.gif" />
+    <Content Include="Content\Images\pokercards\jd.gif" />
+    <Content Include="Content\Images\pokercards\kh.gif" />
+    <Content Include="Content\Images\pokercards\qs.gif" />
+    <Content Include="Content\Images\pokercards\tc.gif" />
+    <Content Include="Content\Images\postits\black\bottom.png" />
+    <Content Include="Content\Images\postits\black\content.png" />
+    <Content Include="Content\Images\postits\black\top.png" />
+    <Content Include="Content\Images\postits\blue\bottom.png" />
+    <Content Include="Content\Images\postits\blue\content.png" />
+    <Content Include="Content\Images\postits\blue\top.png" />
+    <Content Include="Content\Images\postits\green\bottom.png" />
+    <Content Include="Content\Images\postits\green\content.png" />
+    <Content Include="Content\Images\postits\green\top.png" />
+    <Content Include="Content\Images\postits\red\bottom.png" />
+    <Content Include="Content\Images\postits\red\content.png" />
+    <Content Include="Content\Images\postits\red\top.png" />
+    <Content Include="Content\Images\postits\task\task-bottom.png" />
+    <Content Include="Content\Images\postits\task\task-content.png" />
+    <Content Include="Content\Images\postits\task\task-top.png" />
+    <Content Include="Content\Images\submenubackground.gif" />
+    <Content Include="Content\Images\submenutop.gif" />
+    <Content Include="Content\Javascript\jelloscrum.js" />
+    <Content Include="Content\Javascript\jquery-1.3.2.js" />
+    <Content Include="Content\Javascript\jquery-ui-1.7.2.custom.min.js" />
+    <Content Include="Content\Javascript\jquery.corner\excanvas.js" />
+    <Content Include="Content\Javascript\jquery.corner\jquery.corner.js" />
+    <Content Include="Content\Javascript\jquery.corner\jquery.corner.src.js" />
+    <Content Include="Content\Javascript\jquery.jeditable\jquery.jeditable.js" />
+    <Content Include="Content\Javascript\jquery.jtip\jtip.js" />
+    <Content Include="Content\Javascript\jquery.livequery\jquery.livequery.js" />
+    <Content Include="Content\Javascript\jquery.progressbar\jquery.progressbar.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\first.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\last.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\next.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\prev.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\jquery.tablesorter.pager.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\jquery.tablesorter.pager.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\js.jar" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\jsmin.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\min.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\pack.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\packer.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\ParseMaster.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\build\writeFile.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\assets\ajax-content.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\css\jq.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-ajax.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-empty-table.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-extending-defaults.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-meta-headers.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-meta-parsers.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-meta-sort-list.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-debug.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-digits.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-sort-force.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-sort-key.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-sort-list.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-sort-order.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-option-text-extraction.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-options-headers.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-pager.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-parsers.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-trigger-sort.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-triggers.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\example-widgets.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\img\external.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\index.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\chili-1.8b.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\chili-1.8b.pack.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\cplusplus.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\cplusplus.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\csharp.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\csharp.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\css.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\css.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\delphi.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\delphi.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\html.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\html.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\java.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\java.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\javascript.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\javascript.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\jquery-1.1.2.pack.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\js-jquery\javascript.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\js-jquery\javascript.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\lotusscript.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\lotusscript.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\mysql.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\mysql.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\php.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\php.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\recipes.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\chili\recipes.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\docs.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\docs\js\examples.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\jquery-latest.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\jquery.metadata.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\jquery.tablesorter.js" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\ajax-content.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\css\default.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\css\jquery.tabs-ie.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\css\jquery.tabs.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\header-asc.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\header-bg.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\header-desc.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\small.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\small_asc.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\small_desc.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\assets\img\tab.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\cell.metadata.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\checkbox.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\colspan.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\demo.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\index.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\large.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\metadata.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\tests\pager.html" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\blue\asc.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\blue\bg.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\blue\desc.gif" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\blue\style.css" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\green\asc.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\green\bg.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\green\desc.png" />
+    <Content Include="Content\Javascript\jquery.tablesorter\themes\green\style.css" />
+    <Content Include="Content\Javascript\jquery.thickbox\thickbox-compressed.js" />
+    <Content Include="Content\Javascript\jquery.validate\jquery.validate.js" />
+    <Content Include="Content\Javascript\js.open-flash-charts\json\json2.js" />
+    <Content Include="Content\Javascript\js.open-flash-charts\swfobject.js" />
+    <Content Include="Content\Javascript\urenregistratiecomponent.js" />
+    <Content Include="Content\open-flash-chart.swf" />
+    <Content Include="Content\Style\jquery-ui-1.7.2.custom.css" />
+    <Content Include="Content\Style\jtip.css" />
+    <Content Include="Content\Style\layout.css" />
+    <Content Include="Content\Style\table2.css" />
+    <Content Include="Content\Style\thickbox.css" />
+    <Content Include="Global.asax" />
+    <Content Include="log4net.config" />
+    <Content Include="Views\sprint\burndown.js" />
+    <Content Include="Views\sprint\sprintbacklog.js" />
+    <Content Include="Views\sprint\voortgang.js" />
+    <Content Include="Views\sprint\_sprintplanning.js" />
+    <Content Include="Views\task\overzicht.js" />
+    <None Include="Content\Images\pokercards\archive.zip" />
+    <None Include="Content\Javascript\jquery.tablesorter\themes\blue\blue.zip" />
+    <None Include="Content\Javascript\jquery.tablesorter\themes\green\green.zip" />
+    <None Include="Views\dashboard\burndown.brail" />
+    <None Include="Views\dashboard\dashboardmenu.brail" />
+    <None Include="Views\dashboard\index.brail" />
+    <None Include="Views\cardwall\cardwall.brail" />
+    <None Include="Views\sprint\productbacklogitem.brail" />
+    <None Include="Views\sprint\sprintlogitem.brail" />
+    <None Include="Views\sprint\sprintplanning.brail" />
+    <None Include="Views\sprint\sprintplanningsprinttijd.brail" />
+    <None Include="Views\sprint\urenregistreren.brail" />
+    <None Include="Views\database\index.brail" />
+    <None Include="Views\email\password.brail" />
+    <None Include="Views\gebruikerbeheer\edit.brail" />
+    <None Include="Views\gebruikerbeheer\index.brail" />
+    <None Include="Views\gebruikerbeheer\listgebruikers.brail" />
+    <None Include="Views\gebruikerbeheer\loadgebruiker.brail" />
+    <None Include="Views\gebruikerbeheer\mijnprojecten.brail" />
+    <None Include="Views\gebruikerbeheer\sprintindex.brail" />
+    <None Include="Views\home\index.brail" />
+    <None Include="Views\layouts\default.brail" />
+    <None Include="Views\layouts\jellobeheer.brail" />
+    <None Include="Views\layouts\kiesProject.brail" />
+    <None Include="Views\layouts\projectbeheer.brail" />
+    <None Include="Views\layouts\databaselayout.brail" />
+    <None Include="Views\layouts\login.brail" />
+    <None Include="Views\layouts\profile.brail" />
+    <None Include="Views\layouts\sprint.brail" />
+    <None Include="Views\login\index.brail" />
+    <None Include="Views\management\index.brail" />
+    <None Include="Views\project\project.brail" />
+    <None Include="Views\project\__beheer.brail" />
+    <None Include="Views\project\index.brail" />
+    <None Include="Views\project\bewerk.brail" />
+    <None Include="Views\project\moscow.brail" />
+    <None Include="Views\project\productbacklog.brail" />
+    <None Include="Views\project\projectInformatie.brail" />
+    <None Include="Views\project\sprintList.brail" />
+    <None Include="Views\shared\errormessages.brail" />
+    <None Include="Views\sprintstory\getsprintstoriesbysprintgebruikerorderedbyprioriteit.brail" />
+    <None Include="Views\sprintstory\informatie.brail" />
+    <None Include="Views\sprintstory\status.brail" />
+    <None Include="Views\sprint\bewerk.brail" />
+    <None Include="Views\sprint\burndown.brail" />
+    <None Include="Views\sprint\health.brail" />
+    <None Include="Views\sprint\mijnafgeslotentaken.brail" />
+    <None Include="Views\sprint\onopgepaktetaken.brail" />
+    <None Include="Views\sprint\planning.brail" />
+    <None Include="Views\sprint\planning_developer.brail" />
+    <None Include="Views\sprint\shortsprintinfo.brail" />
+    <None Include="Views\sprint\sluit.brail" />
+    <None Include="Views\sprint\sprint.brail" />
+    <None Include="Views\sprint\___sprintplanning.brail" />
+    <None Include="Views\sprint\stories.brail" />
+    <None Include="Views\sprint\takenvananderen.brail" />
+    <None Include="Views\sprint\mijntaken.brail" />
+    <None Include="Views\sprint\dashboard.brail" />
+    <None Include="Views\sprint\renderingeplandestorielist.brail" />
+    <None Include="Views\sprint\sprintbacklog.brail" />
+    <None Include="Views\sprint\sprintinformatie.brail" />
+    <None Include="Views\sprint\sprintstories.brail" />
+    <None Include="Views\sprint\sprintstoriesafgerond.brail" />
+    <None Include="Views\dashboard\voortgang.brail" />
+    <None Include="Views\sprint\voortgang.brail" />
+    <None Include="Views\sprint\whiteboard.brail" />
+    <None Include="Views\story\bewerk.brail" />
+    <None Include="Views\story\story.brail" />
+    <None Include="Views\subviews\pager.brail" />
+    <None Include="Views\subviews\pagination.brail" />
+    <None Include="Views\takenoverzicht\afgerondetaken.brail" />
+    <None Include="Views\takenoverzicht\andermanstaken.brail" />
+    <None Include="Views\takenoverzicht\mijntaken.brail" />
+    <None Include="Views\takenoverzicht\nietopgepaktetaken.brail" />
+    <None Include="Views\task\bewerk.brail" />
+    <None Include="Views\task\boektijd.brail" />
+    <None Include="Views\task\commentaarBerichten.brail" />
+    <None Include="Views\task\overzicht.brail" />
+    <None Include="Views\task\overzichtbekijken.brail" />
+    <None Include="Views\task\index.brail" />
+    <None Include="Views\task\logBerichten.brail" />
+    <None Include="Views\task\taskRow.brail" />
+    <None Include="Views\task\__overzicht.brail" />
+    <None Include="Views\CommentaarBericht\taakCommentaar.brail" />
+    <None Include="Views\task\task.brail" />
+    <None Include="Views\tijdregistratie\geeftijdregistratieoverzicht.brail" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JelloScrum.Container\JelloScrum.Container.csproj">
+      <Project>{EC11D662-1098-421B-A785-073C7889199C}</Project>
+      <Name>JelloScrum.Container</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JelloScrum.Model\JelloScrum.Model.csproj">
+      <Project>{9C63CF64-5192-42E5-9881-13CE1CF08C0B}</Project>
+      <Name>JelloScrum.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JelloScrum.QueryObjects\JelloScrum.QueryObjects.csproj">
+      <Project>{F654B475-5B71-49B8-A303-067CB604CD4A}</Project>
+      <Name>JelloScrum.QueryObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JelloScrum.Repositories\JelloScrum.Repositories.csproj">
+      <Project>{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}</Project>
+      <Name>JelloScrum.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JelloScrum.Services\JelloScrum.Services.csproj">
+      <Project>{59B75401-40FE-4043-99AB-170490A32A2A}</Project>
+      <Name>JelloScrum.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Content\Files\" />
+    <Folder Include="Services\Common\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>2222</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

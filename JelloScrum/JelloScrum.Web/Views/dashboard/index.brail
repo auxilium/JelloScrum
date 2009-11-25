@@ -1,0 +1,28 @@
+﻿<div class="gegevensBlock">
+	<h1>
+		Sprint: ${sprint.Doel}
+	</h1>
+	<hr/>
+	<div id="dashboardLeft">
+		<?brail OutputSubView("dashboardmenu")?>
+	</div>
+
+	<div id="dashboardContent">
+
+		<div class="mijnTabs">
+			<a href="/takenoverzicht/mijntaken.rails" class="actief">Mijn taken</a>
+
+			<a href="/takenoverzicht/nietopgepaktetaken.rails">Open taken</a>
+
+			<a href="/takenoverzicht/andermanstaken.rails">Opgepakte taken</a>
+
+			<a href="/takenoverzicht/afgerondetaken.rails">Afgeronde taken</a>
+			<br class="clear"/>
+		</div>
+		<div id="mijnTabsContent">
+		</div>
+
+	</div>
+	<br class="clear"/>
+	
+</div>

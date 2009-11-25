@@ -1,0 +1,16 @@
+<!--Div element voor paginering in tabel-->
+<div id="pager" class="pager">
+  <form>
+    <img src="/content/Images/jquery.table/first.png" class="first" alt="Eerste pagina"/>
+    <img src="/content/Images/jquery.table/prev.png" class="prev" alt="Vorige pagina"/>
+    <input type="text" class="pagedisplay"/>
+    <img src="/content/Images/jquery.table/next.png" class="next" alt="Volgende pagina"/>
+    <img src="/content/Images/jquery.table/last.png" class="last" alt="Laatste pagina"/>
+    <select class="pagesize">
+      <option selected="selected" value="15">15</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="75">75</option>
+    </select>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:		JelloScrum
+Version:		1.0
+Developer:		Manuel van Rijn
+-------------------------------------------------------------------*/
+
+@import url("reset.css");
+
+/* JQUERY ADDON STYLE SHEETS */
+@import url("jquery.jgrowl.css");
+@import url("jquery.keytable.css");
+@import url("jquery.alerts.css");
+
+
+@import url("table2.css");
+@import url("forms.css");
+@import url("cardwall.css");
+@import url("burndownchart.css");
+
+/* new start here */
+@import url("planning.css");
+
+@import url("layout.css");

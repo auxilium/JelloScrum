@@ -1,0 +1,31 @@
+﻿<div class="gegevensBlock">
+    <h1>
+      Project gegevens
+      <hr/>
+    </h1>
+    ${Form.FormTag({@id: 'Bewerk', @action: 'Opslaan'})}
+    ${Form.HiddenField("item.Id")}
+
+    ${Form.LabelFor("item.Naam", "Projectnaam")}
+    <br clear="both"/>
+    ${Form.TextField("item.Naam")}<span style="margin-left: 8px; color:#666767;">Geef hier de naam op die weergegeven zal worden binnen JelloScrum.</span>
+    <br clear="both"/>
+    <br/>
+    ${Form.LabelFor("item.Omschrijving", "Omschrijving")}<br clear="both"/>
+    ${Form.TextArea("item.Omschrijving", {@cols: "60", @rows: "4"})}
+    <br clear="both"/>
+    <div>
+      ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
+	  
+	  <?brail 
+		 href = "/home/index.rails"
+		 if IsDefined("item") and item is not null: 
+			   href = "/project/project.rails?projectid=" + item.Id
+		 end
+			   ?>		
+      <a href="${href}" class="button reset">Annuleren</a>		
+      <br class="clear"/>
+    </div>
+
+    ${Form.EndFormTag()}
+</div>

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="robots" content="index, follow" />
+		<meta name="description" content="JelloScrum is a Project Management tool developed by Auxilium BV" />
+		<meta name="keywords" content="Auxilium, JelloScrum" />
+		<meta http-equiv="content-language" content="en" />
+		<title>JelloScrum | Auxilium BV</title>
+
+		<link rel="copyright" href="about.rails" title="about" />
+		<link rel="stylesheet" href="/Content/Style/layout.css" type="text/css" media="screen"  />
+		<link rel="stylesheet" href="/Content/Style/jquery-ui-1.7.2.custom.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/Content/Style/table2.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/Content/Style/thickbox.css" type="text/css" media="screen"  />
+		<link rel="stylesheet" href="/Content/Style/jtip.css" type="text/css" media="screen"  />
+		<!--[if IE]>
+	<style>
+	</style>
+	<![endif]-->
+		<!--[if IE 7]>
+	
+	<![endif]-->
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery-1.3.2.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery-ui-1.7.1.custom.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.validate/jquery.validate.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.jeditable/jquery.jeditable.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.thickbox/thickbox-compressed.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.jtip/jtip.js"></script>
+
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.corner/jquery.corner.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.corner/excanvas.js"></script>
+
+		<!-- table sorter + pagination plugin -->
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/jquery.tablesorter.mod.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/addons/pager/jquery.tablesorter.pager.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jelloscrum.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<div id="title">
+					<a href="/dashboard/index.rails" class="logo">
+						<img src="/Content/images/jelloscrum.png" alt="jellologo"/>
+					</a>
+				</div>
+				<?brail OutputSubView("profile") ?>
+			</div>
+			<div class="cornered clear" id="contentblock">
+				<div class="heading cornered">
+					<div id="beginTitel" style="float: left;">
+						<div style="float: left; margin-left: 10px;">
+							<a href="/home/index.rails" style="color: #FFFFFF;">Home</a>&nbsp;
+						</div>
+						<br class="clear"/>
+					</div>
+					<?brail if titel != "" : ?>
+					<div id="restTitel" style="float:left">>&nbsp;${titel}</div>
+					<br style="clear: both;"/>
+					<?brail end ?>
+				</div>
+				<?brail OutputSubView('/shared/errorMessages') ?>
+				<div class="gegevensBlock" id="sprintdashboard">
+					<h1>
+						Sprint: ${sprint.Doel}
+					</h1>
+					<hr/>
+					<div id="dashboardLeft">
+						<div id="dashboardmenu">
+							<div id="dashboardmenuTop" class="corneredTop">
+								Sprint menu
+							</div>
+							<div id="dashboardmenuContent">
+								<a href="/sprint/sprint.rails?sprintId=${sprint.Id}" class="newButton" id="takenoverzicht">Taken overzicht</a>
+								<a href="/sprint/sprintbacklog.rails?sprintId=${sprint.Id}" class="newButton" id="sprintbacklog">Sprint backlog</a>
+								<a href="/sprint/sprintplanning.rails?sprintId=${sprint.Id}" class="newButton" id="sprintplanning">Planning</a>
+								<a href="/sprint/voortgang.rails?sprintId=${sprint.Id}" class="newButton" id="voortgang">Voortgang</a>
+								<a href="/cardwall/cardwall.rails?sprintId=${sprint.Id}" class="newButton" id="cardwall">Cardwall</a>
+								<a href="/sprint/burndown.rails?sprintId=${sprint.Id}" class="newButton" id="burndown">Burndown</a>								
+								<a href="/sprint/urenregistreren.rails?sprintId=${sprint.Id}&maandag=${DateHelper.GetMonday(DateTime.Now).ToString("dd-MM-yyyy")}" class="newButton" id="urenregistreren">Uren registreren</a>
+							</div>
+						</div>
+						<div id="dashboardStatus">
+							<div id="dashboardStatusTop" class="corneredTop">
+								Sprint status
+							</div>
+							<div id="dashboardStatusContent">
+								<?brail OutputSubView("/sprint/health", {"sprintId" : sprint.Id, "taskProgress": SprintHealthHelper.GetTaskProgress(sprint), "velocity": SprintHealthHelper.GetVelocity(sprint)}); ?>
+							</div>
+						</div>
+						<br class="clear"/>
+					</div>
+
+					<div id="dashboardContent">
+						${ChildOutput}
+						<br class="clear"/>
+					</div>
+					<br class="clear"/>
+				</div>
+				
+			</div>
+			<div id="footer">
+				<p>
+					Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" alt="Auxilium BV">Auxilium BV</a>. All rights reserved.
+				</p>
+			</div>
+			<script type="text/javascript">
+				function herstelBreedte()
+				{
+				paginaBreedte = parseInt($("#sprintdashboard").width());
+				kleineContentBreedte = parseInt($("#dashboardmenu").width());
+
+				groteContentBreedte = paginaBreedte - kleineContentBreedte;
+				groteContentBreedte = groteContentBreedte - 80;//Correctie
+
+				$("#dashboardContent").width(groteContentBreedte);
+				}
+
+				$(document).ready(function(){
+				herstelBreedte();
+
+				$(window).resize(function(){
+				herstelBreedte();
+				});
+				   
+				});
+			</script>
+			</div>		
+	</body>
+</html>

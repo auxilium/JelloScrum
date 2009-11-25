@@ -1,0 +1,95 @@
+<?brail
+	[Html]
+  def HtmlEncode(str as string):
+    return str
+  end
+?>
+
+<a href="/sprint/mijntaken.rails">Mijn taken</a>
+<a href="/sprint/takenvananderen.rails">Taken van anderen</a>
+<a href="/sprint/onopgepaktetaken.rails">Onopgepakte taken</a>
+<a href="/sprint/mijnafgeslotentaken.rails">Mijn afgesloten taken</a>
+
+<h1>Onopgepakte taken</h1>
+<p>Dit zijn alle onopgepakte taken.</p>
+<ul>
+<?brail
+if IsDefined("onopgepakteTaken") and onopgepakteTaken is not null:
+  for taak in onopgepakteTaken:
+    ?>
+    <li class="task" id="${taak.Id}">
+      <span class="storyTitle">${taak.Story.Titel}</span>
+      <span class="storyTime">[${OpmaakHelper.UrenStatus(taak.Story.Schatting, taak.Story.TotaalBestedeTijd())}]</span>
+      <span class="taskTitle">${HtmlEncode(taak.Omschrijving)}      
+      </span>
+      
+      <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotaalBestedeTijd())}</span>
+      
+      <a href="#" class="log">Logberichten (${taak.LogBerichten.Count})</a>
+      <a href="#" class="commentaar">Commentaar (${taak.CommentaarBerichten.Count})</a>      
+      <div class="taskButtons">       
+        <a class="addtime" href="#" title="Pak taak op"><img src="/content/images/icons/add.png" alt="Boek tijd"/></a>
+      </div>
+      <div class="taskDetails"></div>
+    </li>
+    <?brail    
+  end
+else :
+  output '<li>Er zijn geen onopgepakte taken.</li>'
+end
+?>
+</ul>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  <?brail 
+    if IsDefined("currentUser") and currentUser.ActieveSprint is not null:
+  ?>
+      setTitle("${currentUser.ActieveSprint.Project.Naam} / ${currentUser.ActieveSprint.Doel}");
+  <?brail
+    else:
+  ?>
+      setTitle("Kies een sprint");
+  <?brail end ?>
+  
+  
+  $(".addtime").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/boektijd.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });
+
+  $("a.log").click(function(e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/logBerichten.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });
+  
+  $("a.commentaar").click(function(e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/commentaarBerichten.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });  
+
+
+  $(".close").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    var tasktitle = $("#" + taskid +" .taskTitle").html();
+    
+    if (!confirm("Weet je zeker dat je '" + jQuery.trim(tasktitle) + "' wilt afsluiten?"))
+      return;
+      
+    $.ajax({
+      type: "POST",
+      url: "/task/sluittaak.rails",
+      data: "taakId=" + taskid,
+      success: function(msg){
+        document.location = "/sprint/dashboard.rails";
+      },
+      error: function(){
+        alert('Er is een fout opgetreden.');
+      }
+    });
+  });  
+});
+</script>

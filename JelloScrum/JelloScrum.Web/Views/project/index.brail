@@ -1,0 +1,61 @@
+﻿<div id="projectOverzicht" class="gegevensBlock">
+  <h1>
+    Overzicht met projecten
+    <hr/>
+  </h1>
+  <div id="projectTableContainer">        
+    <?brail if IsDefined("projecten"): ?>
+      <table class="tablesorter" id="projectTable" style="width: 83%; float:left;">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Naam</th>
+            <th>Omschrijving</th>            
+            <th class="actie">Actie</th>            
+          </tr>
+        </thead>
+        <tbody>
+        
+        <?brail for project in projecten: ?>
+          <tr rel="${project.Id}">
+            <td>${project.Id}</td>
+            <td nowrap="nowrap">
+              <a href="/project/project.rails?projectId=${project.Id}">${project.Naam}</a>
+            </td>
+            <td>${project.Omschrijving}</td>
+            <td style="text-align:center;">
+              <a href="/Project/Bewerk.rails?id=${project.Id}" class="button wijzigen">Bewerk</a>
+            </td>
+          </tr>
+        <?brail end ?>
+        
+        </tbody>
+      </table>
+    <div id="newProjectButtonContainer">
+      <a href="/Project/Nieuw.rails" id="voegToe" class="button nieuw newProjectButtonContainer">Project toevoegen</a>
+    </div>
+    <br class="clear"/>
+    <?brail OutputSubView("/subviews/pager") ?>
+
+    <?brail end ?>
+
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      $("#projectTable").tablesorter({
+      headers: {
+        0: { sorter: false},
+        3: { sorter: false}
+      },
+      widgets: ['zebra']
+      });
+      
+      $("#projectTable").tablesorterPager({container: $("#pager")});
+
+    });
+
+</script>
+
+</div>

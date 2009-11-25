@@ -1,0 +1,23 @@
+﻿<div id="dashboardmenu">
+  <div id="dashboardmenuTop" class="corneredTop">
+    Dashboard menu
+  </div>
+  <div id="dashboardmenuContent">
+    <a href="/dashboard/index.rails" class="newButton">Taken overzicht</a>
+    <a href="/dashboard/urenregistreren.rails?maandag=${DateHelper.GetMonday(DateTime.Now)}" class="newButton">Uren registreren</a>
+    <a href="/cardwall/cardwall.rails" class="newButton">Cardwall</a>
+    <a href="/dashboard/burndown.rails" class="newButton">Burndown</a>
+    <a href="/dashboard/voortgang.rails" class="newButton">Voortgang sprint</a>  
+  </div>
+</div>
+
+<div id="dashboardStatus">
+  <div id="dashboardStatusTop" class="corneredTop">
+    Sprint status
+  </div>
+  <div id="dashboardStatusContent">
+    <?brail
+	      OutputSubView("/sprint/health", {"sprintId" : sprint.Id});
+      ?>
+  </div>
+</div>

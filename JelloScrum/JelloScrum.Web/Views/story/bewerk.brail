@@ -1,0 +1,138 @@
+<div>
+	${Form.FormTag({@action: 'Opslaan', @id: 'Bewerk'})}
+	${Form.HiddenField("story.Project.Id")}
+	${Form.HiddenField("story.Id")}
+	${Form.HiddenField("sprint.Id")}
+	<div class="gegevensBlock" style="float:left; width: 400px;">
+
+		<h1>
+			Story gegevens
+			<hr/>
+		</h1>
+
+		<div style="width: 400px; float:left;" class="ingegevensBlock">
+			<div>
+				<span style="font-weight: bold;">Story ${story.Id}</span>
+     		</div>
+
+			<div style="margin-top: 12px;">
+				${Form.LabelFor("story.Title", "Titel")}
+				<br class="clear"/>
+				${Form.TextField("story.Titel", {@style:"width: 375px;"})}
+			</div>
+
+			<div style="margin-top: 12px;">
+				<div style="width: 145px; float:left;">
+					${Form.LabelFor("story.ProductBacklogPrioriteit", "Prioriteit")}
+					<br class="clear"/>
+					${FormHelper.Select("story.ProductBacklogPrioriteit", prioriteit)}
+				</div>
+				<div style="width: 145px; float:left;">
+					${Form.LabelFor("story.StoryPoints", "Punten")}
+					<br class="clear"/>
+					${FormHelper.Select("story.StoryPoints", punten)}
+				</div>
+				<div style="width: 75px; float:left;">
+					${Form.LabelFor("story.StoryType", "Type")}
+					<br class="clear"/>
+					${FormHelper.Select("story.StoryType", storyTypes)}
+				</div>
+				<br class="clear"/>
+			</div>
+
+			<div style="margin-top: 12px;">
+				${Form.LabelFor("story.Omschrijving", "User story")}<br class="clear"/>
+				${Form.TextArea("story.Omschrijving", {@cols: "60", @rows: "4"})}
+			</div>
+
+			<div style="margin-top: 12px;">
+				${Form.LabelFor("story.HowtoDemo", "How to Demo")}<br class="clear"/>
+				${Form.TextArea("story.HowtoDemo", {@cols: "60", @rows: "4",})}
+			</div>
+			<div style="margin-top: 12px;">
+				${Form.LabelFor("story.Notitie", "Notitie(s)")}<br class="clear"/>
+				${Form.TextArea("story.Notitie", {@cols: "60", @rows: "4"})}
+			</div>
+
+			<div style="margin-top: 12px;">
+				${Form.LabelFor("schatting", "Schatting")}<br class="clear"/>
+				<input style="width:50px;" type="text"  alt="schatting" name="schatting" id="story_Schatting" value="${TimeSpanHelper.TimeSpanInMinuten(Schatting)}" /><span>(hh,mm)</span>
+			</div>
+		</div>
+	</div>
+	<div class="gegevensBlock" style="float:left; width: 500px; margin-left: 25px;">
+
+		<h1>
+			Taken
+			<hr/>
+		</h1>
+		<?brail 
+        OutputSubView("/task/overzicht", {@tasks: story.Tasks})
+      ?>
+		
+		<br class="clear" id="taskoverzicht_closer"/>
+	</div>
+	<br class="clear"/>
+	<div style="margin-top: 12px;" class="gegevensBlock">
+		<?brail if IsDefined("sprint"):?>
+		<a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button reset">Annuleren</a>
+		<?brail else: ?>
+		<a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button reset">Annuleren</a>
+		<?brail end ?>
+		${Form.Submit("Opslaan", {@class: 'button opslaan'})}
+		<?brail 
+        if story.Id == 0:
+      ?>
+		<input type="button" class="button opslaan" id="OpslaanVolgende"  value="Opslaan en nieuwe story"/>
+		<?brail
+        end
+      ?>
+		<input type="hidden" id="Opslaan_Volgende_Hidden" name="OpslaanVolgendeHidden"  value="false"/>
+		<br class="clear"/>
+	</div>
+
+	${Form.EndFormTag()}
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		if ($("#sprintbacklog").length > 0)
+			$("#sprintbacklog").removeClass("newButton").addClass("selectedButton");
+
+		$("#OpslaanVolgende").click(function(){
+			$("#Opslaan_Volgende_Hidden").val("true");
+			$("#Bewerk").submit();
+		});
+		   
+		$("#addtask").click(function (event) {
+			event.preventDefault();
+			var taskCount = $(".taskBlock").length;
+			var url = "/task/task.rails";
+			$.get(url, { count: taskCount }, 
+			function(data){
+				$("#addtask").before(data);
+			});
+		});
+		   
+		$("#Bewerk a.removetask").live("click", function(event){         
+        event.preventDefault();
+        
+        url = $(this).attr("href");
+        element = $(this);
+        $.ajax({
+           type: "POST",
+           url: url,           
+           success: function(msg){
+             $(element).parent().parent().remove();
+           },
+           error: function(msg)
+           {
+             alert("De taak kan niet worden verwijdert, dit komt waarschijnlijk omdat er al tijd is geboekt op deze taak.");
+           }
+        });        
+    });   
+		   
+		});
+
+	</script>
+</div>
+

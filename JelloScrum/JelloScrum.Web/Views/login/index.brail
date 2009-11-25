@@ -1,0 +1,17 @@
+<?brail OutputSubView("/shared/errormessages") ?>
+<form action="/Login/login.rails" method="POST" id="loginForm">
+  <div>
+    Login met je Domein gebruikersnaam en wachtwoord.<br/><br/>
+  </div>
+  <div>
+    <label for="User_username">Gebruikersnaam:</label>
+    <input type="text" value="" name="username" id="User_username" />
+  </div>
+  <div>
+    <label for="User_password">Wachtwoord:</label>
+    <input type="password" value="" name="password" id="User_password" />
+  </div>
+  <div class="ButtonContainer">    
+    <input type="submit" value="Login" class="button login"/>
+  </div>
+</form>

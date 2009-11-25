@@ -1,0 +1,95 @@
+<div>      
+    <br class="clear"/><br/>
+    <fieldset id="Gebruikergegevens">
+      <legend>Gebruiker gegevens</legend>
+        ${Form.FormTag({@id: 'Bewerk', @action: 'save'})}
+          
+          ${Form.HiddenField("item.Id")}
+          ${FormHelper.HiddenField("item.SysteemRol")}
+          ${FormHelper.HiddenField("avatar.x1Cord")}
+          ${FormHelper.HiddenField("avatar.y1Cord")}
+          ${FormHelper.HiddenField("avatar.width")}
+          ${FormHelper.HiddenField("avatar.height")}
+
+          <div id="TextGegevens">
+            ${Form.LabelFor("item.VolledigeNaam", "Naam:")}
+            ${Form.TextField("item.VolledigeNaam")}
+            <br/><br/>
+            ${Form.LabelFor("item.GebruikersNaam", "GebruikersNaam:")}
+            ${Form.TextField("item.GebruikersNaam")}
+            <br/><br/>
+            ${Form.LabelFor("item.Email", "Email adres:")}
+            ${Form.TextField("item.Email")}
+            <br/><br/>
+            ${Form.LabelFor("wachtwoord", "Wachtwoord:")}
+            ${Form.TextField("wachtwoord")}
+            <br/><br/>
+            ${Form.LabelFor("Avatar", "Huidige Avatar:")}
+            <div id="AvatarCurrent">
+              <img src="${item.SmallAvatar}" />
+            </div>
+            
+            <br class="clear"/><br/>
+            <a href="/Dashboard/index.rails" class="button reset">Annuleren</a>
+            ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
+            ${Form.EndFormTag()}
+
+          </div>
+      
+          <div id="Upload">
+            ${Form.FormTag({@id: 'Upload', @action: 'upload', @enctype: 'multipart/form-data' })}
+              <p>Upload een plaatje, waarvan je een avatar wilt maken. Vervolgens maak je een selectie van dat gedeeelte van het plaatje dat je voor de avatar wilt gebruiken.<br/>
+                Direct links van het ge-uploade plaatje zie je een preview van hoe jouw avatar zal worden.<br/>
+                Bij het opslaan van je gebruikersgegevens wordt ook je eigen avatar opgeslagen.
+              </p><br/>
+              ${Form.FileField("postedFile")}<br/><br/>
+              ${Form.Submit("Upload", {@class: 'button'})}<br/><br/>
+            ${Form.EndFormTag()}
+
+            <img src="${item.BigAvatar}" id="imgCrop"></img>
+          </div>
+
+    </fieldset>
+
+
+
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        $('<div id="preview"><img src="${item.SmallAvatar}" /></div>')
+        .css({
+          float: 'left',
+          overflow: 'hidden',
+          width: '40px',
+          height: '40px',
+        })
+        .insertBefore($('#imgCrop'));
+      });
+
+      $(window).load(function () {
+        $('#imgCrop').imgAreaSelect({ aspectRatio: '1:1', onSelectChange: preview });
+      });
+
+      function preview(img, selection)
+      {
+        var scaleX = 40 / (selection.width || 1);
+        var scaleY = 40 / (selection.height || 1);
+
+      $('#preview > img').css({
+        width: Math.round(scaleX * img.width) + 'px',
+        height: Math.round(scaleY * img.height) + 'px',
+        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+      });
+
+      $('#preview > img').attr('src', $('#imgCrop').attr('src'));
+      $('#avatar_x1Cord').val(selection.x1);
+      $('#avatar_y1Cord').val(selection.y1);
+      $('#avatar_width').val(selection.width);
+      $('#avatar_height').val(selection.height);
+      }
+
+    </script>
+
+</div>

@@ -1,0 +1,17 @@
+<div id="smallProfile">
+  <div id="name">
+    ${currentUser.VolledigeNaam} | <a href="/login/logout.rails">logout</a>
+  </div>
+  <div id="urls">
+    <div>
+      <a href="/project/beheer.rails">
+        <img src="/Content/images/bigicons/projectenbeheer.png"/> Projecten beheren</a>      
+    </div>
+    <div>
+      <a href="/management/index.rails">
+        <img src="/Content/images/bigicons/managementbeheer.png"/> Jello management</a>
+    </div>
+  </div>
+  <br class="clear"/>
+  
+</div>

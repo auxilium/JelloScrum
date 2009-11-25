@@ -1,0 +1,69 @@
+<div>
+  <a href="#" id="newGebruiker" rel="${rol}">${rol} Toevoegen</a>
+  <?brail if IsDefined("gebruikers"): ?>
+    <?brail if gebruikers.Length > 0:?>
+      <table class="sortable" id="GebruikerTabel">
+        <thead>
+          <tr>
+            <th align="left">Id</th>
+            <th align="left">Naam</th>
+            <th align="left">E-Mail</th>
+            <th align="left">Reset Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?brail for item in gebruikers: ?>
+            <tr rel="${item.Id}">
+              <td>${item.Id}</td>
+              <td>${item.VolledigeNaam}</td>
+              <td>${item.Email}</td>
+              <td>
+                <?brail if item.Email != "":?>
+                  <a href="resetpassword.rails?id=${item.Id}">Reset</a></td>
+                <?brail else:?>
+                  Niet mogelijk
+                <?brail end?>
+            </tr>
+          <?brail end ?>
+        </tbody>
+      </table>
+      <?brail OutputSubView("/subviews/pagination") ?>
+    <?brail else:?>
+      <br/>Geen ${rol} gebruikers gevonden
+    <?brail end ?>
+  <?brail end ?>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if($("#GebruikerTabel tbody tr").size() != 0) {
+            $("#GebruikerTabel").tablesorter({
+                widgets: ['zebra'],
+                sortList: [[0,0]],
+            }).tablesorterPager({
+                container: $("#pager")
+            });
+        }
+        
+        $("#GebruikerTabel tbody tr").click(function() {
+            $("#GebruikerTabel tr").removeClass("active");
+            $(this).addClass("active");
+            if($("#Acties").is(":hidden")) {
+                $("#Acties").show();
+            }
+            $("#Acties").load("/gebruikerbeheer/loadgebruiker.rails", {id: $(this).attr('rel')}).show();
+            $("a#newGebruiker").html("Gebruiker toevoegen annuleren");
+        });
+        
+        $("a#newGebruiker").click(function() {
+          if($("#Acties").is(":hidden")) {
+              $("#Acties").load("/gebruikerbeheer/nieuw.rails", {rol: $(this).attr('rel')}).show();
+              $("a#newGebruiker").html("Gebruiker toevoegen annuleren");
+          }
+          else {
+              $("#Acties").html("").hide();
+              $("#GebruikerTabel tbody tr").removeClass("active");
+              $("a#newGebruiker").html("Gebruiker toevoegen");
+          }
+        });
+    });
+</script>
+</div>

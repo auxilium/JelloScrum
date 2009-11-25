@@ -1,0 +1,1157 @@
+/*------------------------------------------------------------------
+Layout Stylesheet]
+
+Project:		JelloScrum
+Version:		1.0
+Developer:		Manuel van Rijn
+-------------------------------------------------------------------*/
+/*####################################
+#  Layout                            #
+#####################################*/
+
+*
+{
+	margin: 0px;
+	padding: 0px;	
+}
+
+img
+{
+	border: 0px;
+}
+
+body
+{
+	background: #272D32 none repeat scroll 0 0;
+	font-family: "Lucida Grande" ,Geneva,Arial,Verdana,sans-serif;
+	color: #333333;
+	font-size: 12px;
+	line-height: 1.5;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	overflow-y: scroll;
+}
+
+em
+{
+	font-style: italic;
+}
+
+div#container
+{
+	min-width: 1024px;
+	width: 999px;
+	width: 100%;
+}
+div#loader
+{
+	text-align: center;
+	padding: 10px;
+}
+a
+{
+	color: #0088CC;
+}
+
+a:hover, a:active
+{
+	color: #0088CC;
+	text-decoration: underline;
+}
+
+h1
+{
+	font-size: 26px;
+	line-height: 1.2em;
+	font-weight: bold;
+}
+h4
+{
+	font-size: 14px;
+	line-height: 1.2em;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+h5
+{
+	font-size: 12px;
+	line-height: 1.2em;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+.center
+{
+	text-align: center;
+}
+.clickable
+{
+	cursor: pointer;
+}
+.button
+{
+	display: inline;
+	cursor: pointer;
+	font-weight: bold;
+	padding: 4px;
+}
+.button:hover
+{
+	background-color: #49494A;
+	color: #ffffff;
+}
+.activeButton
+{
+	background-color: #49494A;
+	color: #ffffff;
+	display: inline-block;
+	padding-right: 8px;
+}
+img.absmiddle
+{
+	vertical-align: middle;
+}
+/*####################################
+#  Header                            #
+#####################################*/
+div#header
+{
+	padding-left: 8px;
+	margin-top: 20px;
+	margin-left: 20px;
+	height: 37px;
+	display: block;
+}
+/*####################################
+#  Title                             #
+#####################################*/
+div#header div#title
+{
+	width: 300px;
+	height: 37px;
+	float: left;
+}
+
+a.logo
+{
+	margin-left: 15px;
+}
+/*####################################
+#  Profile                           #
+#####################################*/
+#Profile
+{
+	float: right;
+	margin-right: 30px;
+}
+.avatar
+{
+	float: left;
+	width: 40px;
+	height: 40px;
+	border: solid 2px #FFF;
+}
+
+.userPref
+{
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;	
+}
+
+.nav
+{
+	float: left;
+	padding-left: 10px;
+}
+
+/*####################################
+#  ContentContainer                  #
+#####################################*/
+
+/*####################################
+	#  Content                           #
+	#####################################*/
+div#contentblock
+{
+	background: #FFFFFF none repeat scroll 0 0;
+	min-height: 600px;
+	margin: 20px;
+	padding: 20px;
+}
+
+div#contentblock div.heading
+{
+	color: #ffffff;
+	background: transparent url(/Content/Images/heading_bg.png) repeat-x scroll 0 0;
+	height: 52px;
+	font-size: 18px;
+	line-height: 48px;
+}
+
+div.heading h2 a, div#restTitel a
+{
+	color: #ffffff;
+}
+
+div#contentblock div.heading span.subtitle
+{
+	font-size: 16px;
+}
+
+/*####################################
+#  Footer                            #
+#####################################*/
+div#footer
+{
+	color: #666666;
+	font-size: 10px;
+	text-align: left;
+	margin: 20px;
+}
+/*####################################
+#  Clear                             #
+#####################################*/
+.clear
+{
+	clear: both;
+}
+/*####################################
+#  Blocks                            #
+#####################################*/
+div.block
+{
+	border: 1px solid #394450;
+	background-color: #CFCFCF;
+	padding: 4px;
+	margin: 4px;
+}
+div#projectBurndownChartContainer
+{
+	width: 345px;
+	float: right;
+}
+div#projectBurndownChartContainer img
+{
+	border: 1px solid black;
+}
+div.rightFloatBlock
+{
+	float: right;
+	width: 160px;
+	padding-left: 10px;
+}
+div#bla
+{
+	float: left;
+	width: 600px;
+	padding: 5px;
+}
+div#buttonBar
+{
+	margin-top: 20px;
+	min-height: 48px;
+}
+
+div.buttonBarRight
+{
+	margin-top: 20px;
+}
+/*#####################################  
+SprintBacklog                     
+######################################*/
+.sbItem
+{
+	padding: 0px 3px 3px 3px;
+	cursor: pointer;
+}
+.sbItem .details
+{
+	cursor: move;
+}
+
+/*######################################
+# Duncan
+######################################*/
+label.info, label.success, label.warning, label.error, label.validation
+{
+	border: 1px solid;
+	padding: 2px 10px 2px 25px;
+	margin: 1px 0px 1px 0px;
+	background-repeat: no-repeat;
+	background-position: 3px center;
+}
+label.error
+{
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url(/Content/Images/error.png);
+}
+input.error
+{
+	background-color: #FFBABA;
+}
+textarea.error
+{
+	background-color: #FFBABA;
+}
+
+/* Dashboard */
+.statusOk
+{
+	color: green;
+}
+
+.statusAlarm
+{
+	color: red;
+}
+
+li.task
+{
+	border: 1px solid #B7B7B7;
+	padding: 2px;
+	margin: 3px;
+	position: relative;
+	min-height: 44px;
+	list-style: none;
+	background: #EAEAEA;
+}
+
+li.task li
+{
+	list-style: none;
+}
+
+li.task .storyTitle, .storyTime
+{
+	color: grey;
+}
+
+li.task .storyTime
+{
+	margin-left: 10px;
+}
+
+li.task .taskTitle
+{
+	display: block;
+	width: 90%;
+}
+
+li.task .behandelaar
+{
+	position: absolute;
+	right: 25px;
+	top: 0px;
+}
+
+li.task .totalTaskTime
+{
+	position: absolute;
+	right: 25px;
+	top: 16px;
+}
+
+li.task .commentaar
+{
+	position: absolute;
+	bottom: 0px;
+	right: 25px;
+}
+
+li.task .log
+{
+	position: absolute;
+	bottom: 0px;
+	right: 120px;
+}
+
+li.task .taskButtons
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 16px;
+	float: right;
+	border-left: 1px solid #B7B7B7;
+}
+
+.taskButtons a
+{
+	display: block;
+}
+
+.taskButtons a.edit:hover, a.addtime:hover, a.close:hover
+{
+	background: grey;
+}
+
+li.task .taskDetails
+{
+	width: 78%;
+}
+
+/*#########*/
+/* Buttons */
+/*#########*/
+button
+{
+	border: 1px solid #AAA;
+	padding: 3px;
+	height: 23px;
+	color: #000;
+	background-color: #DDD !important;
+	cursor: pointer;
+}
+
+.button
+{
+	border: 1px solid #AAA;
+	padding: 3px;
+	height: 23px;
+	color: #000;
+	background-color: #DDD !important;
+	cursor: pointer;
+}
+
+
+
+a.button
+{
+	border: 1px solid #AAA;
+	height: 15px;
+	color: #000;
+	background-color: #DDD;
+	text-decoration: none;
+	cursor: pointer;
+	padding: 3px;
+	padding-left: 20px;
+}
+
+.login
+{
+	background: url( "/content/images/login.gif" ) no-repeat 3px 3px;
+}
+
+.nieuw
+{
+	background: url( "/content/images/nieuw.gif" ) no-repeat 3px 3px;
+}
+
+.wijzigen
+{
+	background: url( "/content/images/wijzigen.gif" ) no-repeat 3px 3px;
+}
+
+.verwijderen
+{
+	background: url( "/content/images/verwijderen.gif" ) no-repeat 3px 3px;
+}
+
+.resetwachtwoord
+{
+	background: url( "/content/images/key1.gif" ) no-repeat 3px 3px;
+}
+
+.volgende
+{
+	background: url( "/content/images/volgende.gif" ) no-repeat 3px 3px;
+	padding-right: 20px;
+}
+
+.vorige
+{
+	background: url( "/content/images/vorige.gif" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+.reset
+{
+	background: url( "/content/images/refresh.gif" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+.zoeken
+{
+	background: url( "/content/images/find.gif" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+.opslaan
+{
+	background: url( "/content/images/save.gif" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+.excel
+{
+	background: url( "/content/images/excel.gif" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+#newProjectButtonContainer
+{
+	margin-top: 10px;
+	float: right;
+	width: 15%;
+	text-align: right;
+}
+
+.ButtonContainer
+{
+	margin-top: 4px;
+	margin-left: 155px;
+	float: left;
+}
+
+
+button#closesprint
+{
+	float: none;
+	display: block;
+	margin: 10px auto;
+	height: 200px;
+	width: 500px;
+	text-align: left;
+}
+button#closesprint p
+{
+	padding-top: 10px;
+}
+
+button#closesprint img
+{
+	float: left;
+}
+
+/******************
+ *LOGIN           *
+******************/
+
+#loginForm label
+{
+	width: 150px;
+	display: block;
+	float: left;
+}
+
+#loginForm input
+{
+	width: 150px;
+	float: left;
+}
+
+#loginForm div
+{
+	clear: both;
+}
+
+ul#hoofdMenu
+{
+	list-style-type: none;
+	width: 100px;
+	color: #000000;
+}
+
+ul#hoofdMenu li
+{
+	position: relative;
+}
+
+li.megaItem h2
+{
+	font-size: 18px;
+	font-weight: normal;
+}
+
+li.megaItem a
+{
+	margin-left: 15px;
+	color: #ffffff;
+}
+
+li.megaItem div.outContent
+{
+	display: none;
+}
+
+li.megaItem div.outContent a
+{
+	color: #000000;
+}
+
+div.itemContent
+{
+	margin: 15px;
+	margin-top: 0px;
+	margin-left: 15px;
+	color: #000000;
+}
+
+div.itemContent a
+{
+	color: #000000;
+	margin: 0px;
+}
+
+div.itemContent table, div.itemContent p
+{
+	font-weight: normal;
+	font-size: 14px;
+}
+
+li.active
+{
+	background-image: url('/Content/Images/menuItemBackground.png' );
+	background-repeat: no-repeat;
+	background-position: 0px bottom;
+}
+
+li.active h2 a
+{
+	color: #2200cc !important;
+}
+
+li.active div.outContent
+{
+	display: block;
+	background-image: url('/Content/Images/menuBackground.png' );
+	background-repeat: no-repeat;
+	position: absolute;
+	overflow: hidden;
+	width: 400px;
+	height: 300px;
+	z-index: 1000;
+}
+
+#projectenOverzicht
+{
+	float: left;
+	width: 70%;
+}
+
+.projectKaart
+{
+	display: block;
+	width: 250px;
+	height: 170px;
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding: 5px;
+	background-color: #CCCCCC;
+	border: solid 2px #000000;
+	overflow: hidden;
+}
+
+.projectKaartTitel
+{
+	color: #000;
+	text-decoration: underline;
+	font-size: 14px;
+}
+
+.projectKaart hr
+{
+	border-color: #000000;
+}
+
+.projectKaartOmschrijving
+{
+	color: #333333;
+}
+
+#projectInformatie
+{
+	width: 28%;
+	float: right;
+	min-height: 300px;
+	display: inline;
+	border: solid 2px #000000;
+	padding: 5px;
+}
+
+#SprintStory
+{
+	float: left;
+	width: 45%;
+	padding: 15px;
+}
+
+#StoryTask
+{
+	float: left;
+	width: 730px;
+	padding: 15px;
+}
+
+#Gebruikergegevens
+{
+	padding: 15px;
+}
+
+#TextGegevens
+{
+	float: left;
+	width: 400px;
+}
+
+#TextGegevens input[type=text]
+{
+	float: right;
+	margin-right: 100px;
+}
+
+#TextGegevens input[type=file]
+{
+	float: right;
+	margin-right: 18px;
+}
+
+#postedFile
+{
+	margin-left: 50px;
+}
+
+#Upload .button
+{
+	margin-left: 200px;
+}
+
+#AvatarCurrent img
+{
+	float: right;
+	margin-right: 200px;
+}
+
+#preview
+{
+	margin-right: 10px;
+}
+
+#ProjectShortlist
+{
+	float: left;
+	width: 400px;
+	padding: 15px;
+}
+
+#ProjectSelect
+{
+	float: left;
+	width: 400px;
+	padding: 15px;
+}
+
+/********************/
+/*Feedback messages */
+/********************/
+
+.alert
+{
+	border: 1px solid #6e8c4c;
+	color: #000000;
+	padding: 8px;
+	padding-left: 45px;
+	font-family: Tahoma;
+	font-size: 16px;
+	margin: 5px;
+	margin-left: 0px;
+	clear: both;
+	line-height: 30px;
+	display: block;
+}
+
+.positiveNotice
+{
+	background: #CDEB8B url( "/content/images/notice.jpg" );
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+}
+
+.infoNotice
+{
+	background: #C3D9FF url( "/content/images/infonotice.jpg" );
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+}
+
+.errorNotice
+{
+	background: #fdffcb url( "/content/images/warning.gif" );
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+}
+
+.alert p
+{
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+/********************/
+/*Kies project menu */
+/********************/
+
+#projectSprintSelectContainer
+{
+	display: none;
+	z-index: 100;
+	left: 40px;
+	background-color: #888; /*#252A2E;*/
+	border-right: solid 3px #000;
+	border-bottom: solid 3px #000;
+	text-align: left;
+	padding: 0px;
+	position: absolute;
+	width: 384px;
+}
+
+#projectSelector
+{
+	float: left;
+	width: 190px;
+	margin-left: 5px;
+	border-right: 1px solid #000;
+}
+
+#projectSelector .projectUrl:hover
+{
+	color: #E0FFFF;
+}
+
+#sprintSelector .sprintUrl:hover
+{
+	color: #E0FFFF;
+}
+
+#projectSelector h5
+{
+	text-align: center;
+	border-bottom: solid 1px #000;
+	margin-bottom: 2px;
+}
+
+#sprintSelector
+{
+	margin-left: 200px;
+	width: 190px;
+}
+
+#sprintSelector h5
+{
+	text-align: center;
+	border-bottom: solid 1px #000;
+	margin-bottom: 2px;
+}
+
+.prio, .point, .schatting
+{
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+.newButton
+{
+	width: 145px;
+	height: 28px;
+	display: block;
+	background-image: url('/Content/images/button.gif' );
+	background-repeat: no-repeat;
+	margin-right: 7px;
+	line-height: 28px;
+	text-decoration: none;
+	font-weight: bold;
+	padding-left: 10px;
+	margin-bottom: 7px;
+}
+
+.selectedButton
+{
+	width: 145px;
+	height: 28px;
+	display: block;
+	background-image: url('/Content/images/button_selected.gif' );
+	background-repeat: no-repeat;
+	margin-right: 7px;
+	line-height: 28px;
+	text-decoration: none;
+	font-weight: bold;
+	padding-left: 10px;
+	margin-bottom: 7px;
+	color: #FFFFFF;
+}
+
+#dashboardLeft
+{
+	float: left;
+}
+
+#dashboardmenu
+{
+	width: 170px;
+	margin-top: 12px;
+	margin-right: 12px;
+	background-image: url('/Content/images/submenuBackground.gif' );
+	border-bottom: solid 1px #cccccc;
+}
+
+#dashboardmenuTop
+{
+	height: 24px;
+	padding-left: 9px;
+	background-color: #0089b3;
+	font-size: 14px;
+	color: #ffffff;
+	line-height: 24px;
+	font-weight: bold;
+}
+
+#dashboardmenuContent
+{
+	padding: 7px;
+}
+
+#dashboardContent
+{
+	float: left;
+}
+
+#dashboardStatus
+{
+	width: 170px;
+	margin-top: 12px;
+	margin-right: 12px;
+	background-image: url('/Content/images/submenuBackground.gif' );
+	border-bottom: solid 1px #cccccc;
+}
+
+#dashboardStatusTop
+{
+	height: 24px;
+	padding-left: 9px;
+	background-color: #ea6b10;
+	font-size: 14px;
+	color: #ffffff;
+	line-height: 24px;
+	font-weight: bold;
+}
+
+#dashboardStatusContent
+{
+	padding: 7px;
+}
+
+.mijnTabs
+{
+	height: 24px;
+	border-bottom: solid 1px #cccccc;
+}
+
+.mijnTabs a
+{
+	display: block;
+	height: 25px;
+	float: left;
+	padding-left: 12px;
+	padding-right: 12px;
+	line-height: 25px;
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+.mijnTabs a.actief
+{
+	font-weight: bold;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-image: url( '/Content/images/tabbackground.gif' );
+	border-left: solid 1px #cccccc;
+	border-right: solid 1px #cccccc;
+}
+
+
+.gegevensBlock input[type="text"], .gegevensBlock textarea
+{
+	border: solid 1px #84a1bc !important;
+	font-family: verdana;
+	font-size: 12px;
+	padding: 2px;
+}
+
+.gegevensBlock
+{
+	border: solid 1px #c2c2c2;
+	padding: 10px;
+	background-color: #e8f1ff;
+	margin-top: 15px;
+}
+
+.gegevensBlock h1
+{
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.gegevensBlock hr
+{
+	border-left: solid 1px #c0d4f2;
+	border-top: solid 1px #c0d4f2;
+	border-bottom: solid 1px #fefeff;
+	height: 0px;
+	margin: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.gegevensBlock .button
+{
+	float: left;
+	margin-top: 8px;
+	margin-right: 8px;
+}
+
+.gegevensBlock input[type="checkbox"]
+{
+	border: solid 0px;
+}
+
+.ingegevensBlock
+{
+	border: solid 2px #cccccc; 
+	padding: 2px; 
+	background-color: #f0f5fc;
+}
+
+.gegevensBlock label
+{
+	width: 200px;
+}
+
+.actieBlock
+{
+	float: left;
+	border: solid 1px #fbdbc2;
+	margin: 0px;
+	margin-top: 15px;
+	margin-left: 15px;
+	padding: 10px;
+}
+
+.actieBlock hr
+{
+	border-left: solid 1px #c0d4f2;
+	border-top: solid 1px #c0d4f2;
+	border-bottom: solid 1px #fefeff;
+	height: 0px;
+	margin: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.actieBlock a
+{
+	color: #000;
+	float: left;
+	text-decoration: none;
+	margin-top: 7px;
+}
+
+.actieBlock h2
+{
+	font-weight: bold;
+	background-color: #fffaea;
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.megaItem .tablesorter td, .megaItem .tablesorter th
+{
+	line-height: 20px;
+}
+
+#weekSelector
+{
+	font-size: 16pt;
+	margin-left: 10px;
+}
+
+.inlineEditInput input
+{
+	width: 30px !important;
+	text-align: left;
+}
+
+div.taakInputRegel label, div.taakInputRegel div
+{
+	padding: 3px;
+}
+
+/***********************
+/* Urenregistratie
+/***********************/
+
+#urenregistratie
+{
+	padding: 0px;
+}
+
+#urenregistratie .header_dag
+{
+	width: 80px;
+	padding: 4px;
+	text-align: center;
+}
+
+#urenregistratie .header_totaal
+{
+	vertical-align: middle;
+	text-align: center;
+	background-color: #FFFFFF!important;
+	padding: 0px;
+}
+
+#urenregistratie .task_registration
+{
+	vertical-align: middle;
+	text-align: center;
+}
+
+#urenregistratie .today, #urenregistratie .owntask
+{
+	background-color: #0089B3!important;
+	color: #FFFFFF!important;	
+}
+
+#urenregistratie .uren_readonly
+{
+	display:none;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#urenregistratie .uren_input
+{
+	display:block;
+	background-color: #FFFFFF;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#urenregistratie .uren_input input
+{
+	width: 80px;
+	text-align: center;
+	padding: 0px;
+}
+
+#urenregistratie .story
+{
+	background-color: #F0F0F6;
+}
+

@@ -1,0 +1,33 @@
+﻿<div>
+	<div class="mijnTabs">
+			<a href="/takenoverzicht/mijntaken.rails?sprintId=${sprint.Id}" class="actief">Mijn taken</a>
+			<a href="/takenoverzicht/nietopgepaktetaken.rails?sprintId=${sprint.Id}">Open taken</a>
+			<a href="/takenoverzicht/andermanstaken.rails?sprintId=${sprint.Id}">Opgepakte taken</a>
+			<a href="/takenoverzicht/afgerondetaken.rails?sprintId=${sprint.Id}">Afgeronde taken</a>
+			<br class="clear"/>
+		</div>	  
+		<div id="mijnTabsContent">
+		</div>
+	  
+	</div>
+	<br class="clear"/>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+		starturl = $(".mijnTabs a.actief").attr("href");
+		$("#mijnTabsContent").load(starturl);
+	    $("#takenoverzicht").removeClass("newButton").addClass("selectedButton");		
+		
+
+		$(".mijnTabs a").click(function(event){
+		event.preventDefault();
+		$(".mijnTabs a").removeClass("actief");
+		$(this).addClass("actief");
+
+		url = $(this).attr("href");
+		$("#mijnTabsContent").load(url);
+		});
+		});
+	</script>
+</div>

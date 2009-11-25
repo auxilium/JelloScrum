@@ -1,0 +1,14 @@
+﻿<tr>
+  <td>${story.Id}</td>
+  <td>
+    <span title="${story.Omschrijving}" style="text-decoration: underline; cursor: help;">${story.Titel}</span>
+  </td>
+  <td>${story.productBacklogPrioriteit}</td>
+  <td>
+    ${OpmaakHelper.Tijd(story.Schatting)}
+  </td>
+  <td>
+    <a href="KoppelStoryAanSprint.rails?sprintId=${gekozenSprint.Id}&storyId=${story.Id}" class="button naarSprint">naar sprint</a>
+  </td>
+  
+</tr>

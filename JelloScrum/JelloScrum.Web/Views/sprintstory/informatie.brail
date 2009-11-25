@@ -1,0 +1,73 @@
+<div class="storyInfo" id="tip_${item.Story.Id}">
+    <p class="titel">${item.Story.Titel} - ${item.Story.StoryType}</p>
+    <span class="titel">Omschrijving:</span>
+    <p id="omschrijving">${item.Story.Omschrijving}</p>
+
+    <span class="titel">Howto Demo:</span>
+    <p id="howtodemo">${item.Story.HowtoDemo}</p>
+
+    <?brail taken = item.Story.GeefNogNietOpgepakteTaken() ?>
+    
+    <span class="titel" id="taken">Taken (${taken.Count}):</span>
+    <div id="tasks" style="">
+        <?brail for taak in taken : ?>
+            <div class="taskItem" rel="${taak.Id}">- ${taak.Omschrijving}</div>
+        <?brail end ?>
+    </div>
+
+    <div class="extra">
+        <span class="titel">Schatting:</span> ${item.Story.Schatting}
+        <span class="titel">Door:</span> ${item.Story.AangemaaktDoor.VolledigeNaam}
+        <span class="titel">ProjectMoSCoW:</span> ${item.Story.ProductBacklogPrioriteit}
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#tip_${item.Story.Id} .taskItem").draggable({
+        scroll: false,
+        zIndex: 999,
+        opacity: .8,
+        revert: true,
+        start: function() {
+            $('.qtip-active').fadeTo("fast", 0.5);
+        },
+        stop: function() {
+            var num = $("#tip_${item.Story.Id} .taskItem").size();
+            if(num == 0) {
+                $("#${item.Story.Id}").remove();
+                $('.qtip-active').fadeTo("fast", 0);
+            }
+            else {
+                $("#taken").html("Taken ("+num+"):");
+                $('.qtip-active').fadeTo("fast", 1);
+            }
+        }
+    });
+
+    var textStripOptions = {
+        length: 5,
+        minTrail: 10,
+        moreText: 'lees meer',
+        lessText: 'verbergen',
+        ellipsisText: "..."
+    };
+    $("#tip_${item.Story.Id} .taskItem").stripText( {
+        length: 30,
+        minTrail: 10,
+        moreText: '',
+        lessText: '',
+        ellipsisText: "..."
+    });
+    /*function taskLink_${item.Story.Id}(num) {
+        if($("#tip_${item.Story.Id} #tasks").is(":hidden")) {
+            $("#tip_${item.Story.Id} #tasks").slideDown();
+            $("#tip_${item.Story.Id} #taskLink").html("Verberg onderliggende taken");
+        }
+        else {
+            $("#tip_${item.Story.Id} #tasks").slideUp();
+            $("#tip_${item.Story.Id} #taskLink").html("Toon onderliggende taken ("+num+")");
+        }
+    }
+    alert('a');*/
+});
+</script>

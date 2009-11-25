@@ -1,0 +1,41 @@
+﻿${Form.FormTag({@action: 'TijdBoekingOpslaan', @class: 'taskform'})}
+${Form.HiddenField("tijdRegistratie.Task.Id")}
+<fieldset>
+<ol>
+	<li>
+		${Form.LabelFor("tijdRegistratie.Tijd", "Tijd:")}
+		${Form.TextField("tijdRegistratie.Tijd", {@alt: "time"})}
+	</li>	
+</ol>
+<button type="submit">
+	<img src="/content/images/icons/ok.png" alt="Boek tijd"/> Boek tijd
+</button>
+<button type="button" class="task_reset">
+	<img src="/content/images/icons/delete.png" alt="Annuleren"/> Annuleren
+</button>
+</fieldset>
+${Form.EndFormTag()}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    
+    var options = {
+      beforeSubmit: validate,
+      success: refreshPage
+    };
+    
+    $('form.taskform').ajaxForm(options);
+    
+    $("input#tijdRegistratie_Tijd").val("").focus().setMask();    
+    
+    $(".task_reset").click(function() {
+      $("li#${tijdRegistratie.Task.Id} .taskDetails").html("");
+    });
+	  
+  });
+    
+  function refreshPage() {
+    document.location = "/sprint/dashboard.rails";
+  }
+</script>

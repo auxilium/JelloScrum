@@ -1,0 +1,35 @@
+﻿<div style="font-size: 16px;">
+  Project: ${project.Naam}
+  <hr/>
+</div>
+<div>  
+  <div style="float:left; width: 60px;">
+    <a href="ProductBacklog.rails?projectId=${project.Id}">
+      <img alt="Product backlog" src="/Content/Images/bigicons/productbacklog.png"/>
+      <div style="width: 48px; text-align: center;">
+        Backlog
+      </div>
+    </a>
+  </div>
+    
+  <div style="float:left;">
+    Niet ingeplande stories: ${project.GeefStoriesDieIngeplandMogenWorden().Count} / ${project.Stories.Count}
+  </div>
+  <br class="clear"/>
+</div>
+<div style="margin-top: 25px;">
+  <div style="float:left; width: 60px;">
+    <a href="">
+      <img alt="Sprints" src="/Content/Images/bigicons/sprints.png"/>
+      <div style="width: 48px; text-align: center;">
+        Sprints
+      </div>
+    </a>
+  </div>
+  <div style="float:left;">
+    - Sprint met informatie<br/>
+    - Sprint met informatie<br/>
+    - Sprint met informatie
+  </div>
+  <br class="clear"/>
+</div>

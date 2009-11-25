@@ -1,0 +1,81 @@
+<div class="block cornered" id="buttonBar">
+    <div id="productbacklogButton" class="button cornered"><img src="/Content/Images/bigicons/productbacklog.png" alt="Product backlog" class="absmiddle" />Product backlog</div>
+    <div id="storyPrioriteringButton" class="button cornered"><img src="/Content/Images/bigicons/productbacklog.png" alt="Story prioritering" class="absmiddle" />Story prioritering</div>
+    <div id="editProjectButton" class="button cornered"><img src="/Content/Images/bigicons/edit.png" alt="Bewerk project" class="absmiddle" />Bewerk project</div>
+    <div id="deleteButton" class="button cornered"><img src="/Content/Images/bigicons/delete.png" alt="Verwijder project" class="absmiddle" />Verwijder project</div>
+</div>
+<div id="editContainer">
+    <div class="block cornered" id="bla">
+        <div id="progressContainer" class="rightFloatBlock">
+            <h5>Sprints: 1/4</h5>
+                <div class="progressBar">1%</div>
+            <h5>Stories: 20/20</h5>
+                <span class="progressBar">2%</span>
+            <h5>Bugs: 7/10</h5>
+                <span class="progressBar">3%</span>
+            <h5>Impediments: 1/50</h5>
+                <span class="progressBar">5%</span>
+        </div>
+        <h4>Project naam: ${project.Naam}</h4>
+        ${project.Omschrijving} 
+    </div>
+    <div class="block cornered" id="projectBurndownChartContainer">
+        <h4 class="center">Burndown chart (voorbeeld)</h4>
+        <img src="/Content/Images/burndown-example.jpg" alt="Burndownchart Example" width="340" />
+    </div>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var back = "/Content/Images/bigicons/back.png";
+    setTitle("Project: \"${project.Naam}\"");
+    $('.cornered').corner("10px");
+    $(".progressBar").progressBar();
+    
+    $("#editProjectButton").click(function() {
+        if($("#editProjectButton img").attr("src") == back) {
+            document.location = '/project/overzicht.rails?projectId=' + ${project.Id};
+        }
+        else {
+            $("#editContainer").load("/project/bewerk.rails", {id: ${project.Id}});
+            $("#editProjectButton img").attr("src", back);
+            $("#storyPrioriteringButton").hide();
+            $("#productbacklogButton").hide();
+            $("#deleteButton").hide();
+        }
+    });
+    $("#productbacklogButton").click(function() {
+        if($("#projectTableContainer").is(":hidden")) {
+            document.location = '/project/overzicht.rails?projectId=' + ${project.Id};
+        }
+        else {
+            $("#projectTableContainer").slideUp(function() {
+                $("#editContainer").load("/project/productbacklog.rails", {projectId: ${project.Id}});
+            });
+            $("#productbacklogButton img").attr("src", back);
+            $("#storyPrioriteringButton").hide();
+            $("#editProjectButton").hide();
+            $("#deleteButton").hide();
+        }
+    });
+    $("#storyPrioriteringButton").click(function() {
+        if($("#projectTableContainer").is(":hidden")) {
+            document.location = '/project/overzicht.rails?projectId=' + ${project.Id};
+        }
+        else {
+            $("#projectTableContainer").slideUp(function() {
+                $("#editContainer").load("/project/moscow.rails", {id: ${project.Id}});
+            });
+            $("#storyPrioriteringButton img").attr("src", back);
+            $("#productbacklogButton").hide();
+            $("#editProjectButton").hide();
+            $("#deleteButton").hide();
+        }
+    });
+    
+    $("#deleteButton").click(function() {
+        JelloGrowl('Not Implemented yet...', 'nog even fixxen', 'unknown');
+    });
+});
+</script>

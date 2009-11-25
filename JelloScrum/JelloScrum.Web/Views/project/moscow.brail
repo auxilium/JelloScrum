@@ -1,0 +1,89 @@
+<div class="block cornered">
+    <div style="width: 420px; height: 450px; overflow-y: auto; overflow-x: hidden; float: left; z-index: 1000;" class="postIt">
+    <?brail for story in item : ?>
+        <div class="storyItem" id="${story.Id}">
+            <div class="est">${story.Schatting}</div>
+            <div class="content">${story.Titel}</div>
+        </div>
+    <?brail end ?>
+    </div>
+    <div id="0" class="dropMustHave dropPrioriteit cornered">
+        <div class="postIt MustHave" style="width: 100%;">
+            <div class="story">
+                <p class="title">Must Have</p>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+    </div>
+    <div id="1" class="dropShouldHave dropPrioriteit cornered">
+        <div class="postIt ShouldHave" style="width: 100%;">
+            <div class="story">
+                <p class="title">Should Have</p>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+    </div>
+    <div id="2" class="dropCouldHave dropPrioriteit cornered">
+        <div class="postIt CouldHave" style="width: 100%;">
+            <div class="story">
+                <p class="title">Could Have</p>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+    </div>
+    <div id="3" class="dropWontHave dropPrioriteit cornered">
+        <div class="postIt WontHave" style="width: 100%;">
+            <div class="story">
+                <p class="title">Won't Have</p>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    setTitle("${project.Naam} - Prioriteiten");
+    $('.cornered').corner("10px");
+    
+    var dropMust = {
+        accept: ".storyItem",
+        activeClass: 'droppable-MoSCoW',
+        hoverClass: 'droppable-MoSCoWActive',
+        drop: function(ev, ui) {
+            var id = $(ui.draggable).attr('id');
+            var prio = $(this).attr('id');
+            
+            SaveStoriesPrioriteit(id, prio);
+            
+            $(ui.draggable).remove();
+        }
+    };
+    $(".dropPrioriteit").droppable(dropMust);
+    
+    var dragStories = {
+        scroll: false,
+        zIndex: 99999,
+        opacity: .8,
+        revert: true
+    };
+    
+    $(".storyItem").draggable(dragStories);
+});
+
+function SaveStoriesPrioriteit(storyId, prioriteitId) {
+    $.ajax({
+        type: "POST",
+        url: "/story/veranderprioriteit.rails",
+        data: "id="+storyId+"&prioriteit="+prioriteitId,
+        success: function(msg){
+            JelloGrowl('Prioriteit aangepast', 'De prioriteit van de Story is aangepast', 'success');
+        }
+    });
+}
+
+</script>

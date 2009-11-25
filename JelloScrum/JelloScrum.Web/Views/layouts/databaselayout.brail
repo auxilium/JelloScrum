@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="JelloScrum is a Project Management tool developed by Auxilium BV" />
+    <meta name="keywords" content="Auxilium, JelloScrum" />
+    <meta http-equiv="content-language" content="en" />
+    <title>JelloScrum | Auxilium BV</title>
+
+    <link rel="copyright" href="about.rails" title="about" />
+    <link rel="stylesheet" href="/Content/Style/layout.css" type="text/css" media="screen"  />
+    <link rel="stylesheet" href="/Content/Style/jquery-ui-1.7.2.custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/Content/Style/table2.css" type="text/css" media="screen" />
+    <!--[if IE]>
+	<style>
+	</style>
+	<![endif]-->
+    <!--[if IE 7]>
+	
+	<![endif]-->    
+  </head>
+  <body>
+    <div id="container">
+      <div id="header"> 
+		    <div id="title">
+		      <a href="/dashboard/index.rails" class="logo">
+			    <img src="/Content/images/jelloscrum.png"/>
+		      </a>
+        </div>        
+      </div>
+      <div class="cornered clear" id="contentblock">
+        <div class="heading cornered" style="padding-left: 25px;">         
+             Creeer Database
+        </div>
+        
+        <?brail OutputSubView('/shared/errorMessages') ?>
+        ${ChildOutput}
+        <br class="clear"/>
+      </div>
+      <div id="footer">
+        <p>
+          Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" alt="Auxilium BV">Auxilium BV</a>. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

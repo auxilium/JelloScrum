@@ -1,0 +1,96 @@
+<?brail
+	[Html]
+  def HtmlEncode(str as string):
+    return str
+  end
+?>
+
+<a href="/sprint/mijntaken.rails">Mijn taken</a>
+<a href="/sprint/takenvananderen.rails">Taken van anderen</a>
+<a href="/sprint/onopgepaktetaken.rails">Onopgepakte taken</a>
+<a href="/sprint/mijnafgeslotentaken.rails">Mijn afgesloten taken</a>
+
+<h1>Mijn taken</h1>
+<p>Dit zijn de door mij opgepakte taken.</p>
+<ul>
+<?brail
+if IsDefined("mijnTaken") and mijntaken is not null:
+  for taak in mijnTaken:
+    ?>
+    <li class="task" id="${taak.Id}">
+      <span class="storyTitle">${taak.Story.Titel}</span>
+      <span class="storyTime">[${OpmaakHelper.UrenStatus(taak.Story.Schatting, taak.Story.TotaalBestedeTijd())}]</span>
+      <span class="taskTitle">${HtmlEncode(taak.Omschrijving)}      
+      </span>
+      <span class="behandelaar">${taak.Behandelaar.Gebruiker.Naam}</span>
+      <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotaalBestedeTijd())}</span>
+      
+      <a href="#" class="log">Logberichten (${taak.LogBerichten.Count})</a>
+      <a href="#" class="commentaar">Commentaar (${taak.CommentaarBerichten.Count})</a>      
+      <div class="taskButtons">
+        <a class="edit" title="Edit taak"><img src="/content/images/icons/note.png" alt="Edit taak"/></a>
+        <a class="addtime" href="#" title="Boek tijd"><img src="/content/images/icons/add.png" alt="Boek tijd"/></a>        
+        <a class="close" title="Sluit taak"><img src="/content/images/icons/ok.png" alt="Sluit taak"/></a>
+      </div>
+      <div class="taskDetails"></div>
+    </li>
+    <?brail    
+  end
+else :
+  output '<li>Ik heb geen taken opgepakt.</li>'
+end
+?>
+</ul>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  <?brail 
+    if IsDefined("currentUser") and currentUser.ActieveSprint is not null:
+  ?>
+      setTitle("${currentUser.ActieveSprint.Project.Naam} / ${currentUser.ActieveSprint.Doel}");
+  <?brail
+    else:
+  ?>
+      setTitle("Kies een sprint");
+  <?brail end ?>
+  
+  
+  $(".addtime").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/boektijd.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });
+  
+  $("a.log").click(function(e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/logBerichten.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });
+  
+  $("a.commentaar").click(function(e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/commentaarBerichten.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });  
+  
+  $(".close").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    var tasktitle = $("#" + taskid +" .taskTitle").html();
+    
+    if (!confirm("Weet je zeker dat je '" + jQuery.trim(tasktitle) + "' wilt afsluiten?"))
+      return;
+      
+    $.ajax({
+      type: "POST",
+      url: "/task/sluittaak.rails",
+      data: "taakId=" + taskid,
+      success: function(msg){
+        document.location = "/sprint/dashboard.rails";
+      },
+      error: function(){
+        alert('Er is een fout opgetreden.');
+      }
+    });
+  });  
+});
+</script>

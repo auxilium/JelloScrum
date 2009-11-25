@@ -1,0 +1,121 @@
+<div>
+	<div class="gegevensBlock" style="width: 1000px; margin-top: 10px;">
+		<div>
+			<span style="float:left;">
+				<h1>
+					Mijn projecten
+				</h1>
+			</span>
+			<span style="float:right;">
+				<a href="/GebruikerBeheer/mijnprojecten.rails">Kies mijn projecten</a>
+			</span>
+			<br class="clear"/>
+			<hr/>
+		</div>
+		<div>
+			<?brail
+                  count = 0
+                  for projectShortList in currentUser.ProjectShortList : 
+                ?>
+
+			<div class="ingegevensBlock">
+				<div>
+					<h1 style="font-weight: bold; padding: 3px; float:left;">
+						Project: ${projectShortList.Project.Naam}
+					</h1>
+					<span style="font-weight: bold; padding: 3px; float:right;">
+						<a href="/project/project.rails?projectid=${projectShortList.Project.Id}">ga naar projectpagina</a>
+					</span>
+					<br class="clear"/>
+				</div>
+				<div class="taakInputRegel">
+					<div>
+						${projectShortList.Project.Omschrijving}
+					</div>
+				</div>
+				<div class="taakInputRegel">
+					<span style="font-weight: bold; padding: 3px;">
+						Sprints in project:
+					</span>
+					<table class="tablesorter" id="sprintTable">
+						<thead>
+							<tr>
+								<th>Sprint</th>
+								<th>Status</th>
+								<th>Start datum</th>
+								<th>Eind datum</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?brail for sprint in projectShortList.Project.Sprints : ?>
+							<tr>
+								<td>
+									<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Doel}</a>
+									<?brail
+              if sprint.IsAfgesloten == false:              
+            ?>
+									<a href="/sprint/actieveSprintZetten.rails?sprintId=${sprint.Id}">
+										<img src="/Content/images/favosprint.png" title="Maak ${sprint.Doel} mijn actieve sprint." alt="Maak ${sprint.Doel} mijn actieve sprint."/>
+									</a>
+									<?brail
+              end
+            ?>
+								</td>
+								<td>
+									<?brail
+              if sprint.IsAfgesloten:              
+            ?>
+									Afgesloten
+									<?brail
+              else:
+            ?>
+									Open
+									<?brail
+              end
+             ?>
+								</td>
+								<td>${sprint.StartDatum.ToShortDateString()}</td>
+								<td>${sprint.EindDatum.ToShortDateString()}</td>
+							</tr>
+							<?brail end ?>
+						</tbody>
+					</table>
+				</div>
+				<br class="clear"/>
+
+			</div>
+			<br class="clear"/>
+			<?brail
+    end
+  ?>
+
+
+
+		</div>
+
+		<br class="clear"/>
+	</div>
+
+	<div class="gegevensBlock" style="width: 1000px; margin-top: 10px;">
+		<span style="float:left;">
+			<h1>
+				Alle projecten
+			</h1>
+		</span>
+		<span style="float:right;">
+			<a href="/Project/Nieuw.rails">Nieuw project toevoegen</a>
+		</span>
+		<br class="clear"/>
+		<hr/>
+		<div>
+			<div style="margin-top: 10px;">
+				<form action="/project/index.rails" method="POST">
+					<label style="font-size: 14px; font-weight: normal;">Zoek:</label>
+					<input type="text" name="zoektekst"/>
+					<input type="submit" value="Zoek"/>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+

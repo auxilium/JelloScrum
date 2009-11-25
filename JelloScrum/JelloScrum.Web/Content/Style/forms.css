@@ -1,0 +1,11 @@
+form .fullwidth {
+	width: 100%;
+}
+form textarea, form input {
+	border: 1px solid #394450;
+}
+
+button img 
+{
+	vertical-align: top;
+}

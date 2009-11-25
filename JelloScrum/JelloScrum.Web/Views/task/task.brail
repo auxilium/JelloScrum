@@ -1,0 +1,29 @@
+<!-- NOTE: de class taskBlock wordt gebruikt in jQuery om te tellen hoeveel van deze taskblocks er op 1 pagina staan-->
+<div class="ingegevensBlock taskBlock">
+	<div>
+		<span style="font-weight: bold; padding: 3px; float:left;">
+			<?brail if task.Id == 0:?>
+			Nieuwe taak
+		    <?brail else:?>
+			Taak ${task.Id}
+			<?brail end?>
+		</span>
+		<input type="hidden" name="task[${count}].Id" value="${task.Id}"/>
+		<a href="/task/Verwijder.rails?id=${task.Id}" style="margin-right: 3px; float:right;" class="removetask">verwijder taak</a>
+		<br class="clear"/>
+	</div>
+	<div class="taakInputRegel">
+		<label for="task[${count}]_Titel">Titel</label>
+		<div>
+			<input type="text" name="task[${count}].Titel" id="task[${count}]_Titel" value="${task.Titel}" style="width: 375px;"/>
+		</div>
+	</div>
+	<div class="taakInputRegel">
+		<label for="task[${count}]_Omschrijving">Omschrijving</label>
+		<div>
+			<textarea name="task[${count}].Omschrijving" id="task[${count}]_Omschrijving" cols="50" rows="5" style="width: 375px;" >${task.Omschrijving}</textarea>
+		</div>
+	</div>
+	<br class="clear"/>
+</div>
+<br class="clear"/>

@@ -1,0 +1,305 @@
+#cardWall
+{
+}
+#cardWall #Header
+{
+	text-align: center;
+	width: 967px;
+}
+#cardWall #Container
+{
+	width: 983px;
+}
+#cardWall .Column
+{
+	width: 20%;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+#cardWall .BigColumn
+{
+	width: 39%;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+#cardWall .Developer p.name
+{
+	text-align: center;	
+}
+.droppable-active
+{
+	background-color: #CFCFCF !important;
+}
+.droppable-hover
+{
+	background-color: #AFAFAF !important;
+}
+.droppable-hover p.name
+{
+	font-weight: bold !important;
+}
+.postIt
+{
+	width: 176px;
+	margin-left: 10px;
+	margin-top: 3px;
+}
+.postIt .bottom
+{
+	height: 29px;
+	text-align: center;
+	font-size: 10px;
+}
+.postIt .story
+{
+	padding: 3px;
+}
+p.title
+{
+	font-size: 11px;
+	text-decoration: underline;
+	text-align: center;
+	font-weight: bold;
+}
+.postIt .ui-draggable {
+	
+}
+
+.MustHave .story
+{
+	background: transparent url(/Content/Images/postits/red/content.png) repeat-y scroll top center;
+}
+.MustHave .bottom
+{
+	background: transparent url(/Content/Images/postits/red/bottom.png) no-repeat scroll top center;
+}
+
+
+.CouldHave .story
+{
+	background: transparent url(/Content/Images/postits/green/content.png) repeat-y scroll top center;
+}
+.CouldHave .bottom
+{
+	background: transparent url(/Content/Images/postits/green/bottom.png) no-repeat scroll top center;
+}
+
+
+.ShouldHave .story
+{
+	background: transparent url(/Content/Images/postits/blue/content.png) repeat-y scroll top center;
+}
+.ShouldHave .bottom
+{
+	background: transparent url(/Content/Images/postits/blue/bottom.png) no-repeat scroll top center;
+}
+
+.WontHave .title
+{
+	color: #ffffff;
+}
+.WontHave .story
+{
+	background: transparent url(/Content/Images/postits/black/content.png) repeat-y scroll top center;
+}
+.WontHave .bottom
+{
+	background: transparent url(/Content/Images/postits/black/bottom.png) no-repeat scroll top center;
+}
+
+
+.postIt .storyItem
+{
+	font-size: 7px;
+	width: 80px;
+	background: transparent url(/Content/Images/postits/task/task-bottom.png) no-repeat scroll bottom center;
+	padding-bottom: 15px;
+	margin-left: 3px;
+	float: left;
+	cursor: move;
+}
+.postIt .storyItem .est 
+{
+	background: transparent url(/Content/Images/postits/task/task-top.png) no-repeat scroll top center;
+	height: 2px;
+	font-size: 8px;
+	text-align: right;
+	padding-top: 11px;
+	padding-right: 2px;
+	cursor: move;
+}
+.postIt .storyItem .content 
+{
+	background: transparent url(/Content/Images/postits/task/task-content.png) repeat-y scroll top center;
+	padding: 2px;
+	padding-top: 8px;
+	min-height: 30px;
+}
+#cardWall .Developer
+{
+	min-height: 100px;
+	border-bottom: 1px solid black;
+}
+#cardWall .noBottomBorder
+{
+	border: 0 !important;
+}
+
+.storyInfo 
+{
+	font-size: 10px;
+}
+.storyInfo .titel
+{
+	font-size: 11px;
+	font-weight: bold;
+	border-bottom: 1px solid #333333;
+}
+.storyInfo .extra 
+{
+	border-top: 1px solid #333333;
+	font-size: 10px;
+	margin-top: 15px;
+}
+.storyInfo span.titel 
+{
+	font-size: 10px;
+	border: 0;
+	font-weight: normal;
+	color: #777777;	
+}
+.storyInfo .extra span.titel 
+{
+	padding-left: 3px;
+}
+.storyInfo .taskLink 
+{
+	border-top: 1px solid #333333;
+	margin-top: 5px;
+}
+.storyInfo .taskItem 
+{
+	cursor: move;
+}
+.storyInfo .close 
+{
+	text-align: right;	
+}
+
+.Developer .DeveloperTaskItem 
+{
+	font-size: 7px;
+	border-bottom: 1px solid black;
+	cursor: move;
+}
+
+#doneTasks 
+{
+	height: 100%;
+	min-height: 200px;
+}
+
+div .MustHaveColor
+{
+	border: 1px solid #9F4C00;
+	background-color: #C86000;
+}
+div .dropMustHave 
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #9F4C00;
+	background-color: #C86000;
+	
+}
+div .ShouldHaveColor
+{
+	border: 1px solid #3C5B5B;
+	background-color: #659999;
+}
+div .dropShouldHave
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #3C5B5B;
+	background-color: #659999;
+}
+div .CouldHaveColor
+{
+	border: 1px solid #507000;
+	background-color: #729E00;
+}
+div .dropCouldHave
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #507000;
+	background-color: #729E00;
+}
+div .WontHaveColor
+{
+	border: 1px solid #191918;
+	background-color: #323230;
+	color: #ffffff;
+}
+div .dropWontHave
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #191918;
+	background-color: #323230;
+	color: #ffffff;
+}
+div .BugColor
+{
+	border: 1px solid #A21411;
+	background-color: #00B5FF;
+}
+div .dropBug
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #A21411;
+	background-color: #00B5FF;
+	color: #ffffff;
+}
+div .ImpedimentColor
+{
+	border: 1px solid #A21411;
+	background-color: #F6FF00;
+	color: #A21411;
+}
+div .dropImpediment
+{
+	float: left;
+	width: 242px;
+	height: 152px;
+	margin: 4px;
+	text-align: center;
+	border: 1px solid #A21411;
+	background-color: #F6FF00;
+	color: #A21411;
+}
+.droppable-MoSCoW
+{
+	opacity: 0.5;
+}
+.droppable-MoSCoWActive
+{
+	opacity: 1.0;
+}

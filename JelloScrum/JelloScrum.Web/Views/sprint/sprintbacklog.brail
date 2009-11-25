@@ -1,0 +1,52 @@
+<div>
+  <table class="tablesorter" id="sprintTable" style="float:left;">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Titel</th>
+        <th>Sprint prio</th>
+        <th>Project prio</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Schatting</th>
+        <th>Taken</th>
+        <th>Actie</th>
+      </tr>
+    </thead>
+    <tbody>
+		<?brail
+      if sprint.SprintStories.Count == 0:
+    ?>
+		<tr>
+			<td colspan="9">
+				Er zitten op dit moment geen stories in deze sprint. <a href="/sprint/sprintplanning.rails?sprintId=${sprint.Id}">Ga naar planning</a> om stories toe te voegen.
+			</td>
+		</tr>
+		<?brail  
+      else:
+       for story in sprint.SprintStories: ?>
+      <tr>
+        <td>${story.Id}</td>
+        <td>${story.Story.Titel}</td>
+        <td class="sprintprio">${story.sprintBacklogPrioriteit}</td>
+        <td >${story.Story.ProductBacklogPrioriteit}</td>
+        <td>${story.Story.StoryType}</td>
+        <td>${story.Status}</td>
+        <td>${TimeSpanHelper.TimeSpanInMinuten(story.Story.Schatting)}</td>
+        <td>${story.Story.Tasks.Count}</td>
+        <td style="text-align:center;">
+          <a href="/Story/Bewerk.rails?storyId=${story.Story.Id}&sprintId=${sprint.Id}" class="button wijzigen">Bewerk</a>
+        </td>
+      </tr>
+      <?brail end end?>
+    </tbody>
+  </table>
+  <div id="newProjectButtonContainer" style="width: 60px; margin: 0px; margin-top: 10px;">
+    <a href="ExportSprintBackLog.rails?sprintId=${sprint.Id}" id="voegToe" class="button excel">Excel</a>
+  </div>
+  <br class="clear"/>
+  <?brail OutputSubView("/subviews/pager") ?>
+
+  <script type="text/javascript" src="/views/sprint/sprintbacklog.js"></script>
+
+</div>

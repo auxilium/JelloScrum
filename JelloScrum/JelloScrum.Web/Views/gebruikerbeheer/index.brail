@@ -1,0 +1,12 @@
+<div>
+  <div class="block cornered" id="buttonBar">
+    <?brail for rol in systemRols:?>
+      <div id="${rol}" class="button cornered">
+        <img src="/Content/Images/bigicons/productbacklog.png" alt="${rol}" class="absmiddle" />${rol}
+      </div>
+    <?brail end?>
+  </div>
+  <div id="Acties"></div>
+  <div id="GebruikersList"></div>
+ 
+</div>

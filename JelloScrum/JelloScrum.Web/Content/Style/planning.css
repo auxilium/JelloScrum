@@ -1,0 +1,160 @@
+div#planning 
+{
+	width: 500px;
+}
+div#planning p.storytitle 
+{
+	cursor: pointer;
+}
+div#planning span.toggle 
+{
+	background: url("/Content/Images/icons/toggle.png") no-repeat left center;
+	padding-left: 18px;
+	cursor: pointer;
+	float: right;
+	padding-right: 5px;
+}
+div#planning a.add 
+{
+	background: url("/Content/Images/icons/add.png") no-repeat left center;
+	padding-left: 18px;
+	cursor: pointer;
+}
+div#planning div.story 
+{
+	border: 1px solid #aaaaaa;
+	margin: 5px 0px 5px 0px;
+}
+div#planning div.story div.details 
+{
+	border-top: 1px solid #cccccc;
+	margin: 2px 20px 0px 20px;
+}
+/** statistic info of story (schatting, task count, hours worked on already...) **/
+div#planning div.story div.details span.schatting 
+{
+	background: url("/Content/Images/icons/schatting.png") no-repeat left center;
+	padding-left: 18px;
+}
+div#planning div.story div.details span.geregistreerd 
+{
+	background: url("/Content/Images/icons/geregistreerd.png") no-repeat left center;
+	padding-left: 18px;
+	margin-left: 10px;
+}
+div#planning div.story div.details span.taskcount
+{
+	background: url("/Content/Images/icons/task.png") no-repeat left center;
+	padding-left: 18px;
+	margin-left: 10px;
+}
+
+/** task specific stuff **/
+div#planning .task-hover
+{
+	background: url("/Content/Images/icons/attach.png") no-repeat right center #cccccc!important;
+	color: #000000!important;
+	margin-right: 10px;
+	cursor: pointer;
+}
+div#planning div.omschrijving, div#planning div.tasks
+{
+	padding-left: 45px;
+}
+p.task 
+{
+	font-size: 11px;
+	padding-right: 12px;
+	padding-left: 16px;
+	background: url("/Content/Images/icons/task.png") no-repeat top left;
+}
+div#planning p.task-inprogress 
+{
+	padding-left: 16px;
+	color: #aaaaaa;
+	font-style: italic;
+	background: url("/Content/Images/icons/task-inprogress.png") no-repeat top left;
+}
+div#planning p.task-done 
+{
+	padding-left: 16px;
+	color: #aaaaaa;
+	text-decoration: line-through;
+	background: url("/Content/Images/icons/task-done.png") no-repeat top left;
+}
+/* title with sprintbacklog priority badge */
+div#planning p.MustHave 
+{
+	background: url("/Content/Images/icons/badge-must.png") no-repeat 2px center #dddddd;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	padding-left: 65px;
+}
+div#planning p.ShouldHave 
+{
+	background: url("/Content/Images/icons/badge-should.png") no-repeat 2px center #dddddd;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	padding-left: 65px;
+}
+div#planning p.CouldHave 
+{
+	background: url("/Content/Images/icons/badge-could.png") no-repeat 2px center #dddddd;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	padding-left: 65px;
+}
+div#planning p.WontHave 
+{
+	background: url("/Content/Images/icons/badge-wont.png") no-repeat 2px center #dddddd;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	padding-left: 65px;
+}
+
+div#developerBox 
+{
+	float: right;
+	width: 485px;
+}
+div#developerBox .developer 
+{
+	border-top: 1px solid #aaaaaa;
+	border-left: 1px solid #aaaaaa;
+	border-right: 1px solid #aaaaaa;
+	margin: 0px 4px 0px 4px;
+}
+div#developerBox .developer.last 
+{
+	border-bottom: 1px solid #aaaaaa;
+}
+.title.developer-hover 
+{
+	background-color: #bbbbbb!important;
+	cursor: pointer;
+	text-decoration: underline!important;
+}
+.title span 
+{
+	text-decoration: none!important;
+}
+div#developerBox p.title
+{
+	position: relative;
+	background-color: #DDDDDD;
+	text-align: left;
+	text-decoration: none;
+	height: 18px;
+}
+div#developerBox p.title span 
+{
+	background:transparent url("/Content/Images/icons/arrow-add.png") no-repeat scroll 0 0;
+	position: absolute;
+	top: 5px;
+	left: -50px;
+	height:16px;
+	min-height:16px;
+	margin:-4px 0 0;
+	width:24px;
+	display: none;
+}

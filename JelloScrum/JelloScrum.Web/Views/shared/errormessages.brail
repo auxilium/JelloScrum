@@ -1,0 +1,30 @@
+<?brail
+    if ?errorMessages:
+	  output "<div class='alert errorNotice'>"
+	  for errorMessage in errorMessages:
+		  output "<p>" + errorMessage + "</p>"
+	  end
+	  output "</div>"
+    end
+	
+    if ?positiveMessages:
+	  output "<div class='alert positiveNotice'>"
+	  for positiveMessage in positiveMessages:
+		  output "<p>" + positiveMessage + "</p>"
+	  end
+	  output "</div>"      
+    end
+	
+	if ?infoMessages:
+	    output "<div class='alert infoNotice'>"
+	    for infoMessage in infoMessages:
+		    output "<p>" + infoMessage + "</p>"
+	    end
+	    output "</div>"
+    end	
+?>
+<script type="text/javascript">
+  $(document).ready(function() {
+    setTimeout(function(){ $(".alert").fadeOut('slow'); }, 5000);
+  });
+</script>

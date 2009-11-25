@@ -1,0 +1,113 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Model", "JelloScrum\JelloScrum.Model\JelloScrum.Model.csproj", "{9C63CF64-5192-42E5-9881-13CE1CF08C0B}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Services", "JelloScrum\JelloScrum.Services\JelloScrum.Services.csproj", "{59B75401-40FE-4043-99AB-170490A32A2A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B} = {9C63CF64-5192-42E5-9881-13CE1CF08C0B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Web", "JelloScrum\JelloScrum.Web\JelloScrum.Web.csproj", "{DE73707D-AF49-44D5-B4D2-30DCC23AE115}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B} = {9C63CF64-5192-42E5-9881-13CE1CF08C0B}
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC} = {3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}
+		{59B75401-40FE-4043-99AB-170490A32A2A} = {59B75401-40FE-4043-99AB-170490A32A2A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Repositories", "JelloScrum\JelloScrum.Repositories\JelloScrum.Repositories.csproj", "{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B} = {9C63CF64-5192-42E5-9881-13CE1CF08C0B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Model.Tests", "JelloScrum\JelloScrum.Model.Tests\JelloScrum.Model.Tests.csproj", "{61DF5083-2000-4AC2-8852-607F81E8BA39}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B} = {9C63CF64-5192-42E5-9881-13CE1CF08C0B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Repositories.Tests", "JelloScrum\JelloScrum.Repositories.Tests\JelloScrum.Repositories.Tests.csproj", "{C8F1344D-184F-46EA-A145-314FE0BC6154}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{59B75401-40FE-4043-99AB-170490A32A2A} = {59B75401-40FE-4043-99AB-170490A32A2A}
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC} = {3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B} = {9C63CF64-5192-42E5-9881-13CE1CF08C0B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.QueryObjects", "JelloScrum\JelloScrum.QueryObjects\JelloScrum.QueryObjects.csproj", "{F654B475-5B71-49B8-A303-067CB604CD4A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Container", "JelloScrum\JelloScrum.Container\JelloScrum.Container.csproj", "{EC11D662-1098-421B-A785-073C7889199C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C63CF64-5192-42E5-9881-13CE1CF08C0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59B75401-40FE-4043-99AB-170490A32A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B75401-40FE-4043-99AB-170490A32A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B75401-40FE-4043-99AB-170490A32A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B75401-40FE-4043-99AB-170490A32A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE73707D-AF49-44D5-B4D2-30DCC23AE115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE73707D-AF49-44D5-B4D2-30DCC23AE115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE73707D-AF49-44D5-B4D2-30DCC23AE115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE73707D-AF49-44D5-B4D2-30DCC23AE115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB1BF23-D517-4FAC-AA3C-AC4AC9EC82EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DF5083-2000-4AC2-8852-607F81E8BA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DF5083-2000-4AC2-8852-607F81E8BA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DF5083-2000-4AC2-8852-607F81E8BA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DF5083-2000-4AC2-8852-607F81E8BA39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F1344D-184F-46EA-A145-314FE0BC6154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F1344D-184F-46EA-A145-314FE0BC6154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F1344D-184F-46EA-A145-314FE0BC6154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F1344D-184F-46EA-A145-314FE0BC6154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F654B475-5B71-49B8-A303-067CB604CD4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F654B475-5B71-49B8-A303-067CB604CD4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F654B475-5B71-49B8-A303-067CB604CD4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F654B475-5B71-49B8-A303-067CB604CD4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC11D662-1098-421B-A785-073C7889199C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC11D662-1098-421B-A785-073C7889199C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC11D662-1098-421B-A785-073C7889199C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC11D662-1098-421B-A785-073C7889199C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

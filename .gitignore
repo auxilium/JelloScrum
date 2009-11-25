@@ -1,0 +1,12 @@
+*.resharper*
+_ReSharper*
+*.log
+bin
+obj
+log
+*.suo
+JelloScrum.xml
+partcover-*.xml
+*.bak
+JelloScrum/.xml
+*.user

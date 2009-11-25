@@ -1,0 +1,120 @@
+table {
+	border-collapse: 		collapse;
+	width:					100%;
+	border:					0;
+}
+table td, table th {
+	padding:				2px;
+	vertical-align:			top;
+}
+table tfoot tr td {
+	text-align:				right;
+	border:					0px;
+	font-weight:			bold;
+	font-style:				italic;
+	padding-right:			5px;
+}
+table.sortable th {
+	background-color: 		#272D32;
+	font-weight: 			bold;
+	border-bottom:			2px solid #D3D3D3;
+	color:					#CECECE;
+}
+table.sortable tbody tr {
+	background-color: 		#F3F3F3;
+	border-bottom: 			1px solid #D3D3D3;
+}
+table.sortable {
+	border: 				1px solid #D3D3D3;
+	text-align:				left;
+	margin-top: 			6px;
+}
+
+table.sortable thead th.header {
+	cursor: 				pointer;
+	background: 			#272D32 url('/Content/Images/icons/remove_item.png') no-repeat right center;
+}
+table.sortable thead th.headerSortUp {
+	background: 			#272D32 url('/Content/Images/icons/up_arrow.png') no-repeat left center;
+	padding-left:			18px;
+	color:					#0088CC;
+}
+table.sortable thead th.headerSortDown {
+	background: 			#272D32 url('/Content/Images/icons/down_arrow.png') no-repeat left center;
+	padding-left:			18px;
+	color:					#0088CC;
+}
+table.sortable tbody tr.even {
+	background-color: 		#F3F3F3;
+}
+table.sortable tbody tr.odd {
+	background-color: 		#DFDFDF;
+}
+table .icon {
+	width: 16px;
+}
+
+.pager .prev img {
+	margin-top: 13px;
+}
+.pager .next {
+	
+}
+
+/* ProductBacklog */
+table#productBacklog tr:hover,
+table#projectTable tr:hover,
+table#GebruikerTabel tr:hover {
+	background-color: #CFCFCF;
+	/*background-color: #444446;*/
+	cursor: pointer;
+}
+table#productBacklog tr.active,
+table#projectTable tr.active,
+table#GebruikerTabel tr.active {
+	background-color: #444446;
+	background-color: #272D32;
+	color: #CECECE;
+}
+
+
+table.formTable {
+	font-family: "Lucida Grande",Geneva,Arial,Verdana,sans-serif;
+	color: #333333 !important;
+	font-size: 12px;
+	border: 0 !important;
+	z-index: 100;
+}
+table.formTable tr, table.formTable tr:hover {
+	border: 0 !important;
+}
+table.formTable td {
+	border: 0 !important;
+	padding-left: 13px;
+}
+
+table.tasks{
+	border: 1px solid #394450;
+}
+
+table.taskEdit{
+	border: 1px solid #394450;
+}
+
+table.taskEdit td{
+	text-align: center;
+}
+
+table.taskEdit .action{
+	width: 20px;
+}
+
+table.taskEdit .odd
+{
+	background-color: Blue;
+}
+
+input.time
+{
+	width: 50px;
+}

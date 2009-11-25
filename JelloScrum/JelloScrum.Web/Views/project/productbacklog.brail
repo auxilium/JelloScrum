@@ -1,0 +1,186 @@
+<?brail
+	[MarkDown]
+	def MarkDownOutput(str as string):
+		if str == null:
+			return ""
+		end
+    return str
+	end
+?>
+<div class="gegevensBlock">
+  <h1>
+    Story overzicht
+    <hr/>
+  </h1>
+  <table class="tablesorter" id="projectTable" style="width: 86%; float:left;">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Titel</th>
+        <th>Prioriteit</th>
+        <th>Type</th>
+        <th>Omschrijving</th>
+        <th>Punten</th>
+        <th>Schatting</th>
+        <th>Taken</th>
+        <th>Actie</th>
+      </tr>
+    </thead>
+    <tbody>
+	  <?brail 
+		 if project.Stories.Count == 0:
+			?>
+		<tr>
+			<td colspan="9">&nbsp;</td>
+		</tr>
+	<?brail			   
+		 end
+		 for story in project.Stories: ?>
+      <tr rel="${story.Id}">
+        <td>${story.Id}</td>
+        <td>
+          <a href="/story/story.rails?storyId=${story.Id}">
+            ${story.Titel}
+          </a>
+        </td>
+        <td class="prio inlineEdit">${story.ProductBacklogPrioriteit}</td>
+        <td>${story.StoryType}</td>
+        <td>${MarkDownOutput(story.Omschrijving)}</td>
+        <td class="point inlineEdit">${story.StoryPoints}</td>
+        <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Schatting)}</td>
+        <td>${story.Tasks.Count}</td>
+        <td style="text-align:center;">
+          <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>
+        </td>
+      </tr>
+      <?brail end ?>
+    </tbody>
+  </table>
+
+  <div id="newProjectButtonContainer" style="float:right; width: 13%">
+    <a href="/Story/nieuw.rails?projectId=${project.Id}" id="voegToe" class="button nieuw">Story toevoegen</a>
+    <br/>
+    <br/>
+    <a href="ExportProductBackLog.rails?projectId=${project.Id}" id="openExcel" class="button excel">Excel</a>
+  </div>
+
+  <br class="clear"/>
+  <?brail OutputSubView("/subviews/pager") ?>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      //Zet de juiste sorteer volgorde op de kolom prioriteit
+      $.tablesorter.addParser({
+        // set a unique id
+        id: 'haves',
+        is: function(s) {
+        // return false so this parser is not auto detected
+        return false;
+      },
+      format: function(s) {
+        // format your data for normalization
+        return s.toLowerCase().replace(/must/,0).replace(/should/,1).replace(/could/,2).replace(/would/,3).replace(/onbekend/,5);
+        },
+        // set type, either numeric or text
+        type: 'numeric'
+      });
+
+      //Zet de juiste sorteer volgorde op de kolom punten
+      $.tablesorter.addParser({
+          // set a unique id
+          id: 'punten',
+          is: function(s) {
+          // return false so this parser is not auto detected
+          return false;
+        },
+        format: function(s) {
+          // format your data for normalization
+          return s.toLowerCase().replace(/aas/,0).replace(/twee/,1).replace(/drie/,2).replace(/vijf/,3).replace(/acht/,4).replace(/tien/,5).replace(/heer/,6).replace(/onbekend/,7);
+          },
+          // set type, either numeric or text
+          type: 'numeric'
+        });
+
+      //Zet sorteer funtie op kolommen
+      $("#projectTable").tablesorter({
+        headers: {
+          2: { sorter: 'haves'},
+          5: { sorter: 'punten'},
+          8: { sorter: false}
+        },
+          widgets: ['zebra']
+      });
+
+      //Zet client side paginering aan
+      $("#projectTable").tablesorterPager({container: $("#pager")});
+
+
+      //Toon inline selectbox in kolom prioriteiten
+      $('.prio').livequery(function(){
+      $(this).editable(function(value, settings) {
+      element  = $(this);
+      $.ajax({
+        data: "id="+ $(this).parent().find("td:first").html() + "&value=" + value,
+            url: 'OpslaanPrioriteiten.rails',
+            success: function(html){
+              element.html(html)
+            },
+              error: function(html){
+              location.reload()
+            }
+          });
+        }, {
+          loadurl : 'OphalenPrioriteiten.rails',
+          type   : 'select',
+          submit : 'save'
+        });
+    });
+
+      //Toon inline selectbox bij kolom Punten
+      $('.point').livequery(function(){
+        $(this).editable(function(value, settings) {
+          element  = $(this);
+          $.ajax({
+            data: "id="+ $(this).parent().find("td:first").html() + "&value=" + value,
+            url: 'OpslaanPunten.rails',
+            success: function(html){
+            element.html(html);
+        },
+            error: function(html){
+            location.reload();
+            }
+          });
+        }, {
+          loadurl : 'OphalenStoryPunten.rails',
+          type   : 'select',
+          submit : 'save'
+        });
+      });
+
+      //Toon inline inputbox bij kolom Schatting
+      $('.schatting').livequery(function(){
+        $(this).editable(function(value, settings) {
+          element  = $(this);
+          
+          value = stringReplaceDot(value);
+          
+          $.ajax({
+            data: "id="+ $(this).parent().find("td:first").html() + "&value=" + value,
+            url: 'OpslaanSchatting.rails',
+            success: function(html){
+            element.html(html)
+          },
+            error: function(html){
+            location.reload()
+            }
+        });
+        }, {
+          type: "text",
+          event  : "click",
+          submit : 'save'
+          });
+        });
+    });       
+  </script>
+</div>  

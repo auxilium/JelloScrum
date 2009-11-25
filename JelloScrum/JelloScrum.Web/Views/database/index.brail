@@ -1,0 +1,24 @@
+<?brail if IsDefined("ready"): ?>
+    <center>
+        <h1>Ready 2 Rock</h1>
+        <a href="/home/index.rails" target="_self">Get me HOME!</a>
+    </center>
+    <script type="text/javascript">setTitle("Test data generated");</script>
+<?brail else : ?>
+    <div style="text-align: center;">
+        <?brail if IsDefined("log"): ?>
+            <div class="block cornered" style="width: 400px; margin: 0 auto;">${log}</div><br />
+            <script type="text/javascript">setTitle("Database created");</script>
+            <?brail if hasError == false : ?>
+                <form action="/database/createdata.rails" method="POST">
+                    <input type="submit" value="Generate Test Data" />
+                </form>
+            <?brail end ?>
+        <?brail else : ?>
+            <form action="/database/createdatabase.rails" method="POST">
+                <input type="submit" value="ReCreate Database" />
+            </form>
+            <script type="text/javascript">setTitle("Create database");</script>
+        <?brail end ?>
+    </div>
+<?brail end ?>

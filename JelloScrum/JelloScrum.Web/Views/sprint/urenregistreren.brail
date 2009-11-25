@@ -1,0 +1,3 @@
+<div>
+	<?brail component UrenRegistratieComponent, {"sprint" : sprint, "maandag" : maandag, "sprintGebruiker" : sprintGebruiker, "formaction" : "/sprint/urenboeken.rails"}?>
+</div>

@@ -1,0 +1,151 @@
+﻿<div class="gegevensBlock" style="float:left; width: 1000px;">
+	<div>
+		<span style="float:left;">
+			<h1>
+				Project: ${project.Naam}
+			</h1>
+		</span>
+		<span style="float:right;">
+			<a href="/project/productbacklog.rails?projectId=${project.Id}">Product backlog openen</a>
+		</span>
+		<br class="clear"/>
+		<hr/>
+	</div>
+	<div class="ingegevensBlock">
+		<span style="float:left;">
+			${project.Omschrijving}
+		</span>
+		<span style="font-weight: bold; padding: 3px; float:right;">
+			<a href="/project/bewerk.rails?id=${project.Id}">bewerken</a>
+		</span>
+		<br class="clear"/>
+	</div>
+</div>
+<!--<div class="actieBlock"  style="">
+	<h2>
+		Acties
+		<hr/>
+	</h2>
+	<div style="text-align: center;">
+		<a href="productbacklog.rails?projectId=${project.Id}">
+			<img src="/Content/Images/bigicons/productbacklog.png" alt="Product backlog"/>
+			<br/>
+			<span>Product backlog</span>
+		</a>
+		<a href="/sprint/nieuw.rails?projectId=${project.Id}" style="margin-left:25px;">
+			<img src="/Content/Images/bigicons/sprinttoevoegen.png" alt="Sprint toevoegen" />
+			<br/>
+			<span>Nieuwe sprint</span>
+		</a>
+		<a href="/sprint/sprintplanning.rails?projectId=${project.Id}" style="margin-left:25px;">
+			<img src="/Content/Images/bigicons/sprintplanning.png" alt="Sprint planning" />
+			<br/>
+			<span>Sprint planning</span>
+		</a>
+	</div>
+</div>-->
+<br class="clear"/>
+<div class="gegevensBlock" style="width:1000px;">
+	<h1 style="font-weight: bold; padding: 3px; float:left;">
+		Sprints in project		
+	</h1>
+	<span style="float:right;">
+		<a href="/sprint/nieuw.rails?projectId=${project.Id}">Nieuwe sprint toevoegen</a>
+	</span>
+	<br class="clear"/>
+	<hr/>
+	<div id="projectTableContainer">
+		<table class="tablesorter" id="sprintTable">
+			<thead>
+				<tr>
+					<th>Sprint</th>
+					<th>Status</th>
+					<th>Start datum</th>
+					<th>Eind datum</th>
+					<th colspan="4">
+						&nbsp;
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?brail for sprint in project.Sprints : ?>
+				<tr>
+					<td>
+						<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Doel}</a>
+						<?brail
+              if sprint.IsAfgesloten == false:              
+            ?>
+						<a href="/sprint/actieveSprintZetten.rails?sprintId=${sprint.Id}">
+							<img src="/Content/images/favosprint.png" title="Maak ${sprint.Doel} mijn actieve sprint." alt="Maak ${sprint.Doel} mijn actieve sprint."/>
+						</a>
+						<?brail
+              end
+            ?>
+					</td>
+					<td>
+						<?brail
+              if sprint.IsAfgesloten:              
+            ?>
+						Afgesloten
+						<?brail
+              else:
+            ?>
+						Open
+						<?brail
+              end
+             ?>
+					</td>
+					<td>${sprint.StartDatum.ToShortDateString()}</td>
+					<td>${sprint.EindDatum.ToShortDateString()}</td>
+
+					<td>
+						<?brail
+              if sprint.IsAfgesloten == false:              
+            ?>
+						<a href="/sprint/bewerk.rails?sprintId=${sprint.Id}&projectId=${project.Id}">Sprintgegevens bewerken</a>
+						<?brail
+              end
+             ?>
+					</td>
+					<td>
+						<?brail
+              if sprint.IsAfgesloten == false:              
+            ?>
+						<a href="/sprint/sprintplanning.rails?sprintId=${sprint.Id}">Sprint plannen</a>
+						<?brail
+              end
+             ?>
+					</td>
+					<td>
+						<a href="/sprint/sprintbacklog.rails?sprintId=${sprint.Id}">Bekijk sprintbacklog</a>
+					</td>
+					<td>
+						<?brail
+              if sprint.IsAfgesloten == false:              
+            ?>
+						<a href="/sprint/sluit.rails?sprintId=${sprint.Id}">Sprint afsluiten</a>
+						<?brail
+              end
+             ?>
+					</td>
+				</tr>
+				<?brail end ?>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	$("#sprintTable").tablesorter({
+	dateFormat: "dd-mm-yy",
+	headers: {
+	4: { sorter: false},
+	3: { sorter: false},
+	2: { sorter: false}
+	},
+	widgets: ['zebra']
+	});
+	});
+</script>
+

@@ -1,0 +1,21 @@
+﻿<div>
+  <style>    
+    div.taakInputRegel label, div.taakInputRegel div
+    {
+      padding: 3px;
+    }
+  </style>
+  <?brail 
+    count = 0;
+    for task in tasks:
+	
+	OutputSubView("task", { @task : task, @count : count } )
+	
+    count = count + 1
+    end
+  ?>
+  <!-- NOTE: een nieuw taskedit block wordt met jQuery hiervoor gedropt -->
+  <a href="" id="addtask" class="button nieuw">Voeg een taak toe</a>
+
+</div>
+

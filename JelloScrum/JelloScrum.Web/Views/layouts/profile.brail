@@ -1,0 +1,16 @@
+<div id="Profile">
+  <div class="avatar">
+    <?brail 
+      if (currentUser.smallAvatar != ""):      
+    ?>
+    <img src="${currentUser.smallAvatar}"/>
+    <?brail 
+      end
+    ?>
+  </div>
+  <div class="userPref">
+    <a href="/GebruikerBeheer/GebruikersProfiel.rails">${currentUser.VolledigeNaam}</a>
+    <br/>
+    <a href="/login/logout.rails">logout</a>
+  </div>  
+</div>

@@ -1,0 +1,295 @@
+<table border="1" id="cardWall">
+    <thead>
+        <tr id="Header">
+            <td class="Column">Not checked out</td>
+            <td class="Column">Checked out</td>
+            <td class="Column">Done</td>
+            <td class="BigColumn">Sprint Goal: "${sprint.Doel}"</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="Column" id="NotCheckedOut">
+<!-- STORY BACKLOG -->
+                
+<!-- END STORY BACKLOG -->
+            </td>
+            <td class="Column">
+<!-- DEVELOPERS -->
+                <?brail for sprintGebruiker in sprint.SprintGebruikers : ?>
+                    <?brail if sprintGebruiker.HeeftSprintRol(SprintRol.Developer|SprintRol.ScrumMaster): ?>
+                    <div class="Developer" rel="${sprintGebruiker.Id}" id="Developer_${sprintGebruiker.Id}">
+                        <p class="name"><b>${sprintGebruiker.Gebruiker.VolledigeNaam}</b> (${sprintGebruiker.SprintRol})</p>
+                        <div class="tasks"></div>
+                    </div>
+                    <?brail end ?>
+                <?brail end ?>
+<!-- END DEVELOPERS -->
+            </td>
+            <td class="Column" id="doneSprintStories">
+<!-- DONE TASKS -->
+                
+<!-- END DONE TASKS -->
+            </td>
+            <td class="BigColumn">
+<!-- BURNDOWN CHART -->
+                <div class="burndownContainer">
+                    <div class="yaxLabel">E S T</div>
+                    <div id="burnDownPlaceHolder" class="burndownChart"></div>
+                    <div class="xaxLabel">Tijd</div>
+                </div>
+                <div id="burnDownLegend" class="burndownLegenda"></div>
+                <div class="burndownToolTip block cornered"><div id="tooltip"></div></div>
+<!-- END BURNDOWN CHART -->            
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="clear"></div>
+    
+
+<script type="text/javascript">
+var previousPoint;
+
+$(document).ready(function() {
+    setTitle("Daily Scrum - ${sprint.Doel}");
+    $('.cornered').corner("10px");
+    
+    // load the external content with ajax
+    reloadNotCheckedOut();
+    // load the external content for the developers
+    reloadDevelopers();
+    // load the external content for done stories
+    reloadDone();
+    
+    // dropable Options
+    var dropDeveloper = {
+        accept: ".storyItem, .taskItem",
+        activeClass: 'droppable-active',
+        hoverClass: 'droppable-hover',
+        drop: function(ev, ui) {
+            //var taskContainer = document.createElement("div");
+            //$(taskContainer).addClass("taskItem");
+            var sprintGebruiker = $(this).attr('rel');
+            
+            // check if it is a task or a story
+            if($(ui.draggable).hasClass("storyItem")) {
+                var sprintStory = $(ui.draggable).attr('rel');
+                $("#"+this.id+" .tasks").load("/sprintstory/savesprintstorytosprintgebruiker.rails", {sprintstory: sprintStory, sprintgebruiker: sprintGebruiker}, function() {
+                    JelloGrowl('Story toegedeeld', 'Story is gekoppeld aan behandelaar', 'success');
+                });
+                reloadNotCheckedOut();
+            }
+            else {
+                var task = $(ui.draggable).attr('rel');
+                $("#"+this.id+" .tasks").load("/sprintstory/savetasktosprintgebruiker.rails", {task: task, sprintgebruiker: sprintGebruiker}, function() {
+                    JelloGrowl('Task toegedeeld', 'Task is gekoppeld aan behandelaar', 'success');
+                });
+                reloadNotCheckedOut();
+            }
+            //$(taskContainer).append($(ui.draggable).clone().children());
+            //$(taskContainer).draggable(dragOptions);
+            $(ui.draggable).remove();
+            
+            //$(this).append(taskContainer);
+        }
+    };
+    var dropTaskBackToBacklog = {
+        accept: ".DeveloperTaskItem",
+        activeClass: 'droppable-active',
+        hoverClass: 'droppable-hover',
+        drop: function(ev, ui) {
+            var taak = $(ui.draggable).attr('rel');
+            var sprintGebruiker = $(ui.draggable).attr('gebruiker');
+            
+            $.ajax({
+                type: "POST",
+                url: "/Task/TaskOpslaanAlsNietOpgepakt.rails",
+                data: "id="+taak,
+                success: function(msg){
+                    JelloGrowl('Task teruggeplaatst', 'Task is terug geplaatst in de Backlog', 'success');
+                }
+            });
+            reloadNotCheckedOut();
+            // grab developer storie element and refresh the stories
+            $("#Developer_"+sprintGebruiker+" .tasks").load("/sprintstory/getsprintstoriesbydprintgebruikerorderedbyprioriteit.rails", {id: sprintGebruiker});
+            $(ui.draggable).remove();
+        }
+    };
+    $(".Developer").droppable(dropDeveloper);
+    $("#NotCheckedOut").droppable(dropTaskBackToBacklog);
+    
+    var dropDone = {
+        accept: ".DeveloperTaskItem, .taskItem, .storyItem",
+        activeClass: 'droppable-active',
+        hoverClass: 'droppable-hover',
+        drop: function(ev, ui) {
+            var id = $(ui.draggable).attr('rel');
+            if($(ui.draggable).hasClass("storyItem")) {
+                // not checked out STORY -> done
+                $.ajax({
+                    type: "POST",
+                    url: "/sprintstory/savestoryasdone.rails",
+                    data: "sprintStory="+id,
+                    success: function(msg){
+                        JelloGrowl('Story afgerond', 'Story is opgeslagen als "Afgerond"', 'success');
+                    }
+                });
+                // reload done
+                reloadDone();
+                // reload not checked out
+                reloadNotCheckedOut();
+                // reload the developers
+                reloadDevelopers();
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/sprintstory/savetaskasdone.rails",
+                    data: "task="+id,
+                    success: function(msg){
+                        JelloGrowl('Task afgerond', 'Task is opgeslagen als "Afgerond"', 'success');
+                    }
+                });
+                
+                // reload done
+                reloadDone();
+                
+                if($(ui.draggable).hasClass("DeveloperTaskItem")) {
+                    // checked out -> done
+                    // refresh the developer
+                    var sprintGebruiker = $(ui.draggable).attr('gebruiker');
+                    $("#Developer_"+sprintGebruiker+" .tasks").load("/sprintstory/getsprintstoriesbysprintgebruikerorderedbyprioriteit.rails", {id: sprintGebruiker});
+                }
+                else {
+                    // not checked out TASK -> done
+                    // refresh not checked out
+                    reloadNotCheckedOut();
+                }
+            }
+            $(ui.draggable).remove();
+        }
+    };
+    $("#doneSprintStories").droppable(dropDone);
+    /*var dragOptions = {
+        //helper: "clone", // use a copy of the image
+        scroll: false, // scroll the window during dragging
+        zIndex: 999, // zindex whilst dragging
+        opacity: .5, // opacity whilst dragging
+        revert: true
+    };
+    $(".taskItem").draggable(dragOptions);
+    
+    $(".Developer").droppable({
+        accept: ".taskItem",
+        activeClass: 'droppable-active',
+        hoverClass: 'droppable-hover',
+        drop: function(ev, ui) {
+            var taskContainer = document.createElement("div");
+            $(taskContainer).addClass("taskItem");
+            
+            $(taskContainer).append($(ui.draggable).clone().children());
+            $(taskContainer).draggable(dragOptions);
+            $(ui.draggable).remove();
+            $(this).append(taskContainer);
+            /*document.getElementById("display").innerHTML =  $(ui.draggable).children("li:first").text();
+            var lid = ($(ui.draggable).children("li:first"));
+            var removeLink = document.createElement("a");
+            removeLink.innerHTML = "remove";
+            removeLink.href = "#";
+            removeLink.onclick = function() {    
+                $("#drop1").children().remove("#"+lid[0].id);
+                $(this).remove();      
+            }
+            $(this).append($(ui.draggable).clone().children("li:first").addClass("blocker"));  
+            $(this).append(removeLink);*/
+        //}
+    //});
+    
+    
+    // some style fixxes...
+    $(".TaskContainer:last").addClass("noBottomBorder");
+    $(".Developer:last").addClass("noBottomBorder");
+    
+    ///////////////////////////////
+    //burndown code
+    ///////////////////////////////
+    var dagenTotaal = ${JelloScrum.Web.Helpers.BurnDownHelper.AantalWerkdagenSprint(sprint)};
+    var estTotaal = ${Math.Round(JelloScrum.Web.Helpers.BurnDownHelper.TotaalGeschatteTijd(sprint).TotalHours, 0)};
+    var idealValue = estTotaal / dagenTotaal;
+    var progressTemp = estTotaal;
+    
+    var idealLine = [], progressLine = [];
+    var i=0;
+    <?brail for item in list:?>
+    progressLine.push([i, ${item.Value}]);
+    i++;
+    <?brail end?>
+    
+    // set first and last point
+    idealLine.push([0, estTotaal]);
+    idealLine.push([dagenTotaal, 0]);
+    
+    var plot = $.plot(
+        $("#burnDownPlaceHolder"), [
+            {data: idealLine, label: "Ideale voortgang", lines: {fill:true}, color: "#284450"},
+            {data: progressLine, label: "Voortgang", color: "#252A2E" }
+        ],{
+            lines: { show: true },
+            points: { show: true },
+            selection: { mode: "xy" },
+            grid: {
+                hoverable: true,
+                clickable: true,
+                markings: [ { xaxis: { from: ${JelloScrum.Web.Helpers.BurnDownHelper.AantalWerkdagenTotNu(sprint) - 2},to: ${JelloScrum.Web.Helpers.BurnDownHelper.AantalWerkdagenTotNu(sprint) + 2}}}]
+            },
+            legend: {
+                show: true,
+                position: "ne",//"ne" or "nw" or "se" or "sw"
+                container: $("#burnDownLegend")
+            }
+        });
+
+    $("#burnDownPlaceHolder").bind("plothover", function (event, pos, item) {
+        if(item && item.series.lines.fill == false) {        // item.series.lines.fill = check if it isn't the first and lost point of the middle line
+            var tijd = item.datapoint[0].toFixed(2);
+            var est = item.datapoint[1].toFixed(2);
+            
+            $("#tooltip").html("tijd: " + tijd + "<br/>est: " + est);
+            $("#tooltip").parent().show();
+            
+            if(previousPoint != undefined)
+                plot.unhighlight(item.series, previousPoint);
+            
+            plot.highlight(item.series, item.datapoint);
+            previousPoint = item.datapoint;
+        }
+    });
+});
+
+
+function setNotCheckedDragables() {
+    var dragNotCheckedOut = {
+        scroll: false,
+        zIndex: 999,
+        opacity: .8,
+        revert: true
+    };
+    
+    $(".storyItem").draggable(dragNotCheckedOut);
+}
+function reloadDevelopers() {
+    $(".Developer").each(function(index) {
+        //$(this).attr('rel')}
+        //.tasks
+        $("#"+this.id+" .tasks").load("/sprintstory/getsprintstoriesbysprintgebruikerorderedbyprioriteit.rails", {id: $(this).attr('rel')});
+    });
+}
+function reloadDone() {
+    $("#doneSprintStories").load("/sprint/sprintstoriesafgerond.rails", {id: ${sprint.Id}});
+}
+function reloadNotCheckedOut() {
+    $("#NotCheckedOut").load("/sprint/sprintstories.rails", {id: ${sprint.Id}}, setNotCheckedDragables);
+}
+</script>

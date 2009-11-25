@@ -1,0 +1,225 @@
+<?brail
+	[Html]
+  def HtmlEncode(str as string):
+    return str
+  end
+?>
+<style>
+
+.statusOk {
+  color: green;
+}
+
+.statusAlarm {
+  color: red;
+}
+
+li.task {
+  border: 1px solid #B7B7B7;
+  padding: 2px;
+  margin: 3px;
+  position: relative;
+  min-height: 44px;
+  list-style: none;
+  background: #EAEAEA;
+}
+
+li.task li {
+  list-style: none;
+}
+
+li.task .storyTitle, .storyTime  {
+  color: grey;
+}
+
+li.task .storyTime {
+  margin-left: 10px;
+}
+
+li.task .taskTitle {
+  display: block;
+  width: 90%;
+}
+
+li.task .behandelaar {
+  position: absolute;
+  right: 25px;
+  top: 0px;
+}
+
+li.task .totalTaskTime {
+  position: absolute;
+  right: 25px;
+  top: 16px;
+}
+
+li.task .commentaar {
+  position: absolute;
+  bottom: 0px;
+  right: 25px;
+}
+
+li.task .log {
+  position: absolute;
+  bottom: 0px;
+  right: 120px;
+}
+
+/*
+li.task .edit {
+  position: absolute;
+  top: 0px;
+  right: 0px; 
+  width: 20px;
+  height: 20px;  
+}
+
+li.task .addtime {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+  width: 20px;
+  height: 20px;  
+}
+
+li.task .close {
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  width: 20px;
+  height: 20px;  
+}
+*/
+
+li.task .taskButtons  {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 16px;
+  float: right;
+  border-left: 1px solid #B7B7B7;  
+}
+
+.taskButtons a {
+  display: block;
+}
+
+.taskButtons a.edit:hover, a.addtime:hover, a.close:hover  {
+  background: grey;  
+}
+
+li.task .taskDetails {    
+  width: 78%;
+}
+
+
+
+</style>
+
+<h1>Mijn taken</h1>
+<p>Dit zijn de door mij opgepakte taken.</p>
+<ul>
+<?brail
+if IsDefined("mijnTaken") and mijntaken is not null:
+  for taak in mijnTaken:
+    ?>
+    <li class="task" id="${taak.Id}">
+      <span class="storyTitle">${taak.Story.Titel}</span>
+      <span class="storyTime">[${OpmaakHelper.UrenStatus(taak.Story.Schatting, taak.Story.TotaalBestedeTijd())}]</span>
+      <span class="taskTitle">${HtmlEncode(taak.Omschrijving)}      
+      </span>
+      <span class="behandelaar">${taak.Behandelaar.Gebruiker.Naam}</span>
+      <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotaalBestedeTijd())}</span>
+      
+      <a href="#" class="log">Logberichten (${taak.LogBerichten.Count})</a>
+      <a href="#" class="commentaar">Commentaar (${taak.CommentaarBerichten.Count})</a>
+      ${taak.Status}
+      <div class="taskButtons">
+        <a class="edit" title="Edit taak"><img src="/content/images/icons/note.png" alt="Edit taak"/></a>
+        <a class="addtime" href="#" title="Boek tijd"><img src="/content/images/icons/add.png" alt="Boek tijd"/></a>        
+        <a class="close" title="Sluit taak"><img src="/content/images/icons/ok.png" alt="Sluit taak"/></a>
+      </div>
+      <div class="taskDetails"></div>
+    </li>
+    <?brail    
+  end
+else :
+  output '<li>Ik heb geen taken opgepakt.</li>'
+end
+?>
+</ul>
+<h1>Taken van anderen</h1>
+<p>Dit zijn door anderen opgepakte taken.</p>
+<ul>
+<?brail
+if IsDefined("takenVanAnderen") and takenVanAnderen is not null:
+  for taak in takenVanAnderen:
+    output '<li>' + taak.Omschrijving + '</li>'
+  end
+else :
+  output '<li>Er zijn geen door anderen opgepakte taken.</li>'
+end
+?>
+</ul>
+<h1>Onopgepakte taken</h1>
+<p>Dit zijn alle onopgepakte taken.</p>
+<ul>
+<?brail
+if IsDefined("onopgepakteTaken") and onopgepakteTaken is not null:
+  for taak in onopgepakteTaken:
+    output '<li>' + taak.Omschrijving + taak.Status + '</li>'
+  end
+else :
+  output '<li>Er zijn geen onopgepakte taken.</li>'
+end
+?>
+</ul>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  <?brail 
+    if IsDefined("currentUser") and currentUser.ActieveSprint is not null:
+  ?>
+      setTitle("${currentUser.ActieveSprint.Project.Naam} / ${currentUser.ActieveSprint.Doel}");
+  <?brail
+    else:
+  ?>
+      setTitle("Kies een sprint");
+  <?brail end ?>
+  
+  
+  $(".addtime").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    $("#" + taskid +" .taskDetails").load("/task/boektijd.rails", {'taskId': taskid}).fadeIn("slow");
+    e.preventDefault();
+  });
+  
+  $(".close").click(function (e) {
+    var taskid = $(this).parents("li").attr("id");
+    var tasktitle = $("#" + taskid +" .taskTitle").html();
+    
+    if (!confirm("Weet je zeker dat je '" + jQuery.trim(tasktitle) + "' wilt afsluiten?"))
+      return;
+      
+    $.ajax({
+      type: "POST",
+      url: "/task/sluittaak.rails",
+      data: "taakId=" + taskid,
+      success: function(msg){
+        document.location = "/sprint/dashboard.rails";
+      },
+      error: function(){
+        alert('Er is een fout opgetreden.');
+      }
+    });
+
+    
+    //var taskid = $(this).parents("li").attr("id");
+    //$("#" + taskid +" .taskDetails").load("/task/boektijd.rails", {'taskId': taskid}).fadeIn("slow");
+    //e.preventDefault();
+  });
+  
+});
+</script>

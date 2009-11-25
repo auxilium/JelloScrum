@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+ 
+  <PropertyGroup>
+      <ProjectName>JelloScrum</ProjectName>
+      <Configuration>Release</Configuration>
+      <EnableTest>True</EnableTest>
+      <OutputDir>$(Configuration)\</OutputDir>
+      <TempDir>Temp\</TempDir>
+      <TempBinDir>$(TempDir)\bin\</TempBinDir>
+      <TempViewDir>$(TempDir)\views\</TempViewDir>
+      <TempContentDir>$(TempDir)\content\</TempContentDir>
+      <WebDir>$(ProjectName)\$(ProjectName).Web</WebDir>
+      <WebViewDir>$(WebDir)\views\</WebViewDir>
+      <WebContentDir>$(WebDir)\content\</WebContentDir>
+      <BinDir>$(WebDir)\bin\</BinDir>
+      <SharedDir>Libs\</SharedDir>			
+      <SharedLibDir>$(SharedDir)\SharedLibs\debug</SharedLibDir>
+      <ApplicationLibDir>$(SharedDir)\ApplicationLibs\$(Configuration)</ApplicationLibDir>
+			<LogsDir>Log\</LogsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <ViewTemplates Include="$(WebViewDir)\**\*.brail; $(WebViewDir)\**\*.brailjs; $(WebViewDir)\**\*.js;" Exclude="**\.svn\**"/>
+	  <Content Include="$(WebContentDir)\**\*.*" Exclude="$(WebContentDir)\**\.svn\**" />	  
+	  <SharedLibs Include="$(SharedLibDir)\**\*.dll; $(ApplicationLibDir)\**\*.dll"/>
+  </ItemGroup>
+
+ <Target Name="Quick" DependsOnTargets="Clean; Build; PostBuild; CopyToTemp; ZipWeb; CleanUp;"/>
+  <Target Name="NightlyBuild" DependsOnTargets="Clean; Build; PostBuild; RunTestsx86; CopyToTemp; ZipWeb; CleanUp;"/>
+	<Target Name="BuildAndTest" DependsOnTargets="Clean; Build; PostBuild; RunTests; CopyToTemp; ZipWeb; CleanUp;"/>
+	<Target Name="GenerateCoverage" DependsOnTargets="Clean; Build; Cover; AfterCompile; CleanUp;"/>
+
+	<Target Name="Clean">
+	  <RemoveDir Directories="$(OutputDir); $(TempDir)"/>
+	  <MSBuild Projects="$(ProjectName).sln" Targets="Clean" Properties="Configuration=$(Configuration)"/>
+  </Target>
+
+  <Target Name="PostBuild">
+	  <MakeDir Directories="$(OutputDir); $(TempBinDir)"/>
+  </Target>
+
+  <Target Name="Build">		
+		<MSBuild Projects="$(ProjectName).sln" Targets="Build" Properties="Configuration=$(Configuration)" />		
+  </Target>
+
+  <Target Name="CopyToTemp">
+    <CreateItem Include="$(BinDir)\*.dll">
+      <Output ItemName="Binaries" TaskParameter="Include"/>
+    </CreateItem>    
+    <CreateItem Include="$(WebDir)\Windsor.boo;$(WebDir)\Global.asax;$(WebDir)\default.aspx;">
+      <Output ItemName="ExtraFiles" TaskParameter="Include"/>
+    </CreateItem>    
+	  <Copy SourceFiles="@(Binaries)" DestinationFolder="$(TempBinDir)"/>	  
+    <Copy SourceFiles="@(ViewTemplates)" DestinationFiles="@(ViewTemplates ->'$(TempViewDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    <Copy SourceFiles="@(Content)" DestinationFiles="@(Content ->'$(TempContentDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(TempDir)"/>
+    <Copy SourceFiles="$(WebDir)\Web.config" DestinationFiles="$(TempDir)\Web.config.default" />
+    <Copy SourceFiles="$(WebDir)\log4net.config" DestinationFiles="$(TempDir)\log4net.config.default" />
+  </Target>
+
+  <Target Name="ZipWeb">
+    <Time Format="yyyy-MM-dd-HH-mm">
+      <Output TaskParameter="FormattedTime" PropertyName="buildDate" />
+    </Time>
+    <CreateProperty Value="$(ProjectName).Web-$(buildDate).zip">
+      <Output TaskParameter="Value" PropertyName="ZipFileName" />
+    </CreateProperty>
+    <CreateProperty Value="$(OutputDir)\$(ZipFileName)">
+      <Output TaskParameter="Value" PropertyName="LocalZipFileName" />
+    </CreateProperty>
+    <CreateItem Include="$(TempDir)\**\*.*" >
+      <Output ItemName="ZipFiles" TaskParameter="Include"/>
+    </CreateItem>
+    <Zip Files="@(Zipfiles)" ZipFileName="$(LocalZipFileName)" ZipLevel="9" Flatten="false" WorkingDirectory="$(TempDir)"/>
+  </Target>
+
+  <Target Name="CleanUp">
+    <Delete Files="$(TempFiles);"/>
+    <RemoveDir Directories="$(TempDir);" />
+  </Target>
+
+	<Target Name="RunTests" DependsOnTargets="Build">
+		<CreateItem Include="$(ProjectName)\$(ProjectName).Model.Tests\bin\$(Configuration)\$(ProjectName).Model.Tests.dll">
+			<Output TaskParameter="Include" ItemName="ModelTestAssembly" />
+		</CreateItem>		
+		<CreateItem Include="$(ProjectName)\$(ProjectName).Repositories.Tests\bin\$(Configuration)\$(ProjectName).Repositories.Tests.dll">
+			<Output TaskParameter="Include" ItemName="RepositoryTestAssembly" />
+		</CreateItem>		
+		<NUnit Assemblies="@(ModelTestAssembly);@(RepositoryTestAssembly)" ContinueOnError="false"/>
+		<Message Text="Tests ran successfully!"></Message>
+	</Target>
+	
+	<Target Name="RunTestsx86" DependsOnTargets="Build">
+		<CreateItem Include="$(ProjectName)\$(ProjectName).Model.Tests\bin\$(Configuration)\$(ProjectName).Model.Tests.dll">
+			<Output TaskParameter="Include" ItemName="ModelTestAssembly" />
+		</CreateItem>	
+		<CreateItem Include="$(ProjectName)\$(ProjectName).Repositories.Tests\bin\$(Configuration)\$(ProjectName).Repositories.Tests.dll">
+			<Output TaskParameter="Include" ItemName="RepositoryTestAssembly" />
+		</CreateItem>		
+		<NUnit Assemblies="@(ModelTestAssembly);@(RepositoryTestAssembly)" ContinueOnError="false" Platform="x86"/>		
+		<Message Text="Tests ran successfully!"></Message>
+	</Target>
+
+	<Import Project="$(SharedDir)\BuildTasks\MSBuild.Community.Tasks.Targets"/>
+
+<!-- Code coverage	-->
+<!-- Register the PartCover.MSBuild.dll so the PartCover task is available -->
+<UsingTask TaskName="PartCover.MSBuild.PartCover" AssemblyFile="$(SharedDir)/Coverage/PartCover.MSBuild.dll" />
+ 
+<!-- Setup a property so you can use it in your task -->
+<ItemGroup>
+    <RepoAssembly Include="$(ProjectName)\$(ProjectName).Repositories.Tests\bin\$(Configuration)\$(ProjectName).Repositories.Tests.dll" />
+    <ModelAssembly Include="$(ProjectName)\$(ProjectName).Model.Tests\bin\$(Configuration)\$(ProjectName).Model.Tests.dll" />
+</ItemGroup>
+ 
+<!-- Create a Target to call the PartCover task -->
+<Target Name="Cover" DependsOnTargets="Build"> 
+		   
+    <!-- TargetArgs="%(ModelAssembly.FullPath) /xml=%(TestAssemblies.Filename).xml /labels /nologo /noshadow" -->
+    <PartCover ToolPath="$(SharedDir)/Coverage"
+               Target="$(SharedDir)/NUnit/nunit-console-x86.exe"
+               TargetArgs="%(ModelAssembly.FullPath) /xml=%(TestAssemblies.Filename).xml /labels /nologo /noshadow"
+               WorkingDirectory="$(ProjectName)"
+               Output="$(SharedDir)/Coverage/partcover-report.xml"
+               Include="[JelloScrum.Model*]*"
+               Exclude="[*.Tests]*"/>
+               
+     <PartCover ToolPath="$(SharedDir)/Coverage"
+               Target="$(SharedDir)/NUnit/nunit-console-x86.exe"
+               TargetArgs="%(RepoAssembly.FullPath) /xml=%(TestAssemblies.Filename).xml /labels /nologo /noshadow"
+               WorkingDirectory="$(ProjectName)"
+               Output="$(SharedDir)/Coverage/partcover-repo-report.xml"
+               Include="[JelloScrum.Repositories*]*"
+               Exclude="[*.Tests]*"/>
+</Target>
+
+<Target Name="AfterCompile" DependsOnTargets="Cover">
+  <Exec Command='"$(SharedDir)\Coverage\cover.bat"' ContinueOnError='true'>
+    <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
+  </Exec>
+  <Message Text="The exit code is $(ErrorCode)"/>
+  
+  <Error Text="Error while executing BAT file" Condition="'$(ErrorCode)' > '0'" />
+  <OnError ExecuteTargets="MessageErrorHandler"/>
+</Target>
+
+<!--Error Handler-->
+<Target Name="MessageErrorHandler">
+  <Message Text="An error has occurred while running the batch file"/>
+</Target>
+
+</Project>

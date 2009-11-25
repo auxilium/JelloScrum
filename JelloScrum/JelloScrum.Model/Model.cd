@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="JelloScrum.Model.Entities.CommentaarBericht&lt;T&gt;">
+    <Position X="1.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\CommentaarBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAABAAAAARCAAAAAgAgAAAAIAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Gebruiker" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.TaskCommentaarBericht">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\CommentaarBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LogObject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.StoryCommentaarBericht">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\CommentaarBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LogObject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.TijdRegistratie">
+    <Position X="10.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\TijdRegistratie.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAEAAAABCAAAAAkAgAABAIgA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Gebruiker" />
+      <Property Name="Task" />
+      <Property Name="Sprint" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.Gebruiker" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Entities\Gebruiker.cs</FileName>
+      <HashCode>AABAQAEBWCgBAQAgQAAQBkQBEBSAACAQAEQhAgABAEA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProjectShortList" />
+      <Property Name="SprintGebruikers" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.LogBericht&lt;T&gt;">
+    <Position X="6.25" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Entities\LogBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAABAAAAARCAAAAAhAAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.TaskLogBericht">
+    <Position X="5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\LogBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.StoryLogBericht">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\LogBericht.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.Project">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\Project.cs</FileName>
+      <HashCode>AIABQACAABAAAAgAAAAIBAQAAARAAAAAAAAgIAAAACA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProjectShortList" />
+      <Property Name="Stories" />
+      <Property Name="Sprints" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.Sprint">
+    <Position X="24.25" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Entities\Sprint.cs</FileName>
+      <HashCode>BAAQiQAAEIAAMAAAAEAgDAAJACiDIAAgAgAxoCQBC+A=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Project" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="SprintGebruikers" />
+      <Property Name="SprintStories" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.SprintGebruiker">
+    <Position X="14.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\SprintGebruiker.cs</FileName>
+      <HashCode>EAAgABCAAAIAAAAAAAAJAMCAAgBAAAAABAAgBAAAKIQ=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Gebruiker" />
+      <Property Name="Sprint" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Taken" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.SprintStory">
+    <Position X="13" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\SprintStory.cs</FileName>
+      <HashCode>AAQAAAAEAAAAAAAAQBAACEAQAABAAAAAAAAAACAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Sprint" />
+      <Property Name="Story" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.Story" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="11.75" Width="3.5" />
+    <TypeIdentifier>
+      <FileName>Entities\Story.cs</FileName>
+      <HashCode>gAwACAlEBAIKIAQSCAAgGAAAABgAAggACBAoIIAYAak=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="LogBerichten" />
+      <Property Name="Tasks" />
+    </ShowAsCollectionAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="LogBerichten" Type="JelloScrum.Model.Entities.StoryLogBericht">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.144" Y="0.122" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Tasks" Type="JelloScrum.Model.Entities.Task">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.889" Y="0.065" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.Task" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="14" Width="3.5" />
+    <TypeIdentifier>
+      <FileName>Entities\Task.cs</FileName>
+      <HashCode>AAQGAAgEBQABAAQAABAAIAAQQAAIAgAACBAAJIARBSA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="LogBerichten" />
+    </ShowAsCollectionAssociation>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="LogBerichten" Type="JelloScrum.Model.Entities.TaskLogBericht">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.144" Y="0.11" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="JelloScrum.Model.Entities.ProjectShortList">
+    <Position X="16" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Entities\ProjectShortList.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAgAAAAIAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Gebruiker" />
+      <Property Name="Project" />
+    </ShowAsAssociation>
+  </Class>
+</ClassDiagram>

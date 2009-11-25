@@ -1,0 +1,1 @@
+﻿${OpmaakHelper.Tijd(gekozenSprint.GeefTijdTotaalAlleStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}

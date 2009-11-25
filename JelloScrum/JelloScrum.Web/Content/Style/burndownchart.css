@@ -1,0 +1,38 @@
+.burndownContainer 
+{
+	width:395px;
+	height:215px;
+	float: left;
+}
+.burndownContainer .yaxLabel 
+{
+	width: 15px;
+	float: left;
+	padding-top: 70px;
+}
+.burndownContainer .xaxLabel
+{
+	clear: both;
+	text-align: center;
+	padding-left: 15px;
+}
+.burndownContainer .burndownChart 
+{
+	float: left;
+	width: 370px;
+	height: 200px;
+}
+.burndownLegenda 
+{
+	float: left;
+	margin-left: 30px;
+	padding: 4px;
+}
+.burndownToolTip 
+{
+	margin-top: 190px;
+	width: 350px;
+	margin-left: 30px;
+	float: right;
+	display:none;
+}

@@ -1,0 +1,8 @@
+<div>
+  Management Dashboard
+  <br/><br/>
+  <a href="/gebruikerbeheer/index.rails">Gebruikersbeheer</a>
+  <br/><br/>
+  <a href="/project/index.rails">Projectbeheer</a>
+</div>
+

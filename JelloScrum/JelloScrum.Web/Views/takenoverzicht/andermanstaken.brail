@@ -1,0 +1,86 @@
+﻿<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.thickbox/thickbox-compressed.js"></script>
+<table id="afgeslotenTaken" class="tablesorter" style="width: 100%;">
+	<thead>
+		<tr>
+			<th style="width:20px;">Id</th>
+			<th style="width:375px;">Taak</th>
+			<th style="width:30px;">Prio.</th>
+			<th>Omschrijving</th>
+			<th>Behandelaar</th>
+			<th style="width:80px;">Actie</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?brail
+      if taken.Count == 0:
+    ?>
+		<tr>
+			<td colspan="6">
+				Er zijn voor deze sprint nog geen taken opgepakt.
+			</td>
+		</tr>
+		<?brail  
+      else:               
+        for taak in taken:         
+    ?>
+		<tr>
+			<td style="vertical-align: middle;">${taak.Id}</td>
+			<td>
+				<span style="font-weight: bold;padding-right: 10px;">${taak.Story.Titel}</span>${OpmaakHelper.UrenStatus(taak.Story.Schatting, taak.Story.TotaalBestedeTijd())}<br/>
+				Taak: <a href="/CommentaarBericht/TaakCommentaar.rails?Id=${taak.Id}&height=800&width=600" class="thickbox">${taak.Titel}</a>
+			</td>
+			<td style="width: 50px;">${sprint.GeefSprintStoryVanStory(taak.Story).SprintBacklogPrioriteit}</td>
+			<td>${taak.Omschrijving}</td>
+			<td style="width: 50px;">${taak.BehandelaarNaam}</td>
+			<td>
+				<a class="taakOvernemen" href="#">Taak overnemen</a>
+			</td>
+		</tr>
+		<?brail            
+        end
+      end
+    ?>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+	//Zet de juiste sorteer volgorde op de kolom prioriteit
+	$.tablesorter.addParser({
+	// set a unique id
+	id: 'haves',
+	is: function(s) {
+	// return false so this parser is not auto detected
+	return false;
+	},
+	format: function(s) {
+	// format your data for normalization
+	return s.toLowerCase().replace(/must/,0).replace(/should/,1).replace(/could/,2).replace(/would/,3).replace(/onbekend/,5);
+	},
+	// set type, either numeric or text
+	type: 'numeric'
+	});
+
+	$("#afgeslotenTaken").tablesorter({
+	headers: {
+	2: {sorter: 'haves'},
+	5: {sorter: false}
+	},
+	widgets: ['zebra']
+	});
+
+	$(".taakOvernemen").click(function(event){
+	event.preventDefault();
+	var taakId = $(this).parents("td").find("input:first").val();
+	$.ajax({
+	type: "POST",
+	url: "/TakenOverzicht/TaakOppakken.rails",
+	data: {id:taakId, "sprintId":${sprint.Id}},
+	success: function(html) { $("#mijnTabsContent").html(html); },
+	error: function() { window.location.reload(); }
+	});
+	});
+	});
+</script>
+

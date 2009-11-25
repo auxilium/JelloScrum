@@ -1,0 +1,21 @@
+<html>
+	<head></head>
+	<body>
+		<table>
+			<tr style="border-bottom: 1px #CCCCCC;">
+				<th style="text-align: left;">Taak</th>
+				<th style="text-align: left;">Gebruiker</th>
+				<th style="text-align: left;">Datum</th>
+				<th style="text-align: left;">Tijd</th>
+			</tr>
+			<?brail for tijdregistratie in story.GeefTijdRegistraties():?>
+			<tr>
+				<td style="padding-right:8px;">${tijdregistratie.Task.Titel}</td>
+				<td style="padding-right:8px;">${tijdregistratie.Gebruiker.VolledigeNaam}</td>
+				<td style="padding-right:8px;">${tijdregistratie.Datum.ToString("dddd dd-MM-yyyy")}</td>
+				<td style="padding-right:8px;font-weight: bold;">${OpmaakHelper.Tijd(tijdregistratie.Tijd)}</td>
+			</tr>
+			<?brail end?>
+		</table>
+	</body>
+</html>

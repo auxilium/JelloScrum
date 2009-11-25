@@ -1,0 +1,119 @@
+﻿<div style="width: 1024px;">
+
+  <?brail 
+    if IsDefined("gekozenSprint") and gekozenSprint is not null:
+  ?>
+  <div id="productBackLog" style="float:left;width: 500px; margin-right: 5px;">
+    <table class="tablesorter" id="productBacklogTable">
+      <col style="width: 30px;"/>
+      <col style="width: 250px;"/>
+      <col style="width: 60px;"/>
+      <col style="width: 50px;"/>
+      <col style="width: 100px;"/>
+      <thead>
+        <tr>
+          <th colspan="5">Productbacklog</th>
+        </tr>
+        <tr>
+          <th>Id</th>
+          <th>Titel</th>
+          <th>Prio.</th>
+          <th>tijd.</th>
+          <th>Actie</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?brail 
+        for story in project.GeefStoriesDieIngeplandMogenWorden():
+         OutputSubView("productbacklogitem", {@story : story} );
+        end 
+        ?>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="sprintLogs" style="width: 500px; float:left;">    
+    <div id="sprintlogContent">
+      <table class="tablesorter" id="sprintLogTable">
+        <col style="width: 30px;"/>
+        <col style="width: 250px;"/>
+        <col style="width: 60px;"/>
+        <col style="width: 50px;"/>
+        <col style="width: 112px;"/>
+        <thead>
+          <tr>
+            <th colspan="5">
+              Sprint: <span style="font-weight: normal;">${gekozenSprint.Doel}</span>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="5">
+              Tijd: <span style="font-weight: normal;" id="tijdResterend">${OpmaakHelper.Tijd(gekozenSprint.GeefTijdTotaalAlleStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}</span>
+            </th>
+          </tr>
+          <tr>
+            <th>Id</th>
+            <th>Titel</th>
+            <th>Prio.</th>
+            <th>tijd.</th>
+            <th>Actie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?brail 
+        for story in gekozenSprint.GeefAlleIngeplandeStories():
+          OutputSubView("sprintlogitem", {@story:story});
+        end 
+        ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+  function updateTijd(){
+    $.ajax({  
+      url: "/Sprint/sprintplanningsprinttijd.rails?sprintId=${gekozenSprint.Id}",
+      success: function(html){
+        $("#tijdResterend").html(html);
+      }
+    });
+  }
+  
+  $("#productBackLog .naarSprint").live("click", function(event){
+    event.preventDefault();
+    element  = $(this);
+    $.ajax({        
+        url: element.attr("href"),
+        success: function(html){
+          updateTijd();
+          $("#sprintLogTable tbody").prepend(html);
+          element.parent().parent().remove();          
+           //voeg wat terug komt toe aan de sprintlog
+        },
+        error: function(html){
+           // location.reload();
+        }
+    });
+  });
+  
+  $("#sprintLogTable .uitSprint").live("click", function(event){
+    event.preventDefault();
+    element  = $(this);
+    $.ajax({        
+        url: element.attr("href"),
+        success: function(html){
+          updateTijd();
+          $("#productBacklogTable tbody").prepend(html);
+          element.parent().parent().remove();
+           //voeg wat terug komt toe aan de sprintlog
+        },
+        error: function(html){
+           // location.reload();
+        }
+    });
+  });
+  </script>
+  <?brail end ?>
+  <br class="clear"/>
+</div>
+

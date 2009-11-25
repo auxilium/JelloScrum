@@ -1,0 +1,21 @@
+<div id="pager" class="pager" style="margin-top: 8px; clear: both;">
+	<form action="#">
+	<p style="text-align: left; float: left;margin-top: 13px">
+		Display 
+		<select class="pagesize" style="text-align: center; width: 55px;">
+			<option selected="selected" value="15">15</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="75">75</option>
+		</select>
+		items.
+	</p>
+	<p style="text-align: right;">
+		<!--a href="#" class="first"><img src="pagination_first.png" alt="First" title="First" /></a-->
+		<a href="#" class="prev"><img src="/Content/Images/icons/left_arrow.png" alt="Previous" title="Previous" /></a>
+		<input type="text" class="pagedisplay" size="4" style="text-align: center;" />
+		<a href="#" class="next"><img src="/Content/Images/icons/right_arrow.png" alt="Next" title="Next" /></a>
+		<!--a href="#" class="last"><img src="pagination_last.png" alt="Last" title="Last" /></a-->
+	</p>
+	</form>
+</div>

@@ -1,0 +1,16 @@
+<?brail for sprint in project.Sprints : ?>
+    <a class="sprintUrl" href="#" rel="${sprint.Id}">${sprint.Doel}</a><br/>
+<?brail end ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".sprintUrl").click(function() {
+      document.location = '/gebruiker/selecteersprint.rails?sprintId=' + $(this).attr('rel');
+//        $("#projectName").html("${project.Naam}");
+//        $("#sprintName").html($(this).html());
+
+//        $("#dashboardContainer").load("/Home/Dashboard.rails", {id: $(this).attr('rel')});
+//        $("#selectProjectSprint").click();
+    });
+});
+</script>

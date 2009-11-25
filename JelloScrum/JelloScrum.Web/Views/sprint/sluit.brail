@@ -1,0 +1,25 @@
+<p>
+  <em>Let op:</em> door een sprint te sluiten worden alle niet afgesloten taken weer vrijgegeven voor gebruik in een volgende sprint.  
+</p>
+<button id="closesprint">
+  <img src="/content/images/bigicons/lock_big.png" alt="Sluit deze sprint"/>
+  <h1>Sluit deze sprint</h1>
+  <p>U wilt ${sprint.Doel} afsluiten?</p>
+</button>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    setTitle("Sprint afsluiten");
+    
+    $("#closesprint").click(function (e) {
+      if (!confirm("Weet je zeker dat je sprint ${sprint.Doel} wilt afsluiten?"))
+        return;
+      
+      if (!confirm("Heel zeker?"))
+        return;
+      
+      document.location = "/sprint/sprintafsluiten.rails?sprintId=" + ${sprint.Id};
+    });
+
+  });
+</script>

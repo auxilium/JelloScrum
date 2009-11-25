@@ -1,0 +1,49 @@
+<?brail for KeyValuePair in sprintStories : ?>
+    <?brail if KeyValuePair.Value.Count != 0 : ?>
+        <div class="postIt ${KeyValuePair.Key}" id="done_${KeyValuePair.Key}">
+            <div class="story">
+                <p class="title">${KeyValuePair.Key}</p>
+                <?brail for sprintStory in KeyValuePair.Value : ?>
+                <div class="doneStoryItem storyItem" id="${sprintStory.Id}" rel="${sprintStory.Id}">
+                    <div class="est">${sprintStory.Story.Schatting}</div>
+                    <div class="content">${sprintStory.Story.Titel}</div>
+                </div>
+                <?brail end ?>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+        <div class="clear"></div>
+    <?brail end ?>
+<?brail end ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.doneStoryItem').each(function() {
+        $(this).qtip({
+            content: { url: '/sprintstory/status.rails', data: { id: $(this).attr('id') }},
+            show: {solo: true, when: {event: 'mouseover' }},
+            hide: {when: {event: 'mouseout'}},
+            style : {
+                name: 'light',
+                background: '#CFCFCF',
+                border: { color: '#333333'},
+                tip: 'leftBottom',
+                width: 200
+            },
+            position: { 
+                adjust: { 
+                    x: 0,
+                    y: -70
+                }
+            }
+        });
+    });
+    
+    // event to hide tooltip
+    $(document).click(function() {
+        if($(document).children().not($('.qtip-active')))
+            $('.qtip-active').hide();
+    });
+});
+</script>

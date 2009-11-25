@@ -1,0 +1,30 @@
+﻿<div id="progressContainer">
+  <h5>Voortgang taken&nbsp;(${taskProgress.TotalTasks}):</h5>
+  <div class="progressBarTasksCompleted"></div>
+  <p>
+    Afgeronde taken: ${taskProgress.CompletedTasks}<br/>
+    Niet-afgeronde taken: ${taskProgress.IncompleteTasks}
+  </p>
+  
+  <h5 style="margin-top: 20px;">Verdeling taken&nbsp;(${taskProgress.TotalTasks}):</h5>
+  <div class="progressBarTasksAssigned"></div>
+  <p>
+    Toegedeelde taken: ${taskProgress.AssignedTasks}<br/>
+    Niet-toegedeelde taken: ${taskProgress.UnassignedTasks}
+  </p>
+</div>
+
+
+<!--div id="velocityContainer">
+  <h5>
+    Velocity (storypoints) : ${velocity.StoryPointVelocity}<br/>
+    Velocity (hours) : ${velocity.HoursVelocity}<br/>    
+  </h5>
+</div-->
+<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.progressbar/jquery.progressbar.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+  $(".progressBarTasksCompleted").progressBar(${taskProgress.CompletedTasksPercentage(0)});
+  $(".progressBarTasksAssigned").progressBar(${taskProgress.AssignedTasksPercentage(0)});
+  });
+</script>

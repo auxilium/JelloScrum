@@ -1,0 +1,90 @@
+<div>
+    ${Form.FormTag({@action: 'OpslaanTaakCommentaar', @id: 'Bewerk'})}
+    ${Form.HiddenField("taak.Id")}
+      Taak: ${taak.Id} ${taak.Titel}<br/>
+      Omschrijving: <br/>
+      ${taak.Omschrijving} 
+      <br/><br/>
+      ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
+      <a href="#" id="addcomment" class="button nieuw">Bericht toevoegen</a><br/>
+
+    <table id="commentTable" class="tablesorter">
+      <thead>
+        <th>Id</th>
+        <th>Datum</th>
+        <th>Gebruiker</th>
+        <th>Bericht</th>
+        <th>Acties</th>
+      </thead>
+      <tbody>
+        <?brail
+          count = 0;
+          for comment in taskCommentaarBerichten:
+        ?>
+        <tr>
+            <td>${comment.Id}</td>
+            <td>${comment.Datum.ToShortDateString()}</td>
+            <td>${comment.Gebruiker.VolledigeNaam}</td>
+            <td>
+              <input type="hidden" name="comment[${count}].Id" value="${comment.Id}" />
+              <textarea name='comment[${count}].Tekst' cols="30" rows="5">${comment.Tekst}</textarea>
+            </td>
+            <td><a href="#" class="deletecomment">Delete</a></td>
+          </tr>
+        <?brail 
+          count++
+          end
+        ?>
+
+        <?brail if taskCommentaarBerichten.Count == 0 :?>
+          <tr>
+            <td>0</td>
+            <td>${DateTime.Now}</td>
+            <td>${CurrentUser.VolledigeNaam}</td>
+            <td>
+              <input type="hidden" name="comment[0].Id" value="0" />
+              <textarea name='comment[0].Tekst' cols="30" rows="5"></textarea>
+            </td>
+            <td>
+              <a href="#" class="deletecomment">Delete</a>
+            </td>
+          </tr>
+       
+        <?brail end ?>
+        
+      </tbody>
+    </table>
+      
+    ${Form.EndFormTag()}
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      $("#commentTable").tablesorter({
+        headers: {
+        4: { sorter: false}
+        },
+        widgets: ['zebra']
+      });
+
+      $("#addcomment").click(function (event) {
+        event.preventDefault();
+        var count = $("#commentTable tbody tr").length;
+        $("#commentTable tbody").append("<tr><td>0</td><td>${DateTime.Now}</td><td>${CurrentUser.VolledigeNaam}</td><td><input type='hidden' name='comment["+count+"].Id' value='0' /><textarea name='comment["+count+"].Tekst' cols='30' rows='5'></textarea></td><td><a href='' class='removecomment'>Delete</a></td></tr>")
+      });
+
+        $(".removecomment").live("click", function(event){
+          event.preventDefault();
+          $(this).closest("tr").remove();
+        });
+
+        $("a.deletecomment").click(function(event){
+          event.preventDefault();
+          if (!confirm("Weet je zeker dat je dit commentaar bericht wilt verwijderen?"))
+           return;
+          $(this).closest("tr").remove();
+        });
+
+    });
+  </script>
+</div>

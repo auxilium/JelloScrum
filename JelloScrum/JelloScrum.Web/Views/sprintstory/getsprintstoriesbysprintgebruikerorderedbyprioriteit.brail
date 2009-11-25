@@ -1,0 +1,47 @@
+<?brail
+prioriteiten = Enum.GetNames(typeof(JelloScrum.Model.Enumerations.Prioriteit))
+for prioriteit in prioriteiten :
+
+    taken = item.GeefOpgepakteTakenMetSprintBacklogPrioriteit(Enum.Parse(JelloScrum.Model.Enumerations.Prioriteit, prioriteit))
+    if taken.Count != 0 :
+?>
+    
+        <div class="postIt ${prioriteit}" >
+            <div class="story">
+                <p class="title">${prioriteit}</p>
+                <?brail for taak in taken : ?>
+                    <div class="DeveloperTaskItem" rel="${taak.Id}" gebruiker="${item.Id}">${taak.Omschrijving}</div>
+                <?brail end ?>
+                <div class="clear"></div>
+            </div>
+            <div class="bottom">&nbsp;</div>
+        </div>
+        <div class="clear"></div>
+    
+    <?brail end ?>
+<?brail end ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".DeveloperTaskItem").stripText( {
+        length: 25,
+        minTrail: 10,
+        moreText: '',
+        lessText: '',
+        ellipsisText: "..."
+    });
+    
+    $(".DeveloperTaskItem").draggable({
+        scroll: false,
+        zIndex: 999,
+        opacity: .8,
+        revert: true,
+        start: function() {
+            
+        },
+        stop: function() {
+            
+        }
+    });
+});
+</script>

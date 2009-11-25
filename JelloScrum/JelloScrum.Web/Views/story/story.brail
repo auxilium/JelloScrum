@@ -1,0 +1,95 @@
+<?brail
+	[MarkDown]
+	def MarkDownOutput(str as string):
+		if str == null:
+			return ""
+		end
+    return str
+	end
+?>
+<div class="gegevensBlock">
+  
+    <h1>
+      Story gegevens
+      <hr/>
+    </h1>
+    <div style="width: 400px; float:left;">
+      <div>
+        <span style="font-weight: bold;">Id</span>
+        <br class="clear"/>
+        ${story.Id}
+      </div>
+
+      <div style="margin-top: 12px;">
+        <span style="font-weight: bold;">Titel</span>
+        <br class="clear"/>
+        ${story.Titel}
+      </div>
+
+      <div style="margin-top: 12px;">
+        <div style="width: 145px; float:left;">
+          <span style="font-weight: bold;">Prioriteit</span>          
+          <br class="clear"/>
+          ${story.ProductBacklogPrioriteit}
+        </div>
+        <div style="width: 145px; float:left;">
+          <span style="font-weight: bold;">
+            Punten
+          </span>
+            <br class="clear"/>
+          ${story.StoryPoints}
+        </div>
+        <div style="width: 75px; float:left;">
+          <span style="font-weight: bold;">
+            Type
+          </span>
+            <br class="clear"/>
+          ${story.StoryType}
+        </div>
+        <br class="clear"/>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <span style="font-weight: bold;">
+          Omschrijving
+        </span>
+        <br class="clear"/>
+        ${MarkDownOutput(story.Omschrijving)}
+      </div>
+
+      <div style="margin-top: 12px;">
+        <span style="font-weight: bold;">
+          How to Demo
+        </span><br class="clear"/>
+        ${MarkDownOutput(story.HowtoDemo)}
+      </div>
+      <div style="margin-top: 12px;">
+        <span style="font-weight: bold;">
+          Notitie(s)
+        </span><br class="clear"/>
+        ${MarkDownOutput(story.Notitie)}
+      </div>
+
+      <div style="margin-top: 12px;">
+        <span style="font-weight: bold;">Schatting</span><br class="clear"/>
+        ${TimeSpanHelper.TimeSpanInMinuten(story.Schatting)}
+      </div>
+    </div>
+    <div style="float:left; width: 400px; margin-left:25px;">
+        Taken
+        <?brail 
+        OutputSubView("/task/overzichtbekijken", {@tasks: story.Tasks})
+      ?>
+    </div>
+  <br class="clear"/>
+
+    <div style="margin-top: 12px;">
+      <?brail if IsDefined("sprint"):?>
+      <a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button reset">Annuleren</a>
+      <?brail else: ?>
+      <a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button reset">Annuleren</a>
+      <?brail end ?>
+      <a href="/Story/bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerken</a>
+      <br class="clear"/>
+    </div>
+  </div>

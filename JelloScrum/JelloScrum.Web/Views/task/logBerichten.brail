@@ -1,0 +1,17 @@
+<style type="text/css">
+  .logBerichten li{
+    list-style-type:circle !important;
+    margin-left: 20px;
+  }
+</style>
+<fieldset class="logBerichten">
+  <?brail if logBerichten.Count > 0:?>
+  <ul>
+    <?brail for log in logBerichten:?>
+    <li id="${log.Id}">
+      <i>${log.Datum.ToShortDateString()}</i>: ${log.Tekst}
+    </li>
+    <?brail end?>
+  </ul>
+  <?brail end?>
+</fieldset>

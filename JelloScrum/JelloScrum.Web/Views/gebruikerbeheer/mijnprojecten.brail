@@ -1,0 +1,108 @@
+<div>
+	<div class="gegevensBlock" style="width: 1000px;; margin-top: 10px;">
+		<div>
+			<span style="float:left;">
+				<h1>
+					Mijn projecten
+				</h1>
+			</span>
+			<br class="clear"/>
+			<hr/>
+		</div>
+		<div class="ingegevensBlock" style="float:left;">
+			<div>
+				<h1 style="font-weight: bold; padding: 3px; float:left;">
+					Lijst met mijn projecten:
+				</h1>
+				<div class="taakInputRegel">
+					<div>
+						<table class="tablesorter" id="projectShortList">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Project</th>
+									<th>Actie</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?brail for projectShortList in item.ProjectShortList : ?>
+								<tr>
+									<td>${projectShortList.Project.Id}</td>
+									<td>${projectShortList.Project.Naam}</td>
+									<td>
+										<a href="ProjectVerwijderenVanShortList.rails?id=${projectShortList.Id}" class="button verwijderen">Verwijderen</a>
+									</td>
+								</tr>
+								<?brail end?>
+							</tbody>
+						</table>						
+					</div>
+				</div>
+				<br class="clear"/>
+			</div>
+			<br class="clear"/>
+		</div>
+
+		<div class="ingegevensBlock" style="float:left;margin-left:10px;">
+			<div>
+				<h1 style="font-weight: bold; padding: 3px; float:left;">
+					Projecten toevoegen aan mijn projecten:
+				</h1>
+				<div class="taakInputRegel">
+					<div>
+						<table class="tablesorter" id="projectTable">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Project</th>
+									<th>Actie</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?brail if projecten.Count == 0: ?>
+								<tr>
+									<td colspan="3">Alle projecten zitten in je shortlist.</td>
+								</tr>
+								<?brail end
+										for project in projecten : ?>
+								<tr>
+									<td>${project.Id}</td>
+									<td>${project.Naam}</td>
+									<td>
+										<a href="ProjectToevoegenAanShortList.rails?id=${project.Id}" class="button nieuw">Toevoegen</a>
+									</td>
+								</tr>
+								<?brail end?>
+							</tbody>
+						</table>
+						<?brail OutputSubView("/subviews/pager") ?>
+						<br class="clear"/>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<br class="clear"/>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+		//Zet sorteer funtie op kolommen
+		$("#projectShortList").tablesorter({
+		headers: {
+		2: { sorter: false}
+		},
+		widgets: ['zebra']
+		});
+
+		//Zet sorteer funtie op kolommen
+		$("#projectTable").tablesorter({
+		headers: {
+		2: { sorter: false}
+		},
+		widgets: ['zebra']
+		});
+		//Zet client side paginering aan
+		$("#projectTable").tablesorterPager({container: $("#pager")});
+		});
+	</script>
+	</div>

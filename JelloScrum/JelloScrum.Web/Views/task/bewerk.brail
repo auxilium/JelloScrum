@@ -1,0 +1,39 @@
+﻿<div class="block cornered">
+  ${Form.FormTag({@id: 'Bewerk', @action: 'Opslaan'})}
+  ${Form.HiddenField("item.Id")}
+  <table>
+    <tr>
+      <td>${Form.LabelFor("item.Omschrijving", "Omschrijving:")}</td>
+      <td>${Form.TextField("item.Omschrijving")}</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">
+        ${Form.Submit("Opslaan")}
+      </td>
+    </tr>
+  </table>
+  ${Form.EndFormTag()}
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    <?brail if IsDefined("id"):?>
+    setTitle("Task bewerken");
+    <?brail else: ?>
+    setTitle("Task toevoegen");
+    <?brail end ?>
+
+    $('form#Bewerk').ajaxForm(function() {
+      <?brail if IsDefined("id"):?>
+      JelloGrowl('Task aangepast', 'Task is succesvol aangepast', 'success');
+      <?brail else: ?>
+      JelloGrowl('Task toegevoegd', 'Task is succesvol toegevoegd', 'success');
+      <?brail end ?>
+
+      // reload the overview
+      $("#taskOverzicht").load("/Task/Overzicht.rails");
+      //alert("Overzicht is verwerkt");
+    });
+    $('.cornered').corner("10px");
+  });
+</script>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="index, follow" />
+	<meta name="description" content="JelloScrum is a Project Management tool developed by Auxilium BV" />
+	<meta name="keywords" content="Auxilium, JelloScrum" />
+	<meta http-equiv="content-language" content="en" />
+	<title>JelloScrum | Auxilium BV</title>
+
+	<link rel="copyright" href="about.rails" title="about" />
+	<link rel="stylesheet" href="/Content/Style/master.css" type="text/css" media="screen"  />
+	<link rel="shortcut icon" href="icon.ico" />
+	<!--[if IE]>
+	<style>
+	</style>
+	<![endif]-->
+	<!--[if IE 7]>
+	
+	<![endif]-->
+	<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery-1.3.2.js"></script>
+  <!-- table sorter + pagination plugin -->
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/jquery.tablesorter.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/addons/pager/jquery.tablesorter.pager.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.validate/jquery.validate.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jelloscrum.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.imageareaselect/jquery.imgareaselect.min.js"></script>
+	
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+      <div id="title">
+        <a href="/dashboard/index.rails" class="logo">
+          <img src="/Content/images/jelloscrum.png"/>
+        </a>
+      </div>
+      <div id="navigation">
+			    <?brail OutputSubView("profile", {"management": true}) ?>
+      </div>
+    </div>
+
+    <div class="clear" id="contentblock">
+      <div class="heading">
+        <div id="beginTitel" style="float: left;">
+          <h2 style="margin-left:10px;">
+            <a href="/home/index.rails">Home</a>&nbsp;
+          </h2>
+        </div>
+        
+        <?brail if titel != "" : ?>
+          <div id="restTitel" style="float:left"> >&nbsp;${titel}</div>
+          <br style="clear: both;"/>
+        <?brail end ?>
+        
+      </div>
+
+      <?brail OutputSubView('/shared/errorMessages') ?>
+      ${ChildOutput}
+
+    </div>
+    
+    <div id="footer">
+      <p>
+        Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" alt="Auxilium BV">Auxilium BV</a>. All rights reserved.
+      </p>
+    </div>
+  </div>
+  
+</body>
+</html>

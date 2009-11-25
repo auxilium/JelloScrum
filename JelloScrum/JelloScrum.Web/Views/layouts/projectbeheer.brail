@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="index, follow" />
+	<meta name="description" content="JelloScrum is a Project Management tool developed by Auxilium BV" />
+	<meta name="keywords" content="Auxilium, JelloScrum" />
+	<meta http-equiv="content-language" content="en" />
+	<title>JelloScrum | Auxilium BV</title>
+
+	<link rel="copyright" href="about.rails" title="about" />
+	<link rel="stylesheet" href="/Content/Style/master.css" type="text/css" media="screen"  />
+	<link rel="shortcut icon" href="icon.ico" />
+
+	<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery-ui-1.7.2.custom.min.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jelloscrum.js"></script>
+	<!-- table sorter + pagination plugin -->
+	<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/jquery.tablesorter.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.tablesorter/addons/pager/jquery.tablesorter.pager.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.validate/jquery.validate.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.jeditable/jquery.jeditable.js"></script>
+  
+  
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="title">
+				<a href="/home/index.rails"><h1>JelloScrum</h1>"Just because nobody complains doesn’t mean all parachutes are perfect" - <i>Benny Hill</i></a>
+          <?brail
+            OutputSubView("kiesProject")
+          ?>
+			</div>
+			<div id="navigation">
+				<ul>
+					<li><a href="/project/beheer.rails"><img src="/Content/Images/bigicons/project.png" alt="Projecten"/><br />Projecten</a></li>			  	
+				</ul>
+			  <?brail
+			    OutputSubView("profile")
+        ?>
+              
+			</div>
+		</div>
+		<div class="cornered clear" id="contentblock">
+			<div class="heading cornered"><h1 id="pageTitle"><a href="/project/beheer.rails">Projecten</a> > ${titel}</h1></div>
+			${ChildOutput}
+			<div class="clear"></div>
+		</div>
+		<div id="footer">
+			<p>Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" alt="Auxilium BV">Auxilium BV</a>. All rights reserved. Versie: RC1</p>
+		</div>
+	</div>
+</body>
+</html>
