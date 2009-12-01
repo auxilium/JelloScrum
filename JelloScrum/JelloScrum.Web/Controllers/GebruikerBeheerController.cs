@@ -175,7 +175,7 @@ namespace JelloScrum.Web.Controllers
         public void MijnProjecten()
         {
             Titel = "Kies mijn projecten";
-            ICollection<Project> projects = ProjectRepository.FindAll();
+            IList<Project> projects = new List<Project>(ProjectRepository.FindAll());
             PropertyBag.Add("projecten", projects);
             if (projects.Count == 0)
             {
