@@ -57,6 +57,8 @@ namespace JelloScrum.Web.Controllers
                 AddErrorMessageToPropertyBag("Het afgeven van taak nr: " + taak.Id + " is niet gelukt.");
             }
             PropertyBag.Add("sprint", sprint);
+            
+            CancelLayout();
         }
 
         /// <summary>
@@ -78,6 +80,8 @@ namespace JelloScrum.Web.Controllers
                 AddErrorMessageToPropertyBag("Het afsluiten van taak nr: " + taak.Id + " is niet gelukt.");
             }
             PropertyBag.Add("sprint", sprint);
+
+            CancelLayout();
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace JelloScrum.Web.Helpers
         /// </summary>
         /// <param name="timeSpan">De timespan.</param>
         /// <returns>"HH:MM"</returns>
-        public string Tijd(TimeSpan timeSpan)
+        public static string Tijd(TimeSpan timeSpan)
         {
             StringBuilder sb = new StringBuilder();
                        
@@ -118,7 +118,7 @@ namespace JelloScrum.Web.Helpers
         /// <param name="schatting">De schatting.</param>
         /// <param name="daadwerkelijk">De daadwerkelijke uren.</param>
         /// <returns>De urenstatus.</returns>
-        public string UrenStatus(TimeSpan schatting, TimeSpan daadwerkelijk)
+        public static string UrenStatus(TimeSpan schatting, TimeSpan daadwerkelijk)
         {
             StringBuilder sb = new StringBuilder();
             if (schatting > daadwerkelijk)
