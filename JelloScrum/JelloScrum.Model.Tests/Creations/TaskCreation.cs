@@ -29,7 +29,7 @@ namespace JelloScrum.Model.Tests.Creations
             Gebruiker gebruiker = Gebruiker();
                        
             Sprint sprint = Sprint();
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
 
             Story story = StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Must, sprint);
             //new Story(project, gebruiker, null, StoryType.UserStory);

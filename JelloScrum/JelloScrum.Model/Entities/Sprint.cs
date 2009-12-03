@@ -61,7 +61,7 @@ namespace JelloScrum.Model.Entities
             if (project == null)
                 throw new ArgumentNullException("project");
 
-            project.VoegSprintToe(this);
+            project.AddSprint(this);
         }
 
         #endregion

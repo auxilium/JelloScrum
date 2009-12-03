@@ -182,7 +182,7 @@ namespace JelloScrum.Web.Controllers
                             [ARFetch("projectId")] Project project)
         {
             sprint.BeschikbareUren = TimeSpanHelper.Parse(BeschikbareUren);
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
             foreach (SprintRolGebruikerHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
             {
                 sprintRolGebruikerHelper.Verwerk(sprint);
@@ -431,7 +431,7 @@ namespace JelloScrum.Web.Controllers
         {
             Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Sprintplanning";
 
-            IList<Sprint> sprints = project.GeefNietAfgerondeSprints();
+            IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
 
             PropertyBag.Add("project", project);
@@ -454,7 +454,7 @@ namespace JelloScrum.Web.Controllers
             Project project = sprint.Project;
             Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprintplanning";
 
-            IList<Sprint> sprints = project.GeefNietAfgerondeSprints();
+            IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("project", project);
@@ -489,7 +489,7 @@ namespace JelloScrum.Web.Controllers
         public void Stories([ARFetch("projectId")] Project project)
         {
             // Dit moet dus zowel voor een project de stories geven als mede voor de sprint
-            PropertyBag.Add("stories", project.GeefStoriesDieIngeplandMogenWorden());
+            PropertyBag.Add("stories", project.GetAllPlannableStories());
             CancelLayout();
         }
 

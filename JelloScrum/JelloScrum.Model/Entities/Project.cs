@@ -35,6 +35,7 @@ namespace JelloScrum.Model.Entities
         private IList<Sprint> sprints = new List<Sprint>();
 
         private IList<ProjectShortList> projectShortList = new List<ProjectShortList>();
+
         #endregion
 
         #region constructors
@@ -47,14 +48,14 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Project"/> class.
+        /// Initializes a new instance of the <see cref="Project"/> class with the given name and description.
         /// </summary>
-        /// <param name="naam">De naam.</param>
-        /// <param name="omschrijving">De omschrijving.</param>
-        public Project(string naam, string omschrijving)
+        /// <param name="name">The naam.</param>
+        /// <param name="description">The description.</param>
+        public Project(string name, string description)
         {
-            this.naam = naam;
-            this.omschrijving = omschrijving;
+            this.naam = name;
+            this.omschrijving = description;
         }
 
         #endregion
@@ -62,10 +63,10 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// Gets or sets the naam.
+        /// Gets or sets the name.
         /// </summary>
-        /// <value>The naam.</value>
-        [Property, ValidateNonEmpty("Vul een naam in.")]
+        /// <value>The name.</value>
+        [Property, ValidateNonEmpty("Please provide a name.")]
         public virtual string Naam
         {
             get { return naam; }
@@ -73,9 +74,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the omschrijving.
+        /// Gets or sets the description.
         /// </summary>
-        /// <value>The omschrijving.</value>
+        /// <value>The description.</value>
         [Property(SqlType = "ntext")]
         public virtual string Omschrijving
         {
@@ -84,10 +85,10 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Geeft een readonly lijst met alle stories die bij dit project horen.
-        /// Let Op: om een story toe te voegen gebruik je <see cref="VoegStoryToe(Story)"/>
+        /// Gets a readonly list of all stories
+        /// To add a story use <see cref="AddStory(Story)"/>
         /// </summary>
-        /// <value>De stories.</value>
+        /// <value>The stories.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true,
             Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<Story> Stories
@@ -96,8 +97,8 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Geeft een readonly lijst met alle sprints die bij dit project horen.
-        /// Let Op: om een sprint toe te voegen gebruik je <see cref="VoegSprintToe(Sprint)"/>
+        /// Gets a readonly list of all sprints belonging to this project.
+        /// To add a sprint use <see cref="AddSprint(Sprint)"/>
         /// </summary>
         /// <value>De sprints.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true,
@@ -108,7 +109,7 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De lijst van projecten die op de shortlist staan
+        /// Gets a readonly collection of projectshortlists
         /// </summary>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<ProjectShortList> ProjectShortList
@@ -121,49 +122,49 @@ namespace JelloScrum.Model.Entities
         #region methods
 
         /// <summary>
-        /// Voeg een story toe aan dit project
+        /// Adds the given story
         /// </summary>
-        /// <param name="story">De story.</param>
-        public virtual void VoegStoryToe(Story story)
+        /// <param name="story">The story.</param>
+        public virtual void AddStory(Story story)
         {
             if (!stories.Contains(story))
                 stories.Add(story);
+
             story.Project = this;
         }
 
         /// <summary>
-        /// Voeg een sprint toe aan dit project.
+        /// Adds the given sprint
         /// </summary>
-        /// <param name="sprint">De sprint.</param>
-        public virtual void VoegSprintToe(Sprint sprint)
+        /// <param name="sprint">The sprint.</param>
+        public virtual void AddSprint(Sprint sprint)
         {
             if (!sprints.Contains(sprint))
                 sprints.Add(sprint);
+
             sprint.Project = this;
         }
 
         /// <summary>
-        /// Geeft alle stories uit het productbacklog waar nog geen prioriteit aan gegeven is.
+        /// Gets all stories without a priority.
         /// </summary>
-        /// <returns>Alle stories zonder prioriteit</returns>
-        public virtual IList<Story> GeefStoriesZonderMoSCoWPrioriteit()
+        /// <returns></returns>
+        public virtual IList<Story> GetAllStoriesWithUndefinedPriorities()
         {
-            List<Story> moscowStories = new List<Story>();
+            List<Story> storiesWithoudPriorities = new List<Story>();
             foreach (Story story in Stories)
             {
                 if (story.ProductBacklogPrioriteit == Prioriteit.Onbekend)
-                {
-                    moscowStories.Add(story);
-                }
+                    storiesWithoudPriorities.Add(story);
             }
-            return moscowStories;
+            return storiesWithoudPriorities;
         }
 
         /// <summary>
-        /// Geeft de stories die ingepland mogen worden.
+        /// Gets all stories that can be planned.
         /// </summary>
         /// <returns></returns>
-        public virtual IList<Story> GeefStoriesDieIngeplandMogenWorden()
+        public virtual IList<Story> GetAllPlannableStories()
         {
             List<Story> plannableStories = new List<Story>();
             foreach (Story story in Stories)
@@ -175,22 +176,18 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// 
+        /// Gets all open sprints
         /// </summary>
         /// <returns></returns>
-        public virtual IList<Sprint> GeefNietAfgerondeSprints()
+        public virtual IList<Sprint> GetAllOpenSprints()
         {
-            IList<Sprint> nietAfgerondeSprints = new List<Sprint>();
+            IList<Sprint> notClosedSprints = new List<Sprint>();
             foreach (Sprint sprint in sprints)
             {
-                if(!sprint.IsAfgesloten)
-                {
-                    nietAfgerondeSprints.Add(sprint);    
-                }
-                
+                if (!sprint.IsAfgesloten)
+                    notClosedSprints.Add(sprint);
             }
-
-            return nietAfgerondeSprints;
+            return notClosedSprints;
         }
 
         #endregion

@@ -35,7 +35,7 @@ namespace JelloScrum.Repositories.Tests.Creations
         {
             SprintGebruiker sprintGebruiker = new SprintGebruiker(gebruiker, sprint, sprintRol);
             Project project = Project();
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
             return Persist(sprintGebruiker);
         }
     }

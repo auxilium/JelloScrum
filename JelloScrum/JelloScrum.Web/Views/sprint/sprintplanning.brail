@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <?brail 
-        for story in project.GeefStoriesDieIngeplandMogenWorden():
+        for story in project.GetAllPlannableStories():
          OutputSubView("productbacklogitem", {@story : story} );
         end 
         ?>

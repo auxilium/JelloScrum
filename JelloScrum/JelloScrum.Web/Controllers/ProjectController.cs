@@ -317,7 +317,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("project", project);
             if (project != null)
-                PropertyBag.Add("item", project.GeefStoriesZonderMoSCoWPrioriteit());
+                PropertyBag.Add("item", project.GetAllStoriesWithUndefinedPriorities());
         }
 
         /// <summary>

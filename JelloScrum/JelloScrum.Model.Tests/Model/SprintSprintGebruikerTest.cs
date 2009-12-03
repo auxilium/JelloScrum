@@ -33,7 +33,7 @@ namespace JelloScrum.Model.Tests.Model
             project = new Project();
             sprint = new Sprint();
             gebruiker = new Gebruiker();
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
 
             base.SetUp();
         }

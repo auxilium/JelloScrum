@@ -79,7 +79,7 @@ namespace JelloScrum.Model.Entities
                 throw new ArgumentNullException("aangemaaktDoor", "De gebruiker die deze story aanmaakt kan niet null zijn.");
             }
 
-            project.VoegStoryToe(this);
+            project.AddStory(this);
             this.aangemaaktDoor = aangemaaktDoor;
             this.impact = impact;
             this.storyType = storyType;

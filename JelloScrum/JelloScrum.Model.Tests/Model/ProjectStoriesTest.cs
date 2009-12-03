@@ -40,7 +40,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegStoryToe()
         {
-            project.VoegStoryToe(story);
+            project.AddStory(story);
 
             Assert.AreEqual(project, project.Stories[0].Project);
         }
@@ -48,8 +48,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMeermaalsDezelfdeTaskToevoegenGaatNiet()
         {
-            project.VoegStoryToe(story);
-            project.VoegStoryToe(story);
+            project.AddStory(story);
+            project.AddStory(story);
 
             Assert.AreEqual(1, project.Stories.Count);  
         }
@@ -66,10 +66,10 @@ namespace JelloScrum.Model.Tests.Model
         {
             story.ProductBacklogPrioriteit = Prioriteit.Must;
 
-            project.VoegStoryToe(story);
-            project.VoegStoryToe(story2);
+            project.AddStory(story);
+            project.AddStory(story2);
 
-            IList<Story> result = project.GeefStoriesZonderMoSCoWPrioriteit();
+            IList<Story> result = project.GetAllStoriesWithUndefinedPriorities();
 
             Assert.IsTrue(result.Contains(story2), "GeefStoriesZonderMoSCoWPrioriteit() geeft niet de goede story terug.");
             Assert.AreEqual(1, result.Count);

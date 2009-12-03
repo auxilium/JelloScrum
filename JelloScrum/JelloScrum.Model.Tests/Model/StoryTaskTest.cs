@@ -33,7 +33,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             project = new Project();
             sprint = new Sprint();
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
             story = new Story(project, new Gebruiker(), null, StoryType.UserStory);
             task = new Task();
             task2 = new Task();
