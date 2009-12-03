@@ -249,7 +249,7 @@ namespace JelloScrum.Web.Controllers
 
                 for (int y = 0; y < 3; y++)
                 {
-                    SprintStory sprintStory = sprint.MaakSprintStoryVoor(project_James.Stories[num]);
+                    SprintStory sprintStory = sprint.CreateSprintStoryFor(project_James.Stories[num]);
                     
                     sprintStory.SprintBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
                     SprintStoryRepository.Save(sprintStory);

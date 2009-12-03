@@ -89,7 +89,7 @@ namespace JelloScrum.Web.Components
         {
             StringBuilder sb = new StringBuilder();
 
-            SprintStory ss = sprint.GeefSprintStoryVanStory(story);
+            SprintStory ss = sprint.GetSprintStoryFor(story);
             string priority = "<img src='/content/images/moscow_unknown.png' title='Unknown'/>";
             string prioritycss = "sunknown";
             

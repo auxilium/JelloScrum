@@ -48,7 +48,7 @@
           </tr>
           <tr>
             <th colspan="5">
-              Tijd: <span style="font-weight: normal;" id="tijdResterend">${OpmaakHelper.Tijd(gekozenSprint.GeefTijdTotaalAlleStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}</span>
+              Tijd: <span style="font-weight: normal;" id="tijdResterend">${OpmaakHelper.Tijd(gekozenSprint.GetTotalTimeEstimatedForAllStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}</span>
             </th>
           </tr>
           <tr>
@@ -61,7 +61,7 @@
         </thead>
         <tbody>
           <?brail 
-        for story in gekozenSprint.GeefAlleIngeplandeStories():
+        for story in gekozenSprint.GetAllStories():
           OutputSubView("sprintlogitem", {@story:story});
         end 
         ?>

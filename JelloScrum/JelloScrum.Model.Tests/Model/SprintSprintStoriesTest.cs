@@ -50,7 +50,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaakSprintStory()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
 
             Assert.AreEqual(story, ss.Story);
         }
@@ -58,7 +58,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryRelatieMetSprintIsGoed()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
                         
             Assert.AreEqual(sprint, ss.Sprint);
         }
@@ -79,20 +79,20 @@ namespace JelloScrum.Model.Tests.Model
             task2.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 20, 10));
             task3.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 25, 10));
 
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
 
-            Assert.AreEqual(new TimeSpan(4, 0, 30), sprint.TotaalBestedeTijd());
+            Assert.AreEqual(new TimeSpan(4, 0, 30), sprint.TotalTimeSpent());
         }
 
         [Test]
         public void TestGeefNogNietAfgeslotenSprintStories()
         {
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
             story.Tasks[0].Status = Status.Afgesloten;
 
-            IList<SprintStory> result = sprint.GeefNogNietAfgeslotenSprintStories();
+            IList<SprintStory> result = sprint.GetAllOpenSprintStories();
             
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(story2, result[0].Story);
@@ -101,12 +101,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefNogNietAfgeslotenSprintStoriesMetMustHavePrioriteit()
         {
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
             story2.Tasks[0].Status = Status.Afgesloten;
             sprint.SprintStories[0].SprintBacklogPrioriteit = Prioriteit.Must;
             
-            IList<SprintStory> result = sprint.GeefNogNietAfgeslotenSprintStories(Prioriteit.Must);
+            IList<SprintStory> result = sprint.GetAllOpenSprintStories(Prioriteit.Must);
 
             Assert.AreEqual(Prioriteit.Must, result[0].SprintBacklogPrioriteit);
         }

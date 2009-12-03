@@ -68,8 +68,8 @@ namespace JelloScrum.Model.Tests.Model
             story.Tasks[0].Status = Status.Afgesloten;
             story.Tasks[1].Status = Status.Opgepakt;
             
-            sprint.MaakSprintStoryVoor(story);
-            sprint2.MaakSprintStoryVoor(story);
+            sprint.CreateSprintStoryFor(story);
+            sprint2.CreateSprintStoryFor(story);
             sprint2.IsAfgesloten = true;
 
             Assert.IsFalse(story.IsTePlannen);
@@ -83,7 +83,7 @@ namespace JelloScrum.Model.Tests.Model
 
             story.Tasks[0].Status = Status.Afgesloten;
             story.Tasks[1].Status = Status.Opgepakt;
-            sprint.MaakSprintStoryVoor(story);
+            sprint.CreateSprintStoryFor(story);
             sprint.IsAfgesloten = true;
 
             Assert.IsTrue(story.IsTePlannen);

@@ -203,13 +203,13 @@ namespace JelloScrum.Web.Controllers
         {
             Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
             sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Must)));
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Must)));
             sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Should)));
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Should)));
             sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Could)));
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Could)));
             sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Would)));
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
             CancelLayout();
@@ -223,13 +223,13 @@ namespace JelloScrum.Web.Controllers
         {
             Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
             sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Must)));
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Must)));
             sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Should)));
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Should)));
             sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Could)));
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Could)));
             sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Would)));
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
 
@@ -333,7 +333,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story"></param>
         public void OntkoppelStoryVanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story)
         {
-            sprint.VerwijderStory(story);
+            sprint.RemoveStory(story);
             SprintRepository.Save(sprint);
 
             PropertyBag.Add("gekozenSprint", sprint);
@@ -405,7 +405,7 @@ namespace JelloScrum.Web.Controllers
         public void SprintAfsluiten([ARFetch("sprintId")] Sprint sprint)
         {
             //todo: security!
-            IList<Task> taken = sprint.SluitSprintAf();
+            IList<Task> taken = sprint.Close();
 
             SprintRepository.Save(sprint);
 
@@ -482,7 +482,7 @@ namespace JelloScrum.Web.Controllers
         public void Stories([ARFetch("sprintId")] Sprint sprint)
         {
             // Dit moet dus zowel voor een project de stories geven als mede voor de sprint
-            PropertyBag.Add("stories", sprint.GeefAlleIngeplandeStories());
+            PropertyBag.Add("stories", sprint.GetAllStories());
             CancelLayout();
         }
 
@@ -606,7 +606,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void UrenRegistreren([ARFetch("sprintId")] Sprint sprint, DateTime maandag)
         {
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
+            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
            
 
             Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Uren registreren";

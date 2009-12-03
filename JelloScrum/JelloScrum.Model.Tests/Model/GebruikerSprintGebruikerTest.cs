@@ -32,7 +32,7 @@ namespace JelloScrum.Model.Tests.Model
         public void TestVindSprintGebruikerVanGebruikerVoorSprint()
         {
             Gebruiker gb = new Gebruiker();
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            sprint.AddUser(gb, SprintRol.Developer);
 
             SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
 
@@ -44,8 +44,8 @@ namespace JelloScrum.Model.Tests.Model
         {
             Gebruiker gb = new Gebruiker();
             Sprint sprint2 = new Sprint();
-            sprint2.VoegGebruikerToe(gb, SprintRol.Developer);
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            sprint2.AddUser(gb, SprintRol.Developer);
+            sprint.AddUser(gb, SprintRol.Developer);
 
             SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
 
@@ -57,7 +57,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             Gebruiker gb = new Gebruiker();
             gb.ActieveSprint = sprint;
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            sprint.AddUser(gb, SprintRol.Developer);
 
             SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
 
@@ -68,7 +68,7 @@ namespace JelloScrum.Model.Tests.Model
         public void TestGeefActieveSprintGebruikerVanGebruikerTerwijlDezeNogNietGezetIs()
         {
             Gebruiker gb = new Gebruiker();
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            sprint.AddUser(gb, SprintRol.Developer);
 
             SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
 

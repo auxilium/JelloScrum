@@ -59,7 +59,7 @@ namespace JelloScrum.Model.Entities
             if (story == null)
                 throw new ArgumentNullException("story", "De story mag niet null zijn.");
 
-            sprint.VoegSprintStoryToe(this);
+            sprint.AddSprintStory(this);
             story.VoegSprintStoryToe(this);
 
             this.schatting = schatting;

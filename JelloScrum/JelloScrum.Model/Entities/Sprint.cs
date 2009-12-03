@@ -33,11 +33,10 @@ namespace JelloScrum.Model.Entities
         private DateTime startDatum = DateTime.Now;
         private DateTime eindDatum = DateTime.Now;
         private int werkDagen;
-        private bool afgesloten = false;
-        private TimeSpan beschikbareUren = new TimeSpan();
-        private int aantalManDagen = 0;
+        private bool afgesloten;
+        private TimeSpan beschikbareUren;
 
-        private Project project = null;
+        private Project project;
 
         private IList<SprintStory> sprintStories = new List<SprintStory>();
         private IList<SprintGebruiker> sprintGebruikers = new List<SprintGebruiker>();
@@ -45,18 +44,18 @@ namespace JelloScrum.Model.Entities
         #endregion
 
         #region constructors
-
+        
         /// <summary>
-        /// Default parameterless ctor
+        /// Initializes a new instance of the <see cref="Sprint"/> class.
         /// </summary>
         public Sprint()
         {
         }
-
+        
         /// <summary>
-        /// Ctor met Project
+        /// Initializes a new instance of the <see cref="Sprint"/> class for the given project.
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="project">The project.</param>
         public Sprint(Project project)
         {
             if (project == null)
@@ -70,9 +69,9 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// Gets or sets the doel of this sprint.
+        /// Gets or sets the goal of this sprint.
         /// </summary>
-        /// <value>The doel.</value>
+        /// <value>The goal</value>
         [Property]
         public virtual string Doel
         {
@@ -81,9 +80,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the omschrijving.
+        /// Gets or sets the description.
         /// </summary>
-        /// <value>The omschrijving.</value>
+        /// <value>The description.</value>
         [Property(SqlType = "ntext")]
         public virtual string Omschrijving
         {
@@ -92,9 +91,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the start datum on which this sprint will start.
+        /// Gets or sets the start date on which this sprint will start.
         /// </summary>
-        /// <value>The start datum.</value>
+        /// <value>The start date.</value>
         [Property]
         public virtual DateTime StartDatum
         {
@@ -103,9 +102,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the eind datum on which this sprint will end.
+        /// Gets or sets the end date on which this sprint will end.
         /// </summary>
-        /// <value>The eind datum.</value>
+        /// <value>The end date.</value>
         [Property]
         public virtual DateTime EindDatum
         {
@@ -125,10 +124,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Geeft een readonly collectie met sprintstories. 
-        /// Let Op: Om een nieuwe sprintstory aan te maken en toe te voegen gebruik je <see cref="MaakSprintStoryVoor(Story)"/>
+        /// Gets a readonly collection of sprintstories.
+        /// To make a new sprintstory and add it to this list, use <see cref="CreateSprintStoryFor(Story)"/>
         /// </summary>
-        /// <value>The stories.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase, OrderBy = "SprintBacklogPrioriteit")]
         public virtual IList<SprintStory> SprintStories
         {
@@ -136,10 +134,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the gebruikers.
+        /// Gets the sprintusers
         /// </summary>
-        /// <value>The gebruikers.</value>
-        //[HasAndBelongsToMany(typeof(Gebruiker), Table = "Sprint_Gebruiker", ColumnRef = "gebruiker_id", ColumnKey = "sprint_id", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true)]
+        /// <value>The sprintusers.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<SprintGebruiker> SprintGebruikers
         {
@@ -147,8 +144,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets the amount of available time.
         /// </summary>
+        /// <value>The available time.</value>
         [Property(ColumnType = "TimeSpan")]
         public virtual TimeSpan BeschikbareUren
         {
@@ -156,11 +154,10 @@ namespace JelloScrum.Model.Entities
             set { beschikbareUren = value; }
         }
 
-
         /// <summary>
-        /// Gets or sets het aantal werkdagen van deze sprint.
+        /// Gets or sets the amount of workdays in this sprint.
         /// </summary>
-        /// <value>The werk dagen.</value>
+        /// <value>The amount of workdays.</value>
         [Property]
         public virtual int WerkDagen
         {
@@ -169,9 +166,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Geeft of zet de status van de Sprint <see cref="Sprint"/> als afgesloten.
+        /// Is this sprint closed?
         /// </summary>
-        /// <value><c>true</c> if afgesloten; else, <c>false</c>.</value>
+        /// <value><c>true</c> if closed; else, <c>false</c>.</value>
         [Property]
         public virtual bool IsAfgesloten
         {
@@ -184,25 +181,24 @@ namespace JelloScrum.Model.Entities
         #region methods
 
         /// <summary>
-        /// Voeg een sprintstory toe aan deze sprint. toet
+        /// Add a sprintstory to this sprint
         /// </summary>
-        /// <param name="sprintStory">De sprintstory.</param>
-        protected internal virtual void VoegSprintStoryToe(SprintStory sprintStory)
+        /// <param name="sprintStory">The sprintstory.</param>
+        protected internal virtual void AddSprintStory(SprintStory sprintStory)
         {
             sprintStory.Sprint = this;
             if (!sprintStories.Contains(sprintStory))
-            {
                 sprintStories.Add(sprintStory);
-            }
         }
 
         /// <summary>
-        /// Verwijdert de gegeven story uit deze sprint
+        /// Searches for the sprintstory for the given story in this sprint 
+        /// and removes it from this sprint
         /// </summary>
-        /// <param name="story"></param>
-        public virtual void VerwijderStory(Story story)
+        /// <param name="story">The story.</param>
+        public virtual void RemoveStory(Story story)
         {
-            SprintStory sprintStory = GeefSprintStoryVanStory(story);
+            SprintStory sprintStory = GetSprintStoryFor(story);
 
             if (sprintStory == null)
                 return;
@@ -212,164 +208,158 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Voeg een gebruiker toe aan deze sprint. Als er al een sprintgebruiker voor deze gebruiker in deze sprint bestaat
-        /// wordt er geen nieuwe springebruiker gemaakt, maar deze bestaande teruggegeven.
+        /// Add a user with a specified role to this sprint, hereby creating a sprintuser for 
+        /// the given user and this sprint. If the sprintuser already exists then 
+        /// the existing sprintuser is returned.
         /// </summary>
-        /// <param name="gebruiker">The gebruiker.</param>
-        /// <param name="sprintRol">The sprint rol.</param>
-        /// <returns>De nieuwe sprintgebruiker.</returns>
-        public virtual SprintGebruiker VoegGebruikerToe(Gebruiker gebruiker, SprintRol sprintRol)
+        /// <param name="gebruiker">The user.</param>
+        /// <param name="sprintRol">The role.</param>
+        /// <returns>The (new) sprintuser.</returns>
+        public virtual SprintGebruiker AddUser(Gebruiker gebruiker, SprintRol sprintRol)
         {
-            SprintGebruiker sprintGebruiker = GeefSprintGebruikerVoor(gebruiker);
+            SprintGebruiker sprintGebruiker = GetSprintUserFor(gebruiker);
 
-            if (sprintGebruiker != null)
-                return sprintGebruiker;
-
-            return new SprintGebruiker(gebruiker, this, sprintRol);
+            return sprintGebruiker ?? new SprintGebruiker(gebruiker, this, sprintRol);
         }
 
         /// <summary>
-        /// Verwijder de gegeven gebruiker uit deze sprint, door de sprintgebruiker los te koppelen van sprint en de gegeven gebruiker.
+        /// Remove the given user from this sprint. This removes the sprintuser
+        /// belonging to the given user and this sprint and removes it from this sprint
         /// </summary>
-        /// <param name="gebruiker"></param>
-        public virtual void VerwijderGebruiker(Gebruiker gebruiker)
+        /// <param name="user">The user.</param>
+        public virtual void RemoveUser(Gebruiker user)
         {
-            if (gebruiker == null)
-                throw new ArgumentNullException("gebruiker");
+            if (user == null)
+                throw new ArgumentNullException("user");
 
-            SprintGebruiker sprintGebruiker = gebruiker.GeefSprintGebruikerVoor(this);
-            if (sprintGebruiker == null)
+            SprintGebruiker sprintUser = user.GeefSprintGebruikerVoor(this);
+            if (sprintUser == null)
                 return;
 
-            sprintGebruiker.KoppelSprintGebruikerLos();
+            sprintUser.KoppelSprintGebruikerLos();
         }
 
         /// <summary>
-        /// Verwijdert een sprintGebruiker uit deze sprint
+        /// todo: how / why is this differen from above?
+        /// Removes the given sprintuser from this sprint.
         /// </summary>
-        /// <param name="sprintGebruiker"></param>
-        protected internal virtual void VerwijderSprintGebruiker(SprintGebruiker sprintGebruiker)
+        /// <param name="sprintUser">The sprintuser.</param>
+        protected internal virtual void RemoveSprintUser(SprintGebruiker sprintUser)
         {
-            sprintGebruikers.Remove(sprintGebruiker);
-            sprintGebruiker.Sprint = null;
+            sprintGebruikers.Remove(sprintUser);
+            sprintUser.Sprint = null;
         }
 
         /// <summary>
-        /// Voeg de sprintgebruiker toe aan de collectie van sprintgebruikers.
+        /// Add the given sprintuser to this sprints collection of sprintusers
         /// </summary>
-        /// <param name="sprintGebruiker">De sprintgebruiker.</param>
-        protected internal virtual void VoegSprintGebruikerToe(SprintGebruiker sprintGebruiker)
+        /// <param name="sprintUser">The sprintuser.</param>
+        protected internal virtual void AddSprintUser(SprintGebruiker sprintUser)
         {
-            if (!sprintGebruikers.Contains(sprintGebruiker))
+            if (!sprintGebruikers.Contains(sprintUser))
             {
-                sprintGebruikers.Add(sprintGebruiker);
+                sprintGebruikers.Add(sprintUser);
             }
-            sprintGebruiker.Sprint = this;
+            sprintUser.Sprint = this;
         }
 
         /// <summary>
-        /// Maak een sprintstory voor de gegeven story en leg alle relaties.
+        /// Create a sprintstory for the given story and this sprint.
         /// </summary>
-        /// <param name="story">De story.</param>
-        public virtual SprintStory MaakSprintStoryVoor(Story story)
+        /// <param name="story">The story.</param>
+        /// <returns></returns>
+        public virtual SprintStory CreateSprintStoryFor(Story story)
         {
             foreach (SprintStory ss in sprintStories)
             {
                 if (ss.Story == story)
-                {
                     return ss;
-                }
             }
 
             return new SprintStory(this, story, story.Schatting);
         }
 
         /// <summary>
-        /// Voegs the werk dag toe.
+        /// Adds the given workday
         /// </summary>
-        /// <param name="werkDag">The werk dag.</param>
-        public virtual void VoegWerkDagToe(WerkDag werkDag)
+        /// <param name="workday">The workday.</param>
+        public virtual void AddWorkday(WerkDag workday)
         {
-            if (HeeftWerkDag(werkDag) == false)
-            {
-                werkDagen += (int) werkDag;
-            }
+            if (!HasWorkday(workday))
+                werkDagen += (int) workday;
         }
 
         /// <summary>
-        /// Heeft deze sprint de gegeven werkdag?
+        /// Does this sprint have the given workday?
         /// </summary>
-        /// <param name="werkDag">De werkdag.</param>
-        /// <returns>true als de werkdag in de werkdagen collectie zit, anders false</returns>
-        public virtual bool HeeftWerkDag(WerkDag werkDag)
+        /// <param name="workday">The workday.</param>
+        /// <returns>
+        /// 	<c>true</c> if this sprint has the specified workday; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool HasWorkday(WerkDag workday)
         {
-            return (int) werkDag == ((int) werkDag & werkDagen);
+            return (int) workday == ((int) workday & werkDagen);
         }
 
         /// <summary>
-        /// Berekent de totaal aan deze sprint bestede tijd.
+        /// Calculates the total amount of time spent in this sprint
         /// </summary>
-        /// <returns>De totaal bestede tijd</returns>
-        public virtual TimeSpan TotaalBestedeTijd()
+        /// <returns>The total time spent</returns>
+        public virtual TimeSpan TotalTimeSpent()
         {
-            TimeSpan totaal = new TimeSpan(0);
+            TimeSpan total = new TimeSpan(0);
             foreach (SprintStory sprintStory in sprintStories)
             {
-                totaal = totaal.Add(sprintStory.Story.TotaalBestedeTijd());
+                total = total.Add(sprintStory.Story.TotaalBestedeTijd());
             }
-            return totaal;
+            return total;
         }
 
         /// <summary>
-        /// Geeft de nog niet afgesloten sprint stories.
+        /// Gets all open sprintstories
         /// </summary>
-        /// <returns>Alle nog niet afgesloten sprintstories</returns>
-        public virtual IList<SprintStory> GeefNogNietAfgeslotenSprintStories()
+        /// <returns>all open sprintstories</returns>
+        public virtual IList<SprintStory> GetAllOpenSprintStories()
         {
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
                 if (sprintStory.Status != Status.Afgesloten)
-                {
                     stories.Add(sprintStory);
-                }
             }
             return stories;
         }
 
         /// <summary>
-        ///  Geeft de nog niet afgesloten sprint stories met een bepaalde SprintBacklog prioriteit
+        /// Gets all open sprintstories with the given SprintBacklog priority
         /// </summary>
-        /// <param name="prioriteit">De prioriteit.</param>
-        /// <returns>De nog niet afgesloten sprintstories met de gegeven prioriteit</returns>
-        public virtual IList<SprintStory> GeefNogNietAfgeslotenSprintStories(Prioriteit prioriteit)
+        /// <param name="prioriteit">The priority.</param>
+        /// <returns></returns>
+        public virtual IList<SprintStory> GetAllOpenSprintStories(Prioriteit prioriteit)
         {
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
                 if (sprintStory.IsVolledigeOpgepakt == false && sprintStory.SprintBacklogPrioriteit == prioriteit)
-                {
                     stories.Add(sprintStory);
-                }
             }
             return stories;
         }
 
         /// <summary>
-        /// Geeft de afgesloten sprint stories met een bepaalde SprintBacklog prioriteit
+        /// Get all sprintstories with the given priority that have one or more closed tasks.
         /// </summary>
-        /// <param name="prioriteit">De prioriteit.</param>
-        /// <returns>De afgesloten sprintstories met de gegeven prioriteit.</returns>
-        public virtual IList<SprintStory> GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit prioriteit)
+        /// <param name="priority">The priority.</param>
+        /// <returns></returns>
+        public virtual IList<SprintStory> GetSprintStoriesWithClosedTasks(Prioriteit priority)
         {
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.SprintBacklogPrioriteit == prioriteit)
+                if (sprintStory.SprintBacklogPrioriteit == priority)
                 {
                     foreach (Task task in sprintStory.Story.Tasks)
                     {
-                        // als een taak afgesloten is, is de story deels afgesloten.
                         if (task.Status == Status.Afgesloten)
                         {
                             stories.Add(sprintStory);
@@ -382,10 +372,10 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Geeft alle stories die gekoppeld zijn aan deze sprint
+        /// Gets all stories that have a sprintstory in this sprint.
         /// </summary>
         /// <returns></returns>
-        public virtual IList<Story> GeefAlleIngeplandeStories()
+        public virtual IList<Story> GetAllStories()
         {
             IList<Story> stories = new List<Story>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -393,98 +383,69 @@ namespace JelloScrum.Model.Entities
                 stories.Add(sprintStory.Story);
             }
             return stories;
-
         }
 
         /// <summary>
-        /// Geeft de nog niet opgepakte sprint stories.
-        /// todo: unit test voor schrijven
+        /// Gets the sprintstory for the given story in this sprint.
         /// </summary>
-        /// <param name="prioriteit">De prioriteit.</param>
-        /// <returns>De nog niet opgepakte sprintstories met de gegeven prioriteit</returns>
-        public virtual IList<SprintStory> GeefNogNietAfgeslotenSprintStories(string prioriteit)
-        {
-            Prioriteit p = (Prioriteit) Enum.Parse(typeof (Prioriteit), prioriteit);
-            return GeefNogNietAfgeslotenSprintStories(p);
-        }
-
-        /// <summary>
-        /// Geeft de afgesloten sprint stories.
-        /// todo: unit test voor schrijven
-        /// </summary>
-        /// <param name="prioriteit">De prioriteit.</param>
-        /// <returns>De afgesloten sprintstories met de gegeven prioriteit.</returns>
-        public virtual IList<SprintStory> GeefDeelsOfGeheleAfgeslotenSprintStories(string prioriteit)
-        {
-            Prioriteit p = (Prioriteit) Enum.Parse(typeof (Prioriteit), prioriteit);
-            return GeefDeelsOfGeheleAfgeslotenSprintStories(p);
-        }
-
-        /// <summary>
-        /// Geeft de SprintStory van een story.
-        /// </summary>
-        /// <param name="story">De story.</param>
-        /// <returns>De sprintstory van de gegeven story binnen deze sprint.</returns>
-        public virtual SprintStory GeefSprintStoryVanStory(Story story)
+        /// <param name="story">The story.</param>
+        /// <returns></returns>
+        public virtual SprintStory GetSprintStoryFor(Story story)
         {
             foreach (SprintStory sprintStory in sprintStories)
             {
                 if (sprintStory.Story == story)
-                {
                     return sprintStory;
-                }
             }
             return null;
         }
 
+        ///// <summary>
+        ///// Deze method zorgt voor de synchronisatie van de huidige sprintgebruikers met de gegevenlijst
+        ///// </summary>
+        ///// <param name="gebruikersLijst"></param>
+        //public virtual void VerwerkNieuweIngedeeldeGebruikersLijst(IList<Gebruiker> gebruikersLijst)
+        //{
+        //    // de huidige lijst doorlopen en alles dat niet in de nieuwe lijst voorkomt verwijderen.
+        //    foreach (SprintGebruiker sprintGebruiker in new List<SprintGebruiker>(sprintGebruikers))
+        //    {
+        //        if (gebruikersLijst.Contains(sprintGebruiker.Gebruiker))
+        //            continue;
+
+        //        sprintGebruiker.KoppelSprintGebruikerLos();
+        //    }
+
+        //    foreach (Gebruiker gebruiker in gebruikersLijst)
+        //    {
+        //        if (GeefSprintGebruikerVoor(gebruiker) == null)
+        //        {
+        //            AddUser(gebruiker, 0);
+        //        }
+        //    }
+        //}
+
         /// <summary>
-        /// Deze method zorgt voor de synchronisatie van de huidige sprintgebruikers met de gegevenlijst
+        /// Gets all users that have a sprintuser in this sprint.
         /// </summary>
-        /// <param name="gebruikersLijst"></param>
-        public virtual void VerwerkNieuweIngedeeldeGebruikersLijst(IList<Gebruiker> gebruikersLijst)
+        /// <returns></returns>
+        public virtual IList<Gebruiker> GetAllUsers()
         {
-            // de huidige lijst doorlopen en alles dat niet in de nieuwe lijst voorkomt verwijderen.
-            foreach (SprintGebruiker sprintGebruiker in new List<SprintGebruiker>(sprintGebruikers))
+            IList<Gebruiker> users = new List<Gebruiker>();
+            foreach (SprintGebruiker sprintUser in sprintGebruikers)
             {
-                if (gebruikersLijst.Contains(sprintGebruiker.Gebruiker))
-                    continue;
-
-                sprintGebruiker.KoppelSprintGebruikerLos();
+                users.Add(sprintUser.Gebruiker);
             }
-
-            foreach (Gebruiker gebruiker in gebruikersLijst)
-            {
-                if (GeefSprintGebruikerVoor(gebruiker) == null)
-                {
-                    VoegGebruikerToe(gebruiker, 0);
-                }
-            }
+            return users;
         }
 
         /// <summary>
-        /// Geeft een lijst met alle gebruikers die ingedeeld zijn
+        /// Closes this sprint.
+        /// This means that all tasks in this sprint that are 'taken' get their status changed to open. 
+        /// Each task gets a logmessage describing why the status changed and who was working on that task.
         /// </summary>
-        /// <returns>Een lijst met actieve gebruikers</returns>
-        public virtual IList<Gebruiker> GeefAlleActieveGebruikers()
+        public virtual IList<Task> Close()
         {
-            IList<Gebruiker> gebruikersLijst = new List<Gebruiker>();
-            foreach (SprintGebruiker sprintGebruiker in sprintGebruikers)
-            {
-                gebruikersLijst.Add(sprintGebruiker.Gebruiker);
-            }
-
-            return gebruikersLijst;
-        }
-
-        /// <summary>
-        /// Sluit een sprint af.
-        /// Vind alle taken voor deze sprint die als status opgepakt hebben en zet deze weer op nietopgepakt.
-        /// Schrijf een logbericht dat de status veranderd is door het sluiten van de taak (en wie er mee bezig was enz.)
-        /// todo: met query object? 
-        /// </summary>
-        public virtual IList<Task> SluitSprintAf()
-        {
-            IList<Task> taken = new List<Task>();
+            IList<Task> tasks = new List<Task>();
 
             foreach (SprintStory sprintStory in sprintStories)
             {
@@ -492,39 +453,37 @@ namespace JelloScrum.Model.Entities
                 {
                     if (task.Status == Status.Opgepakt)
                     {
-                        taken.Add(task);
-                        task.OntKoppelTaakEnZetStatusAlsNietOpgepakt("Sprint gesloten", "Deze sprint is afgesloten. ");
+                        tasks.Add(task);
+                        task.OntKoppelTaakEnZetStatusAlsNietOpgepakt("Sprint closed", "This sprint is closed. ");
                     }
                 }
             }
 
-            IsAfgesloten = true;
+            afgesloten = true;
 
-            return taken;
+            return tasks;
         }
+
         /// <summary>
-        /// Zoekt naar de sprintgebruiker die hoort bij deze sprint en gebruiker. 
-        ///
+        /// Gets the sprintuser for the given user in this sprint.
         /// </summary>
-        /// <param name="gebruiker"></param>
-        /// <returns>N</returns>
-        public virtual SprintGebruiker GeefSprintGebruikerVoor(Gebruiker gebruiker)
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        public virtual SprintGebruiker GetSprintUserFor(Gebruiker user)
         {
-            foreach (SprintGebruiker sg in sprintGebruikers)
+            foreach (SprintGebruiker sprintUser in sprintGebruikers)
             {
-                if (sg.Gebruiker == gebruiker)
-                {
-                    return sg;
-                }
+                if (sprintUser.Gebruiker == user)
+                    return sprintUser;
             }
             return null;
         }
-        
+
         /// <summary>
-        /// Geeft alle taken terug die bij deze sprint horen.
+        /// Gets all tasks that belong to a story that has a sprintstory in this sprint.
         /// </summary>
-        /// <returns>Lijst met taken</returns>
-        public virtual IList<Task> GeefAlleTakenVanSprint()
+        /// <returns></returns>
+        public virtual IList<Task> GetAllTasks()
         {
             IList<Task> sprintTasks = new List<Task>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -537,29 +496,31 @@ namespace JelloScrum.Model.Entities
             return sprintTasks;
         }
 
-        /// <summary>
-        /// Geeft alle door andere gebruikers opgepakte taken terug die bij deze sprint horen.
-        /// </summary>
-        /// <returns>Lijst met taken</returns>
-        public virtual IList<Task> GeefAndermansOpenTakenVanSprint(SprintGebruiker sprintGebruiker)
-        {
-            IList<Task> sprintTasks = new List<Task>();
-            foreach (SprintStory sprintStory in sprintStories)
-            {
-                foreach (Task task in sprintStory.Story.Tasks)
-                {
-                    if (task.Status != Status.Opgepakt && task.Behandelaar != sprintGebruiker)
-                        sprintTasks.Add(task);
-                }
-            }
-            return sprintTasks;
-        }
+        ///// <summary>
+        ///// Gets all tasks taken by sprintusers other than the given sprintuser.
+        ///// </summary>
+        ///// <param name="sprintUser">The sprintuser.</param>
+        ///// <returns></returns>
+        //public virtual IList<Task> GetAllTasksTakenBySprintUsersOtherThan(SprintGebruiker sprintUser)
+        //{
+        //    IList<Task> sprintTasks = new List<Task>();
+        //    foreach (SprintStory sprintStory in sprintStories)
+        //    {
+        //        foreach (Task task in sprintStory.Story.Tasks)
+        //        {
+        //            if (task.Status != Status.Opgepakt && task.Behandelaar != sprintUser)
+        //                sprintTasks.Add(task);
+        //        }
+        //    }
+        //    return sprintTasks;
+        //}
 
         /// <summary>
-        /// Geeft alle taken met bepaalde status terug die bij deze sprint horen.
+        /// Gets all tasks with the given status.
         /// </summary>
-        /// <returns>Lijst met taken</returns>
-        public virtual IList<Task> GeefAlleTakenVanSprint(Status status)
+        /// <param name="status">The status.</param>
+        /// <returns></returns>
+        public virtual IList<Task> GetAllTasksWith(Status status)
         {
             IList<Task> sprintTasks = new List<Task>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -573,71 +534,69 @@ namespace JelloScrum.Model.Entities
             return sprintTasks;
         }
 
+        ///// <summary>
+        ///// Geeft alle taken terug die niet door de gespecificeerde sprintgebruiker zijn opgepakt.
+        ///// </summary>
+        ///// <returns>Lijst met taken</returns>
+        //public virtual IList<Task> GeefAndermansOfNietOpgepakteTaken(SprintGebruiker gebruiker)
+        //{
+        //    IList<Task> sprintTasks = new List<Task>();
+        //    foreach (SprintStory sprintStory in sprintStories)
+        //    {
+        //        foreach (Task task in sprintStory.Story.Tasks)
+        //        {
+        //            if (task.Behandelaar != gebruiker)
+        //                sprintTasks.Add(task);
+        //        }
+        //    }
+        //    return sprintTasks;
+        //}
+
         /// <summary>
-        /// Geeft alle taken terug die niet door de gespecificeerde sprintgebruiker zijn opgepakt.
+        /// Gets the total time estimated for all stories in this sprint.
         /// </summary>
-        /// <returns>Lijst met taken</returns>
-        public virtual IList<Task> GeefAndermansOfNietOpgepakteTaken(SprintGebruiker gebruiker)
+        /// <returns></returns>
+        public virtual TimeSpan GetTotalTimeEstimatedForAllStories()
         {
-            IList<Task> sprintTasks = new List<Task>();
+            TimeSpan totalTime = new TimeSpan();
+
             foreach (SprintStory sprintStory in sprintStories)
             {
-                foreach (Task task in sprintStory.Story.Tasks)
-                {
-                    if (task.Behandelaar != gebruiker)
-                        sprintTasks.Add(task);
-                }
+                totalTime += sprintStory.Story.Schatting;
             }
-            return sprintTasks;
+
+            return totalTime;
         }
 
         /// <summary>
-        /// Geeft de totaal tijd van alle stories in de sprint
+        /// Gets the remaining amount of time available.
         /// </summary>
         /// <returns></returns>
-        public virtual TimeSpan GeefTijdTotaalAlleStories()
+        public virtual TimeSpan RemainingTimeAvailable()
         {
-            TimeSpan totaalTijd = new TimeSpan();
+            TimeSpan remainingTime = BeschikbareUren - GetTotalTimeEstimatedForAllStories();
+
+            return remainingTime;
+        }
+        
+        /// <summary>
+        /// Gets the total estimated time for stories that are not closed til the given date.
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <returns></returns>
+        public virtual TimeSpan GetTotalEstimatedTimeForNotClosedStoriesTil(DateTime date)
+        {
+            TimeSpan totalTime = new TimeSpan();
 
             foreach (SprintStory sprintStory in sprintStories)
             {
-                totaalTijd += sprintStory.Story.Schatting;
+                if (sprintStory.Story.Status != Status.Afgesloten || (sprintStory.Story.Status == Status.Afgesloten && sprintStory.Story.DatumAfgesloten.Value.Date > date.Date))
+                    totalTime += sprintStory.Story.Schatting;
             }
 
-            return totaalTijd;
-        }
-
-
-        /// <summary>
-        /// Geeft aan hoeveel tijd er nog beschikbaar is in de sprint
-        /// </summary>
-        /// <returns></returns>
-        public virtual TimeSpan ResterendBeschikbareUren()
-        {
-            TimeSpan resterendeUren = BeschikbareUren - GeefTijdTotaalAlleStories();
-
-            return resterendeUren;
+            return totalTime;
         }
 
         #endregion
-        
-        /// <summary>
-        /// Hier moet nog zinnig commentaar... en anders mailt Roelof wel een keer dat het nog een keer moet...
-        /// </summary>
-        /// <param name="werkdag"></param>
-        /// <returns></returns>
-        public virtual TimeSpan GeefNietAfgeslotenStoriesTotaalSchattingTotEnMetDatum(DateTime werkdag)
-        {
-            TimeSpan totaalTijd = new TimeSpan();
-
-            foreach (SprintStory sprintStory in sprintStories)
-            {
-                if (sprintStory.Story.Status != Status.Afgesloten || (sprintStory.Story.Status == Status.Afgesloten && sprintStory.Story.DatumAfgesloten.Value.Date > werkdag.Date))
-                    totaalTijd += sprintStory.Story.Schatting;
-            }
-
-            return totaalTijd;
-        }
-
     }
 }

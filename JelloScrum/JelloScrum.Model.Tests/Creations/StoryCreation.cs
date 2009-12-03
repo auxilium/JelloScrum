@@ -42,7 +42,7 @@ namespace JelloScrum.Model.Tests.Creations
         {
             Story story = Story(gebruiker);
 
-            sprint.MaakSprintStoryVoor(story);
+            sprint.CreateSprintStoryFor(story);
             story.SprintStories[0].SprintBacklogPrioriteit = prioriteit;
 
             return story;

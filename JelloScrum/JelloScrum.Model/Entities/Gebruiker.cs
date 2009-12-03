@@ -291,7 +291,7 @@ namespace JelloScrum.Model.Entities
             if (sprint == null)
                 throw new ArgumentNullException("sprint");
 
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(this);
+            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(this);
             if (sprintGebruiker == null)
                 return;
 

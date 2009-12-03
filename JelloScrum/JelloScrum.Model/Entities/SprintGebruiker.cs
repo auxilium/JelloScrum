@@ -57,7 +57,7 @@ namespace JelloScrum.Model.Entities
                 throw new ArgumentNullException("sprint", "De sprint mag niet null zijn.");
             
             gebruiker.VoegSprintGebruikerToe(this);
-            sprint.VoegSprintGebruikerToe(this);
+            sprint.AddSprintUser(this);
             this.sprintRol = sprintRol;
         }
 
@@ -125,7 +125,7 @@ namespace JelloScrum.Model.Entities
             {
                 if (taak.Status == Status.Opgepakt)
                 {
-                    SprintStory ss = sprint.GeefSprintStoryVanStory(taak.Story);
+                    SprintStory ss = sprint.GetSprintStoryFor(taak.Story);
                  
                     if (ss == null)
                         continue;
@@ -253,7 +253,7 @@ namespace JelloScrum.Model.Entities
         public virtual void KoppelSprintGebruikerLos()
         {
             gebruiker.VerwijderSprintGebruiker(this);
-            sprint.VerwijderSprintGebruiker(this);
+            sprint.RemoveSprintUser(this);
         }
     }
 }

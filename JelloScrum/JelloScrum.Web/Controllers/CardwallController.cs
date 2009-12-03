@@ -51,7 +51,7 @@ namespace JelloScrum.Web.Controllers
         {
             //de status wordt meegezonden, dus als de taak de status opgepakt krijgt, gaat de huidige gebruiker de taak oppakken
             if (task.Status == Status.Opgepakt)
-                task.Behandelaar = sprint.GeefSprintGebruikerVoor(CurrentUser);
+                task.Behandelaar = sprint.GetSprintUserFor(CurrentUser);
             try
             {
                 TaskRepository.Save(task);

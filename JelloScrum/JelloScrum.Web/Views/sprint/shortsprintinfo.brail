@@ -35,7 +35,7 @@
           ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}
         </div>
         <div style="float:left;">
-          ${OpmaakHelper.Tijd(gekozenSprint.ResterendBeschikbareUren())}
+          ${OpmaakHelper.Tijd(gekozenSprint.RemainingTimeAvailable())}
         </div>
         <br class="clear"/>
       </div>

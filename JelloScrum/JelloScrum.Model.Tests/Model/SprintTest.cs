@@ -33,8 +33,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaandagAanSprintToevoegen()
         {
-            sprint.VoegWerkDagToe(WerkDag.Maandag);
-            Assert.IsTrue(sprint.HeeftWerkDag(WerkDag.Maandag), "Maandag is niet aan de sprint toegevoegd!");
+            sprint.AddWorkday(WerkDag.Maandag);
+            Assert.IsTrue(sprint.HasWorkday(WerkDag.Maandag), "Maandag is niet aan de sprint toegevoegd!");
         }
 
         [Test]
@@ -43,10 +43,10 @@ namespace JelloScrum.Model.Tests.Model
             Story story = Creation.Story();
             Story story2 = Creation.Story();
 
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
 
-            SprintStory ss = sprint.GeefSprintStoryVanStory(story2);
+            SprintStory ss = sprint.GetSprintStoryFor(story2);
 
             Assert.AreEqual(ss.Story, story2);
             Assert.AreEqual(2, sprint.SprintStories.Count);
@@ -57,7 +57,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             Task task = Creation.TaskMetCompleteHierarchie();
             sprint = task.Behandelaar.Sprint;
-            sprint.SluitSprintAf();
+            sprint.Close();
 
             Assert.AreEqual(Status.NietOpgepakt, task.Status);
             Assert.IsTrue(sprint.IsAfgesloten);
@@ -67,10 +67,10 @@ namespace JelloScrum.Model.Tests.Model
         public void TestSluitSprintAfMaaktLogBericht()
         {
             Task task = Creation.TaskMetCompleteHierarchie();
-            task.Behandelaar.Sprint.SluitSprintAf();
+            task.Behandelaar.Sprint.Close();
 
             Assert.AreEqual(1, task.LogBerichten.Count);
-            Assert.AreEqual("Sprint gesloten", task.LogBerichten[0].Titel);
+            Assert.AreEqual("Sprint closed", task.LogBerichten[0].Titel);
         }
     }
 }

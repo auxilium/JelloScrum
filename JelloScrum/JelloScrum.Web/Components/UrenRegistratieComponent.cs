@@ -213,7 +213,7 @@ namespace JelloScrum.Web.Components
         private string BerekenTotaalGeregistreerdeTijd(DateTime dag, SprintGebruiker gebruiker)
         {
             double total = 0;
-            foreach (Task task in sprint.GeefAlleTakenVanSprint())
+            foreach (Task task in sprint.GetAllTasks())
             {
                 total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(gebruiker.Gebruiker, dag));
             }
@@ -228,7 +228,7 @@ namespace JelloScrum.Web.Components
         private string BerekenTotaalGeregistreerdeTijd(DateTime dag)
         {
             double total = 0;
-            foreach (Task task in sprint.GeefAlleTakenVanSprint())
+            foreach (Task task in sprint.GetAllTasks())
             {
                 total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(dag));
             }

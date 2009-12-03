@@ -39,7 +39,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryRelatieMetStoryIsGoed()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
             
             Assert.AreEqual(story, ss.Story);
         }   
@@ -54,7 +54,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaakSprintStoryNeemtStorySchattingOver()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
 
             Assert.AreEqual(story.Schatting, ss.Schatting);
         }
@@ -64,7 +64,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             story.VoegTaskToe(new Task());
             story.VoegTaskToe(new Task());
-            SprintStory result = sprint.MaakSprintStoryVoor(story);
+            SprintStory result = sprint.CreateSprintStoryFor(story);
 
             story.Tasks[0].Status = Status.Opgepakt;
             story.Tasks[1].Status = Status.Opgepakt;
@@ -77,7 +77,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             story.VoegTaskToe(new Task());
             story.VoegTaskToe(new Task());
-            SprintStory result = sprint.MaakSprintStoryVoor(story);
+            SprintStory result = sprint.CreateSprintStoryFor(story);
 
             story.Tasks[0].Status = Status.Opgepakt;
 

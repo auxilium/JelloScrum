@@ -50,14 +50,14 @@ namespace JelloScrum.Model.Tests.Model
 
             foreach (Gebruiker developer in testCaseDevelopers)
             {
-                testCaseSprint.VoegGebruikerToe(developer, SprintRol.Developer);
+                testCaseSprint.AddUser(developer, SprintRol.Developer);
             }
             testCaseSprint.SprintGebruikers[0].VoegRolToe(SprintRol.ScrumMaster);
 
             // 1 story, 2 taken, beide afgesloten
             const int hoursPerStoryPoint = 2;
             Story testCaseStory1 = Creation.Story(testCaseProject, StoryPoint.Acht, hoursPerStoryPoint, Prioriteit.Must, testCaseDevelopers[random.Next(0,3)]);
-            testCaseSprint.MaakSprintStoryVoor(testCaseStory1);
+            testCaseSprint.CreateSprintStoryFor(testCaseStory1);
 
             Task task1_1 = Creation.Task();
             testCaseStory1.VoegTaskToe(task1_1);

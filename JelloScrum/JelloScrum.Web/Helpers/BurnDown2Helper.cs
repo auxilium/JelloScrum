@@ -198,7 +198,7 @@ namespace JelloScrum.Web.Helpers
             TimeSpan totaalbestedeTijd = new TimeSpan();
 
             //Zaken voor de ideale lijn
-            double totaalTijd = sprint.GeefTijdTotaalAlleStories().TotalHours;
+            double totaalTijd = sprint.GetTotalTimeEstimatedForAllStories().TotalHours;
             double urenPerDag = totaalTijd / (werkdagen.Count - 1);
             double aantalNogTeBestedenUren = totaalTijd;
 
@@ -286,9 +286,9 @@ namespace JelloScrum.Web.Helpers
 
                     //Nu gaan we de blauwe balk opbouwen
                     
-                    resterendeUren = Math.Round(sprint.GeefNietAfgeslotenStoriesTotaalSchattingTotEnMetDatum(werkdag).TotalHours - afhalenVanNietAfgeslotenUren); //Blauw
+                    resterendeUren = Math.Round(sprint.GetTotalEstimatedTimeForNotClosedStoriesTil(werkdag).TotalHours - afhalenVanNietAfgeslotenUren); //Blauw
 
-                    tabelMetGegevens.Append("<tr><td>" + werkdag.DayOfWeek + " " + werkdag.ToShortDateString() + "</td><td>" + resterendeUren + "</td><td>" + sprint.GeefNietAfgeslotenStoriesTotaalSchattingTotEnMetDatum(werkdag).TotalHours + "</td><td>" + afhalenVanNietAfgeslotenUren + "</td><td>" + teveelBestedeUrenVandaag + "</td><td>" + gewonnenTijd + "</td><td>" + vandaagBestedeUren + "</td></tr>");
+                    tabelMetGegevens.Append("<tr><td>" + werkdag.DayOfWeek + " " + werkdag.ToShortDateString() + "</td><td>" + resterendeUren + "</td><td>" + sprint.GetTotalEstimatedTimeForNotClosedStoriesTil(werkdag).TotalHours + "</td><td>" + afhalenVanNietAfgeslotenUren + "</td><td>" + teveelBestedeUrenVandaag + "</td><td>" + gewonnenTijd + "</td><td>" + vandaagBestedeUren + "</td></tr>");
 
                     arrayDone.Append("[" + resterendeUren + "," + Math.Round(reductieTijdTeVeel) + "," + Math.Round(vandaagBestedeUren) + "]");
 
@@ -314,7 +314,7 @@ namespace JelloScrum.Web.Helpers
                 stringbuilder.Append("}");
                 stringbuilder.Append("], 'x_axis': { 'labels': { 'rotate': 300, 'labels': [" + arrayTicks +
                                      "]} }, 'y_axis': {'min':    0,'max':    " +
-                                     Math.Round((sprint.GeefTijdTotaalAlleStories().TotalHours), 0) +
+                                     Math.Round((sprint.GetTotalTimeEstimatedForAllStories().TotalHours), 0) +
                                      ", 'steps' : 10, 'offset': 300}, 'bg_colour': '#FFFFFF', 'title': { 'text': 'Burndown chart', 'style': 'font-size: 20px;' }");
                 
 

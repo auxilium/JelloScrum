@@ -54,7 +54,7 @@ namespace JelloScrum.Web.Controllers
 
                 if (gb.ActieveSprint != null)
                 {
-                    return gb.ActieveSprint.GeefSprintGebruikerVoor(gb);
+                    return gb.ActieveSprint.GetSprintUserFor(gb);
                 }
                 else
                 {

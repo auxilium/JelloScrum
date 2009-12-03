@@ -60,7 +60,7 @@ namespace JelloScrum.Model.Helpers
             if (gebruiker == null || sprint == null)
                 return;
 
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(gebruiker);
+            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(gebruiker);
 
             if (sprintRol == 0)
             {
@@ -72,7 +72,7 @@ namespace JelloScrum.Model.Helpers
             else
             {
                 if (sprintGebruiker == null)
-                    sprint.VoegGebruikerToe(gebruiker, sprintRol);
+                    sprint.AddUser(gebruiker, sprintRol);
                 else
                     sprintGebruiker.SprintRol = sprintRol;
             }
