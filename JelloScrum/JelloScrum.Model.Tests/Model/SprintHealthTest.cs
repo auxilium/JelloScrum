@@ -61,12 +61,12 @@ namespace JelloScrum.Model.Tests.Model
 
             Task task1_1 = Creation.Task();
             testCaseStory1.AddTask(task1_1);
-            task1_1.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(8,0,0));
-            task1_1.SluitTaak();
+            task1_1.RegisterTime(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(8,0,0));
+            task1_1.Close();
             Task task1_2 = Creation.Task();
             testCaseStory1.AddTask(task1_2);
-            task1_2.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(12, 0, 0));
-            task1_2.SluitTaak();
+            task1_2.RegisterTime(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(12, 0, 0));
+            task1_2.Close();
         }
 
         [Test]

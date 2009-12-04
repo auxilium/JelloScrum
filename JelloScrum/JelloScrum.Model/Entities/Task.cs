@@ -33,13 +33,12 @@ namespace JelloScrum.Model.Entities
         #region Fields
 
         private string titel = string.Empty;
-        private Story story = null;
+        private Story story;
         private string omschrijving = string.Empty;
         private Status status = Status.NietOpgepakt;
         private SprintGebruiker behandelaar;
         private DateTime? datumAfgesloten;
-        private TimeSpan schatting = new TimeSpan();
-        private string schattingString = string.Empty;
+        private TimeSpan schatting;
 
         private IList<TijdRegistratie> tijdRegistraties = new List<TijdRegistratie>();
         private IList<TaskLogBericht> logBerichten = new List<TaskLogBericht>();
@@ -57,21 +56,21 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Task"/> class.
+        /// Initializes a new instance of the <see cref="Task"/> class for the given story.
         /// </summary>
-        /// <param name="story">De story.</param>
+        /// <param name="story">The story.</param>
         public Task(Story story)
         {
             story.AddTask(this);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Task"/> class.
+        /// Initializes a new instance of the <see cref="Task"/> class with the given description.
         /// </summary>
-        /// <param name="omschrijving">The omschrijving.</param>
-        public Task(string omschrijving)
+        /// <param name="description">The description.</param>
+        public Task(string description)
         {
-            this.omschrijving = omschrijving;
+            omschrijving = description;
         }
 
         #endregion
@@ -79,7 +78,7 @@ namespace JelloScrum.Model.Entities
         #region Properties
 
         /// <summary>
-        /// Titel van de taak
+        /// Title of the task
         /// </summary>
         [Property]
         public virtual string Titel
@@ -89,9 +88,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De story.
+        /// The story this task belongs to.
         /// </summary>
-        /// <value>De story.</value>
+        /// <value>The story.</value>
         [BelongsTo]
         public virtual Story Story
         {
@@ -100,9 +99,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De omschrijving.
+        /// Description of this task
         /// </summary>
-        /// <value>De omschrijving.</value>
+        /// <value>The description.</value>
         [Property(SqlType = "ntext")]
         public virtual string Omschrijving
         {
@@ -111,9 +110,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De status.
+        /// The status of this task.
         /// </summary>
-        /// <value>De status.</value>
+        /// <value>The status.</value>
         [Property]
         public virtual Status Status
         {
@@ -122,9 +121,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De behandelaar.
+        /// The user this task is assigned to.
         /// </summary>
-        /// <value>De behandelaar.</value>
+        /// <value>The assigned user.</value>
         [BelongsTo]
         public virtual SprintGebruiker Behandelaar
         {
@@ -133,33 +132,30 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De tijd die geschat is voor deze story
+        /// Estimated time for this task.
         /// </summary>
-        /// <value>De schatting.</value>
-        [Property(ColumnType = "TimeSpan"), ValidateNonEmpty("Vul een schatting in.")]
+        /// <value>Estimated time.</value>
+        [Property(ColumnType = "TimeSpan"), ValidateNonEmpty("Estimate the time.")]
         public virtual TimeSpan Schatting
         {
             get { return schatting; }
-            set
-            {
-                schatting = value;
-            }
+            set { schatting = value; }
         }
 
-        /// <summary>
-        /// Hulp property voor schatting
-        /// </summary>
-        public virtual string SchattingString
-        {
-            get { return schattingString; }
-            set { schattingString = value; }
-        }
+        ///// <summary>
+        ///// Hulp property voor schatting
+        ///// </summary>
+        //public virtual string SchattingString
+        //{
+        //    get { return schattingString; }
+        //    set { schattingString = value; }
+        //}
 
         /// <summary>
-        /// Geeft een readonly lijst met alle tijdregistraties die bij deze task horen.
-        /// gebruik <see cref="MaakTijdRegistratie(Gebruiker, DateTime, Sprint, TimeSpan)"/> om nieuwe tijdregistraties te maken.
+        /// Gets a readonly list of all timeregistrations belonging to this task.
+        /// To add a timeregistration, use <see cref="RegisterTime(Gebruiker, DateTime, Sprint, TimeSpan)"/>.
         /// </summary>
-        /// <value>De tijdregistraties.</value>
+        /// <value>The time registrations.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<TijdRegistratie> TijdRegistraties
         {
@@ -167,9 +163,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De logberichten.
+        /// The logmessages
         /// </summary>
-        /// <value>De logberichten.</value>
+        /// <value>the logmessages.</value>
         [HasMany(Table = "LogBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
         public virtual IList<TaskLogBericht> LogBerichten
         {
@@ -178,9 +174,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the commentaar berichten.
+        /// Gets or sets the comments.
         /// </summary>
-        /// <value>The commentaar berichten.</value>
+        /// <value>The comments.</value>
         [HasMany(Table = "LogBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
         public virtual IList<TaskCommentaarBericht> CommentaarBerichten
         {
@@ -189,38 +185,36 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Get de datum waarop de taak is afgesloten
+        /// The date this task was closed.
         /// </summary>
         [Property(Access = PropertyAccess.NosetterCamelcase)]
         public virtual DateTime? DatumAfgesloten
         {
-            get { return this.datumAfgesloten; }
+            get { return datumAfgesloten; }
         }
         #endregion
 
         #region derived properties
 
         /// <summary>
-        /// Geef de naam van de behandelaar
+        /// Gets the name of the user this task is assigned to.
         /// </summary>
-        public virtual string BehandelaarNaam
+        public virtual string AssignedUserName
         {
             get
             {
-                if (Behandelaar !=null)
-                    return Behandelaar.Gebruiker.Naam;
-                return string.Empty;
+                return Behandelaar != null ? Behandelaar.Gebruiker.Naam : string.Empty;
             }
         }
 
         /// <summary>
-        /// Geeft de nog resterende tijd voor deze taak
+        /// Gets the available time left for this task.
         /// </summary>
-        public virtual TimeSpan ResterendeTijd
+        public virtual TimeSpan RemainingTime
         {
             get
             {
-                return (Schatting - TotaalBestedeTijd());
+                return (Schatting - TotalTimeSpent());
             }
         }
 
@@ -229,196 +223,196 @@ namespace JelloScrum.Model.Entities
         #region Methods
 
         /// <summary>
-        /// Maak een tijdregistratie.
+        /// Register time spent on this task.
         /// </summary>
-        /// <param name="gebruiker">De gebruiker.</param>
-        /// <param name="datum">De datum.</param>
+        /// <param name="user">The user.</param>
+        /// <param name="date">The date.</param>
         /// <param name="sprint">De sprint.</param>
-        /// <param name="tijd">De tijd.</param>
-        public virtual void MaakTijdRegistratie(Gebruiker gebruiker, DateTime datum, Sprint sprint, TimeSpan tijd)
+        /// <param name="time">The time.</param>
+        public virtual void RegisterTime(Gebruiker user, DateTime date, Sprint sprint, TimeSpan time)
         {
             if (!story.Project.Sprints.Contains(sprint))
             {
-                throw new ArgumentException("De gegeven sprint hoort niet bij dit project.", "sprint");
+                throw new ArgumentException("The given sprint does not belong to this project.", "sprint");
             }
 
-            foreach (TijdRegistratie registratie in GeeftTijdregistratievanGebruiker(gebruiker, sprint, datum))
+            foreach (TijdRegistratie registratie in GetTimeRegistrationsFor(user, sprint, date))
             {
-                VerwijderTijdRegistratie(registratie);
+                RemoveTimeRegistration(registratie);
             }
-            //als de tijdregistratie 0 seconden is, dan hoeven we geen nieuwe tijdregistratie toe te voegen
-            if (tijd.TotalSeconds == 0)
+
+            //only add timeregistrations that actually contain time
+            if (time.TotalSeconds == 0)
                 return;
             
-            TijdRegistratie tijdRegistratie = new TijdRegistratie(gebruiker, datum, sprint, this, tijd);
-            VoegTijdRegistratieToe(tijdRegistratie);
+            TijdRegistratie timeRegistration = new TijdRegistratie(user, date, sprint, this, time);
+            AddTimeRegistration(timeRegistration);
         }
 
         /// <summary>
-        /// Voegs the commentaar bericht toe.
+        /// Add a comment
         /// </summary>
-        public virtual void VoegCommentaarBerichtToe(TaskCommentaarBericht bericht)
+        /// <param name="comment">The comment.</param>
+        public virtual void AddComment(TaskCommentaarBericht comment)
         {
-            if (!commentaarBerichten.Contains(bericht))
+            if (!commentaarBerichten.Contains(comment))
             {
-                commentaarBerichten.Add(bericht);
+                commentaarBerichten.Add(comment);
             }
         }
 
         /// <summary>
-        /// Verwijder commentaarBericht van de task
+        /// Remove a comment
         /// </summary>
-        /// <param name="bericht"></param>
-        public virtual void VerwijderCommentaarBericht(TaskCommentaarBericht bericht)
+        /// <param name="comment">The comment.</param>
+        public virtual void RemoveComment(TaskCommentaarBericht comment)
         {
-            if(commentaarBerichten.Contains(bericht))
+            if (commentaarBerichten.Contains(comment))
             {
-                commentaarBerichten.Remove(bericht);
+                commentaarBerichten.Remove(comment);
             }
         }
 
         /// <summary>
-        /// Berekent de totaal aan deze taak bestede tijd.
+        /// Calculates the total time spent on this task.
         /// </summary>
-        /// <returns>De totaal bestede tijd.</returns>
-        public virtual TimeSpan TotaalBestedeTijd()
-        {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (TijdRegistratie registratie in tijdRegistraties)
-            {
-                totaal = totaal.Add(registratie.Tijd);
-            }
-            return totaal;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gebruiker"></param>
-        /// <param name="dateRange"></param>
         /// <returns></returns>
-        public virtual TimeSpan TotaalBestedeTijd(Gebruiker gebruiker, DateRange? dateRange)
+        public virtual TimeSpan TotalTimeSpent()
         {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            TimeSpan total = new TimeSpan(0);
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if ((gebruiker != null || registratie.Gebruiker == gebruiker) && (dateRange == null || dateRange.Value.Overlap(registratie.Datum.Date)))
+                total = total.Add(timeRegistration.Tijd);
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Calculates the total time spent on this task by the given user in the given daterange.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="dateRange">The date range.</param>
+        /// <returns></returns>
+        public virtual TimeSpan TotalTimeSpent(Gebruiker user, DateRange? dateRange)
+        {
+            TimeSpan total = new TimeSpan(0);
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            {
+                if ((user != null || timeRegistration.Gebruiker == user) && (dateRange == null || dateRange.Value.Overlap(timeRegistration.Datum.Date)))
                 {
-                    totaal = totaal.Add(registratie.Tijd);
+                    total = total.Add(timeRegistration.Tijd);
                 }
             }
-            return totaal;
+            return total;
         }
 
         /// <summary>
-        /// Totaal bestedTijd per dag
+        /// Calculates the total time spent on this task on the given date.
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date">The date.</param>
         /// <returns></returns>
-        public virtual TimeSpan TotaalBestedeTijd(DateTime date)
+        public virtual TimeSpan TotalTimeSpent(DateTime date)
         {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            TimeSpan total = new TimeSpan(0);
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if (registratie.Datum.Date == date.Date)
+                if (timeRegistration.Datum.Date == date.Date)
                 {
-                    totaal = totaal.Add(registratie.Tijd);
+                    total = total.Add(timeRegistration.Tijd);
                 }
             }
-            return totaal;
+            return total;
         }
 
         /// <summary>
-        /// Geeft de totaal bestede tijd aan deze taak vanaf de gespecificeerde 'vanaf' datum tot en met de gespecificeerde 'totEnMet' datum
+        /// Calculates the total time spent on this task between the given start and end date.
         /// </summary>
-        /// <param name="vanaf"></param>
-        /// <param name="totEnMet"></param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
         /// <returns></returns>
-        public virtual TimeSpan TotaalBestedeTijd(DateTime vanaf, DateTime totEnMet)
+        public virtual TimeSpan TotalTimeSpent(DateTime startDate, DateTime endDate)
         {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            TimeSpan total = new TimeSpan(0);
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if (registratie.Datum.Date >= vanaf.Date && registratie.Datum.Date <= totEnMet.Date)
+                if (timeRegistration.Datum.Date >= startDate.Date && timeRegistration.Datum.Date <= endDate.Date)
                 {
-                    totaal = totaal.Add(registratie.Tijd);
+                    total = total.Add(timeRegistration.Tijd);
                 }
             }
-            return totaal;
+            return total;
         }
 
         /// <summary>
-        /// Totaal bestedTijd per dag per gebruiker
+        /// Calculates the total time spent on this task by the given user on the given date.
         /// </summary>
-        /// <param name="gebruiker">Gebruiker</param>
-        /// <param name="date">Datum</param>
+        /// <param name="user">The user.</param>
+        /// <param name="date">The date.</param>
         /// <returns></returns>
-        public virtual TimeSpan TotaalBestedeTijd(Gebruiker gebruiker, DateTime date)
+        public virtual TimeSpan TotaalBestedeTijd(Gebruiker user, DateTime date)
         {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            TimeSpan total = new TimeSpan(0);
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if (registratie.Gebruiker == gebruiker && registratie.Datum.Date == date.Date)
+                if (timeRegistration.Gebruiker == user && timeRegistration.Datum.Date == date.Date)
                 {
-                    totaal = totaal.Add(registratie.Tijd);
+                    total = total.Add(timeRegistration.Tijd);
                 }
             }
-            return totaal;
+            return total;
         }
 
         /// <summary>
-        /// Geef alle registraties terug van een gebruiker
+        /// Gets all timeregistrations of the given user.
         /// </summary>
-        /// <param name="gebruiker"></param>
+        /// <param name="user">The user.</param>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GeeftTijdregistratievanGebruiker(Gebruiker gebruiker)
+        public virtual IList<TijdRegistratie> GetTimeRegistrationsFor(Gebruiker user)
         {
-            IList<TijdRegistratie> userTijdRegistraties = new List<TijdRegistratie>();
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            IList<TijdRegistratie> userTimeRegistrations = new List<TijdRegistratie>();
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if (registratie.Gebruiker == gebruiker)
+                if (timeRegistration.Gebruiker == user)
                 {
-                    userTijdRegistraties.Add(registratie);
+                    userTimeRegistrations.Add(timeRegistration);
                 }
             }
-            return userTijdRegistraties;
+            return userTimeRegistrations;
         }
 
         /// <summary>
-        /// Geef alle registraties terug van een gebruiker voor een bepaalde datum
+        /// Gets all timeregistrations of the given user for the given sprint and date.
         /// </summary>
-        /// <param name="gebruiker">gebruiker</param>
-        /// <param name="sprint">sprint</param>
-        /// <param name="date">datum</param>
+        /// <param name="user">The user.</param>
+        /// <param name="sprint">The sprint.</param>
+        /// <param name="date">The date.</param>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GeeftTijdregistratievanGebruiker(Gebruiker gebruiker, Sprint sprint, DateTime date)
+        public virtual IList<TijdRegistratie> GetTimeRegistrationsFor(Gebruiker user, Sprint sprint, DateTime date)
         {
-            IList<TijdRegistratie> userTijdRegistraties = new List<TijdRegistratie>();
-            foreach (TijdRegistratie registratie in tijdRegistraties)
+            IList<TijdRegistratie> userTimeRegistrations = new List<TijdRegistratie>();
+            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
             {
-                if (registratie.Gebruiker == gebruiker && registratie.Sprint == sprint && registratie.Datum.ToShortDateString() == date.ToShortDateString())
+                if (timeRegistration.Gebruiker == user && timeRegistration.Sprint == sprint && timeRegistration.Datum.ToShortDateString() == date.ToShortDateString())
                 {
-                    userTijdRegistraties.Add(registratie);
+                    userTimeRegistrations.Add(timeRegistration);
                 }
             }
-            return userTijdRegistraties;
+            return userTimeRegistrations;
         }
 
         /// <summary>
-        /// Sluit deze taak. De status wordt nu afgesloten.
-        /// En dat datum waarop de taak is afgesloten wordt opgeslagen
+        /// Close this task.
         /// </summary>
-        public virtual void SluitTaak()
+        public virtual void Close()
         {
-            Status = Status.Afgesloten;
+            status = Status.Afgesloten;
             datumAfgesloten = DateTime.Now;
         }
 
         /// <summary>
-        /// De Status zal NietOpgepakt worden en de behandelaar raakt zijn taak kwijt.
-        /// todo: zie beneden.
+        /// Sets this task as not-taken.
         /// </summary>
-        public virtual void ZetTaakAlsNietOpgepakt()
+        public virtual void SetAsNotTaken()
         {
             if (behandelaar != null)
             {
@@ -426,63 +420,59 @@ namespace JelloScrum.Model.Entities
             }
         }
 
-        //todo: refactoren / samenvoegen met bovenstaande op het moment dat die ook een logbericht gaat maken
+        //todo: refactoren / combine with above and create logmessage?
         /// <summary>
-        /// Ontkoppel deze taak en zet status als niet opgepakt. Ook wordt er een logbericht van deze actie gemaakt.
+        /// Decouple this task from the user it was assigned to, set status as open and create a logmessage.
         /// </summary>
-        /// <param name="titel">De titel van het logbericht.</param>
-        /// <param name="text">De text van het logbericht.</param>
-        public virtual void OntKoppelTaakEnZetStatusAlsNietOpgepakt(string titel, string text)
+        public virtual void UnassignTaskAndSetSatusAsOpen(string logTitle, string logText)
         {
             if (behandelaar != null)
             {
-                text = text + " \nDe behandelaar was " + behandelaar.Gebruiker.VolledigeNaam;
+                logText = logText + " \nWas assigned to: " + behandelaar.Gebruiker.VolledigeNaam;
                 behandelaar.GeefTaakAf(this);
             }
 
-            MaakLogBericht(titel, text);
+            CreateLogmessage(logTitle, logText);
         }
 
         /// <summary>
-        /// Maak een logbericht voor deze task met de gegeven titel en tekst.
+        /// Create a logmessage
         /// </summary>
-        /// <param name="titel">De titel.</param>
-        /// <param name="text">De text.</param>
-        /// <returns>Een logbericht.</returns>
-        private void MaakLogBericht(string titel, string text)
+        /// <param name="title">The title.</param>
+        /// <param name="text">The text.</param>
+        private void CreateLogmessage(string title, string text)
         {
-            TaskLogBericht logBericht = new TaskLogBericht(this, titel, text);
-            if (!logBerichten.Contains(logBericht))
+            TaskLogBericht logMessage = new TaskLogBericht(this, title, text);
+            if (!logBerichten.Contains(logMessage))
             {
-                logBerichten.Add(logBericht);
+                logBerichten.Add(logMessage);
             }
         }
 
         /// <summary>
-        /// Voeg een tijdregistratie toe.
+        /// Adds a timeregistration.
         /// </summary>
-        /// <param name="tijdRegistratie">De tijdregistratie.</param>
-        private void VoegTijdRegistratieToe(TijdRegistratie tijdRegistratie)
+        /// <param name="timeRegistration">The time registration.</param>
+        private void AddTimeRegistration(TijdRegistratie timeRegistration)
         {
-            if (!tijdRegistraties.Contains(tijdRegistratie))
+            if (!tijdRegistraties.Contains(timeRegistration))
             {
-                tijdRegistraties.Add(tijdRegistratie);
+                tijdRegistraties.Add(timeRegistration);
             }
-            tijdRegistratie.Task = this;
+            timeRegistration.Task = this;
         }
 
         /// <summary>
-        /// Verwijderd een tijdregistatie
+        /// Removes a timeregistration.
         /// </summary>
-        /// <param name="tijdRegistratie">de tijdregistratie</param>
-        public virtual void VerwijderTijdRegistratie(TijdRegistratie tijdRegistratie)
+        /// <param name="timeRegistration">The time registration.</param>
+        public virtual void RemoveTimeRegistration(TijdRegistratie timeRegistration)
         {
-            if (tijdRegistraties.Contains(tijdRegistratie))
+            if (tijdRegistraties.Contains(timeRegistration))
             {
-                tijdRegistraties.Remove(tijdRegistratie);
+                tijdRegistraties.Remove(timeRegistration);
             }
         }
-
 
         #endregion
     }

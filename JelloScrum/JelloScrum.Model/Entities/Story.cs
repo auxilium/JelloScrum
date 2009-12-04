@@ -410,7 +410,7 @@ namespace JelloScrum.Model.Entities
             TimeSpan total = new TimeSpan(0);
             foreach (Task task in tasks)
             {
-                total = total.Add(task.TotaalBestedeTijd());
+                total = total.Add(task.TotalTimeSpent());
             }
             return total;
         }
@@ -426,7 +426,7 @@ namespace JelloScrum.Model.Entities
             TimeSpan total = new TimeSpan(0);
             foreach (Task task in tasks)
             {
-                total = total.Add(task.TotaalBestedeTijd(startDate, endDate));
+                total = total.Add(task.TotalTimeSpent(startDate, endDate));
             }
             return total;
         }

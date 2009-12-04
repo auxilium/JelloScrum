@@ -34,7 +34,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSaveTaakAlsDone()
         {
-            taak.SluitTaak();
+            taak.Close();
 
             Assert.IsTrue(taak.Status == Status.Afgesloten);
         }

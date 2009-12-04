@@ -130,7 +130,7 @@ if IsDefined("mijnTaken") and mijntaken is not null:
       <span class="taskTitle">${HtmlEncode(taak.Omschrijving)}      
       </span>
       <span class="behandelaar">${taak.Behandelaar.Gebruiker.Naam}</span>
-      <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotaalBestedeTijd())}</span>
+      <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotalTimeSpent())}</span>
       
       <a href="#" class="log">Logberichten (${taak.LogBerichten.Count})</a>
       <a href="#" class="commentaar">Commentaar (${taak.CommentaarBerichten.Count})</a>

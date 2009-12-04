@@ -151,20 +151,20 @@ namespace JelloScrum.Services
                         case Status.NietOpgepakt:
                             taskRow.TaskOpenId = task.Id.ToString();
                             taskRow.TaskOpenTitle = task.Titel;
-                            taskRow.TaskOpenBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskOpenBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskOpenBehandelaar = task.AssignedUserName;
+                            taskRow.TaskOpenBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                         case Status.Opgepakt:
                             taskRow.TaskInProgressId = task.Id.ToString();
                             taskRow.TaskInProgressTitle = task.Titel;
-                            taskRow.TaskInProgressBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskInProgressBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskInProgressBehandelaar = task.AssignedUserName;
+                            taskRow.TaskInProgressBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                         case Status.Afgesloten:
                             taskRow.TaskDoneId = task.Id.ToString();
                             taskRow.TaskDoneTitle = task.Titel;
-                            taskRow.TaskDoneBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskDoneBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskDoneBehandelaar = task.AssignedUserName;
+                            taskRow.TaskDoneBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                     }
 

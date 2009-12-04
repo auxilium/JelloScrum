@@ -49,7 +49,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegTijdRegistratieToe()
         {
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
 
             Assert.AreEqual(1, task.TijdRegistraties.Count);
         }
@@ -57,7 +57,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegTijdRegistratieToeZetRelaties()
         {
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
 
             Assert.IsTrue(task.TijdRegistraties[0].Task == task);
         }
@@ -75,8 +75,8 @@ namespace JelloScrum.Model.Tests.Model
         {
             Gebruiker gebruiker2 = new Gebruiker();
 
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd);
-            task.MaakTijdRegistratie(gebruiker2, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker2, DateTime.Now, sprint, tijd);
 
             Assert.AreEqual(2, task.TijdRegistraties.Count);
             Assert.IsTrue(task.TijdRegistraties[0].Gebruiker != task.TijdRegistraties[1].Gebruiker);
@@ -88,8 +88,8 @@ namespace JelloScrum.Model.Tests.Model
             Sprint sprint2 = new Sprint();
             project.AddSprint(sprint2);
 
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd);
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint2, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint2, tijd);
             
             Assert.IsTrue(task.TijdRegistraties[0].Sprint != task.TijdRegistraties[1].Sprint);
         }
@@ -99,7 +99,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             TimeSpan tijd2 = new TimeSpan();
 
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd2);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd2);
             Assert.AreEqual(0, task.TijdRegistraties.Count);
         }
 
@@ -108,9 +108,9 @@ namespace JelloScrum.Model.Tests.Model
         {
             TimeSpan tijd2 = new TimeSpan();
             //eerst tijd registreren
-            task.MaakTijdRegistratie(gebruiker, DateTime.Today, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Today, sprint, tijd);
             //daarna een lege tijd registreren
-            task.MaakTijdRegistratie(gebruiker, DateTime.Today, sprint, tijd2);
+            task.RegisterTime(gebruiker, DateTime.Today, sprint, tijd2);
             Assert.AreEqual(0, task.TijdRegistraties.Count);
         }
 
@@ -119,7 +119,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             TimeSpan tijd2 = new TimeSpan();
 
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, new Sprint(), tijd2);
+            task.RegisterTime(gebruiker, DateTime.Now, new Sprint(), tijd2);
             Assert.Fail();
         }
 
@@ -127,12 +127,12 @@ namespace JelloScrum.Model.Tests.Model
         public void TestBerekenTotaalBestedeTijd()
         {
             TimeSpan tijd2 = new TimeSpan(3, 29, 15);
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now, sprint, tijd);
-            task.MaakTijdRegistratie(gebruiker, DateTime.Now.AddDays(1), sprint, tijd2);
+            task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
+            task.RegisterTime(gebruiker, DateTime.Now.AddDays(1), sprint, tijd2);
 
             TimeSpan expected = tijd + tijd2;
 
-            Assert.AreEqual(expected, task.TotaalBestedeTijd());
+            Assert.AreEqual(expected, task.TotalTimeSpent());
         }
     }
 }

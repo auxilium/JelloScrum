@@ -75,9 +75,9 @@ namespace JelloScrum.Model.Tests.Model
         {
             task3 = new Task(story2);
 
-            task.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 15, 10));
-            task2.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 20, 10));
-            task3.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 25, 10));
+            task.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 15, 10));
+            task2.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 20, 10));
+            task3.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 25, 10));
 
             sprint.CreateSprintStoryFor(story);
             sprint.CreateSprintStoryFor(story2);

@@ -230,7 +230,7 @@ namespace JelloScrum.Web.Components
             double total = 0;
             foreach (Task task in sprint.GetAllTasks())
             {
-                total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(dag));
+                total += TimeSpanHelper.TimeSpanInMinuten(task.TotalTimeSpent(dag));
             }
             return total.ToString();
         }

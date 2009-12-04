@@ -148,7 +148,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">De task.</param>
         public void TaskOpslaanAlsNietOpgepakt([ARFetch("id")] Task task)
         {
-            task.ZetTaakAlsNietOpgepakt();
+            task.SetAsNotTaken();
             TaskRepository.Save(task);
             CancelView();
             CancelLayout();
@@ -172,7 +172,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="taak">De taak.</param>
         public void SluitTaak([ARFetch("taakId")] Task taak)
         {
-            taak.SluitTaak();
+            taak.Close();
             TaskRepository.Save(taak);
 
             CancelView();
@@ -190,7 +190,7 @@ namespace JelloScrum.Web.Controllers
 
             Gebruiker gebruiker = CurrentUser;
 
-            tmpTijdRegistratie.Task.MaakTijdRegistratie(gebruiker, DateTime.Now, gebruiker.ActieveSprint, tmpTijdRegistratie.Tijd);
+            tmpTijdRegistratie.Task.RegisterTime(gebruiker, DateTime.Now, gebruiker.ActieveSprint, tmpTijdRegistratie.Tijd);
 
             TaskRepository.Save(tmpTijdRegistratie.Task);
 

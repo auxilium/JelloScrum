@@ -454,7 +454,7 @@ namespace JelloScrum.Model.Entities
                     if (task.Status == Status.Opgepakt)
                     {
                         tasks.Add(task);
-                        task.OntKoppelTaakEnZetStatusAlsNietOpgepakt("Sprint closed", "This sprint is closed. ");
+                        task.UnassignTaskAndSetSatusAsOpen("Sprint closed", "This sprint is closed. ");
                     }
                 }
             }

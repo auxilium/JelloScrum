@@ -89,7 +89,7 @@ namespace JelloScrum.Web.Controllers
         {
             foreach (Task task in sprintStory.Story.Tasks)
             {
-                task.SluitTaak();
+                task.Close();
                 TaskRepository.Save(task);
             }
             CancelView();

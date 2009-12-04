@@ -54,7 +54,7 @@ namespace JelloScrum.Web.Controllers
         public void Verwijder([ARFetch("commentId")] TaskCommentaarBericht bericht)
         {
             Task task = bericht.LogObject;
-            task.VerwijderCommentaarBericht(bericht);
+            task.RemoveComment(bericht);
             TaskRepository.SaveOrUpdate(task);
             RedirectToReferrer();
         }
@@ -82,7 +82,7 @@ namespace JelloScrum.Web.Controllers
             foreach (TaskCommentaarBericht taakCommentaar in new List<TaskCommentaarBericht>(taak.CommentaarBerichten))
             {
                 if (!taakCommentaren.Contains(taakCommentaar))
-                    taak.VerwijderCommentaarBericht(taakCommentaar);
+                    taak.RemoveComment(taakCommentaar);
             }
 
             //voeg alle nieuwe commentaren toe
@@ -93,7 +93,7 @@ namespace JelloScrum.Web.Controllers
                     taakCommentaar.LogObject = taak;
                     taakCommentaar.Gebruiker = CurrentUser;
                     taakCommentaar.Datum = DateTime.Now;
-                    taak.VoegCommentaarBerichtToe(taakCommentaar);
+                    taak.AddComment(taakCommentaar);
                 }
             }
 

@@ -158,7 +158,7 @@ namespace JelloScrum.Web.Components
             StringBuilder sb = new StringBuilder();
           
             sb.AppendLine("<li class='taskli'>");
-            sb.AppendFormat("<div class='theader'>{0}<span class='time'>[{1}]</span></div>", task.Titel, OpmaakHelper.Tijd(task.TotaalBestedeTijd()));
+            sb.AppendFormat("<div class='theader'>{0}<span class='time'>[{1}]</span></div>", task.Titel, OpmaakHelper.Tijd(task.TotalTimeSpent()));
             sb.AppendLine("<div class='tcontent'>");
 
             switch (mode)
@@ -167,7 +167,7 @@ namespace JelloScrum.Web.Components
                     sb.AppendFormat("<div class='tbuttons'>{0}</div>", RenderMyTasksButtons(task));
                     break;
                 case StoryAndTasksComponentMode.TakenTasks:
-                    sb.AppendFormat("behandelaar: {0}", task.BehandelaarNaam);
+                    sb.AppendFormat("behandelaar: {0}", task.AssignedUserName);
                     sb.AppendFormat("<div class='tbuttons'>{0}</div>", RenderTakenTasksButtons(task));
                     break;
                 case StoryAndTasksComponentMode.ClosedTasks:

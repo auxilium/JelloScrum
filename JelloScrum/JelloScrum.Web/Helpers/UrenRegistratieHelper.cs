@@ -69,7 +69,7 @@ namespace JelloScrum.Web.Helpers
         /// </summary>
         public void MaakUrenRegistratie()
         {
-            task.MaakTijdRegistratie(sprintGebruiker.Gebruiker, dag, sprintGebruiker.Sprint, TimeSpanHelper.Parse(aantalUren.ToString()));
+            task.RegisterTime(sprintGebruiker.Gebruiker, dag, sprintGebruiker.Sprint, TimeSpanHelper.Parse(aantalUren.ToString()));
         }
     }
 }

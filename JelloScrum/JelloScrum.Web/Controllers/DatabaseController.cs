@@ -154,7 +154,7 @@ namespace JelloScrum.Web.Controllers
                     task.Story = story;
                     story.AddTask(task);
                     TaskCommentaarBericht bericht = new TaskCommentaarBericht(task, "blabla comment teskt " + i.ToString());
-                    task.VoegCommentaarBerichtToe(bericht);
+                    task.AddComment(bericht);
                     StoryRepository.SaveOrUpdate(story);
                 }
                 story.AddComment("Storycomment James teskt");
@@ -172,7 +172,7 @@ namespace JelloScrum.Web.Controllers
                     task.Story = story;
                     story.AddTask(task);
                     TaskCommentaarBericht bericht = new TaskCommentaarBericht(task,"blabla comment teskt " + i.ToString());
-                    task.VoegCommentaarBerichtToe(bericht);
+                    task.AddComment(bericht);
                     StoryRepository.Save(story);
                 }
                 story.AddComment("Storycomment James teskt");
@@ -257,8 +257,8 @@ namespace JelloScrum.Web.Controllers
                     if (sprintStory.Status != Status.NietOpgepakt)
                     {
                         // ook even wat werkuren toevoegen
-                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].MaakTijdRegistratie(user2, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
-                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].MaakTijdRegistratie(user3, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
+                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].RegisterTime(user2, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
+                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].RegisterTime(user3, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
 
                         SprintStoryRepository.Save(sprintStory);
                     }

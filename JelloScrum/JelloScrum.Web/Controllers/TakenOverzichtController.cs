@@ -71,7 +71,7 @@ namespace JelloScrum.Web.Controllers
             try
             {
                 SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
-                taak.SluitTaak();
+                taak.Close();
                 TaskRepository.Save(taak);
                 PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
             }

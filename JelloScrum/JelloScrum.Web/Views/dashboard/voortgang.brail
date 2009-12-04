@@ -141,16 +141,16 @@
         </td>
         <td>&nbsp;</td>
         <td>
-          ${OpmaakHelper.Tijd(task.TotaalBestedeTijd())}
+          ${OpmaakHelper.Tijd(task.TotalTimeSpent())}
         </td>
         <?brail
             for werkdag in werkdagen:
           ?>
         <td style="text-align:center;">
           <?brail
-                  if task.TotaalBestedeTijd(werkdag) != TimeSpan.Zero:
+                  if task.TotalTimeSpent(werkdag) != TimeSpan.Zero:
                 ?>
-          ${OpmaakHelper.Tijd(task.TotaalBestedeTijd(werkdag))}
+          ${OpmaakHelper.Tijd(task.TotalTimeSpent(werkdag))}
           <?brail
                   end
                 ?>

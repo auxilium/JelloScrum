@@ -35,8 +35,8 @@
 							<div class="task_note_content">
 								#${taak.Id}: ${taak.Titel}
 								<div class="details">
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
@@ -56,8 +56,8 @@
 							<div class="task_note_content">
 								#${taak.Id}: ${taak.Titel}
 								<div class="details">
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
@@ -78,8 +78,8 @@
 								#${taak.Id}: ${taak.Titel}
 								<div class="details">
 									<br/>
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
