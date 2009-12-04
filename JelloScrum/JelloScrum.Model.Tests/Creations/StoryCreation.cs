@@ -52,7 +52,7 @@ namespace JelloScrum.Model.Tests.Creations
         {
             Story story = new Story(project, aangemaaktDoor, Impact.Normaal, StoryType.UserStory);
             story.StoryPoints = storyPoints;
-            story.Schatting = new TimeSpan(story.WaardeStoryPoints*hoursPerStoryPoint);
+            story.Schatting = new TimeSpan(story.StoryPointsValue*hoursPerStoryPoint);
             story.ProductBacklogPrioriteit = moscowPrio;
             return story;
         }

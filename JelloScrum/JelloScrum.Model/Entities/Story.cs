@@ -34,9 +34,9 @@ namespace JelloScrum.Model.Entities
         private string omschrijving = string.Empty;
         private string howtoDemo = string.Empty;
         private string notitie = string.Empty;
-        private TimeSpan schatting = new TimeSpan();
+        private TimeSpan schatting;
 
-        private Project project = null;
+        private Project project;
         private Gebruiker aangemaaktDoor;
         private Impact? impact;
         private Prioriteit productBacklogPrioriteit = Prioriteit.Onbekend;
@@ -64,23 +64,23 @@ namespace JelloScrum.Model.Entities
         /// Initializes a new instance of the <see cref="Story"/> class.
         /// </summary>
         /// <param name="project">The project.</param>  
-        /// <param name="aangemaaktDoor">The aangemaakt door.</param>
+        /// <param name="createdBy">The user that created this story.</param>
         /// <param name="impact">The impact.</param>
         /// <param name="storyType">Type of the story.</param>
-        public Story(Project project, Gebruiker aangemaaktDoor, Impact? impact, StoryType storyType)
+        public Story(Project project, Gebruiker createdBy, Impact? impact, StoryType storyType)
         {
             if (project == null)
             {
-                throw new ArgumentNullException("project", "Het project mag niet null zijn.");
+                throw new ArgumentNullException("project", "Project can't be null.");
             }
 
-            if (aangemaaktDoor == null)
+            if (createdBy == null)
             {
-                throw new ArgumentNullException("aangemaaktDoor", "De gebruiker die deze story aanmaakt kan niet null zijn.");
+                throw new ArgumentNullException("createdBy", "The user creating this story can't be null.");
             }
 
             project.AddStory(this);
-            this.aangemaaktDoor = aangemaaktDoor;
+            this.aangemaaktDoor = createdBy;
             this.impact = impact;
             this.storyType = storyType;
         }
@@ -256,83 +256,99 @@ namespace JelloScrum.Model.Entities
         #region derived properties
 
         /// <summary>
-        /// Geeft de status van deze story gebaseerd op de statussen van de tasks.
-        /// - Als alle tasks afgesloten zijn dan is de story ook afgesloten
-        /// - Als een of meer tasks opgepakt zijn dan is de story ook opgepakt
-        /// - Als alle taken niet zijn opgepakt of afgesloten dna is de story status nietopgepakt
+        /// Gets the state of this story based on the states of its tasks
+        /// - if all tasks are closed, the story is closed
+        /// - if a task is taken, the story is taken
+        /// - if no tasks are taken, the story is not taken
+        /// todo: different states for stories and tasks?
         /// </summary>
-        /// <value>De status.</value>
+        /// <value>The state.</value>
         public virtual Status Status
         {
             get
             {
-                int opgepakt = 0;
-                int afgesloten = 0;
-                int ingepland = 0;
+                int taken = 0;
+                int closed = 0;
+                
                 foreach (Task task in tasks)
                 {
                     if (task.Status == Status.Opgepakt)
-                    {
-                        opgepakt++;
-                    }
+                        taken++;
+
                     if (task.Status == Status.Afgesloten)
-                    {
-                        afgesloten++;
-                    }
+                        closed++;
                 }
 
-                if (afgesloten == tasks.Count && tasks.Count > 0)
-                {
+                if (closed == tasks.Count && tasks.Count > 0)
                     return Status.Afgesloten;
-                }
-                else if (opgepakt == 0 || tasks.Count == 0)
-                {
+
+                if (taken == 0 || tasks.Count == 0)
                     return Status.NietOpgepakt;
-                }
-                else
-                {
-                    return Status.Opgepakt;
-                }
+
+                return Status.Opgepakt;
             }
         }
 
         /// <summary>
-        /// Geeft aan of de story gepland kan worden
+        /// Determines if a story is plannable
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance is te plannen; otherwise, <c>false</c>.
+        /// 	<c>true</c> if this instance is plannable; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool IsTePlannen
+        public virtual bool IsPlannable
         {
             get
             {
-                // story is afgesloten dus niet te plannen
                 if (Status == Status.Afgesloten)
-                {
                     return false;
-                }
 
                 foreach (SprintStory sprintStory in SprintStories)
                 {
-                    // story zit in een sprint die nog niet afgesloten is. story is dus ingepland en er wordt nog aan gewerkt
+                    // story has an active sprintstory / sprint
                     if (!sprintStory.Sprint.IsAfgesloten)
-                    {
                         return false;
-                    }
                 }
+
                 return true;
             }
         }
 
         /// <summary>
-        /// Geef de getal waarde van de storypoint terug
+        /// Gets the value of the storypoints
         /// </summary>
-        /// <returns>int met de storypoint waarde</returns>
-        public virtual int WaardeStoryPoints
+        /// <value>The story points value.</value>
+        public virtual int StoryPointsValue
         {
             get
             {
                 return (int) Enum.Parse(typeof (StoryPoint), Enum.GetName(typeof (StoryPoint), StoryPoints));
+            }
+        }
+
+        /// <summary>
+        /// Gets the date this story is closed.
+        /// A story is closed when the last task is closed, the cosed date
+        /// is therefore the same as the date of the last closed task.
+        /// </summary>
+        /// <value>The closed date, or null if there are still open tasks.</value>
+        public virtual DateTime? ClosedDate
+        {
+            get
+            {
+                if (Status != Status.Afgesloten)
+                    return null;
+
+                DateTime? lastDate = null;
+
+                foreach (Task task in tasks)
+                {
+                    if (lastDate.HasValue == false || task.DatumAfgesloten > lastDate.Value)
+                    {
+                        lastDate = task.DatumAfgesloten;
+                    }
+                }
+
+                return lastDate;
             }
         }
 
@@ -341,23 +357,21 @@ namespace JelloScrum.Model.Entities
         #region methods
 
         /// <summary>
-        /// Voeg een task aan deze story toe.
+        /// Adds the given task
         /// </summary>
-        /// <param name="task">De task.</param>
-        public virtual void VoegTaskToe(Task task)
+        /// <param name="task">The task.</param>
+        public virtual void AddTask(Task task)
         {
-            if (!Tasks.Contains(task))
-            {
+            if (!tasks.Contains(task))
                 tasks.Add(task);
-            }
             task.Story = this;
         }
 
         /// <summary>
-        /// Verwijder de gegeven task van deze story
+        /// Removes the given task
         /// </summary>
-        /// <param name="task">De task.</param>
-        public virtual void VerwijderTask(Task task)
+        /// <param name="task">The task.</param>
+        public virtual void RemoveTask(Task task)
         {
             if (tasks.Contains(task))
                 tasks.Remove(task);
@@ -365,142 +379,108 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Voeg eem sprintStory aan deze story toe.
+        /// Adds the given sprintstory
         /// </summary>
-        /// <param name="sprintStory">De sprintstory.</param>
-        protected internal virtual void VoegSprintStoryToe(SprintStory sprintStory)
+        /// <param name="sprintStory">The sprintstory.</param>
+        protected internal virtual void AddSprintStory(SprintStory sprintStory)
         {
             if (!sprintStories.Contains(sprintStory))
-            {
                 sprintStories.Add(sprintStory);
-            }
             sprintStory.Story = this;
         }
 
         /// <summary>
-        /// Voegs the commentaar bericht toe.
+        /// Adds the given text as comment.
         /// </summary>
-        /// <param name="tekst">The tekst.</param>
-        public virtual void VoegCommentaarBerichtToe(string tekst)
+        /// <param name="text">The tekst.</param>
+        public virtual void AddComment(string text)
         {
-            if (!string.IsNullOrEmpty(tekst))
+            if (!string.IsNullOrEmpty(text))
             {
-                StoryCommentaarBericht bericht = new StoryCommentaarBericht(this, tekst);
-                commentaarBerichten.Add(bericht);
+                commentaarBerichten.Add(new StoryCommentaarBericht(this, text));
             }
         }
 
         /// <summary>
-        /// Berekent de totaal bestede tijd aan deze story 
-        /// aan de hand van de op de taken geboekte tijd.
-        /// </summary>
-        /// <returns>De totaal bestede tijd.</returns>
-        public virtual TimeSpan TotaalBestedeTijd()
-        {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (Task task in tasks)
-            {
-                totaal = totaal.Add(task.TotaalBestedeTijd());
-            }
-            return totaal;
-        }
-
-        /// <summary>
-        /// Berekent de totaal bestede tijd aan deze story 
-        /// aan de hand van de op de taken geboekte tijd tot en met de gespecificeerde datum
-        /// </summary>
-        /// <returns>De totaal bestede tijd.</returns>
-        public virtual TimeSpan TotaalBestedeTijd(DateTime vanaf, DateTime totEnMet)
-        {
-            TimeSpan totaal = new TimeSpan(0);
-            foreach (Task task in tasks)
-            {
-                totaal = totaal.Add(task.TotaalBestedeTijd(vanaf, totEnMet));
-            }
-            return totaal;
-        }
-
-
-        /// <summary>
-        /// Geeft lijst met alle taken met bepaalde status.
-        /// </summary>
-        /// <returns>Lijst van taken met bepaalde status</returns>
-        public virtual IList<Task> GeefTakenMetStatus(Status status)
-        {
-            IList<Task> taken = new List<Task>();
-            foreach (Task task in tasks)
-            {
-                if (task.Status == status)
-                {
-                    taken.Add(task);
-                }
-            }
-            return taken;
-        }
-
-        /// <summary>
-        /// Geeft alle tijdregistraties van de taken van deze story
+        /// Gets the total amount of time spent on this story.
         /// </summary>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GeefTijdRegistraties()
+        public virtual TimeSpan TotalTimeSpent()
         {
-            List<TijdRegistratie> tijdRegistraties = new List<TijdRegistratie>();
+            TimeSpan total = new TimeSpan(0);
             foreach (Task task in tasks)
             {
-                tijdRegistraties.AddRange(task.TijdRegistraties);
+                total = total.Add(task.TotaalBestedeTijd());
             }
-            tijdRegistraties.Sort(delegate(TijdRegistratie t1, TijdRegistratie t2)
+            return total;
+        }
+
+        /// <summary>
+        /// Gets the total amount of time spent on this story between the given startdate and enddate.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public virtual TimeSpan TotalTimeSpent(DateTime startDate, DateTime endDate)
+        {
+            TimeSpan total = new TimeSpan(0);
+            foreach (Task task in tasks)
+            {
+                total = total.Add(task.TotaalBestedeTijd(startDate, endDate));
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Gets all tasks with the given state
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <returns></returns>
+        public virtual IList<Task> GetTasksWith(Status state)
+        {
+            IList<Task> tasksWithState = new List<Task>();
+            foreach (Task task in tasks)
+            {
+                if (task.Status == state)
+                    tasksWithState.Add(task);
+            }
+            return tasksWithState;
+        }
+
+        /// <summary>
+        /// Gets all timeregistrations for all tasks belonging to this story.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IList<TijdRegistratie> GetTimeRegistrations()
+        {
+            List<TijdRegistratie> timeRegistrations = new List<TijdRegistratie>();
+            foreach (Task task in tasks)
+            {
+                timeRegistrations.AddRange(task.TijdRegistraties);
+            }
+            timeRegistrations.Sort(delegate(TijdRegistratie t1, TijdRegistratie t2)
                                       {
                                           return t1.Datum.CompareTo(t2.Datum);
                                       });
 
-            return tijdRegistraties;
+            return timeRegistrations;
         }
-
+        
         /// <summary>
-        /// Check of de uren schatting van alle taken kleiner of gelijk is aan de uren schatting van de story
+        /// Determines whether the estimated time of all tasks is less then the estimated time of this story.
         /// </summary>
-        /// <returns>true als uren taken kleiner of gelijk is aan uren schatting story</returns>
-        public virtual bool CheckSchattingTaken()
+        /// <returns>
+        /// 	<c>true</c> if [is estimated time of tasks less then estimated time of story]; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory()
         {
-            double urenTask = 0; 
+            double timeTasks = 0; 
             foreach (Task task in Tasks)
             {
-                urenTask += task.Schatting.TotalMinutes;
+                timeTasks += task.Schatting.TotalMinutes;
             }
 
-            if(urenTask <= Schatting.TotalMinutes)
-                return true;
-            
-            return false;
-        }
-
-        /// <summary>
-        /// Geeft de datum waarop de laatste taak is afgesloten.
-        /// Er komt alleen een datum terug als alle taken van deze story zijn afgesloten.
-        /// Anders sturen we null terug.
-        /// </summary>
-        public virtual DateTime? DatumAfgesloten
-        {
-            get
-            {
-                if (Status != Status.Afgesloten)
-                    return null;
-
-                DateTime? laatsteDatum = null;
-
-                foreach (Task task in tasks)
-                {
-                    if (laatsteDatum.HasValue == false || task.DatumAfgesloten > laatsteDatum.Value)
-                    {
-                        laatsteDatum = task.DatumAfgesloten;
-                    }
-                }
-                               
-
-                return laatsteDatum;
-            }
-            
+            return timeTasks <= Schatting.TotalMinutes;
         }
 
         #endregion

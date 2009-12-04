@@ -96,7 +96,7 @@
           ${OpmaakHelper.Tijd(sprintstory.Story.Schatting)}
         </td>
         <td>
-          ${OpmaakHelper.Tijd(sprintstory.Story.TotaalBestedeTijd())}
+          ${OpmaakHelper.Tijd(sprintstory.Story.TotalTimeSpent())}
         </td>
         <td style="text-align:center;" colspan="${werkdagen.Count}">
           &nbsp;

@@ -115,7 +115,7 @@ namespace JelloScrum.Web.Controllers
             foreach (Task task in new List<Task>(story.Tasks))
             {
                 if (!taken.Contains(task))
-                    story.VerwijderTask(task);
+                    story.RemoveTask(task);
             }
 
             //voeg alle nieuwe taken toe
@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Controllers
             {
                 if (tasks[i].Id == 0)
                 {
-                    story.VoegTaskToe(tasks[i]);
+                    story.AddTask(tasks[i]);
                 }
             }
 
@@ -144,7 +144,7 @@ namespace JelloScrum.Web.Controllers
             else
                 args.Add("projectId", story.Project.Id);
 
-            if (story.CheckSchattingTaken())
+            if (story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory())
             {
                 AddPositiveMessageToFlashBag("Story is opgeslagen.");
                 if (opslaanVolgendeHidden)

@@ -38,32 +38,32 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestStoryMagIngeplandWordenOmdatDezeNietAfgerondIs()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.Opgepakt;
             story.Tasks[1].Status = Status.Afgesloten;
 
-            Assert.IsTrue(story.IsTePlannen);
+            Assert.IsTrue(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagNietIngeplandWordenOmdatDezeAfgerondIs()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.Afgesloten;
             story.Tasks[1].Status = Status.Afgesloten;
             
-            Assert.IsFalse(story.IsTePlannen);
+            Assert.IsFalse(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagNietIngeplandWordenOmdatDezeNogInEenNietAfgeslotenSprintZit()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.Afgesloten;
             story.Tasks[1].Status = Status.Opgepakt;
@@ -72,21 +72,21 @@ namespace JelloScrum.Model.Tests.Model
             sprint2.CreateSprintStoryFor(story);
             sprint2.IsAfgesloten = true;
 
-            Assert.IsFalse(story.IsTePlannen);
+            Assert.IsFalse(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagIngeplandWordenOmdatDezeInEenAfgeslotenSprintZit()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.Afgesloten;
             story.Tasks[1].Status = Status.Opgepakt;
             sprint.CreateSprintStoryFor(story);
             sprint.IsAfgesloten = true;
 
-            Assert.IsTrue(story.IsTePlannen);
+            Assert.IsTrue(story.IsPlannable);
         }
     }
 }

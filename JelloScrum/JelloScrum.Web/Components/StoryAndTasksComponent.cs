@@ -125,7 +125,7 @@ namespace JelloScrum.Web.Components
             }
 
             sb.AppendFormat("<span class='moscow'>{0}</span>{1}", priority, story.Titel);
-            sb.AppendFormat("<span class='time'>{0}</span>", OpmaakHelper.UrenStatus(story.Schatting, story.TotaalBestedeTijd()));
+            sb.AppendFormat("<span class='time'>{0}</span>", OpmaakHelper.UrenStatus(story.Schatting, story.TotalTimeSpent()));
             sb.AppendLine("</div>");
             sb.AppendFormat("<div class='stext'>{0}</div>", RenderMarkdown(story.Omschrijving));
             sb.AppendFormat("<div class='stasks {0}'>", prioritycss);

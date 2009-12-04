@@ -27,7 +27,7 @@
 					</div>
 				</td>
 				<td class="droppable NietOpgepakt">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.NietOpgepakt): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(Status.NietOpgepakt): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>
@@ -48,7 +48,7 @@
 					<?brail end?>
 				</td>
 				<td class="droppable Opgepakt">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Opgepakt): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(Status.Opgepakt): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>
@@ -69,7 +69,7 @@
 					<?brail end?>
 				</td>
 				<td class="droppable Afgesloten">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Afgesloten): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(Status.Afgesloten): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>

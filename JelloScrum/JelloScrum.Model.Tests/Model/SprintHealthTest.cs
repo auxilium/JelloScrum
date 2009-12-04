@@ -60,11 +60,11 @@ namespace JelloScrum.Model.Tests.Model
             testCaseSprint.CreateSprintStoryFor(testCaseStory1);
 
             Task task1_1 = Creation.Task();
-            testCaseStory1.VoegTaskToe(task1_1);
+            testCaseStory1.AddTask(task1_1);
             task1_1.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(8,0,0));
             task1_1.SluitTaak();
             Task task1_2 = Creation.Task();
-            testCaseStory1.VoegTaskToe(task1_2);
+            testCaseStory1.AddTask(task1_2);
             task1_2.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(12, 0, 0));
             task1_2.SluitTaak();
         }

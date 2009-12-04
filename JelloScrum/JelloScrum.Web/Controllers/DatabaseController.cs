@@ -152,12 +152,12 @@ namespace JelloScrum.Web.Controllers
                     Task task = new Task();
                     task.Omschrijving = "Omschrijving voor JelloScrum story " + story.Titel + " taak nummer " + i.ToString();
                     task.Story = story;
-                    story.VoegTaskToe(task);
+                    story.AddTask(task);
                     TaskCommentaarBericht bericht = new TaskCommentaarBericht(task, "blabla comment teskt " + i.ToString());
                     task.VoegCommentaarBerichtToe(bericht);
                     StoryRepository.SaveOrUpdate(story);
                 }
-                story.VoegCommentaarBerichtToe("Storycomment James teskt");
+                story.AddComment("Storycomment James teskt");
                 StoryRepository.Save(story);
             }
             #endregion
@@ -170,12 +170,12 @@ namespace JelloScrum.Web.Controllers
                     Task task = new Task();
                     task.Omschrijving = "Omschrijving voor James story " + story.Titel + " taak nummer " + i.ToString();
                     task.Story = story;
-                    story.VoegTaskToe(task);
+                    story.AddTask(task);
                     TaskCommentaarBericht bericht = new TaskCommentaarBericht(task,"blabla comment teskt " + i.ToString());
                     task.VoegCommentaarBerichtToe(bericht);
                     StoryRepository.Save(story);
                 }
-                story.VoegCommentaarBerichtToe("Storycomment James teskt");
+                story.AddComment("Storycomment James teskt");
                 StoryRepository.Save(story);
             }
             #endregion
@@ -276,7 +276,7 @@ namespace JelloScrum.Web.Controllers
                 Story impediment = new Story(project_JelloScrum, user3, null, StoryType.Impediment);
                 impediment.Titel = "Impediment JelloScrum #" + i.ToString();
                 impediment.Omschrijving = "JelloScrum Impediment omschrijving";
-                impediment.VoegCommentaarBerichtToe("Ahum comment voor....." + i);
+                impediment.AddComment("Ahum comment voor....." + i);
                 StoryRepository.Save(impediment);
             }
             #endregion
@@ -287,7 +287,7 @@ namespace JelloScrum.Web.Controllers
                 Story impediment = new Story(project_James, user2, null, StoryType.Impediment);
                 impediment.Titel = "Impediment James #" + i.ToString();
                 impediment.Omschrijving = "James Impediment omschrijving";
-                impediment.VoegCommentaarBerichtToe("Ahum comment voor....." + i);
+                impediment.AddComment("Ahum comment voor....." + i);
                 StoryRepository.Save(impediment);
             }
             #endregion

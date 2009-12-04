@@ -60,7 +60,7 @@ namespace JelloScrum.Model.Entities
                 throw new ArgumentNullException("story", "De story mag niet null zijn.");
 
             sprint.AddSprintStory(this);
-            story.VoegSprintStoryToe(this);
+            story.AddSprintStory(this);
 
             this.schatting = schatting;
         }
@@ -127,7 +127,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (story.GeefTakenMetStatus(Status.NietOpgepakt).Count == 0)
+                if (story.GetTasksWith(Status.NietOpgepakt).Count == 0)
                     return true;
                 return false;
             }

@@ -41,7 +41,7 @@ namespace JelloScrum.Model.Tests.Model
             tijd = new TimeSpan(1, 30, 00); //1,5 uur
 
             story = new Story(project, gebruiker, null, StoryType.UserStory);
-            story.VoegTaskToe(task);
+            story.AddTask(task);
 
             base.SetUp();
         }

@@ -36,37 +36,37 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeenOpenStaandeTaken()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.Opgepakt;
             story.Tasks[1].Status = Status.Afgesloten;
 
-            Assert.AreEqual(0, story.GeefTakenMetStatus(Status.NietOpgepakt).Count);
+            Assert.AreEqual(0, story.GetTasksWith(Status.NietOpgepakt).Count);
         }
 
         [Test]
         public void TestEenOpenStaandeTaak()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.NietOpgepakt;
             story.Tasks[1].Status = Status.Afgesloten;
 
-            Assert.AreEqual(1, story.GeefTakenMetStatus(Status.Afgesloten).Count);
+            Assert.AreEqual(1, story.GetTasksWith(Status.Afgesloten).Count);
         }
 
         [Test]
         public void TestTweeOpenStaandeTaken()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
             story.Tasks[0].Status = Status.NietOpgepakt;
             story.Tasks[1].Status = Status.NietOpgepakt;
 
-            Assert.AreEqual(2, story.GeefTakenMetStatus(Status.NietOpgepakt).Count);
+            Assert.AreEqual(2, story.GetTasksWith(Status.NietOpgepakt).Count);
         }
 
   

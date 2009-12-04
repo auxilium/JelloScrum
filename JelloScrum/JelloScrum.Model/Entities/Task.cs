@@ -62,7 +62,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="story">De story.</param>
         public Task(Story story)
         {
-            story.VoegTaskToe(this);
+            story.AddTask(this);
         }
 
         /// <summary>

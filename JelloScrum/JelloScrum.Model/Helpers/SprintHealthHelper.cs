@@ -279,7 +279,7 @@ namespace JelloScrum.Model.Helpers
                 {
                     velocity.HoursTotalEstimatedInSprint += Convert.ToDecimal(sprintStory.Schatting.TotalHours);
                     if (sprintStory.Story.StoryPoints != StoryPoint.Onbekend)
-                        velocity.StoryPointsTotalEstimatedInSprint += sprintStory.Story.WaardeStoryPoints;
+                        velocity.StoryPointsTotalEstimatedInSprint += sprintStory.Story.StoryPointsValue;
 
                     if (sprintStory.Status == Status.Afgesloten)
                     {
@@ -287,7 +287,7 @@ namespace JelloScrum.Model.Helpers
                             Convert.ToDecimal(sprintStory.Schatting.TotalHours);
                         if (sprintStory.Story.StoryPoints != StoryPoint.Onbekend)
                             velocity.StoryPointsTotalEstimatedForCompletedStoriesInSprint +=
-                                sprintStory.Story.WaardeStoryPoints;
+                                sprintStory.Story.StoryPointsValue;
                     }
 
                     foreach (Task task in sprintStory.Story.Tasks)

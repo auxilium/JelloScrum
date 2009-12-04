@@ -169,7 +169,7 @@ namespace JelloScrum.Model.Entities
             List<Story> plannableStories = new List<Story>();
             foreach (Story story in Stories)
             {
-                if(story.IsTePlannen)
+                if(story.IsPlannable)
                     plannableStories.Add(story);
             }
             return plannableStories;

@@ -36,7 +36,7 @@ namespace JelloScrum.Model.Tests.Creations
             //project.VoegStoryToe(story);
             //sprint.MaakSprintStoryVoor(story);
             Task task = Task();
-            story.VoegTaskToe(task);
+            story.AddTask(task);
 
             SprintGebruiker sprintGebruiker = sprint.AddUser(gebruiker, SprintRol.Developer);
             sprintGebruiker.PakTaakOp(task);

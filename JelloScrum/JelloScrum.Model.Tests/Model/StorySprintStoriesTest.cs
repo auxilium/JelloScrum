@@ -62,8 +62,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryIsVolledigOpgepakt()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
             story.Tasks[0].Status = Status.Opgepakt;
@@ -75,8 +75,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryIsNietVolledigOpgepakt()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
             story.Tasks[0].Status = Status.Opgepakt;

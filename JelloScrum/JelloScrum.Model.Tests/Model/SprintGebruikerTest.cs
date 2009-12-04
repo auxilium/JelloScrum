@@ -80,10 +80,10 @@ namespace JelloScrum.Model.Tests.Model
         public void TestGeefOpgepakteTakenMetSprintBacklogPrioriteitMustHave()
         {
             Story story = Creation.StoryMetSprintStory(gebruiker);
-            story.VoegTaskToe(taak);
+            story.AddTask(taak);
 
             Story story2 = Creation.StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Must, sprintGebruiker.Sprint);
-            story2.VoegTaskToe(taak2);
+            story2.AddTask(taak2);
 
             sprintGebruiker.PakTaakOp(taak);
             sprintGebruiker.PakTaakOp(taak2);

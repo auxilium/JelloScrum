@@ -310,7 +310,7 @@ namespace JelloScrum.Model.Entities
             TimeSpan total = new TimeSpan(0);
             foreach (SprintStory sprintStory in sprintStories)
             {
-                total = total.Add(sprintStory.Story.TotaalBestedeTijd());
+                total = total.Add(sprintStory.Story.TotalTimeSpent());
             }
             return total;
         }
@@ -590,7 +590,7 @@ namespace JelloScrum.Model.Entities
 
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.Story.Status != Status.Afgesloten || (sprintStory.Story.Status == Status.Afgesloten && sprintStory.Story.DatumAfgesloten.Value.Date > date.Date))
+                if (sprintStory.Story.Status != Status.Afgesloten || (sprintStory.Story.Status == Status.Afgesloten && sprintStory.Story.ClosedDate.Value.Date > date.Date))
                     totalTime += sprintStory.Story.Schatting;
             }
 

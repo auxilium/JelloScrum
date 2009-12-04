@@ -53,7 +53,7 @@ namespace JelloScrum.Web.Controllers
         public void SaveSprintStoryToSprintGebruiker([ARFetch("sprintstory")] SprintStory sprintStory,
                                                      [ARFetch("sprintgebruiker")] SprintGebruiker sprintGebruiker)
         {
-            foreach (Task task in sprintStory.Story.GeefTakenMetStatus(Status.NietOpgepakt))
+            foreach (Task task in sprintStory.Story.GetTasksWith(Status.NietOpgepakt))
             {
                 sprintGebruiker.PakTaakOp(task);
             }
