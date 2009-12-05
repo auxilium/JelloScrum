@@ -50,7 +50,7 @@ namespace JelloScrum.Web.Controllers
         public void OpslaanTaak([ARDataBind("task", AutoLoad = AutoLoadBehavior.NullIfInvalidKey)] Task task, [ARFetch("sprintId")]Sprint sprint)
         {
             //de status wordt meegezonden, dus als de taak de status opgepakt krijgt, gaat de huidige gebruiker de taak oppakken
-            if (task.Status == Status.Opgepakt)
+            if (task.Status == State.Taken)
                 task.Behandelaar = sprint.GetSprintUserFor(CurrentUser);
             try
             {

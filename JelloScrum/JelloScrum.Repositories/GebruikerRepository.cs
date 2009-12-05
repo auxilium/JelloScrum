@@ -61,7 +61,7 @@ namespace JelloScrum.Repositories
             return list[0];
         }
 
-        public IList<Gebruiker> ZoekOpSysteemRol(JelloScrum.Model.Enumerations.SysteemRol rol)
+        public IList<Gebruiker> ZoekOpSysteemRol(JelloScrum.Model.Enumerations.SystemRole rol)
         {
             string hql = "SELECT g FROM Gebruiker g WHERE g.SysteemRol = :SysteemRol";
             SimpleQuery<Gebruiker> query = new SimpleQuery<Gebruiker>(typeof(Gebruiker), hql);

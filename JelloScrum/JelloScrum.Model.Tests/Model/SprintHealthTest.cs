@@ -38,7 +38,7 @@ namespace JelloScrum.Model.Tests.Model
             // 4 gebruikers
             for (int i = 0; i<testCaseDevelopers.Length; i++ )
             {
-                testCaseDevelopers[i] = Creation.Gebruiker(SysteemRol.Gebruiker);
+                testCaseDevelopers[i] = Creation.Gebruiker(SystemRole.User);
             }
 
             // 1 project
@@ -50,13 +50,13 @@ namespace JelloScrum.Model.Tests.Model
 
             foreach (Gebruiker developer in testCaseDevelopers)
             {
-                testCaseSprint.AddUser(developer, SprintRol.Developer);
+                testCaseSprint.AddUser(developer, SprintRole.Developer);
             }
-            testCaseSprint.SprintGebruikers[0].VoegRolToe(SprintRol.ScrumMaster);
+            testCaseSprint.SprintGebruikers[0].VoegRolToe(SprintRole.ScrumMaster);
 
             // 1 story, 2 taken, beide afgesloten
             const int hoursPerStoryPoint = 2;
-            Story testCaseStory1 = Creation.Story(testCaseProject, StoryPoint.Acht, hoursPerStoryPoint, Prioriteit.Must, testCaseDevelopers[random.Next(0,3)]);
+            Story testCaseStory1 = Creation.Story(testCaseProject, StoryPoint.Eight, hoursPerStoryPoint, Priority.Must, testCaseDevelopers[random.Next(0,3)]);
             testCaseSprint.CreateSprintStoryFor(testCaseStory1);
 
             Task task1_1 = Creation.Task();

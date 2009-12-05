@@ -29,7 +29,7 @@ namespace JelloScrum.QueryObjects
             DetachedCriteria detachedCriteria =
                 DetachedCriteria.For(typeof(Task))
                 .SetProjection(Projections.Property("Id"))
-                .Add(Restrictions.Not(Restrictions.Eq("Status", Status.Afgesloten)));
+                .Add(Restrictions.Not(Restrictions.Eq("Status", State.Closed)));
 
             if(Project != null)
             {

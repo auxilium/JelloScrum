@@ -36,7 +36,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             taak.Close();
 
-            Assert.IsTrue(taak.Status == Status.Afgesloten);
+            Assert.IsTrue(taak.Status == State.Closed);
         }
 
         [Test]

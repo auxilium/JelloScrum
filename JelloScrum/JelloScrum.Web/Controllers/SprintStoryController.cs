@@ -53,7 +53,7 @@ namespace JelloScrum.Web.Controllers
         public void SaveSprintStoryToSprintGebruiker([ARFetch("sprintstory")] SprintStory sprintStory,
                                                      [ARFetch("sprintgebruiker")] SprintGebruiker sprintGebruiker)
         {
-            foreach (Task task in sprintStory.Story.GetTasksWith(Status.NietOpgepakt))
+            foreach (Task task in sprintStory.Story.GetTasksWith(State.Open))
             {
                 sprintGebruiker.PakTaakOp(task);
             }
@@ -108,11 +108,11 @@ namespace JelloScrum.Web.Controllers
 
         public void OpslaanPrioriteiten([ARFetch("id")] SprintStory sprintStory, int value)
         {
-            sprintStory.SprintBacklogPrioriteit = (Prioriteit)value;
+            sprintStory.SprintBacklogPrioriteit = (Priority)value;
 
             SprintStoryRepository.Save(sprintStory);
 
-            RenderText(Enum.GetName(typeof(Prioriteit), value));
+            RenderText(Enum.GetName(typeof(Priority), value));
         }
     }
 }

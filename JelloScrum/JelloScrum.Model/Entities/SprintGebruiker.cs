@@ -30,7 +30,7 @@ namespace JelloScrum.Model.Entities
         
         private Gebruiker gebruiker;
         private Sprint sprint;
-        private SprintRol sprintRol = 0;
+        private SprintRole sprintRol = 0;
 
         private IList<Task> taken = new List<Task>();
 
@@ -49,7 +49,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="gebruiker">De gebruiker.</param>
         /// <param name="sprint">De sprint.</param>
-        public SprintGebruiker(Gebruiker gebruiker, Sprint sprint, SprintRol sprintRol)
+        public SprintGebruiker(Gebruiker gebruiker, Sprint sprint, SprintRole sprintRol)
         {
             if (gebruiker == null)
                 throw new ArgumentNullException("gebruiker", "De gebruiker mag niet null zijn.");
@@ -89,7 +89,7 @@ namespace JelloScrum.Model.Entities
         /// Rol van de gebruiker binnen deze sprint
         /// </summary>
         [Property]
-        public virtual SprintRol SprintRol
+        public virtual SprintRole SprintRol
         {
             get { return sprintRol; }
             set { sprintRol = value; }
@@ -118,12 +118,12 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="prioriteit">De prioriteit.</param>
         /// <returns>De taken van de gebruiker met de gegeven prioriteit.</returns>
-        public virtual IList<Task> GeefOpgepakteTakenMetSprintBacklogPrioriteit(Prioriteit prioriteit)
+        public virtual IList<Task> GeefOpgepakteTakenMetSprintBacklogPrioriteit(Priority prioriteit)
         {
             IList<Task> tasks = new List<Task>();
             foreach (Task taak in taken)
             {
-                if (taak.Status == Status.Opgepakt)
+                if (taak.Status == State.Taken)
                 {
                     SprintStory ss = sprint.GetSprintStoryFor(taak.Story);
                  
@@ -146,7 +146,7 @@ namespace JelloScrum.Model.Entities
             IList<Task> opgepakteTaken = new List<Task>();
             foreach (Task task in taken)
             {
-                if (task.Status == Status.Opgepakt)
+                if (task.Status == State.Taken)
                     opgepakteTaken.Add(task);
             }
             return new ReadOnlyCollection<Task>(opgepakteTaken);
@@ -161,7 +161,7 @@ namespace JelloScrum.Model.Entities
             IList<Task> afgeslotenTaken = new List<Task>();
             foreach (Task task in taken)
             {
-                if (task.Status == Status.Afgesloten)
+                if (task.Status == State.Closed)
                     afgeslotenTaken.Add(task);
             }
             return new ReadOnlyCollection<Task>(afgeslotenTaken);
@@ -176,7 +176,7 @@ namespace JelloScrum.Model.Entities
             if (!taken.Contains(taak))
                 taken.Add(taak);
             taak.Behandelaar = this;
-            taak.Status = Status.Opgepakt;
+            taak.Status = State.Taken;
         }
 
         /// <summary>
@@ -188,14 +188,14 @@ namespace JelloScrum.Model.Entities
             if (taken.Contains(taak))
                 taken.Remove(taak);
             taak.Behandelaar = null;
-            taak.Status = Status.NietOpgepakt;
+            taak.Status = State.Open;
         }
 
         /// <summary>
         /// Voegt een rol toe aan de huidige set met sprintrollen
         /// </summary>
         /// <param name="nieuweSprintRol"></param>
-        public virtual void VoegRolToe(SprintRol nieuweSprintRol)
+        public virtual void VoegRolToe(SprintRole nieuweSprintRol)
         {
             this.sprintRol |= nieuweSprintRol;
         }
@@ -204,7 +204,7 @@ namespace JelloScrum.Model.Entities
         /// Verwijder een rol uit de huidige set met sprintrollen
         /// </summary>
         /// <param name="teVerwijderenSprintRol"></param>
-        public virtual void VerwijderRol(SprintRol teVerwijderenSprintRol)
+        public virtual void VerwijderRol(SprintRole teVerwijderenSprintRol)
         {
             sprintRol &= ~teVerwijderenSprintRol;
         }
@@ -214,7 +214,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public virtual bool HeeftSprintRolExact(SprintRol role)
+        public virtual bool HeeftSprintRolExact(SprintRole role)
         {
             //hmm
             //return ((this.sprintRol & sprintRol) == sprintRol);
@@ -226,7 +226,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public virtual bool HeeftSprintRol(SprintRol role)
+        public virtual bool HeeftSprintRol(SprintRole role)
         {
             return ((sprintRol & role) != 0);
         }

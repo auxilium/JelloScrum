@@ -15,48 +15,48 @@
 namespace JelloScrum.Model.Enumerations
 {
     /// <summary>
-    /// Definieert het story point
+    /// The planningpoker storypoints
     /// </summary>
     public enum StoryPoint
     {
         /// <summary>
-        /// Onbekend, 0 punt
+        /// Unknown, 0 points
         /// </summary>
-        Onbekend = 0,
+        Unknown = 0,
 
         /// <summary>
-        /// Aas, 1 punt
+        /// Ace, 1 point
         /// </summary>
-        Aas = 1,
+        Ace = 1,
 
         /// <summary>
-        /// Twee, 2 punten
+        /// Two, 2 points
         ///  </summary>
-        Twee = 2,
+        Two = 2,
 
         /// <summary>
-        /// Drie, 3 punten
+        /// Three, 3 points
         /// </summary>
-        Drie = 3,
+        Three = 3,
 
         /// <summary>
-        /// Vijf, 5 punten
+        /// Five, 5 points
         /// </summary>
-        Vijf = 5,
+        Five = 5,
 
         /// <summary>
-        /// Acht, 8 punten
+        /// Eight, 8 points
         /// </summary>
-        Acht = 8,
+        Eight = 8,
 
         /// <summary>
-        /// Tien, 10 punten
+        /// Ten, 10 points
         /// </summary>
-        Tien = 10,
+        Ten = 10,
 
         /// <summary>
-        /// Heer, niet in te schatten
+        /// King, too difficult to estimate
         /// </summary>
-        Heer = 99
+        King = 99
     }
 }

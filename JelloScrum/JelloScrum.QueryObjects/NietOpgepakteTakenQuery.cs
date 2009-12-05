@@ -29,7 +29,7 @@ namespace JelloScrum.QueryObjects
 
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", Status.NietOpgepakt));
+            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", State.Open));
             
             if (sprint != null)
                 criteria.CreateCriteria("Story").CreateCriteria("SprintStories").Add(Restrictions.Eq("Sprint", sprint));

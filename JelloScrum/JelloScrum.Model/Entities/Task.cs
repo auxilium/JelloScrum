@@ -35,7 +35,7 @@ namespace JelloScrum.Model.Entities
         private string titel = string.Empty;
         private Story story;
         private string omschrijving = string.Empty;
-        private Status status = Status.NietOpgepakt;
+        private State status = State.Open;
         private SprintGebruiker behandelaar;
         private DateTime? datumAfgesloten;
         private TimeSpan schatting;
@@ -114,7 +114,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The status.</value>
         [Property]
-        public virtual Status Status
+        public virtual State Status
         {
             get { return status; }
             set { status = value; }
@@ -405,7 +405,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public virtual void Close()
         {
-            status = Status.Afgesloten;
+            status = State.Closed;
             datumAfgesloten = DateTime.Now;
         }
 

@@ -17,9 +17,9 @@
             <td class="Column">
 <!-- DEVELOPERS -->
                 <?brail for sprintGebruiker in sprint.SprintGebruikers : ?>
-                    <?brail if sprintGebruiker.HeeftSprintRol(SprintRol.Developer|SprintRol.ScrumMaster): ?>
+                    <?brail if sprintGebruiker.HeeftSprintRol(SprintRole.Developer|SprintRole.ScrumMaster): ?>
                     <div class="Developer" rel="${sprintGebruiker.Id}" id="Developer_${sprintGebruiker.Id}">
-                        <p class="name"><b>${sprintGebruiker.Gebruiker.VolledigeNaam}</b> (${sprintGebruiker.SprintRol})</p>
+                        <p class="name"><b>${sprintGebruiker.Gebruiker.VolledigeNaam}</b> (${sprintGebruiker.SprintRole})</p>
                         <div class="tasks"></div>
                     </div>
                     <?brail end ?>

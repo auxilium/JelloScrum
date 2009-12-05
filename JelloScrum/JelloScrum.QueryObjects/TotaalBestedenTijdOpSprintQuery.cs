@@ -32,7 +32,7 @@ namespace JelloScrum.QueryObjects
             {
                 crit.Add(Restrictions.Eq("Sprint", sprint));
                 crit.Add(Restrictions.Le("Datum", DateTime.Now));
-                crit.CreateCriteria("Task").Add(Restrictions.Eq("Status", Status.Afgesloten));
+                crit.CreateCriteria("Task").Add(Restrictions.Eq("Status", State.Closed));
             }
 
             return crit;

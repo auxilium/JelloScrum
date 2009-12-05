@@ -39,7 +39,7 @@ namespace JelloScrum.Model.Entities
         private Project project;
         private Gebruiker aangemaaktDoor;
         private Impact? impact;
-        private Prioriteit productBacklogPrioriteit = Prioriteit.Onbekend;
+        private Priority productBacklogPrioriteit = Priority.Unknown;
         private StoryType storyType = StoryType.UserStory;
 
         private IList<StoryLogBericht> logBerichten = new List<StoryLogBericht>();
@@ -48,7 +48,7 @@ namespace JelloScrum.Model.Entities
         private IList<SprintStory> sprintStories = new List<SprintStory>();
         private IList<Task> tasks = new List<Task>();
 
-        private StoryPoint storyPoints = StoryPoint.Onbekend;
+        private StoryPoint storyPoints = StoryPoint.Unknown;
         #endregion
 
         #region constructors
@@ -181,7 +181,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The product backlog prioriteit.</value>
         [Property]
-        public virtual Prioriteit ProductBacklogPrioriteit
+        public virtual Priority ProductBacklogPrioriteit
         {
             get { return productBacklogPrioriteit; }
             set { productBacklogPrioriteit = value; }
@@ -263,7 +263,7 @@ namespace JelloScrum.Model.Entities
         /// todo: different states for stories and tasks?
         /// </summary>
         /// <value>The state.</value>
-        public virtual Status Status
+        public virtual State Status
         {
             get
             {
@@ -272,20 +272,20 @@ namespace JelloScrum.Model.Entities
                 
                 foreach (Task task in tasks)
                 {
-                    if (task.Status == Status.Opgepakt)
+                    if (task.Status == State.Taken)
                         taken++;
 
-                    if (task.Status == Status.Afgesloten)
+                    if (task.Status == State.Closed)
                         closed++;
                 }
 
                 if (closed == tasks.Count && tasks.Count > 0)
-                    return Status.Afgesloten;
+                    return State.Closed;
 
                 if (taken == 0 || tasks.Count == 0)
-                    return Status.NietOpgepakt;
+                    return State.Open;
 
-                return Status.Opgepakt;
+                return State.Taken;
             }
         }
 
@@ -299,7 +299,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (Status == Status.Afgesloten)
+                if (Status == State.Closed)
                     return false;
 
                 foreach (SprintStory sprintStory in SprintStories)
@@ -335,7 +335,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (Status != Status.Afgesloten)
+                if (Status != State.Closed)
                     return null;
 
                 DateTime? lastDate = null;
@@ -436,7 +436,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="state">The state.</param>
         /// <returns></returns>
-        public virtual IList<Task> GetTasksWith(Status state)
+        public virtual IList<Task> GetTasksWith(State state)
         {
             IList<Task> tasksWithState = new List<Task>();
             foreach (Task task in tasks)

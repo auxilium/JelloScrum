@@ -81,12 +81,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestBepaalWelkeTakenNogNietZijnOpgepakt()
         {
-            task.Status = Status.Opgepakt;
+            task.Status = State.Taken;
             
             story.AddTask(task);
             story.AddTask(task2); //task2 heeft nog de default status: NietOpgepakt
 
-            IList<Task> result = story.GetTasksWith(Status.NietOpgepakt);
+            IList<Task> result = story.GetTasksWith(State.Open);
 
             Assert.IsTrue(result.Contains(task2));
             Assert.AreEqual(1, result.Count);
@@ -98,30 +98,30 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(Status.NietOpgepakt, story.Status);
+            Assert.AreEqual(State.Open, story.Status);
         }
                
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_EenOpgepakteStory()
         {
-            task.Status = Status.Opgepakt;
+            task.Status = State.Taken;
 
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(Status.Opgepakt, story.Status);
+            Assert.AreEqual(State.Taken, story.Status);
         }
 
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_AlleStoriesZijnAfgesloten()
         {
-            task.Status = Status.Afgesloten;
-            task2.Status = Status.Afgesloten;
+            task.Status = State.Closed;
+            task2.Status = State.Closed;
 
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(Status.Afgesloten, story.Status);
+            Assert.AreEqual(State.Closed, story.Status);
         }
 
         [Test]

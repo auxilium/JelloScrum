@@ -27,8 +27,8 @@ namespace JelloScrum.Model.Tests.Creations
         public static Sprint SprintMetScrumMasterEnProductOwner()
         {
             Sprint sprint = Sprint();
-            sprint.AddUser(Gebruiker(), SprintRol.ScrumMaster);
-            sprint.AddUser(Gebruiker(), SprintRol.ProductOwner);
+            sprint.AddUser(Gebruiker(), SprintRole.ScrumMaster);
+            sprint.AddUser(Gebruiker(), SprintRole.ProductOwner);
             return sprint;
         }
 

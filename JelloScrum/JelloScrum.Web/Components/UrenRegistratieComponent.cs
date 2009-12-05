@@ -177,7 +177,7 @@ namespace JelloScrum.Web.Components
 
         private string HighlightEigenTaak(Task task)
         {
-            if (task.Behandelaar == sprintGebruiker && task.Status != Status.Afgesloten)
+            if (task.Behandelaar == sprintGebruiker && task.Status != State.Closed)
                 return " owntask";
             return string.Empty;
         }

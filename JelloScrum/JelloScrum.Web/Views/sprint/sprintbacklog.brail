@@ -31,7 +31,7 @@
         <td class="sprintprio">${story.sprintBacklogPrioriteit}</td>
         <td >${story.Story.ProductBacklogPrioriteit}</td>
         <td>${story.Story.StoryType}</td>
-        <td>${story.Status}</td>
+        <td>${story.State}</td>
         <td>${TimeSpanHelper.TimeSpanInMinuten(story.Story.Schatting)}</td>
         <td>${story.Story.Tasks.Count}</td>
         <td style="text-align:center;">

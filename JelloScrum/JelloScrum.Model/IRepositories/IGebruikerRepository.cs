@@ -35,7 +35,7 @@ namespace JelloScrum.Model.IRepositories
         /// </summary>
         /// <param name="rol">De rol</param>
         /// <returns>De gebruikers die de gegeven rol hebben.</returns>
-        IList<Gebruiker> ZoekOpSysteemRol(SysteemRol rol);
+        IList<Gebruiker> ZoekOpSysteemRol(SystemRole rol);
 
         /// <summary>
         /// Alle gebruikers die niet in een sprint zitten

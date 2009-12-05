@@ -60,7 +60,7 @@ namespace JelloScrum.Web.Controllers
 
             Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > <a href='/project/productBacklog.rails?projectId=" + project.Id + "'>ProductBacklog</a> > Story toevoegen";
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
             PropertyBag.Add("story", story);
             PropertyBag.Add("Schatting", new TimeSpan(0, 0, 0));
@@ -85,7 +85,7 @@ namespace JelloScrum.Web.Controllers
             }
 
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
             PropertyBag.Add("Schatting", story.Schatting);
             PropertyBag.Add("story", story);
@@ -172,7 +172,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="story">De story.</param>
         /// <param name="prioriteit">De prioriteit.</param>
-        public void VeranderPrioriteit([ARFetch("id")] Story story, Prioriteit prioriteit)
+        public void VeranderPrioriteit([ARFetch("id")] Story story, Priority prioriteit)
         {
             story.ProductBacklogPrioriteit = prioriteit;
             StoryRepository.Save(story);
@@ -190,7 +190,7 @@ namespace JelloScrum.Web.Controllers
             Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Naam + "</a> > <a href='/project/productBacklog.rails?projectId=" + story.Project.Id + "'>ProductBacklog</a> > Story (" + story.Id + ") bekijken";
 
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
             PropertyBag.Add("story", story);
         }

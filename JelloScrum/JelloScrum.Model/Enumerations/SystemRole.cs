@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JelloScrum.Model.Tests.Creations
+namespace JelloScrum.Model.Enumerations
 {
-    using Entities;
-    using Enumerations;
-
-    public partial class Creation
+    /// <summary>
+    /// Systemroles
+    /// </summary>
+    public enum SystemRole
     {
-        public static Gebruiker Gebruiker()
-        {
-            return new Gebruiker();
-        }
+        /// <summary>
+        /// Administrator
+        /// </summary>
+        Administrator = 0,
 
-        public static Gebruiker Gebruiker(SystemRole rol)
-        {
-            return new Gebruiker(rol);
-        }
+        /// <summary>
+        /// Normal user
+        /// </summary>
+        User = 1,
+
+        /// <summary>
+        /// Administrative user
+        /// </summary>
+        AdministrativeUser = 2
     }
 }

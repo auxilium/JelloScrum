@@ -24,7 +24,7 @@ namespace JelloScrum.Model.Helpers
     public class SprintRolGebruikerHelper
     {
         private Gebruiker gebruiker;
-        private SprintRol sprintRol;
+        private SprintRole sprintRol;
 
         /// <summary>
         /// 
@@ -45,7 +45,7 @@ namespace JelloScrum.Model.Helpers
         /// <summary>
         /// 
         /// </summary>
-        public virtual SprintRol SprintRol
+        public virtual SprintRole SprintRol
         {
             get { return sprintRol; }
             set { sprintRol = value; }

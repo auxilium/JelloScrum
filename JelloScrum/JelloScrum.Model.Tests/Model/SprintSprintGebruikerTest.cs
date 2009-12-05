@@ -41,7 +41,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegNieuweGebruikerAanSprintToe()
         {
-            SprintGebruiker sg = sprint.AddUser(gebruiker, SprintRol.Developer);
+            SprintGebruiker sg = sprint.AddUser(gebruiker, SprintRole.Developer);
 
             Assert.AreEqual(sg.Sprint, sprint);
             Assert.AreEqual(sg.Gebruiker, gebruiker);
@@ -51,8 +51,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegGebruikerAanSprintToeWaarAlEenSprintGebruikerVoorDieSprintEnGebruikerBestaat()
         {
-            SprintGebruiker sg1 = sprint.AddUser(gebruiker, SprintRol.Developer);
-            SprintGebruiker sg2 = sprint.AddUser(gebruiker, SprintRol.Developer);
+            SprintGebruiker sg1 = sprint.AddUser(gebruiker, SprintRole.Developer);
+            SprintGebruiker sg2 = sprint.AddUser(gebruiker, SprintRole.Developer);
             
             Assert.AreEqual(sg1, sg2);
         }
@@ -68,7 +68,7 @@ namespace JelloScrum.Model.Tests.Model
         public void TestVerwerkenVanGebruikersMetEenNieuweGebruikerLevertEenExtraSprintGebruikerOp()
         {
             Sprint sprint = Creation.SprintMetScrumMasterEnProductOwner();
-            sprint.AddUser(Creation.Gebruiker(), SprintRol.Developer);
+            sprint.AddUser(Creation.Gebruiker(), SprintRole.Developer);
             Assert.IsTrue(sprint.SprintGebruikers.Count == 3);
 
         }

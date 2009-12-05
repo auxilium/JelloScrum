@@ -362,7 +362,7 @@ namespace JelloScrum.Web.Helpers
             double totaalGewerkteTijd = 0;
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                if (sprintStory.Status == Status.Afgesloten && dateTime.Date < sprintStory.Story.ClosedDate.Value.Date)
+                if (sprintStory.Status == State.Closed && dateTime.Date < sprintStory.Story.ClosedDate.Value.Date)
                 {
                     //Als er meer werk is gedaan dan dat er is geschat, sturen we de schatting mee. het teveel aan uren zal in rood worden weergegeven.
                     
@@ -378,7 +378,7 @@ namespace JelloScrum.Web.Helpers
                     }
 
                 }
-                else if (sprintStory.Status != Status.Afgesloten)
+                else if (sprintStory.Status != State.Closed)
                 {
                     //Hier gaan we als de story nog niet is afgesloten.
                     if (sprintStory.Story.TotalTimeSpent(sprint.StartDatum, dateTime) < sprintStory.Schatting)
@@ -431,7 +431,7 @@ namespace JelloScrum.Web.Helpers
 
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                if (sprintStory.Status == Status.Afgesloten && dateTime.Date >= sprintStory.Story.ClosedDate.Value.Date && sprintStory.Story.TotalTimeSpent(sprint.StartDatum, dateTime) < sprintStory.Schatting)
+                if (sprintStory.Status == State.Closed && dateTime.Date >= sprintStory.Story.ClosedDate.Value.Date && sprintStory.Story.TotalTimeSpent(sprint.StartDatum, dateTime) < sprintStory.Schatting)
                 {
                     //Als het werk sneller is afgerond voor afgesloten stories betekend dit dat we extra ruimte hebben verkregen om te ontwikkellen.
                     gewonnenUren += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting - sprintStory.Story.TotalTimeSpent(sprint.StartDatum, dateTime));

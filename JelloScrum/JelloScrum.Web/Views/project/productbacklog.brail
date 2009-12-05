@@ -80,7 +80,7 @@
       },
       format: function(s) {
         // format your data for normalization
-        return s.toLowerCase().replace(/must/,0).replace(/should/,1).replace(/could/,2).replace(/would/,3).replace(/onbekend/,5);
+        return s.toLowerCase().replace(/must/,0).replace(/should/,1).replace(/could/,2).replace(/would/,3).replace(/unknown/,5);
         },
         // set type, either numeric or text
         type: 'numeric'
@@ -96,7 +96,7 @@
         },
         format: function(s) {
           // format your data for normalization
-          return s.toLowerCase().replace(/aas/,0).replace(/twee/,1).replace(/drie/,2).replace(/vijf/,3).replace(/acht/,4).replace(/tien/,5).replace(/heer/,6).replace(/onbekend/,7);
+          return s.toLowerCase().replace(/aas/,0).replace(/twee/,1).replace(/drie/,2).replace(/vijf/,3).replace(/acht/,4).replace(/tien/,5).replace(/heer/,6).replace(/unknown/,7);
           },
           // set type, either numeric or text
           type: 'numeric'

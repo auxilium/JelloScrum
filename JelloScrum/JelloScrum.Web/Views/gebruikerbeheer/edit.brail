@@ -5,7 +5,7 @@
         ${Form.FormTag({@id: 'Bewerk', @action: 'save'})}
           
           ${Form.HiddenField("item.Id")}
-          ${FormHelper.HiddenField("item.SysteemRol")}
+          ${FormHelper.HiddenField("item.SystemRole")}
           ${FormHelper.HiddenField("avatar.x1Cord")}
           ${FormHelper.HiddenField("avatar.y1Cord")}
           ${FormHelper.HiddenField("avatar.width")}

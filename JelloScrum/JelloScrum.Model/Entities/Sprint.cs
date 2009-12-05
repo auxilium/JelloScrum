@@ -215,7 +215,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="gebruiker">The user.</param>
         /// <param name="sprintRol">The role.</param>
         /// <returns>The (new) sprintuser.</returns>
-        public virtual SprintGebruiker AddUser(Gebruiker gebruiker, SprintRol sprintRol)
+        public virtual SprintGebruiker AddUser(Gebruiker gebruiker, SprintRole sprintRol)
         {
             SprintGebruiker sprintGebruiker = GetSprintUserFor(gebruiker);
 
@@ -283,7 +283,7 @@ namespace JelloScrum.Model.Entities
         /// Adds the given workday
         /// </summary>
         /// <param name="workday">The workday.</param>
-        public virtual void AddWorkday(WerkDag workday)
+        public virtual void AddWorkday(WorkDay workday)
         {
             if (!HasWorkday(workday))
                 werkDagen += (int) workday;
@@ -296,7 +296,7 @@ namespace JelloScrum.Model.Entities
         /// <returns>
         /// 	<c>true</c> if this sprint has the specified workday; otherwise, <c>false</c>.
         /// </returns>
-        public virtual bool HasWorkday(WerkDag workday)
+        public virtual bool HasWorkday(WorkDay workday)
         {
             return (int) workday == ((int) workday & werkDagen);
         }
@@ -324,7 +324,7 @@ namespace JelloScrum.Model.Entities
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.Status != Status.Afgesloten)
+                if (sprintStory.Status != State.Closed)
                     stories.Add(sprintStory);
             }
             return stories;
@@ -335,7 +335,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="prioriteit">The priority.</param>
         /// <returns></returns>
-        public virtual IList<SprintStory> GetAllOpenSprintStories(Prioriteit prioriteit)
+        public virtual IList<SprintStory> GetAllOpenSprintStories(Priority prioriteit)
         {
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -351,7 +351,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="priority">The priority.</param>
         /// <returns></returns>
-        public virtual IList<SprintStory> GetSprintStoriesWithClosedTasks(Prioriteit priority)
+        public virtual IList<SprintStory> GetSprintStoriesWithClosedTasks(Priority priority)
         {
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -360,7 +360,7 @@ namespace JelloScrum.Model.Entities
                 {
                     foreach (Task task in sprintStory.Story.Tasks)
                     {
-                        if (task.Status == Status.Afgesloten)
+                        if (task.Status == State.Closed)
                         {
                             stories.Add(sprintStory);
                             break;
@@ -451,7 +451,7 @@ namespace JelloScrum.Model.Entities
             {
                 foreach (Task task in sprintStory.Story.Tasks)
                 {
-                    if (task.Status == Status.Opgepakt)
+                    if (task.Status == State.Taken)
                     {
                         tasks.Add(task);
                         task.UnassignTaskAndSetSatusAsOpen("Sprint closed", "This sprint is closed. ");
@@ -520,7 +520,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="status">The status.</param>
         /// <returns></returns>
-        public virtual IList<Task> GetAllTasksWith(Status status)
+        public virtual IList<Task> GetAllTasksWith(State status)
         {
             IList<Task> sprintTasks = new List<Task>();
             foreach (SprintStory sprintStory in sprintStories)
@@ -590,7 +590,7 @@ namespace JelloScrum.Model.Entities
 
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.Story.Status != Status.Afgesloten || (sprintStory.Story.Status == Status.Afgesloten && sprintStory.Story.ClosedDate.Value.Date > date.Date))
+                if (sprintStory.Story.Status != State.Closed || (sprintStory.Story.Status == State.Closed && sprintStory.Story.ClosedDate.Value.Date > date.Date))
                     totalTime += sprintStory.Story.Schatting;
             }
 

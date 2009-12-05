@@ -76,7 +76,7 @@
       
       storyStatusClass=""
       
-      if sprintstory.Story.Status.ToString() == Status.Afgesloten.ToString():
+      if sprintstory.Story.State.ToString() == State.Closed.ToString():
         storyStatusClass="afgesloten";
       end
     ?>
@@ -107,7 +107,7 @@
         
         taskStatusClass=""
       
-        if task.Status.ToString() == Status.Afgesloten.ToString():
+        if task.State.ToString() == State.Closed.ToString():
           taskStatusClass="afgesloten";
         end
       ?>

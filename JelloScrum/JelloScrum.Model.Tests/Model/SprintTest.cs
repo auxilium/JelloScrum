@@ -33,8 +33,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaandagAanSprintToevoegen()
         {
-            sprint.AddWorkday(WerkDag.Maandag);
-            Assert.IsTrue(sprint.HasWorkday(WerkDag.Maandag), "Maandag is niet aan de sprint toegevoegd!");
+            sprint.AddWorkday(WorkDay.Monday);
+            Assert.IsTrue(sprint.HasWorkday(WorkDay.Monday), "Maandag is niet aan de sprint toegevoegd!");
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace JelloScrum.Model.Tests.Model
             sprint = task.Behandelaar.Sprint;
             sprint.Close();
 
-            Assert.AreEqual(Status.NietOpgepakt, task.Status);
+            Assert.AreEqual(State.Open, task.Status);
             Assert.IsTrue(sprint.IsAfgesloten);
         }
 

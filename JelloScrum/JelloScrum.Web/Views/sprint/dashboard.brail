@@ -168,7 +168,7 @@ end
 <?brail
 if IsDefined("onopgepakteTaken") and onopgepakteTaken is not null:
   for taak in onopgepakteTaken:
-    output '<li>' + taak.Omschrijving + taak.Status + '</li>'
+    output '<li>' + taak.Omschrijving + taak.State + '</li>'
   end
 else :
   output '<li>Er zijn geen onopgepakte taken.</li>'

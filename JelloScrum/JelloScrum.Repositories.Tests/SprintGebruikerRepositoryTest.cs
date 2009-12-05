@@ -40,7 +40,7 @@ namespace JelloScrum.Repositories.Tests
         [Test]
         public void TestOpgeslagenSprintGebruikerKanTerugGelezenWorden()
         {
-            SprintGebruiker sprintGebruiker = sprintGebruikerRepository.Save(Creation.SprintGebruiker(Creation.Gebruiker(), Creation.Sprint(), SprintRol.Developer));
+            SprintGebruiker sprintGebruiker = sprintGebruikerRepository.Save(Creation.SprintGebruiker(Creation.Gebruiker(), Creation.Sprint(), SprintRole.Developer));
             //UnitOfWork.CurrentSession.Clear();
             SprintGebruiker dbSprintGebruiker = sprintGebruikerRepository.Get(sprintGebruiker.Id);
 

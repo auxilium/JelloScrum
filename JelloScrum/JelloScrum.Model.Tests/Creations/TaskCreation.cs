@@ -31,14 +31,14 @@ namespace JelloScrum.Model.Tests.Creations
             Sprint sprint = Sprint();
             project.AddSprint(sprint);
 
-            Story story = StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Must, sprint);
+            Story story = StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Must, sprint);
             //new Story(project, gebruiker, null, StoryType.UserStory);
             //project.VoegStoryToe(story);
             //sprint.MaakSprintStoryVoor(story);
             Task task = Task();
             story.AddTask(task);
 
-            SprintGebruiker sprintGebruiker = sprint.AddUser(gebruiker, SprintRol.Developer);
+            SprintGebruiker sprintGebruiker = sprint.AddUser(gebruiker, SprintRole.Developer);
             sprintGebruiker.PakTaakOp(task);
             return task;
         }

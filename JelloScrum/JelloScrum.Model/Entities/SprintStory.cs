@@ -30,7 +30,7 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private Prioriteit sprintBacklogPrioriteit = Prioriteit.Onbekend;
+        private Priority sprintBacklogPrioriteit = Priority.Unknown;
         private Sprint sprint = null;
         private Story story = null;
         private TimeSpan schatting;
@@ -74,7 +74,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The sprint backlog prioriteit.</value>
         [Property]
-        public virtual Prioriteit SprintBacklogPrioriteit
+        public virtual Priority SprintBacklogPrioriteit
         {
             get { return sprintBacklogPrioriteit; }
             set { sprintBacklogPrioriteit = value; }
@@ -127,7 +127,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (story.GetTasksWith(Status.NietOpgepakt).Count == 0)
+                if (story.GetTasksWith(State.Open).Count == 0)
                     return true;
                 return false;
             }
@@ -137,7 +137,7 @@ namespace JelloScrum.Model.Entities
         /// De status van de story
         /// </summary>
         /// <value>De status van de Story.</value>
-        public virtual Status Status
+        public virtual State Status
         {
             get { return story.Status; }
         }

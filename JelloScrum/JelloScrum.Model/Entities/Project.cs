@@ -154,7 +154,7 @@ namespace JelloScrum.Model.Entities
             List<Story> storiesWithoudPriorities = new List<Story>();
             foreach (Story story in Stories)
             {
-                if (story.ProductBacklogPrioriteit == Prioriteit.Onbekend)
+                if (story.ProductBacklogPrioriteit == Priority.Unknown)
                     storiesWithoudPriorities.Add(story);
             }
             return storiesWithoudPriorities;

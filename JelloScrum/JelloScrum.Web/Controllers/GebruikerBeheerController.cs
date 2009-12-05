@@ -43,7 +43,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Index()
         {
-            PropertyBag.Add("systemRols", Enum.GetNames(typeof(SysteemRol)));
+            PropertyBag.Add("systemRols", Enum.GetNames(typeof(SystemRole)));
             Titel = "Gebruikers";
         }
 
@@ -63,7 +63,7 @@ namespace JelloScrum.Web.Controllers
         /// Geeft een lijst terug met gebruikers aan de hand van de systeem rol
         /// </summary>
         /// <param name="rol"></param>
-        public void ListGebruikers(SysteemRol rol)
+        public void ListGebruikers(SystemRole rol)
         {
             PropertyBag.Add("gebruikers", GebruikerRepository.ZoekOpSysteemRol(rol));
             CancelLayout();
@@ -84,7 +84,7 @@ namespace JelloScrum.Web.Controllers
         /// Nieuwe gebruiker aan maken
         /// </summary>
         /// <param name="rol"></param>
-        public void Nieuw(SysteemRol rol)
+        public void Nieuw(SystemRole rol)
         {
             PropertyBag.Add("item", new Gebruiker(rol));
             RenderView("edit");

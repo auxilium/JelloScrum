@@ -91,7 +91,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Nietopgepaktetaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GetAllTasksWith(Status.NietOpgepakt);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Open);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);
@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Controllers
             else
             {
                 //Hier proberen nieuwe sprint gebruiker te maken.
-                sprintGebruiker = sprint.AddUser(CurrentUser, SprintRol.Developer);
+                sprintGebruiker = sprint.AddUser(CurrentUser, SprintRole.Developer);
                 try
                 {
                     sprintGebruiker.PakTaakOp(taak);
@@ -146,7 +146,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Andermanstaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GetAllTasksWith(Status.Opgepakt);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Taken);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);
@@ -161,7 +161,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Afgerondetaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GetAllTasksWith(Status.Afgesloten);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Closed);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);

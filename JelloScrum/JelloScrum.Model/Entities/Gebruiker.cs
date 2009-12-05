@@ -36,7 +36,7 @@ namespace JelloScrum.Model.Entities
         private string salt = string.Empty;
         private string gebruikersNaam = string.Empty;
         private bool actief = true;
-        private SysteemRol systeemRol = SysteemRol.Gebruiker;
+        private SystemRole systeemRol = SystemRole.User;
         private IList<SprintGebruiker> sprintGebruikers = new List<SprintGebruiker>();
         private IList<ProjectShortList> projectShortList = new List<ProjectShortList>();
         private string email = string.Empty;
@@ -68,7 +68,7 @@ namespace JelloScrum.Model.Entities
         /// Nieuwe gebruiker aan de hand van de systeem rol
         /// </summary>
         /// <param name="rol">De rol.</param>
-        public Gebruiker(SysteemRol rol)
+        public Gebruiker(SystemRole rol)
         {
             systeemRol = rol;
         }
@@ -79,7 +79,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="naam"></param>
         /// <param name="systeemRol"></param>
-        public Gebruiker(string naam, SysteemRol systeemRol)
+        public Gebruiker(string naam, SystemRole systeemRol)
         {
             this.naam = naam;
             this.systeemRol = systeemRol;
@@ -156,7 +156,7 @@ namespace JelloScrum.Model.Entities
         /// Het type van de gebruiker
         /// </summary>
         [Property]
-        public virtual SysteemRol SysteemRol
+        public virtual SystemRole SysteemRol
         {
             get { return systeemRol; }
             set { systeemRol = value; }
@@ -256,7 +256,7 @@ namespace JelloScrum.Model.Entities
         /// <returns>
         /// 	<c>true</c> if [is in role] [the specified role]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsInRole(SysteemRol rol)
+        public bool IsInRole(SystemRole rol)
         {
             return rol == systeemRol;
         }

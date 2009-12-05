@@ -12,21 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JelloScrum.Model.Tests.Creations
+namespace JelloScrum.Model.Enumerations
 {
-    using Entities;
-    using Enumerations;
-
-    public partial class Creation
+    /// <summary>
+    /// The MoSCoW priority
+    /// </summary>
+    public enum Priority
     {
-        public static Gebruiker Gebruiker()
-        {
-            return new Gebruiker();
-        }
+        /// <summary>
+        /// Must have
+        /// </summary>
+        Must = 0,
 
-        public static Gebruiker Gebruiker(SystemRole rol)
-        {
-            return new Gebruiker(rol);
-        }
+        /// <summary>
+        /// Should have
+        /// </summary>
+        Should = 1,
+
+        /// <summary>
+        /// Could have
+        /// </summary>
+        Could = 2,
+
+        /// <summary>
+        /// Won't have this time, but would like to in the future
+        /// </summary>
+        Would = 3,
+
+        /// <summary>
+        /// Unknown
+        /// </summary>
+        Unknown = 4
     }
 }

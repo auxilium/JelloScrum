@@ -15,27 +15,27 @@
 namespace JelloScrum.Model.Enumerations
 {
     /// <summary>
-    /// Definieert het storytype
+    /// The different storytypes
     /// </summary>
     public enum StoryType
     {
         /// <summary>
-        /// De story is een userstory
+        /// This story is a userstory
         /// </summary>
         UserStory = 0,
 
         /// <summary>
-        /// De story is een techstory
+        /// This story is a techstory
         /// </summary>
         TechStory = 1,
 
         /// <summary>
-        /// De story is een impediment
+        /// This story is an impediment
         /// </summary>
         Impediment = 2,
 
         /// <summary>
-        /// De story is een bug
+        /// This story is a bug
         /// </summary>
         Bug = 3
     }

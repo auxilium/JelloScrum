@@ -278,14 +278,14 @@ namespace JelloScrum.Model.Helpers
                 foreach (SprintStory sprintStory in sprint.SprintStories)
                 {
                     velocity.HoursTotalEstimatedInSprint += Convert.ToDecimal(sprintStory.Schatting.TotalHours);
-                    if (sprintStory.Story.StoryPoints != StoryPoint.Onbekend)
+                    if (sprintStory.Story.StoryPoints != StoryPoint.Unknown)
                         velocity.StoryPointsTotalEstimatedInSprint += sprintStory.Story.StoryPointsValue;
 
-                    if (sprintStory.Status == Status.Afgesloten)
+                    if (sprintStory.Status == State.Closed)
                     {
                         velocity.HoursTotalEstimatedForCompletedStoriesInSprint +=
                             Convert.ToDecimal(sprintStory.Schatting.TotalHours);
-                        if (sprintStory.Story.StoryPoints != StoryPoint.Onbekend)
+                        if (sprintStory.Story.StoryPoints != StoryPoint.Unknown)
                             velocity.StoryPointsTotalEstimatedForCompletedStoriesInSprint +=
                                 sprintStory.Story.StoryPointsValue;
                     }
@@ -298,7 +298,7 @@ namespace JelloScrum.Model.Helpers
                             {
                                 velocity.HoursTotalRegisteredInSprint += Convert.ToDecimal(tijdRegistratie.Tijd.TotalHours);
 
-                                if (task.Status == Status.Afgesloten)
+                                if (task.Status == State.Closed)
                                 {
                                     velocity.HoursTotalRegisteredForCompletedStoriesInSprint +=
                                         Convert.ToDecimal(tijdRegistratie.Tijd.TotalHours);
@@ -341,7 +341,7 @@ namespace JelloScrum.Model.Helpers
             {
                 taskProgress.TotalTasks++;
 
-                if (task.Status == Status.Afgesloten)
+                if (task.Status == State.Closed)
                     taskProgress.CompletedTasks++;
                 else
                     taskProgress.IncompleteTasks++;

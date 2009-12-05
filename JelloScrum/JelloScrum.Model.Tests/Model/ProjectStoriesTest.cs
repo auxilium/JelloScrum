@@ -64,7 +64,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefStoriesZonderMoSCoWPrioriteit()
         {
-            story.ProductBacklogPrioriteit = Prioriteit.Must;
+            story.ProductBacklogPrioriteit = Priority.Must;
 
             project.AddStory(story);
             project.AddStory(story2);

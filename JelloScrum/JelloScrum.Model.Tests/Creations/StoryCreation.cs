@@ -34,11 +34,11 @@ namespace JelloScrum.Model.Tests.Creations
 
         public static Story StoryMetSprintStory(Gebruiker gebruiker)
         {
-            return StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Onbekend, Sprint());
+            return StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Unknown, Sprint());
             
         }
 
-        public static Story StoryMetSprintStoryEnSprintBacklogPrioriteit(Gebruiker gebruiker, Prioriteit prioriteit, Sprint sprint)
+        public static Story StoryMetSprintStoryEnSprintBacklogPrioriteit(Gebruiker gebruiker, Priority prioriteit, Sprint sprint)
         {
             Story story = Story(gebruiker);
 
@@ -48,9 +48,9 @@ namespace JelloScrum.Model.Tests.Creations
             return story;
         }
         
-        public static Story Story(Project project, StoryPoint storyPoints, int hoursPerStoryPoint, Prioriteit moscowPrio, Gebruiker aangemaaktDoor)
+        public static Story Story(Project project, StoryPoint storyPoints, int hoursPerStoryPoint, Priority moscowPrio, Gebruiker aangemaaktDoor)
         {
-            Story story = new Story(project, aangemaaktDoor, Impact.Normaal, StoryType.UserStory);
+            Story story = new Story(project, aangemaaktDoor, Impact.Normal, StoryType.UserStory);
             story.StoryPoints = storyPoints;
             story.Schatting = new TimeSpan(story.StoryPointsValue*hoursPerStoryPoint);
             story.ProductBacklogPrioriteit = moscowPrio;

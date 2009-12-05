@@ -41,7 +41,7 @@ namespace JelloScrum.Repositories.Tests.Creations
             return Persist(new Gebruiker(gebruikersNaam));
         }
 
-        public static Gebruiker Gebruiker(string gebruikersNaam, SysteemRol systeemRol)
+        public static Gebruiker Gebruiker(string gebruikersNaam, SystemRole systeemRol)
         {
             return Persist(new Gebruiker(gebruikersNaam, systeemRol));
         }

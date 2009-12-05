@@ -97,19 +97,19 @@ namespace JelloScrum.Repositories.Tests
         [Test]
         public void TestZoekenOpRolGeeftJuisteResultaat()
         {
-            Creation.Gebruiker("Gebruiker1", SysteemRol.Gebruiker);
-            Creation.Gebruiker("Gebruiker2", SysteemRol.Gebruiker);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SysteemRol.Gebruiker);
+            Creation.Gebruiker("Gebruiker1", SystemRole.User);
+            Creation.Gebruiker("Gebruiker2", SystemRole.User);
+            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
             Assert.IsTrue(gebruikers.Count == 2, gebruikers.Count.ToString());
         }
 
         [Test]
         public void TestZoekenOpRolGeeftGeenAndereRollen()
         {
-            Creation.Gebruiker("Gebruiker1", SysteemRol.Gebruiker);
-            Creation.Gebruiker("Administrator1", SysteemRol.Administrator);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SysteemRol.Gebruiker);
-            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SysteemRol == SysteemRol.Gebruiker, "Er zijn ook andere rollen gevonden.");
+            Creation.Gebruiker("Gebruiker1", SystemRole.User);
+            Creation.Gebruiker("Administrator1", SystemRole.Administrator);
+            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
+            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SysteemRol == SystemRole.User, "Er zijn ook andere rollen gevonden.");
         }
     }
 }

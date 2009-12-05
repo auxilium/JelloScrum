@@ -99,14 +99,14 @@ namespace JelloScrum.Web.Controllers
             Gebruiker user2 = new Gebruiker();
             user2.Naam = "user2";
             user2.GebruikersNaam = "ScrumMaster";
-            user2.SysteemRol = SysteemRol.Administrator;
+            user2.SysteemRol = SystemRole.Administrator;
             user2.VolledigeNaam = "Gebruiker 2";
             GebruikerRepository.Save(user2);
 
             Gebruiker user3 = new Gebruiker();
             user3.Naam = "user3";
             user3.GebruikersNaam = "Developer";
-            user3.SysteemRol = SysteemRol.Gebruiker;
+            user3.SysteemRol = SystemRole.User;
             user3.VolledigeNaam = "Gebruiker 3";
             GebruikerRepository.Save(user3);
             #endregion
@@ -119,7 +119,7 @@ namespace JelloScrum.Web.Controllers
                 story.HowtoDemo = "uitleg voor de demo " + i.ToString();
                 story.Notitie = "notitie " + i.ToString();
                 story.Omschrijving = "omschrijving " + i.ToString();
-                story.ProductBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
+                story.ProductBacklogPrioriteit = (Priority)RandomNumber(0, 3);
                 story.Schatting = new TimeSpan(4, 30, 0);
                 story.Titel = "JelloScrum story number: " + i.ToString();
                 
@@ -134,7 +134,7 @@ namespace JelloScrum.Web.Controllers
                 story.HowtoDemo = "uitleg voor de demo " + i.ToString();
                 story.Notitie = "notitie " + i.ToString();
                 story.Omschrijving = "omschrijving " + i.ToString();
-                story.ProductBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
+                story.ProductBacklogPrioriteit = (Priority)RandomNumber(0, 3);
                 story.Schatting = new TimeSpan(6, 0, 0);
                 story.Titel = "James story number: " + i.ToString();
 
@@ -193,9 +193,9 @@ namespace JelloScrum.Web.Controllers
                 sprint.Project = project_JelloScrum;
                 SprintRepository.Save(sprint);
                 
-                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRol.ProductOwner);
-                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRol.Developer);
-                SprintGebruiker sprintGebruiker3 = new SprintGebruiker(user2, sprint, SprintRol.ScrumMaster);
+                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRole.ProductOwner);
+                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRole.Developer);
+                SprintGebruiker sprintGebruiker3 = new SprintGebruiker(user2, sprint, SprintRole.ScrumMaster);
                 SprintGebruikerRepository.Save(sprintGebruiker);
                 SprintGebruikerRepository.Save(sprintGebruiker2);
                 SprintGebruikerRepository.Save(sprintGebruiker3);
@@ -238,8 +238,8 @@ namespace JelloScrum.Web.Controllers
                 sprint.Project = project_James;
                 SprintRepository.Save(sprint);
 
-                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRol.ScrumMaster);
-                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRol.Developer);
+                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRole.ScrumMaster);
+                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRole.Developer);
                 SprintGebruikerRepository.Save(sprintGebruiker);
                 SprintGebruikerRepository.Save(sprintGebruiker2);
 
@@ -251,10 +251,10 @@ namespace JelloScrum.Web.Controllers
                 {
                     SprintStory sprintStory = sprint.CreateSprintStoryFor(project_James.Stories[num]);
                     
-                    sprintStory.SprintBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
+                    sprintStory.SprintBacklogPrioriteit = (Priority)RandomNumber(0, 3);
                     SprintStoryRepository.Save(sprintStory);
 
-                    if (sprintStory.Status != Status.NietOpgepakt)
+                    if (sprintStory.Status != State.Open)
                     {
                         // ook even wat werkuren toevoegen
                         sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].RegisterTime(user2, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));

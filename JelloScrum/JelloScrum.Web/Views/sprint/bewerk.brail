@@ -45,7 +45,7 @@ ${Form.HiddenField("projectId", project.Id)}
     <thead>
       <tr>
         <th style="text-align:center; padding: 0px;">Gebruiker</th>
-        <?brail for rol in Enum.GetNames(typeof(SprintRol)): ?>
+        <?brail for rol in Enum.GetNames(typeof(SprintRole)): ?>
         <th style="text-align:center; padding: 0px;">${rol.ToString()}</th>
         <?brail end ?>
       </tr>
@@ -57,15 +57,15 @@ ${Form.HiddenField("projectId", project.Id)}
           <input type="hidden" name="rol[${gebruiker.Id}].Gebruiker.Id" id="rol_${gebruiker.Id}_Gebruiker_Id" value="${gebruiker.Id}"/>
           ${gebruiker.GebruikersNaam}
         </td>
-        <?brail for rol in Enum.GetNames(typeof(SprintRol)): ?>
+        <?brail for rol in Enum.GetNames(typeof(SprintRole)): ?>
         <td>
           <?brail 
              sprintGebruiker = gebruiker.GeefSprintGebruikerVoor(sprint)
-             if sprintGebruiker is null or sprintGebruiker.HeeftSprintRol(Enum.Parse(typeof(SprintRol), rol, true)) == false:
+             if sprintGebruiker is null or sprintGebruiker.HeeftSprintRol(Enum.Parse(typeof(SprintRole), rol, true)) == false:
           ?>
-          <input type="checkbox" class="checkbox" name="rol[${gebruiker.Id}].SprintRol" id="rol_${gebruiker.Id}_SprintRol" value="${rol}" />
+          <input type="checkbox" class="checkbox" name="rol[${gebruiker.Id}].SprintRole" id="rol_${gebruiker.Id}_SprintRole" value="${rol}" />
           <?brail else:?>
-          <input type="checkbox" checked="checked" class="checkbox" name="rol[${gebruiker.Id}].SprintRol" id="rol_${gebruiker.Id}_SprintRol" value="${rol}" />
+          <input type="checkbox" checked="checked" class="checkbox" name="rol[${gebruiker.Id}].SprintRole" id="rol_${gebruiker.Id}_SprintRole" value="${rol}" />
           <?brail end ?>
         </td>
         <?brail end ?>

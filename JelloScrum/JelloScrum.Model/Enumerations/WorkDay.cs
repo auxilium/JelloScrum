@@ -15,28 +15,43 @@
 namespace JelloScrum.Model.Enumerations
 {
     /// <summary>
-    /// The different states of impact.
+    /// The workdays
     /// </summary>
-    public enum Impact
+    public enum WorkDay
     {
         /// <summary>
-        /// The impact is blokking
+        /// Monday
         /// </summary>
-        Blocking = 0,
+        Monday = 1,
 
         /// <summary>
-        /// The impact is critical
+        /// Tuesday
         /// </summary>
-        Critical = 1,
+        Tuesday = 2,
 
         /// <summary>
-        /// The impact is normal
+        /// Wednesday
         /// </summary>
-        Normal = 2,
+        Wednesday = 4,
 
         /// <summary>
-        /// The impact is small
+        /// Thursday
         /// </summary>
-        Small = 3
+        Thursday = 8,
+
+        /// <summary>
+        /// Friday
+        /// </summary>
+        Friday = 16,
+
+        /// <summary>
+        /// Saturday
+        /// </summary>
+        Saturday = 32,
+
+        /// <summary>
+        /// Sunday
+        /// </summary>
+        Sunday = 64
     }
 }

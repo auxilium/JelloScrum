@@ -201,15 +201,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="item">Sprint.</param>
         public void SprintStories([ARFetch("id")] Sprint item)
         {
-            Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
-            sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Must)));
-            sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Should)));
-            sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Could)));
-            sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GetAllOpenSprintStories(Prioriteit.Would)));
+            Dictionary<Priority, IList<SprintStory>> sprintStories = new Dictionary<Priority, IList<SprintStory>>();
+            sprintStories.Add(Priority.Must,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Must)));
+            sprintStories.Add(Priority.Should,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Should)));
+            sprintStories.Add(Priority.Could,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Could)));
+            sprintStories.Add(Priority.Would,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
             CancelLayout();
@@ -221,15 +221,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="item">The item.</param>
         public void SprintStoriesAfgerond([ARFetch("id")] Sprint item)
         {
-            Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
-            sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Must)));
-            sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Should)));
-            sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Could)));
-            sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Prioriteit.Would)));
+            Dictionary<Priority, IList<SprintStory>> sprintStories = new Dictionary<Priority, IList<SprintStory>>();
+            sprintStories.Add(Priority.Must,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Must)));
+            sprintStories.Add(Priority.Should,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Should)));
+            sprintStories.Add(Priority.Could,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Could)));
+            sprintStories.Add(Priority.Would,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
 
@@ -359,7 +359,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story">The story.</param>
         /// <param name="prioriteit">The prioriteit.</param>
         public void KoppelStoryAanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story,
-                                         Prioriteit prioriteit)
+                                         Priority prioriteit)
         {
             SprintStory sprintStory = new SprintStory(sprint, story, story.Schatting);
             sprintStory.SprintBacklogPrioriteit = prioriteit;
@@ -377,7 +377,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="sprint">The sprint.</param>
         /// <param name="prioriteit">The prioriteit.</param>
-        public void RenderIngeplandeStorieList([ARFetch("sprintId")] Sprint sprint, Prioriteit prioriteit)
+        public void RenderIngeplandeStorieList([ARFetch("sprintId")] Sprint sprint, Priority prioriteit)
         {
             SprintStoriesQuery ingeplandeStories = new SprintStoriesQuery();
             ingeplandeStories.Sprint = sprint;

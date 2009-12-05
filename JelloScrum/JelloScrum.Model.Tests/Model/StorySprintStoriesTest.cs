@@ -66,8 +66,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = Status.Opgepakt;
-            story.Tasks[1].Status = Status.Opgepakt;
+            story.Tasks[0].Status = State.Taken;
+            story.Tasks[1].Status = State.Taken;
 
             Assert.IsTrue(result.IsVolledigeOpgepakt);
         }
@@ -79,7 +79,7 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = Status.Opgepakt;
+            story.Tasks[0].Status = State.Taken;
 
             Assert.IsFalse(result.IsVolledigeOpgepakt);
         }

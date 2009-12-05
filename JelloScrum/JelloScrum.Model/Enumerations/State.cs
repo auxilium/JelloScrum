@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JelloScrum.Model.Tests.Creations
+namespace JelloScrum.Model.Enumerations
 {
-    using Entities;
-    using Enumerations;
-
-    public partial class Creation
+    /// <summary>
+    /// De status van een story of van een task
+    /// </summary>
+    public enum State
     {
-        public static Gebruiker Gebruiker()
-        {
-            return new Gebruiker();
-        }
+        /// <summary>
+        /// De story of task is nog niet opgepakt
+        /// </summary>
+        Open = 0,
 
-        public static Gebruiker Gebruiker(SystemRole rol)
-        {
-            return new Gebruiker(rol);
-        }
+        /// <summary>
+        /// De story of task is opgepakt
+        /// </summary>
+        Taken = 1,
+
+        /// <summary>
+        /// De story of task is afgesloten
+        /// </summary>
+        Closed = 2
     }
 }

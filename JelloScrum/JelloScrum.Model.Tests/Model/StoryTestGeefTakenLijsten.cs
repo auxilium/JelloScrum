@@ -39,10 +39,10 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Opgepakt;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].Status = State.Taken;
+            story.Tasks[1].Status = State.Closed;
 
-            Assert.AreEqual(0, story.GetTasksWith(Status.NietOpgepakt).Count);
+            Assert.AreEqual(0, story.GetTasksWith(State.Open).Count);
         }
 
         [Test]
@@ -51,10 +51,10 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.NietOpgepakt;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].Status = State.Open;
+            story.Tasks[1].Status = State.Closed;
 
-            Assert.AreEqual(1, story.GetTasksWith(Status.Afgesloten).Count);
+            Assert.AreEqual(1, story.GetTasksWith(State.Closed).Count);
         }
 
         [Test]
@@ -63,10 +63,10 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.NietOpgepakt;
-            story.Tasks[1].Status = Status.NietOpgepakt;
+            story.Tasks[0].Status = State.Open;
+            story.Tasks[1].Status = State.Open;
 
-            Assert.AreEqual(2, story.GetTasksWith(Status.NietOpgepakt).Count);
+            Assert.AreEqual(2, story.GetTasksWith(State.Open).Count);
         }
 
   

@@ -14,29 +14,37 @@
 
 namespace JelloScrum.Model.Enumerations
 {
+    using System;
+
     /// <summary>
-    /// The different states of impact.
+    /// Roles in a sprint
     /// </summary>
-    public enum Impact
+    [Flags]
+    public enum SprintRole
     {
         /// <summary>
-        /// The impact is blokking
+        /// Administrative user
         /// </summary>
-        Blocking = 0,
+        Administratie = 1 << 0,
 
         /// <summary>
-        /// The impact is critical
+        /// Scrum Master
         /// </summary>
-        Critical = 1,
+        ScrumMaster = 1 << 1,
 
         /// <summary>
-        /// The impact is normal
+        /// Developer
         /// </summary>
-        Normal = 2,
+        Developer = 1 << 2,
 
         /// <summary>
-        /// The impact is small
+        /// Product Owner
         /// </summary>
-        Small = 3
+        ProductOwner = 1 << 3,
+
+        /// <summary>
+        /// System administrator
+        /// </summary>
+        Administrator = 1 << 4
     }
 }

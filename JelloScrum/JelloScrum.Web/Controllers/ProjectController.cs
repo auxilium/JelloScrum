@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void OphalenPrioriteiten()
         {
-            string js = ConvertEnumToJavascript(typeof (Prioriteit));
+            string js = ConvertEnumToJavascript(typeof (Priority));
             Response.ContentType = "application/json";
             RenderText(js);
         }
@@ -171,7 +171,7 @@ namespace JelloScrum.Web.Controllers
 
             try
             {
-                story.ProductBacklogPrioriteit = (Prioriteit) Enum.ToObject(typeof (Prioriteit), Convert.ToInt32(value));
+                story.ProductBacklogPrioriteit = (Priority) Enum.ToObject(typeof (Priority), Convert.ToInt32(value));
                 StoryRepository.Save(story);
             }
             catch (JelloScrumRepositoryException e)
@@ -182,7 +182,7 @@ namespace JelloScrum.Web.Controllers
                 RedirectToAction("ProductBacklog", args);
             }
 
-            RenderText(Enum.GetName(typeof (Prioriteit), Convert.ToInt32(value)));
+            RenderText(Enum.GetName(typeof (Priority), Convert.ToInt32(value)));
         }
 
         /// <summary>

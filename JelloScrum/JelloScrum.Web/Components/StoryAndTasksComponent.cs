@@ -101,23 +101,23 @@ namespace JelloScrum.Web.Components
             {
                 switch (ss.SprintBacklogPrioriteit)
                 {
-                    case Prioriteit.Must:
+                    case Priority.Must:
                         priority = "<img src='/content/images/moscow_must.png' title='Must'/>";
                         prioritycss = "smust";
                         break;
-                    case Prioriteit.Should:
+                    case Priority.Should:
                         priority = "<img src='/content/images/moscow_should.png' title='Should'/>";
                         prioritycss = "sshould";
                         break;
-                    case Prioriteit.Could:
+                    case Priority.Could:
                         priority = "<img src='/content/images/moscow_could.png' title='Could'/>";
                         prioritycss = "scould";
                         break;
-                    case Prioriteit.Would:
+                    case Priority.Would:
                         priority = "<img src='/content/images/moscow_wont.png' title='Won't'/>";
                         prioritycss = "swont";
                         break;
-                    case Prioriteit.Onbekend:
+                    case Priority.Unknown:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
