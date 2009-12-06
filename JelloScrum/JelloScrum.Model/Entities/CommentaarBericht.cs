@@ -22,7 +22,7 @@ namespace JelloScrum.Model.Entities
     /// Commentaar Bericht
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CommentaarBericht<T> : ModelBase where T : ILogable
+    public class CommentaarBericht<T> : ModelBase where T : ILoggable
     {
         #region fields
 

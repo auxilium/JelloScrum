@@ -89,7 +89,7 @@ namespace JelloScrum.Repositories
 //            IPasswordService passwordService = IoC.Resolve<IPasswordService>();
 //            if (string.IsNullOrEmpty(gebruiker.Salt))
 //            {
-//                gebruiker.Salt = passwordService.GenerateSALT();
+//                gebruiker.Salt = passwordService.GenerateSalt();
 //            }
 //            if (string.IsNullOrEmpty(wachtwoord))
 //            {

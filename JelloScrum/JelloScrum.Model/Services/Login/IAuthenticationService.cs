@@ -18,28 +18,28 @@ namespace JelloScrum.Model.Services
     using Entities;
 
     /// <summary>
-    /// Interface van de Authentication Service
+    /// Interface for the Authentication Service
     /// </summary>
     public interface IAuthenticationService
     {
         /// <summary>
-        /// Zet het koekje naar het verleden, en verlaat de sessie.
+        /// Set cookie date to the past and exit the session.
         /// </summary>
-        /// <param name="context">Gebruiker context</param>
+        /// <param name="context">The context.</param>
         void SignOut(IEngineContext context);
 
         /// <summary>
-        /// Zet het authenticatie koekje
+        /// Set authentication cookie
         /// </summary>
-        /// <param name="user">gebruiker die inlogt.</param>
-        /// <param name="context">Gebruikers context</param>
+        /// <param name="user">The logged in user.</param>
+        /// <param name="context">The context</param>
         void SetAuthCookie(Gebruiker user, IEngineContext context);
 
         /// <summary>
-        /// Veriveerd de gebruikers recht om in te loggen
+        /// Authenticate the user
         /// </summary>
-        /// <param name="context">De gebruiker context</param>
-        /// <returns>een gebruiker</returns>
+        /// <param name="context">The context.</param>
+        /// <returns>The authenticated user</returns>
         Gebruiker Authenticatie(IEngineContext context);
     }
 }

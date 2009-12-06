@@ -15,7 +15,7 @@
 namespace JelloScrum.Model.Services
 {
     ///<summary>
-    /// Interface van de password service
+    /// Interface for the password service
     ///</summary>
     public interface IPasswordService
     {
@@ -63,7 +63,7 @@ namespace JelloScrum.Model.Services
         /// Generates a random length of random characters
         /// </summary>
         /// <returns>the random characters</returns>
-        string GenerateSALT();
+        string GenerateSalt();
 
         /// <summary>
         /// Generates a random length within a given range of random characters
@@ -71,14 +71,14 @@ namespace JelloScrum.Model.Services
         /// <param name="minSaltSize">Minimum length</param>
         /// <param name="maxSaltSize">Maximum length</param>
         /// <returns>the random characters</returns>
-        string GenerateSALT(int minSaltSize, int maxSaltSize);
+        string GenerateSalt(int minSaltSize, int maxSaltSize);
 
         /// <summary>
         /// Generates a random length of random characters
         /// </summary>
         /// <param name="length">length of text</param>
         /// <returns>the random characters</returns>
-        string GenerateSALT(int length);
+        string GenerateSalt(int length);
 
         #endregion
 

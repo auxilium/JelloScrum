@@ -17,98 +17,90 @@ namespace JelloScrum.Model.IRepositories
     using System.Collections.Generic;
 
     /// <summary>
-    /// Interface for the IJelloSrumRepository
+    /// Interface for the JelloSrumRepository
     /// </summary>
-    /// <typeparam name="T">een sterk-getypeerd object</typeparam>
+    /// <typeparam name="T">a stronly typed object</typeparam>
     public interface IJelloScrumRepository<T> 
     {
-       
         /// <summary>
-        /// Geeft een sterk-getypeerd object met het gespecificeerde id terug of null als het object niet bestaat.
+        /// Gets object T with the given id, or null if no object T with given id exists.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
         T Get(int id);
 
         /// <summary>
-        /// Geeft het object terug met de gespecificeerde id of een uitzondering als het object niet blijkt te bestaan.
-        /// In geval van een proxy/lazy loading krijg je een proxy terug met alleen de id gezet. Later initialiseren
-        /// kan resulteren in een uitzondering.
+        /// Loads the object with the given id from the databse. If no object with that id exists, an exception is thrown.
+        /// In case of proxy / lazy loading you get a proxy with only the id set. Later initialisation can result in an exception
+        /// (because only then nhibernate really tries to get the object from the database(so it might not exist)).
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
         T Load(int id);
 
         /// <summary>
-        /// Het gespecificeerde object verwijderen uit de database.
+        /// Delete the given entity from the database
         /// </summary>
         /// <param name="entity">The entity.</param>
         void Delete(T entity);
 
         /// <summary>
-        /// Verwijdert alle objecten van type T uit de database.
+        /// Delete all objects T from the database
         /// </summary>
         void DeleteAll();
 
         /// <summary>
-        /// Slaat het gespecificeerde object op in de database.
+        /// Save the given entity in the database
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         T Save(T entity);
 
         /// <summary>
-        /// Slaat een nieuwe of gewijzigd object op in de database.
+        /// Save a new or updated entity in the database
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         T SaveOrUpdate(T entity);
-
+        
         /// <summary>
-        /// Slaat een nieuw of gewijzigd object op, eventueel als kopie onder bepaalde voorwaarden die ik niet zo 1-2-3 begrijp.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
-       // T SaveOrUpdateCopy(T entity);
-
-        /// <summary>
-        /// Slaat wijzigingen van het gespecificeerde object op in de database.
+        /// Save the updated entity in the database
         /// </summary>
         /// <param name="entity">The entity.</param>
         void Update(T entity);
 
         /// <summary>
-        /// Geeft een collectie van alle objecten van het type T.
+        /// Gets a list of all objects of type T
         /// </summary>
         /// <returns></returns>
         IList<T> FindAll();
 
         /// <summary>
-        /// Vind één(1) object van het gegeven type. Worden er meer gevonden resulteert dit in een uitzondering.
+        /// Find one (1) object of the given type. If more than one objects are found an exception is thrown.
         /// </summary>
         /// <returns></returns>
         T FindOne();
 
         /// <summary>
-        /// Vind het eerste resultaat
+        /// Find the first result
         /// </summary>
         /// <returns></returns>
         T FindFirst();
 
         /// <summary>
-        /// Geeft aan of iets bestaat of zo.
+        /// Determines of the given object exists
         /// </summary>
         /// <returns></returns>
         bool Exists();
 
         /// <summary>
-        /// Doet iets met tellen of iets dergelijks.
+        /// Count
         /// </summary>
         /// <returns></returns>
         long Count();
 
         /// <summary>
-        /// Maakt een nieuwe instantie aan van type T.
+        /// Create a new instance of type T
         /// </summary>
         /// <returns></returns>
         T Create();

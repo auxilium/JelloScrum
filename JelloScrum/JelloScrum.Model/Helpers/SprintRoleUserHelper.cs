@@ -18,51 +18,43 @@ namespace JelloScrum.Model.Helpers
     using Enumerations;
 
     /// <summary>
-    /// Deze helper helpt met gebruikers helpen aan sprintrollen. Of het verwijderen hiervan.
-    /// Verder helpt dit ook met aan maken en verwijderen van sprintgebruikers als een gebruiker helemaal geen rollen meer heeft.
+    /// This helper is used to assign (or unassign) sprintroles to users
     /// </summary>
-    public class SprintRolGebruikerHelper
+    public class SprintRoleUserHelper
     {
-        private Gebruiker gebruiker;
-        private SprintRole sprintRol;
-
+        private Gebruiker user;
+        private SprintRole sprintRole;
+        
         /// <summary>
-        /// 
+        /// The user
         /// </summary>
-        public SprintRolGebruikerHelper()
+        public virtual Gebruiker User
         {
+            get { return user; }
+            set { user = value; }
         }
 
         /// <summary>
-        /// 
+        /// The sprintrole
         /// </summary>
-        public virtual Gebruiker Gebruiker
+        public virtual SprintRole SprintRole
         {
-            get { return gebruiker; }
-            set { gebruiker = value; }
+            get { return sprintRole; }
+            set { sprintRole = value; }
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public virtual SprintRole SprintRol
-        {
-            get { return sprintRol; }
-            set { sprintRol = value; }
-        }
-
-        /// <summary>
-        /// Verwerk dit object met de gegeven sprint.
+        /// Process this object with the given sprint
         /// </summary>
         /// <param name="sprint"></param>
-        public virtual void Verwerk(Sprint sprint)
+        public virtual void Process(Sprint sprint)
         {
-            if (gebruiker == null || sprint == null)
+            if (user == null || sprint == null)
                 return;
 
-            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(gebruiker);
+            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(user);
 
-            if (sprintRol == 0)
+            if (sprintRole == 0)
             {
                 if (sprintGebruiker == null)
                     return;
@@ -72,9 +64,9 @@ namespace JelloScrum.Model.Helpers
             else
             {
                 if (sprintGebruiker == null)
-                    sprint.AddUser(gebruiker, sprintRol);
+                    sprint.AddUser(user, sprintRole);
                 else
-                    sprintGebruiker.SprintRol = sprintRol;
+                    sprintGebruiker.SprintRol = sprintRole;
             }
         }
     }

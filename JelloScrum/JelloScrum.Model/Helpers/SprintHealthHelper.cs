@@ -35,7 +35,7 @@ namespace JelloScrum.Model.Helpers
         private decimal numberOfDaysInSprint;
 
         /// <summary>
-        /// Totaal aantal uren dat ingepland is voor de sprint
+        /// Total hours estimated in this sprint
         /// </summary>
         public decimal HoursTotalEstimatedInSprint
         {
@@ -44,7 +44,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Totaal aantal uren geregistreerd op stories uit de sprint
+        /// Total hours spent in this sprint
         /// </summary>
         public decimal HoursTotalRegisteredInSprint
         {
@@ -53,7 +53,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Totaal aantal geschatte uren voor afgeronde stories uit de sprint.
+        /// Total time estimated for completed stories in this sprint
         /// </summary>
         public decimal HoursTotalEstimatedForCompletedStoriesInSprint
         {
@@ -62,7 +62,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Totaal aantal geregistreerde uren voor afgeronde stories uit de sprint.
+        /// Total time spent on closed stories in this sprint
         /// </summary>
         public decimal HoursTotalRegisteredForCompletedStoriesInSprint
         {
@@ -71,7 +71,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Totaal aantal storypunten in de sprint
+        /// Total amount of storypoints in this sprint
         /// </summary>
         public int StoryPointsTotalEstimatedInSprint
         {
@@ -80,7 +80,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Totaal geschatte storypunten voor afgeronde stories
+        /// Total amount of story points estimated for closed stories in this sprint
         /// </summary>
         public int StoryPointsTotalEstimatedForCompletedStoriesInSprint
         {
@@ -89,7 +89,8 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Aantal dagen voor deze sprint (voor alle developers). Dus voor 2 developers die 4 weken werken vul je hier 40 in.
+        /// Number of days this sprint takes (for all developers). 
+        /// If 2 developers work 4 weeks this should be 40
         /// </summary>
         public decimal NumberOfDaysInSprint
         {
@@ -98,7 +99,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Geeft het aantal storypoints dat afgerond is in deze sprint per dag
+        /// Gets the amount of storypoints that are closed in this sprint each day
         /// </summary>
         public decimal StoryPointVelocity
         {
@@ -106,13 +107,13 @@ namespace JelloScrum.Model.Helpers
             {
                 if (numberOfDaysInSprint == 0)
                     return 0;
-                else 
-                    return storyPointsTotalEstimatedForCompletedStoriesInSprint/numberOfDaysInSprint;
+
+                return storyPointsTotalEstimatedForCompletedStoriesInSprint/numberOfDaysInSprint;
             }
         }
 
         /// <summary>
-        /// 
+        /// Hours velocity
         /// </summary>
         public decimal HoursVelocity
         {
@@ -120,8 +121,8 @@ namespace JelloScrum.Model.Helpers
             {
                 if (numberOfDaysInSprint == 0)
                     return 0;
-                else 
-                    return hoursTotalEstimatedForCompletedStoriesInSprint / numberOfDaysInSprint;
+                
+                return hoursTotalEstimatedForCompletedStoriesInSprint / numberOfDaysInSprint;
             }
         }
     }
@@ -138,7 +139,7 @@ namespace JelloScrum.Model.Helpers
         private int unassignedTasks;
 
         /// <summary>
-        /// Aantal taken die afgerond zijn
+        /// Completed tasks
         /// </summary>
         public int CompletedTasks
         {
@@ -147,7 +148,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Aantal taken nog niet afgerond
+        /// Incomplete tasks
         /// </summary>
         public int IncompleteTasks
         {
@@ -156,18 +157,18 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage afgeronde taken
+        /// Percentage of closed tasks
         /// </summary>
         public decimal CompletedTasksPercentage()
         {
             if (TotalTasks > 0)
                 return 100 * ((decimal)completedTasks / TotalTasks);
-            else
-                return 0;
+            
+            return 0;
         }
 
         /// <summary>
-        /// Afgerond percentage afgeronde taken
+        /// Rounded percentage closed tasks
         /// </summary>
         /// <param name="numberOfDecimals"></param>
         /// <returns></returns>
@@ -177,7 +178,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage niet-afgeronde taken
+        /// Percentage incomplete tasks
         /// </summary>
         public decimal IncompleteTasksPercentage()
         {
@@ -185,7 +186,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage niet-afgeronde taken
+        /// Rounded percentage incomplete tasks
         /// </summary>
         public decimal IncompleteTasksPercentage(int numberOfDecimals)
         {
@@ -193,18 +194,18 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage afgeronde taken
+        /// Percentage taken tasks
         /// </summary>
         public decimal AssignedTasksPercentage()
         {
             if (TotalTasks > 0)
                 return 100 * ((decimal)assignedTasks / TotalTasks);
-            else
-                return 0;
+            
+            return 0;
         }
 
         /// <summary>
-        /// Afgerond percentage afgeronde taken
+        /// Rounded percentage taken tasks
         /// </summary>
         /// <param name="numberOfDecimals"></param>
         /// <returns></returns>
@@ -214,7 +215,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage niet-afgeronde taken
+        /// Percentage open tasks
         /// </summary>
         public decimal UnassignedTasksPercentage()
         {
@@ -222,7 +223,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Percentage niet-afgeronde taken
+        /// Rounded percentage open tasks
         /// </summary>
         public decimal UnassignedTasksPercentage(int numberOfDecimals)
         {
@@ -230,7 +231,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Total tasks
         /// </summary>
         public int TotalTasks
         {
@@ -239,7 +240,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Taken tasks
         /// </summary>
         public int AssignedTasks
         {
@@ -248,7 +249,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Open tasks
         /// </summary>
         public int UnassignedTasks
         {
@@ -258,12 +259,12 @@ namespace JelloScrum.Model.Helpers
     }
 
     /// <summary>
-    /// Deze class kan allerhande al dan niet nutteloze statistieken berekenen
+    /// Used to calculate all kinds of statistics.
     /// </summary>
     public static class SprintHealthHelper
     {
         /// <summary>
-        /// Berekent informatie over de velocity van de gegeven sprint
+        /// Calculates information about the velocity of the given sprint
         /// </summary>
         /// <param name="sprint"></param>
         /// <returns></returns>
@@ -313,20 +314,14 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Bereken de taak voortgang van een sprint.
+        /// Calculates the taskprogress of the given sprint
         /// </summary>
         /// <param name="sprint"></param>
         /// <returns></returns>
         public static TaskProgress GetTaskProgress(Sprint sprint)
         {
             TaskProgress taskProgress = new TaskProgress();
-
-            //Dit kan niet in het model, dus loopen, of een List<Task> als argument geven.
-//            TakenVanSprintQuery takenVanSprintQuery = new TakenVanSprintQuery();
-//            takenVanSprintQuery.Sprint = sprint;
-//
-//            IList tasks = takenVanSprintQuery.GetQuery(UnitOfWork.CurrentSession).List();
-
+        
             List<Task> tasks = new List<Task>();
             
             if(sprint != null)

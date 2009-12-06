@@ -177,15 +177,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="project"></param>
         public void Opslaan([ARDataBind("sprint", AutoLoad = AutoLoadBehavior.NewInstanceIfInvalidKey)] Sprint sprint,
                             string BeschikbareUren,
-                            [ARDataBind("rol", AutoLoadBehavior.NewRootInstanceIfInvalidKey)] SprintRolGebruikerHelper[]
+                            [ARDataBind("rol", AutoLoadBehavior.NewRootInstanceIfInvalidKey)] SprintRoleUserHelper[]
                                 sprintRolGebruikerHelpers,
                             [ARFetch("projectId")] Project project)
         {
             sprint.BeschikbareUren = TimeSpanHelper.Parse(BeschikbareUren);
             project.AddSprint(sprint);
-            foreach (SprintRolGebruikerHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
+            foreach (SprintRoleUserHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
             {
-                sprintRolGebruikerHelper.Verwerk(sprint);
+                sprintRolGebruikerHelper.Process(sprint);
             }
 
             SprintRepository.Save(sprint);

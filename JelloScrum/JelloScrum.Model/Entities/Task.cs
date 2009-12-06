@@ -28,7 +28,7 @@ namespace JelloScrum.Model.Entities
     /// Represents a Task
     /// </summary>
     [ActiveRecord]
-    public class Task : ModelBase, ILogable
+    public class Task : ModelBase, ILoggable
     {
         #region Fields
 

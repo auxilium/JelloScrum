@@ -109,6 +109,7 @@
     <Compile Include="Creations\TaskCreation.cs" />
     <Compile Include="DBTestBase.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Helpers\DateRangeTests.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="MockRepository.cs" />
     <Compile Include="Model\StoryTestGeefTakenLijsten.cs" />

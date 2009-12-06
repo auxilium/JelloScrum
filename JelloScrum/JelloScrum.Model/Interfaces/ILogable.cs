@@ -15,9 +15,9 @@
 namespace JelloScrum.Model.Interfaces
 {
     /// <summary>
-    /// ILogable zorgt ervoor dat bepaald object logbericht kunnen hebben zoals commentaar en logberichten
+    /// Interface for loggable objects
     /// </summary>
-    public interface ILogable
+    public interface ILoggable
     {
         /// <summary>
         /// Gets or sets the id.

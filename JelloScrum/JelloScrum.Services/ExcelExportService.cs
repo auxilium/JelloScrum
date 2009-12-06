@@ -55,12 +55,12 @@ namespace JelloScrum.Services
 
                 row.Id = story.Id.ToString();
                 row.Title = story.Titel;
-                row.Prioriteit = Enum.GetName(typeof(Priority), story.ProductBacklogPrioriteit);
+                row.Priority = Enum.GetName(typeof(Priority), story.ProductBacklogPrioriteit);
                 row.Type = Enum.GetName(typeof(StoryType), story.StoryType);
-                row.Omschrijving = story.Omschrijving;
-                row.Punten = Enum.GetName(typeof(StoryPoint), story.StoryPoints);
-                row.Schatting = TimeSpanInMinuten(story.Schatting).ToString();
-                row.Taken = story.Tasks.Count.ToString();
+                row.Description = story.Omschrijving;
+                row.Points = Enum.GetName(typeof(StoryPoint), story.StoryPoints);
+                row.Estimation = TimeSpanInMinuten(story.Schatting).ToString();
+                row.Tasks = story.Tasks.Count.ToString();
 
                 res.Add(row);
             }
@@ -96,13 +96,13 @@ namespace JelloScrum.Services
 
                 row.Id = sprintStory.Id.ToString();
                 row.Title = sprintStory.Story.Titel;
-                row.Sprintprio = Enum.GetName(typeof(Priority), sprintStory.SprintBacklogPrioriteit);
-                row.Projectprio = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPrioriteit);
+                row.SprintPriority = Enum.GetName(typeof(Priority), sprintStory.SprintBacklogPrioriteit);
+                row.ProjectPriority = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPrioriteit);
                 row.Type = Enum.GetName(typeof(StoryType), sprintStory.Story.StoryType);
-                row.Omschrijving = sprintStory.Story.Omschrijving;
-                row.Punten = Enum.GetName(typeof(StoryPoint), sprintStory.Story.StoryPoints);
-                row.Schatting = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
-                row.Taken = sprintStory.Story.Tasks.Count.ToString();
+                row.Description = sprintStory.Story.Omschrijving;
+                row.Points = Enum.GetName(typeof(StoryPoint), sprintStory.Story.StoryPoints);
+                row.Estimation = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
+                row.Tasks = sprintStory.Story.Tasks.Count.ToString();
 
                 res.Add(row);
             }
@@ -138,8 +138,8 @@ namespace JelloScrum.Services
 
                 storyRow.StoryId = sprintStory.Id.ToString();
                 storyRow.StoryTitle = sprintStory.Story.Titel;
-                storyRow.StoryPrioriteit = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPrioriteit);
-                storyRow.StoryGeschatteUren = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
+                storyRow.StoryPriority = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPrioriteit);
+                storyRow.StoryEstimatedHours = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
                 res.Add(storyRow);
 
                 foreach (Task task in sprintStory.Story.Tasks)
@@ -151,20 +151,20 @@ namespace JelloScrum.Services
                         case State.Open:
                             taskRow.TaskOpenId = task.Id.ToString();
                             taskRow.TaskOpenTitle = task.Titel;
-                            taskRow.TaskOpenBehandelaar = task.AssignedUserName;
-                            taskRow.TaskOpenBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
+                            taskRow.TaskOpenAssignee = task.AssignedUserName;
+                            taskRow.TaskOpenTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                         case State.Taken:
                             taskRow.TaskInProgressId = task.Id.ToString();
                             taskRow.TaskInProgressTitle = task.Titel;
-                            taskRow.TaskInProgressBehandelaar = task.AssignedUserName;
-                            taskRow.TaskInProgressBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
+                            taskRow.TaskInProgressAssignee = task.AssignedUserName;
+                            taskRow.TaskInProgressTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                         case State.Closed:
                             taskRow.TaskDoneId = task.Id.ToString();
                             taskRow.TaskDoneTitle = task.Titel;
-                            taskRow.TaskDoneBehandelaar = task.AssignedUserName;
-                            taskRow.TaskDoneBestedeUren = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
+                            taskRow.TaskDoneAssignee = task.AssignedUserName;
+                            taskRow.TaskDoneTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                     }
 

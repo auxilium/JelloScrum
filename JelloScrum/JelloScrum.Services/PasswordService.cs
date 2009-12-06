@@ -113,9 +113,9 @@ namespace JelloScrum.Services
         /// Generates a random length of random characters
         /// </summary>
         /// <returns>the random characters</returns>
-        public string GenerateSALT()
+        public string GenerateSalt()
         {
-            return GenerateSALT(GenerateRandomNumber(5, 10));
+            return GenerateSalt(GenerateRandomNumber(5, 10));
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace JelloScrum.Services
         /// <param name="minSaltSize">Minimum length</param>
         /// <param name="maxSaltSize">Maximum length</param>
         /// <returns>the random characters</returns>
-        public string GenerateSALT(int minSaltSize, int maxSaltSize)
+        public string GenerateSalt(int minSaltSize, int maxSaltSize)
         {
-            return GenerateSALT(GenerateRandomNumber(minSaltSize, maxSaltSize));
+            return GenerateSalt(GenerateRandomNumber(minSaltSize, maxSaltSize));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="length">length of text</param>
         /// <returns>the random characters</returns>
-        public string GenerateSALT(int length)
+        public string GenerateSalt(int length)
         {
             byte[] data = new byte[length];
             new RNGCryptoServiceProvider().GetBytes(data);
@@ -148,7 +148,7 @@ namespace JelloScrum.Services
         /// <returns>the MD5 encrypted password</returns>
         public string EncryptPassword(string password)
         {
-            return EncryptPassword(password, GenerateSALT(GenerateRandomNumber(5, 10)));
+            return EncryptPassword(password, GenerateSalt(GenerateRandomNumber(5, 10)));
         }
 
         /// <summary>

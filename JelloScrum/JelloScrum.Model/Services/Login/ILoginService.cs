@@ -14,33 +14,34 @@
 
 namespace JelloScrum.Model.Services
 {
-    using Model.Entities;
+    using Entities;
 
     /// <summary>
-    /// Interface van de loginService
+    /// Interface for the loginService
     /// </summary>
     public interface ILoginService
     {
         /// <summary>
-        /// Controlleerd het wachtwoord
+        /// Check the given password
         /// </summary>
-        /// <param name="password"></param>
-        /// <param name="user"></param>
+        /// <param name="password">The password.</param>
+        /// <param name="user">The user.</param>
         void CheckPassword(string password, Gebruiker user);
+
         /// <summary>
-        /// 
+        /// Log the specified user in with the given password.
         /// </summary>
-        /// <param name="password"></param>
-        /// <param name="username"></param>
-        /// <returns></returns>
+        /// <param name="password">The password.</param>
+        /// <param name="username">The username.</param>
+        /// <returns>The logged in user</returns>
         Gebruiker Login(string password, string username);
 
         /// <summary>
-        /// Controlleerd of de gebruiker bestaat aan de hand van de LDAP
+        /// Check LDAP if the given user / password combo exists.
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The user</returns>
         Gebruiker LDapGebruikerCheck(string username, string password);
     }
 }

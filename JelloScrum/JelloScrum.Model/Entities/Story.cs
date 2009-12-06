@@ -26,7 +26,7 @@ namespace JelloScrum.Model.Entities
     /// Represents a Story
     /// </summary>
     [ActiveRecord]
-    public class Story : ModelBase, ILogable
+    public class Story : ModelBase, ILoggable
     {
         #region fields
 

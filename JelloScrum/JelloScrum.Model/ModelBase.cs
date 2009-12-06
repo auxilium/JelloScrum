@@ -18,9 +18,8 @@ namespace JelloScrum.Model
     using Castle.ActiveRecord;
 
     /// <summary>
-    /// This is the abstract baseclass used for all entities used in Foleta.
+    /// This is the abstract baseclass used for all entities used in JelloScrum.
     /// </summary>
-    // [Serializable]
     public abstract class ModelBase : IEquatable<ModelBase>
     {
         private int id = 0;

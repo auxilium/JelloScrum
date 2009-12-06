@@ -19,37 +19,29 @@ namespace JelloScrum.Model.IRepositories
     using Enumerations;
 
     /// <summary>
-    /// Interface for the gebruiker repository
+    /// Interface for the user repository
     /// </summary>
     public interface IGebruikerRepository : IJelloScrumRepository<Gebruiker>
     {
         /// <summary>
-        /// Vind de gebruiker aan de hand van zijn / haar gebruikers naam
+        /// Find the user belonging to the given username
         /// </summary>
-        /// <param name="gebruikersNaam">De gebruikersnaam.</param>
-        /// <returns>de gevonden gebruiker, anders null</returns>
-        Gebruiker ZoekOpGebruikersNaam(string gebruikersNaam);
+        /// <param name="userName">The username.</param>
+        /// <returns>The found user, else null</returns>
+        Gebruiker ZoekOpGebruikersNaam(string userName);
 
         /// <summary>
-        /// Geeft een lijst met gebruikers terug aan de hand van de systeem rol
+        /// Find all users with the given systenrole
         /// </summary>
-        /// <param name="rol">De rol</param>
-        /// <returns>De gebruikers die de gegeven rol hebben.</returns>
-        IList<Gebruiker> ZoekOpSysteemRol(SystemRole rol);
+        /// <param name="role">The systemrole</param>
+        /// <returns>Users that have the given systemrole.</returns>
+        IList<Gebruiker> ZoekOpSysteemRol(SystemRole role);
 
         /// <summary>
-        /// Alle gebruikers die niet in een sprint zitten
+        /// Find all users currently not in the given sprint
         /// </summary>
-        /// <param name="sprint">De sprint</param>
-        /// <returns>De gebruikers die niet in de gegeven sprint zitten.</returns>
+        /// <param name="sprint">The sprint</param>
+        /// <returns>The users that are currently not in the given sprint.</returns>
         IList<Gebruiker> ZoekOpNietInSprint(Sprint sprint);
-
-//        /// <summary>
-//        /// Slaat een nieuwe gebruiker op.
-//        /// </summary>
-//        /// <param name="gebruiker">de gebruiker</param>
-//        /// <param name="wachtwoord">het opgegeven wachtwoord</param>
-//        /// <returns>De gesavede gebruiker</returns>
-//        Gebruiker SaveGebruiker(Gebruiker gebruiker, string wachtwoord);
     }
 }

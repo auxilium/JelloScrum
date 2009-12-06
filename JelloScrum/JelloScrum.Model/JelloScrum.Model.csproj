@@ -123,7 +123,7 @@
     <Compile Include="Helpers\SprintBackLog.cs" />
     <Compile Include="Helpers\ProductBackLog.cs" />
     <Compile Include="Helpers\SprintHealthHelper.cs" />
-    <Compile Include="Helpers\SprintRolGebruikerHelper.cs" />
+    <Compile Include="Helpers\SprintRoleUserHelper.cs" />
     <Compile Include="Interfaces\ILogable.cs" />
     <Compile Include="IRepositories\IProjectShortListRepository.cs" />
     <Compile Include="IRepositories\ISprintGebruikerRepository.cs" />

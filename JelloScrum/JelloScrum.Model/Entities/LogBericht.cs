@@ -21,7 +21,7 @@ namespace JelloScrum.Model.Entities
     /// <summary>
     /// Een logbericht
     /// </summary>
-    public class LogBericht<T> : ModelBase where T : ILogable
+    public class LogBericht<T> : ModelBase where T : ILoggable
     {
         private string titel = string.Empty;
         private string tekst = string.Empty;
