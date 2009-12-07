@@ -42,7 +42,7 @@ namespace JelloScrum.Web.Filter
         {
             try
             {
-                Gebruiker user = authenticationService.Authenticatie(context);
+                User user = authenticationService.Authenticatie(context);
                 controllerContext.PropertyBag.Add("currentUser", user);
             }
             catch

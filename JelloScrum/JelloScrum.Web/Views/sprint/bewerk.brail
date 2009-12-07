@@ -55,7 +55,7 @@ ${Form.HiddenField("projectId", project.Id)}
       <tr>
         <td>
           <input type="hidden" name="rol[${gebruiker.Id}].Gebruiker.Id" id="rol_${gebruiker.Id}_Gebruiker_Id" value="${gebruiker.Id}"/>
-          ${gebruiker.GebruikersNaam}
+          ${gebruiker.UserName}
         </td>
         <?brail for rol in Enum.GetNames(typeof(SprintRole)): ?>
         <td>

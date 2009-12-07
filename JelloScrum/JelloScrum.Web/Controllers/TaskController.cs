@@ -188,9 +188,9 @@ namespace JelloScrum.Web.Controllers
             if (tmpTijdRegistratie.Task == null)
                 return; //todo: foutmelding tonen?
 
-            Gebruiker gebruiker = CurrentUser;
+            User gebruiker = CurrentUser;
 
-            tmpTijdRegistratie.Task.RegisterTime(gebruiker, DateTime.Now, gebruiker.ActieveSprint, tmpTijdRegistratie.Tijd);
+            tmpTijdRegistratie.Task.RegisterTime(gebruiker, DateTime.Now, gebruiker.ActiveSprint, tmpTijdRegistratie.Tijd);
 
             TaskRepository.Save(tmpTijdRegistratie.Task);
 

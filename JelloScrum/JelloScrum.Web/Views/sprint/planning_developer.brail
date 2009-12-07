@@ -2,7 +2,7 @@
     <div class="inner">
         <p class="title">
             <span></span>
-            ${sprintGebruiker.Gebruiker.VolledigeNaam} (<i>${sprintGebruiker.SprintRole} </i>)
+            ${sprintGebruiker.Gebruiker.FullName} (<i>${sprintGebruiker.SprintRole} </i>)
         </p>
     </div>
     <div class="tasks">

@@ -43,9 +43,9 @@ end
 <script type="text/javascript">
 $(document).ready(function(){ 
   <?brail 
-    if IsDefined("currentUser") and currentUser.ActieveSprint is not null:
+    if IsDefined("currentUser") and currentUser.ActiveSprint is not null:
   ?>
-      setTitle("${currentUser.ActieveSprint.Project.Naam} / ${currentUser.ActieveSprint.Doel}");
+      setTitle("${currentUser.ActiveSprint.Project.Naam} / ${currentUser.ActiveSprint.Doel}");
   <?brail
     else:
   ?>

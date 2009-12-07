@@ -28,7 +28,7 @@ namespace JelloScrum.Model.Tests.Model
         public override void SetUp()
         {
             sprint = new Sprint();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
 
             base.SetUp();
         }

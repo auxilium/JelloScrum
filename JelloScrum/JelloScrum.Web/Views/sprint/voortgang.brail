@@ -126,7 +126,7 @@
           <?brail
               if task.Behandelaar != null:
             ?>
-          <a href="#linkie naar die persoonofzo">${task.Behandelaar.Gebruiker.VolledigeNaam}</a>
+          <a href="#linkie naar die persoonofzo">${task.Behandelaar.Gebruiker.FullName}</a>
           <?brail
             else:
             ?>

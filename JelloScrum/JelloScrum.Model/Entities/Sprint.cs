@@ -215,7 +215,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="gebruiker">The user.</param>
         /// <param name="sprintRol">The role.</param>
         /// <returns>The (new) sprintuser.</returns>
-        public virtual SprintGebruiker AddUser(Gebruiker gebruiker, SprintRole sprintRol)
+        public virtual SprintGebruiker AddUser(User gebruiker, SprintRole sprintRol)
         {
             SprintGebruiker sprintGebruiker = GetSprintUserFor(gebruiker);
 
@@ -227,12 +227,12 @@ namespace JelloScrum.Model.Entities
         /// belonging to the given user and this sprint and removes it from this sprint
         /// </summary>
         /// <param name="user">The user.</param>
-        public virtual void RemoveUser(Gebruiker user)
+        public virtual void RemoveUser(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
 
-            SprintGebruiker sprintUser = user.GeefSprintGebruikerVoor(this);
+            SprintGebruiker sprintUser = user.GetSprintUserFor(this);
             if (sprintUser == null)
                 return;
 
@@ -428,9 +428,9 @@ namespace JelloScrum.Model.Entities
         /// Gets all users that have a sprintuser in this sprint.
         /// </summary>
         /// <returns></returns>
-        public virtual IList<Gebruiker> GetAllUsers()
+        public virtual IList<User> GetAllUsers()
         {
-            IList<Gebruiker> users = new List<Gebruiker>();
+            IList<User> users = new List<User>();
             foreach (SprintGebruiker sprintUser in sprintGebruikers)
             {
                 users.Add(sprintUser.Gebruiker);
@@ -469,7 +469,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public virtual SprintGebruiker GetSprintUserFor(Gebruiker user)
+        public virtual SprintGebruiker GetSprintUserFor(User user)
         {
             foreach (SprintGebruiker sprintUser in sprintGebruikers)
             {

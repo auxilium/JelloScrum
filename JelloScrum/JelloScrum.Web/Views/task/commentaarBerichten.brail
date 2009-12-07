@@ -25,7 +25,7 @@
   <ul>
     <?brail for comment in taskCommentaarBerichten:?>
       <li id="${comment.Id}" class="comment">
-        <div class="head">${comment.Gebruiker.VolledigeNaam} - ${comment.Datum.ToShortDateString()}</div>
+        <div class="head">${comment.Gebruiker.FullName} - ${comment.Datum.ToShortDateString()}</div>
         <div class="body">${comment.Tekst}</div>
         <?brail if comment.Gebruiker == currentUser:?>
           <div class="foot">

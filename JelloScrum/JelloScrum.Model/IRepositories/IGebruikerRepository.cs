@@ -21,27 +21,27 @@ namespace JelloScrum.Model.IRepositories
     /// <summary>
     /// Interface for the user repository
     /// </summary>
-    public interface IGebruikerRepository : IJelloScrumRepository<Gebruiker>
+    public interface IGebruikerRepository : IJelloScrumRepository<User>
     {
         /// <summary>
         /// Find the user belonging to the given username
         /// </summary>
         /// <param name="userName">The username.</param>
         /// <returns>The found user, else null</returns>
-        Gebruiker ZoekOpGebruikersNaam(string userName);
+        User ZoekOpGebruikersNaam(string userName);
 
         /// <summary>
         /// Find all users with the given systenrole
         /// </summary>
         /// <param name="role">The systemrole</param>
         /// <returns>Users that have the given systemrole.</returns>
-        IList<Gebruiker> ZoekOpSysteemRol(SystemRole role);
+        IList<User> ZoekOpSysteemRol(SystemRole role);
 
         /// <summary>
         /// Find all users currently not in the given sprint
         /// </summary>
         /// <param name="sprint">The sprint</param>
         /// <returns>The users that are currently not in the given sprint.</returns>
-        IList<Gebruiker> ZoekOpNietInSprint(Sprint sprint);
+        IList<User> ZoekOpNietInSprint(Sprint sprint);
     }
 }

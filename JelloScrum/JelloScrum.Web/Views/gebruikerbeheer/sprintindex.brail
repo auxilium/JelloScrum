@@ -3,7 +3,7 @@
     <div class="title">Product Owner</div>
     <?brail for item in sprint.Gebruikers:?>
       <?brail if item.SprintRole.ToString() == "ProductOwner":?>
-        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.GebruikersNaam}</div>
+        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.UserName}</div>
       <?brail end?>
     <?brail end?>
   </div>
@@ -11,7 +11,7 @@
     <div class="title">Developers</div>
     <?brail for item in sprint.Gebruikers:?>
       <?brail if item.SprintRole.ToString() == "Developer":?>
-        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.GebruikersNaam}</div>
+        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.UserName}</div>
       <?brail end?>
     <?brail end?>
   </div>
@@ -19,14 +19,14 @@
     <div class="title">Scrum Master</div>
     <?brail for item in sprint.Gebruikers:?>
       <?brail if item.SprintRole.ToString() == "ScrumMaster":?>
-        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.GebruikersNaam}</div>
+        <div class="member">${item.Gebruiker.Id} - ${item.Gebruiker.UserName}</div>
       <?brail end?>
     <?brail end?>
   </div>
   <div>
     <div class="title">Gebruikers</div>
     <?brail for item in gebruikers:?>
-        <div class="member">${item.Id} - ${item.GebruikersNaam}</div>
+        <div class="member">${item.Id} - ${item.UserName}</div>
     <?brail end?>    
   </div>
   <script type="text/javascript">

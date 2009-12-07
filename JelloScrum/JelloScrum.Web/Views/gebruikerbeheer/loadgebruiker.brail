@@ -8,7 +8,7 @@
 </div>
 <div id="editContainer">
   <div class="block cornered" id="bc">
-    <h4>Gebruiker: ${gebruiker.Naam}</h4>
+    <h4>Gebruiker: ${gebruiker.Name}</h4>
     Rol binnen Project
     ${FormHelper.Select("gebruiker.GebruikerType", sprintRols)}
   </div>

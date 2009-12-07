@@ -31,7 +31,7 @@ namespace JelloScrum.Repositories.Tests.Creations
             return sprintGebruikerRepository.Save(sprintGebruiker);
         }
 
-        public static SprintGebruiker SprintGebruiker(Gebruiker gebruiker, Sprint sprint, SprintRole sprintRol)
+        public static SprintGebruiker SprintGebruiker(User gebruiker, Sprint sprint, SprintRole sprintRol)
         {
             SprintGebruiker sprintGebruiker = new SprintGebruiker(gebruiker, sprint, sprintRol);
             Project project = Project();

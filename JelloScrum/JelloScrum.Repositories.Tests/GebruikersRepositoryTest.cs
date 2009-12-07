@@ -44,18 +44,18 @@ namespace JelloScrum.Repositories.Tests
         [Test]
         public void TestOpgeslagenGebruikerKanWordenTeruggelezen()
         {
-            Gebruiker gebruiker = gebruikerRepository.Save(Creation.Gebruiker("TestUser"));
+            User gebruiker = gebruikerRepository.Save(Creation.Gebruiker("TestUser"));
             //UnitOfWork.CurrentSession.Clear();
-            Gebruiker dbgebruiker = gebruikerRepository.Get(gebruiker.Id);
+            User dbgebruiker = gebruikerRepository.Get(gebruiker.Id);
 
-            Assert.AreEqual(dbgebruiker.GebruikersNaam, "TestUser");
+            Assert.AreEqual(dbgebruiker.UserName, "TestUser");
         }
 
         [Test]
         public void TestZoekenOpGebruikersNaamGeeftResultaat()
         {
-            Gebruiker gebruiker = Creation.Gebruiker("BenIkInBeeld");
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
+            User gebruiker = Creation.Gebruiker("BenIkInBeeld");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
             Assert.IsTrue(gebruiker.Equals(dbGebruiker), "Gevonden gebruiker was niet de verwachte gebruiker");
         }
 
@@ -63,7 +63,7 @@ namespace JelloScrum.Repositories.Tests
         public void TestZoekenOpGebruikersNaamDieNietBestaatGeeftNullAlsResultaat()
         {
             Creation.Gebruiker("BenIkInBeeld");
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("IkZoekIetsAnders");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("IkZoekIetsAnders");
             Assert.IsNull(dbGebruiker, "Er is een gebruiker gevonden, terwijl dit niet had moeten gebeuren");
         }
 
@@ -76,7 +76,7 @@ namespace JelloScrum.Repositories.Tests
             Creation.Gebruiker("BenIkInBeeld");
             Creation.Gebruiker("BenIkInBeeld");
 
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
             Assert.IsNull(dbGebruiker, "Er is een gebruiker gevonden, terwijl het resultaat null moest zijn");
         }
 
@@ -99,7 +99,7 @@ namespace JelloScrum.Repositories.Tests
         {
             Creation.Gebruiker("Gebruiker1", SystemRole.User);
             Creation.Gebruiker("Gebruiker2", SystemRole.User);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
+            IList<User> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
             Assert.IsTrue(gebruikers.Count == 2, gebruikers.Count.ToString());
         }
 
@@ -108,8 +108,8 @@ namespace JelloScrum.Repositories.Tests
         {
             Creation.Gebruiker("Gebruiker1", SystemRole.User);
             Creation.Gebruiker("Administrator1", SystemRole.Administrator);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
-            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SysteemRol == SystemRole.User, "Er zijn ook andere rollen gevonden.");
+            IList<User> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
+            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SystemRole == SystemRole.User, "Er zijn ook andere rollen gevonden.");
         }
     }
 }

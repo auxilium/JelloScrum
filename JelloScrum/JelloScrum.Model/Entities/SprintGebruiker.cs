@@ -28,7 +28,7 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
         
-        private Gebruiker gebruiker;
+        private User gebruiker;
         private Sprint sprint;
         private SprintRole sprintRol = 0;
 
@@ -49,14 +49,14 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="gebruiker">De gebruiker.</param>
         /// <param name="sprint">De sprint.</param>
-        public SprintGebruiker(Gebruiker gebruiker, Sprint sprint, SprintRole sprintRol)
+        public SprintGebruiker(User gebruiker, Sprint sprint, SprintRole sprintRol)
         {
             if (gebruiker == null)
                 throw new ArgumentNullException("gebruiker", "De gebruiker mag niet null zijn.");
             if (sprint == null)
                 throw new ArgumentNullException("sprint", "De sprint mag niet null zijn.");
             
-            gebruiker.VoegSprintGebruikerToe(this);
+            gebruiker.AddSprintUser(this);
             sprint.AddSprintUser(this);
             this.sprintRol = sprintRol;
         }
@@ -69,7 +69,7 @@ namespace JelloScrum.Model.Entities
         /// De Gebruiker
         /// </summary>
         [BelongsTo(NotNull = true)]
-        public virtual Gebruiker Gebruiker
+        public virtual User Gebruiker
         {
             get { return gebruiker; }
             set { gebruiker = value; }
@@ -252,7 +252,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public virtual void KoppelSprintGebruikerLos()
         {
-            gebruiker.VerwijderSprintGebruiker(this);
+            gebruiker.RemoveSprintUser(this);
             sprint.RemoveSprintUser(this);
         }
     }

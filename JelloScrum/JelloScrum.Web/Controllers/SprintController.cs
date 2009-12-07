@@ -57,8 +57,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void MijnTaken()
         {
-            Gebruiker gb = CurrentUser;
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            User gb = CurrentUser;
+            SprintGebruiker sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
@@ -70,7 +70,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void TakenVanAnderen()
         {
-            Gebruiker gb = CurrentUser;
+            User gb = CurrentUser;
             IList takenVanAnderen = GeefTakenVanAnderen(gb);
 
             if (takenVanAnderen.Count > 0)
@@ -82,8 +82,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void OnOpgepakteTaken()
         {
-            Gebruiker gb = CurrentUser;
-            IList onopgepakteTaken = GeefOnopgepakteTaken(gb.ActieveSprint);
+            User gb = CurrentUser;
+            IList onopgepakteTaken = GeefOnopgepakteTaken(gb.ActiveSprint);
 
             if (onopgepakteTaken.Count > 0)
                 PropertyBag.Add("onopgepakteTaken", onopgepakteTaken);
@@ -94,8 +94,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void MijnAfgeslotenTaken()
         {
-            Gebruiker gb = CurrentUser;
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            User gb = CurrentUser;
+            SprintGebruiker sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
@@ -543,8 +543,8 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void ActieveSprintZetten([ARFetch("sprintId")] Sprint sprint)
         {
-            Gebruiker gb = CurrentUser;
-            gb.ActieveSprint = sprint;
+            User gb = CurrentUser;
+            gb.ActiveSprint = sprint;
 
             try
             {
@@ -658,11 +658,11 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="gebruiker">De gebruiker.</param>
         /// <returns>De taken van anderen.</returns>
-        private static IList GeefTakenVanAnderen(Gebruiker gebruiker)
+        private static IList GeefTakenVanAnderen(User gebruiker)
         {
             OpgepakteTakenQuery opgepakteTakenQuery = new OpgepakteTakenQuery();
-            opgepakteTakenQuery.Sprint = gebruiker.ActieveSprint;
-            opgepakteTakenQuery.BehalveVoorDezeSprintGebruiker = gebruiker.GeefActieveSprintGebruiker();
+            opgepakteTakenQuery.Sprint = gebruiker.ActiveSprint;
+            opgepakteTakenQuery.BehalveVoorDezeSprintGebruiker = gebruiker.GetActiveSprintUser();
             return opgepakteTakenQuery.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List();
         }
         #endregion

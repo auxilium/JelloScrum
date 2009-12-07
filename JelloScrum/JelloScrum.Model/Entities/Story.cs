@@ -37,13 +37,13 @@ namespace JelloScrum.Model.Entities
         private TimeSpan schatting;
 
         private Project project;
-        private Gebruiker aangemaaktDoor;
+        private User aangemaaktDoor;
         private Impact? impact;
         private Priority productBacklogPrioriteit = Priority.Unknown;
         private StoryType storyType = StoryType.UserStory;
 
         private IList<StoryLogBericht> logBerichten = new List<StoryLogBericht>();
-        private IList<StoryCommentaarBericht> commentaarBerichten = new List<StoryCommentaarBericht>();
+        private IList<StoryComment> commentaarBerichten = new List<StoryComment>();
 
         private IList<SprintStory> sprintStories = new List<SprintStory>();
         private IList<Task> tasks = new List<Task>();
@@ -67,7 +67,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="createdBy">The user that created this story.</param>
         /// <param name="impact">The impact.</param>
         /// <param name="storyType">Type of the story.</param>
-        public Story(Project project, Gebruiker createdBy, Impact? impact, StoryType storyType)
+        public Story(Project project, User createdBy, Impact? impact, StoryType storyType)
         {
             if (project == null)
             {
@@ -159,7 +159,7 @@ namespace JelloScrum.Model.Entities
         /// De gebruiker die deze story aangemaakt heeft
         /// </summary>
         [BelongsTo(NotNull = true)]
-        public virtual Gebruiker AangemaaktDoor
+        public virtual User AangemaaktDoor
         {
             get { return aangemaaktDoor; }
             set { aangemaaktDoor = value; }
@@ -214,7 +214,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The commentaren.</value>
         [HasMany(Table = "CommentaarBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
-        public virtual IList<StoryCommentaarBericht> CommentaarBerichten
+        public virtual IList<StoryComment> CommentaarBerichten
         {
             get { return commentaarBerichten; }
             set { commentaarBerichten = value; }
@@ -397,7 +397,7 @@ namespace JelloScrum.Model.Entities
         {
             if (!string.IsNullOrEmpty(text))
             {
-                commentaarBerichten.Add(new StoryCommentaarBericht(this, text));
+                commentaarBerichten.Add(new StoryComment(this, text));
             }
         }
 

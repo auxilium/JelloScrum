@@ -33,13 +33,13 @@ namespace JelloScrum.Web.Controllers
         /// <param name="beschrijving">de (nieuwe) text van het commentaar bericht</param>
         /// <param name="bericht">het eventueele bestaande bericht</param>
         /// <param name="task"></param>
-        public void TaakOpslaan(string beschrijving, [ARFetch("commentId", true, false)] TaskCommentaarBericht bericht, [ARFetch("taskId", false, true)] Task task)
+        public void TaakOpslaan(string beschrijving, [ARFetch("commentId", true, false)] TaskComment bericht, [ARFetch("taskId", false, true)] Task task)
         {
-            bericht.Tekst = beschrijving;
+            bericht.Text = beschrijving;
 
             if(bericht.Id == 0)
             {
-                bericht.Gebruiker = CurrentUser;
+                bericht.User = CurrentUser;
                 bericht.LogObject = task;
                 task.CommentaarBerichten.Add(bericht);
             }
@@ -51,7 +51,7 @@ namespace JelloScrum.Web.Controllers
         /// Verwijder de comment.
         /// </summary>
         /// <param name="bericht"></param>
-        public void Verwijder([ARFetch("commentId")] TaskCommentaarBericht bericht)
+        public void Verwijder([ARFetch("commentId")] TaskComment bericht)
         {
             Task task = bericht.LogObject;
             task.RemoveComment(bericht);
@@ -74,25 +74,25 @@ namespace JelloScrum.Web.Controllers
         /// 
         /// </summary>
         public void OpslaanTaakCommentaar([ARDataBind("taak", AutoLoad = AutoLoadBehavior.NewRootInstanceIfInvalidKey)] Task taak,
-            [ARDataBind("comment", AutoLoad = AutoLoadBehavior.NewInstanceIfInvalidKey)] TaskCommentaarBericht[] comments)
+            [ARDataBind("comment", AutoLoad = AutoLoadBehavior.NewInstanceIfInvalidKey)] TaskComment[] comments)
         {
-            IList<TaskCommentaarBericht> taakCommentaren = new List<TaskCommentaarBericht>(comments);
+            IList<TaskComment> taakCommentaren = new List<TaskComment>(comments);
 
             //verwijder gedelete commentaren
-            foreach (TaskCommentaarBericht taakCommentaar in new List<TaskCommentaarBericht>(taak.CommentaarBerichten))
+            foreach (TaskComment taakCommentaar in new List<TaskComment>(taak.CommentaarBerichten))
             {
                 if (!taakCommentaren.Contains(taakCommentaar))
                     taak.RemoveComment(taakCommentaar);
             }
 
             //voeg alle nieuwe commentaren toe
-            foreach (TaskCommentaarBericht taakCommentaar in comments)
+            foreach (TaskComment taakCommentaar in comments)
             {
                 if (taakCommentaar.Id == 0)
                 {
                     taakCommentaar.LogObject = taak;
-                    taakCommentaar.Gebruiker = CurrentUser;
-                    taakCommentaar.Datum = DateTime.Now;
+                    taakCommentaar.User = CurrentUser;
+                    taakCommentaar.Date = DateTime.Now;
                     taak.AddComment(taakCommentaar);
                 }
             }

@@ -26,7 +26,7 @@ namespace JelloScrum.Model.Services
         /// </summary>
         /// <param name="password">The password.</param>
         /// <param name="user">The user.</param>
-        void CheckPassword(string password, Gebruiker user);
+        void CheckPassword(string password, User user);
 
         /// <summary>
         /// Log the specified user in with the given password.
@@ -34,7 +34,7 @@ namespace JelloScrum.Model.Services
         /// <param name="password">The password.</param>
         /// <param name="username">The username.</param>
         /// <returns>The logged in user</returns>
-        Gebruiker Login(string password, string username);
+        User Login(string password, string username);
 
         /// <summary>
         /// Check LDAP if the given user / password combo exists.
@@ -42,6 +42,6 @@ namespace JelloScrum.Model.Services
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The user</returns>
-        Gebruiker LDapGebruikerCheck(string username, string password);
+        User LDapGebruikerCheck(string username, string password);
     }
 }

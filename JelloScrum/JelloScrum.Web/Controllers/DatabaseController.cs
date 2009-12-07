@@ -90,24 +90,24 @@ namespace JelloScrum.Web.Controllers
             #endregion
 
             #region Gebruikers
-            Gebruiker user1 = new Gebruiker();
-            user1.Naam = "user1";
-            user1.GebruikersNaam = "ProductOwner";
-            user1.VolledigeNaam = "Gebruiker 1";
+            User user1 = new User();
+            user1.Name = "user1";
+            user1.UserName = "ProductOwner";
+            user1.FullName = "Gebruiker 1";
             GebruikerRepository.Save(user1);
             
-            Gebruiker user2 = new Gebruiker();
-            user2.Naam = "user2";
-            user2.GebruikersNaam = "ScrumMaster";
-            user2.SysteemRol = SystemRole.Administrator;
-            user2.VolledigeNaam = "Gebruiker 2";
+            User user2 = new User();
+            user2.Name = "user2";
+            user2.UserName = "ScrumMaster";
+            user2.SystemRole = SystemRole.Administrator;
+            user2.FullName = "Gebruiker 2";
             GebruikerRepository.Save(user2);
 
-            Gebruiker user3 = new Gebruiker();
-            user3.Naam = "user3";
-            user3.GebruikersNaam = "Developer";
-            user3.SysteemRol = SystemRole.User;
-            user3.VolledigeNaam = "Gebruiker 3";
+            User user3 = new User();
+            user3.Name = "user3";
+            user3.UserName = "Developer";
+            user3.SystemRole = SystemRole.User;
+            user3.FullName = "Gebruiker 3";
             GebruikerRepository.Save(user3);
             #endregion
 
@@ -153,7 +153,7 @@ namespace JelloScrum.Web.Controllers
                     task.Omschrijving = "Omschrijving voor JelloScrum story " + story.Titel + " taak nummer " + i.ToString();
                     task.Story = story;
                     story.AddTask(task);
-                    TaskCommentaarBericht bericht = new TaskCommentaarBericht(task, "blabla comment teskt " + i.ToString());
+                    TaskComment bericht = new TaskComment(task, "blabla comment teskt " + i.ToString());
                     task.AddComment(bericht);
                     StoryRepository.SaveOrUpdate(story);
                 }
@@ -171,7 +171,7 @@ namespace JelloScrum.Web.Controllers
                     task.Omschrijving = "Omschrijving voor James story " + story.Titel + " taak nummer " + i.ToString();
                     task.Story = story;
                     story.AddTask(task);
-                    TaskCommentaarBericht bericht = new TaskCommentaarBericht(task,"blabla comment teskt " + i.ToString());
+                    TaskComment bericht = new TaskComment(task,"blabla comment teskt " + i.ToString());
                     task.AddComment(bericht);
                     StoryRepository.Save(story);
                 }

@@ -26,7 +26,7 @@ namespace JelloScrum.Model.Entities
     public class TijdRegistratie : ModelBase
     {
         #region fields
-        private Gebruiker gebruiker;
+        private User gebruiker;
         private DateTime datum;
         private Sprint sprint; 
         private Task task;
@@ -51,7 +51,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="sprint">The sprint.</param>
         /// <param name="task">The task.</param>
         /// <param name="tijd">The tijd.</param>
-        public TijdRegistratie(Gebruiker gebruiker, DateTime datum, Sprint sprint, Task task, TimeSpan tijd)
+        public TijdRegistratie(User gebruiker, DateTime datum, Sprint sprint, Task task, TimeSpan tijd)
         {
             if (tijd.TotalMilliseconds == 0)
                 throw new ArgumentOutOfRangeException("tijd", "Een tijdregistratie moet wel tijd bevatten.");
@@ -79,7 +79,7 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>De gebruiker.</value>
         [BelongsTo(NotNull = true)]
-        public virtual Gebruiker Gebruiker
+        public virtual User Gebruiker
         {
             get { return gebruiker; }
             set { gebruiker = value; }

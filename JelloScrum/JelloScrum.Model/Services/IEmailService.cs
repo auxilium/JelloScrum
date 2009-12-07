@@ -39,7 +39,7 @@ namespace JelloScrum.Model.Services
         /// </summary>
         /// <param name="user">The user</param>
         /// <param name="password">The password</param>
-        void SendPassword(Gebruiker user, string password);
+        void SendPassword(User user, string password);
 
         /// <summary>
         /// Send the given message

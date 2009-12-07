@@ -26,7 +26,7 @@ namespace JelloScrum.Model.Tests.Model
         private Project project;
         private Story story;
         private Task task;
-        private Gebruiker gebruiker;
+        private User gebruiker;
         private Sprint sprint;
         private TimeSpan tijd;
 
@@ -35,7 +35,7 @@ namespace JelloScrum.Model.Tests.Model
             project = new Project();
             
             task = new Task();
-            gebruiker = new Gebruiker();
+            gebruiker = new User();
             sprint = new Sprint();
             project.AddSprint(sprint);
             tijd = new TimeSpan(1, 30, 00); //1,5 uur
@@ -73,7 +73,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegTijdRegistratiesVanVerschillendeGebruikersToe()
         {
-            Gebruiker gebruiker2 = new Gebruiker();
+            User gebruiker2 = new User();
 
             task.RegisterTime(gebruiker, DateTime.Now, sprint, tijd);
             task.RegisterTime(gebruiker2, DateTime.Now, sprint, tijd);

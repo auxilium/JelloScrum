@@ -31,10 +31,10 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVindSprintGebruikerVanGebruikerVoorSprint()
         {
-            Gebruiker gb = new Gebruiker();
+            User gb = new User();
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
+            SprintGebruiker sg = gb.GetSprintUserFor(sprint);
 
             Assert.AreEqual(gb, sg.Gebruiker);
         }
@@ -42,12 +42,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVindGeenSprintGebruikerVanAndereSprints()
         {
-            Gebruiker gb = new Gebruiker();
+            User gb = new User();
             Sprint sprint2 = new Sprint();
             sprint2.AddUser(gb, SprintRole.Developer);
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
+            SprintGebruiker sg = gb.GetSprintUserFor(sprint);
 
             Assert.AreEqual(sprint, sg.Sprint);
         }
@@ -55,11 +55,11 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefActieveSprintGebruikerVanGebruiker()
         {
-            Gebruiker gb = new Gebruiker();
-            gb.ActieveSprint = sprint;
+            User gb = new User();
+            gb.ActiveSprint = sprint;
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            SprintGebruiker sg = gb.GetActiveSprintUser();
 
             Assert.AreEqual(sg.Gebruiker, gb);
         }
@@ -67,10 +67,10 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefActieveSprintGebruikerVanGebruikerTerwijlDezeNogNietGezetIs()
         {
-            Gebruiker gb = new Gebruiker();
+            User gb = new User();
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            SprintGebruiker sg = gb.GetActiveSprintUser();
 
             Assert.AreEqual(null, sg);
         }

@@ -22,13 +22,13 @@ namespace JelloScrum.Model.Helpers
     /// </summary>
     public class SprintRoleUserHelper
     {
-        private Gebruiker user;
+        private User user;
         private SprintRole sprintRole;
         
         /// <summary>
         /// The user
         /// </summary>
-        public virtual Gebruiker User
+        public virtual User User
         {
             get { return user; }
             set { user = value; }

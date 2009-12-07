@@ -31,8 +31,8 @@ namespace JelloScrum.Model.Tests.Model
         public override void SetUp()
         {
             project = new Project();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
-            story2 = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
+            story2 = new Story(new Project(), new User(), null, StoryType.UserStory);
 
             base.SetUp();
         }

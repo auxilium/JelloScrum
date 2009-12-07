@@ -26,13 +26,13 @@ namespace JelloScrum.Model.Tests.Model
     {
         private Project project;
         private Sprint sprint;
-        private Gebruiker gebruiker;
+        private User gebruiker;
 
         public override void SetUp()
         {
             project = new Project();
             sprint = new Sprint();
-            gebruiker = new Gebruiker();
+            gebruiker = new User();
             project.AddSprint(sprint);
 
             base.SetUp();

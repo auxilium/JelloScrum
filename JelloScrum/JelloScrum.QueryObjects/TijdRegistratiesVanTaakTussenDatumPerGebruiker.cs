@@ -21,7 +21,7 @@ namespace JelloScrum.QueryObjects
 
     public class TijdRegistratiesVanTaakTussenDatumPerGebruiker
     {
-        public Gebruiker currentUser;
+        public User currentUser;
         public Sprint sprint;
         public DateTime startDate = new DateTime();
         public DateTime endDate = new DateTime();

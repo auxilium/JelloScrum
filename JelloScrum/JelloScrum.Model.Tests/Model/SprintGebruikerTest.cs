@@ -24,13 +24,13 @@ namespace JelloScrum.Model.Tests.Model
     public class SprintGebruikerTest : TestBase
     {
         private SprintGebruiker sprintGebruiker;
-        private Gebruiker gebruiker;
+        private User gebruiker;
         private Task taak;
         private Task taak2;
 
         public override void SetUp()
         {
-            gebruiker = new Gebruiker();
+            gebruiker = new User();
             sprintGebruiker = Creation.SprintGebruiker(gebruiker);
             taak = new Task();
             taak2 = new Task();
@@ -72,7 +72,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void TestMaakNieuweSprintGebruikerWaarbijSprintNullIsFaalt()
         {
-            new SprintGebruiker(new Gebruiker(), null, SprintRole.Developer);
+            new SprintGebruiker(new User(), null, SprintRole.Developer);
             Assert.Fail();
         }
         

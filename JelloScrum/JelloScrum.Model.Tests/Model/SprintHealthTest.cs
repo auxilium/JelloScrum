@@ -29,7 +29,7 @@ namespace JelloScrum.Model.Tests.Model
         private Sprint testCaseSprint;
         private Project testCaseProject;
         private Story[] testCaseStories = new Story[10];
-        private Gebruiker[] testCaseDevelopers = new Gebruiker[4];
+        private User[] testCaseDevelopers = new User[4];
 
         public override void SetUp()
         {
@@ -50,7 +50,7 @@ namespace JelloScrum.Model.Tests.Model
             testCaseSprint = Creation.Sprint(testCaseProject);
             testCaseSprint.WerkDagen = 40; // 4 devvers voor 2 weken = 4 * 2 * 5 dagen.
 
-            foreach (Gebruiker developer in testCaseDevelopers)
+            foreach (User developer in testCaseDevelopers)
             {
                 testCaseSprint.AddUser(developer, SprintRole.Developer);
             }

@@ -17,7 +17,7 @@
 
     <div class="extra">
         <span class="titel">Schatting:</span> ${item.Story.Schatting}
-        <span class="titel">Door:</span> ${item.Story.AangemaaktDoor.VolledigeNaam}
+        <span class="titel">Door:</span> ${item.Story.AangemaaktDoor.FullName}
         <span class="titel">ProjectMoSCoW:</span> ${item.Story.ProductBacklogPrioriteit}
     </div>
 </div>

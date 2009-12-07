@@ -26,7 +26,7 @@ namespace JelloScrum.Model.Tests.Creations
 
         public static Task TaskMetCompleteHierarchie()
         {
-            Gebruiker gebruiker = Gebruiker();
+            User gebruiker = Gebruiker();
                        
             Sprint sprint = Sprint();
             project.AddSprint(sprint);

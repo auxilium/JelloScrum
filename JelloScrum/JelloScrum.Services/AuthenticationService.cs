@@ -54,7 +54,7 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="user">gebruiker die inlogt.</param>
         /// <param name="context">Gebruikers context</param>
-        public void SetAuthCookie(Gebruiker user, IEngineContext context)
+        public void SetAuthCookie(User user, IEngineContext context)
         {
             HttpCookie cookie = CreateCookie(7);
 
@@ -72,7 +72,7 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="context">De gebruiker context</param>
         /// <returns>een gebruiker</returns>
-        public Gebruiker Authenticatie(IEngineContext context)
+        public User Authenticatie(IEngineContext context)
         {
             string cookieText = context.Request.ReadCookie(Cookie_name);
 
@@ -108,14 +108,14 @@ namespace JelloScrum.Services
                 throw new SecurityException("De gebruikers identificatie is niet geldig");
             }
 
-            Gebruiker user = userService.Load(userId);
+            User user = userService.Load(userId);
 
             if (user == null)
             {
                 throw new SecurityException("De gebruiker uit het koekje bestaat niet meer.");
             }
 
-            if (!user.Actief)
+            if (!user.IsActive)
             {
                 throw new SecurityException("Deze gebruiker is niet actief");
             }

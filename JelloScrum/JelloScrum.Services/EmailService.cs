@@ -94,7 +94,7 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="gebruiker"></param>
         /// <param name="wachtwoord"></param>
-        public void SendPassword(Gebruiker gebruiker, string wachtwoord)
+        public void SendPassword(User gebruiker, string wachtwoord)
         {
             Dictionary<string, object> propertyBag = new Dictionary<string, object>();
             propertyBag.Add("gebruiker", gebruiker);

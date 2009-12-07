@@ -33,13 +33,13 @@ namespace JelloScrum.Model.Services
         /// </summary>
         /// <param name="user">The logged in user.</param>
         /// <param name="context">The context</param>
-        void SetAuthCookie(Gebruiker user, IEngineContext context);
+        void SetAuthCookie(User user, IEngineContext context);
 
         /// <summary>
         /// Authenticate the user
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns>The authenticated user</returns>
-        Gebruiker Authenticatie(IEngineContext context);
+        User Authenticatie(IEngineContext context);
     }
 }

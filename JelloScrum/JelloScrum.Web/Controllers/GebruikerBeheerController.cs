@@ -73,7 +73,7 @@ namespace JelloScrum.Web.Controllers
         /// Laad de gebruiker
         /// </summary>
         /// <param name="gebruiker"></param>
-        public void LoadGebruiker([ARFetch("id")] Gebruiker gebruiker)
+        public void LoadGebruiker([ARFetch("id")] User gebruiker)
         {
             PropertyBag.Add("item", gebruiker);
             RenderView("edit");
@@ -86,7 +86,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="rol"></param>
         public void Nieuw(SystemRole rol)
         {
-            PropertyBag.Add("item", new Gebruiker(rol));
+            PropertyBag.Add("item", new User(rol));
             RenderView("edit");
             CancelLayout();
         }
@@ -125,7 +125,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="gebruiker"></param>
         /// <param name="avatar"></param>
-        public void Save([ARDataBind("item", AutoLoadBehavior.NewInstanceIfInvalidKey)] Gebruiker gebruiker,
+        public void Save([ARDataBind("item", AutoLoadBehavior.NewInstanceIfInvalidKey)] User gebruiker,
                 [ARDataBind("avatar", AutoLoadBehavior.NewInstanceIfInvalidKey)] Avatar avatar)
         {
             try
@@ -198,7 +198,7 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                CurrentUser.ShortListProjectToevoegen(project);
+                CurrentUser.AddProjectToShortList(project);
                 GebruikerRepository.Save(CurrentUser);
             }
             catch

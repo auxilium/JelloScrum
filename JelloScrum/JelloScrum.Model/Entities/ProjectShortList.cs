@@ -24,7 +24,7 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private Gebruiker gebruiker;
+        private User gebruiker;
         private Project project;
 
         #endregion
@@ -41,7 +41,7 @@ namespace JelloScrum.Model.Entities
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectShortList(Gebruiker gebruiker, Project project)
+        public ProjectShortList(User gebruiker, Project project)
         {
             this.gebruiker = gebruiker;
             this.project = project;
@@ -55,7 +55,7 @@ namespace JelloScrum.Model.Entities
         /// De gebruiker
         /// </summary>
         [BelongsTo]
-        public virtual Gebruiker Gebruiker
+        public virtual User Gebruiker
         {
             get { return gebruiker; }
             set { gebruiker = value; }

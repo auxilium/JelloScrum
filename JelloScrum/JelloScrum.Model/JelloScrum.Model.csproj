@@ -90,7 +90,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\CommentaarBericht.cs" />
     <Compile Include="Entities\Gebruiker.cs" />
     <Compile Include="Entities\SprintStory.cs" />
     <Compile Include="Enumerations\Impact.cs" />
@@ -109,6 +108,7 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\LogBericht.cs" />
     <Compile Include="Entities\ProjectShortList.cs" />
     <Compile Include="Entities\SprintGebruiker.cs" />

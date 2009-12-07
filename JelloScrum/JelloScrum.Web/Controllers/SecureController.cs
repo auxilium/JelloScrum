@@ -33,14 +33,14 @@ namespace JelloScrum.Web.Controllers
         /// <summary>
         /// Gitaar. (aldus marco)
         /// </summary>
-        protected Gebruiker currentUser;
+        protected User currentUser;
 
         /// <summary>
         /// Ingelogde gebruiker
         /// </summary>
-        public virtual Gebruiker CurrentUser
+        public virtual User CurrentUser
         {
-            get { return Context.CurrentUser as Gebruiker; }
+            get { return Context.CurrentUser as User; }
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace JelloScrum.Web.Controllers
         {
             get
             {
-                Gebruiker gb = CurrentUser;
+                User gb = CurrentUser;
 
-                if (gb.ActieveSprint != null)
+                if (gb.ActiveSprint != null)
                 {
-                    return gb.ActieveSprint.GetSprintUserFor(gb);
+                    return gb.ActiveSprint.GetSprintUserFor(gb);
                 }
                 else
                 {

@@ -34,7 +34,7 @@ namespace JelloScrum.Model.Tests.Model
             project = new Project();
             sprint = new Sprint();
             project.AddSprint(sprint);
-            story = new Story(project, new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(project, new User(), null, StoryType.UserStory);
             task = new Task();
             task2 = new Task();
            
@@ -71,9 +71,9 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(task);
             story.AddTask(task2);
 
-            task.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1,30,15) );
-            task.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(3,10,26) );
-            task2.RegisterTime(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(2,42,58) );
+            task.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(1,30,15) );
+            task.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(3,10,26) );
+            task2.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(2,42,58) );
 
             Assert.AreEqual(new TimeSpan(7, 23, 39), story.TotalTimeSpent());
         }

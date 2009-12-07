@@ -47,13 +47,13 @@ namespace JelloScrum.Services
         /// <param name="password"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        public Gebruiker Login(string password, string username)
+        public User Login(string password, string username)
         {
-            Gebruiker user;
+            User user;
             try
             {
                 user = userService.ZoekOpGebruikersNaam(username);
-                if (!user.Actief)
+                if (!user.IsActive)
                 {
                     throw new Exception("Deze gebruiker is niet actief.");
                 }
@@ -71,9 +71,9 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="password"></param>
         /// <param name="user"></param>
-        public void CheckPassword(string password, Gebruiker user)
+        public void CheckPassword(string password, User user)
         {
-            if (passwordService.EncryptPassword(password, user.Salt) != user.Wachtwoord)
+            if (passwordService.EncryptPassword(password, user.Salt) != user.Password)
             {
                 throw new Exception("Gebruikersnaam en / of wachtwoord zijn niet geldig.");
             }
@@ -86,7 +86,7 @@ namespace JelloScrum.Services
             }
             return null;
         }
-        public Gebruiker LDapGebruikerCheck(string username, string password)
+        public User LDapGebruikerCheck(string username, string password)
         {
             string domainAndUsername = domain + @"\" + username;
             string fullName = string.Empty;
@@ -111,12 +111,12 @@ namespace JelloScrum.Services
                 throw new Exception(e.Message);
             }
 
-            Gebruiker gebruiker = userService.ZoekOpGebruikersNaam(username);
+            User gebruiker = userService.ZoekOpGebruikersNaam(username);
             if(gebruiker == null)
             {
-                gebruiker = new Gebruiker(username);
-                gebruiker.Naam = username;
-                gebruiker.VolledigeNaam = fullName;
+                gebruiker = new User(username);
+                gebruiker.Name = username;
+                gebruiker.FullName = fullName;
                 userService.Save(gebruiker);
                 return gebruiker;
             }
