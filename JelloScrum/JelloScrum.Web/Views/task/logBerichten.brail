@@ -9,7 +9,7 @@
   <ul>
     <?brail for log in logBerichten:?>
     <li id="${log.Id}">
-      <i>${log.Datum.ToShortDateString()}</i>: ${log.Tekst}
+      <i>${log.Date.ToShortDateString()}</i>: ${log.Tekst}
     </li>
     <?brail end?>
   </ul>

@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JelloScrum.Model.IRepositories
+namespace JelloScrum.Repositories
 {
-    using Entities;
+    using JelloScrum.Model.Entities;
+    using JelloScrum.Model.IRepositories;
 
-    /// <summary>
-    /// Interface for the sprint repository
-    /// </summary>
-    public interface ISprintGebruikerRepository : IJelloScrumRepository<SprintGebruiker>
+    public class SprintUserRepository : JelloScrumRepository<SprintUser>, ISprintUserRepository
     {
 
     }

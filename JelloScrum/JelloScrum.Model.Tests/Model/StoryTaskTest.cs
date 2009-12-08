@@ -33,8 +33,8 @@ namespace JelloScrum.Model.Tests.Model
         {
             project = new Project();
             sprint = new Sprint();
-            project.VoegSprintToe(sprint);
-            story = new Story(project, new Gebruiker(), null, StoryType.UserStory);
+            project.AddSprint(sprint);
+            story = new Story(project, new User(), null, StoryType.UserStory);
             task = new Task();
             task2 = new Task();
            
@@ -44,7 +44,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegTaskToe()
         {
-            story.VoegTaskToe(task);
+            story.AddTask(task);
 
             Assert.AreEqual(story, story.Tasks[0].Story);
         }
@@ -52,8 +52,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMeermaalsDezelfdeTaskToevoegenGaatNiet()
         {
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task);
+            story.AddTask(task);
+            story.AddTask(task);
 
             Assert.AreEqual(1, story.Tasks.Count);
         }
@@ -68,25 +68,25 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestBerekenTotaalBestedeTijd()
         {
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
+            story.AddTask(task);
+            story.AddTask(task2);
 
-            task.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1,30,15) );
-            task.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(3,10,26) );
-            task2.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(2,42,58) );
+            task.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(1,30,15) );
+            task.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(3,10,26) );
+            task2.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(2,42,58) );
 
-            Assert.AreEqual(new TimeSpan(7, 23, 39), story.TotaalBestedeTijd());
+            Assert.AreEqual(new TimeSpan(7, 23, 39), story.TotalTimeSpent());
         }
 
         [Test]
         public void TestBepaalWelkeTakenNogNietZijnOpgepakt()
         {
-            task.Status = Status.Opgepakt;
+            task.State = State.Taken;
             
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2); //task2 heeft nog de default status: NietOpgepakt
+            story.AddTask(task);
+            story.AddTask(task2); //task2 heeft nog de default status: NietOpgepakt
 
-            IList<Task> result = story.GeefTakenMetStatus(Status.NietOpgepakt);
+            IList<Task> result = story.GetTasksWith(State.Open);
 
             Assert.IsTrue(result.Contains(task2));
             Assert.AreEqual(1, result.Count);
@@ -95,72 +95,72 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_GeenOpgepakteStories()
         {
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
+            story.AddTask(task);
+            story.AddTask(task2);
 
-            Assert.AreEqual(Status.NietOpgepakt, story.Status);
+            Assert.AreEqual(State.Open, story.State);
         }
                
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_EenOpgepakteStory()
         {
-            task.Status = Status.Opgepakt;
+            task.State = State.Taken;
 
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
+            story.AddTask(task);
+            story.AddTask(task2);
 
-            Assert.AreEqual(Status.Opgepakt, story.Status);
+            Assert.AreEqual(State.Taken, story.State);
         }
 
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_AlleStoriesZijnAfgesloten()
         {
-            task.Status = Status.Afgesloten;
-            task2.Status = Status.Afgesloten;
+            task.State = State.Closed;
+            task2.State = State.Closed;
 
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
+            story.AddTask(task);
+            story.AddTask(task2);
 
-            Assert.AreEqual(Status.Afgesloten, story.Status);
+            Assert.AreEqual(State.Closed, story.State);
         }
 
         [Test]
         public void TestUrenSchattingTakenKleinerUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0,1,0,0);
-            task2.Schatting = new TimeSpan(0, 1, 0, 0);
+            task.Estimation = new TimeSpan(0,1,0,0);
+            task2.Estimation = new TimeSpan(0, 1, 0, 0);
 
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
-            story.Schatting = new TimeSpan(0, 3, 0, 0);
+            story.AddTask(task);
+            story.AddTask(task2);
+            story.Estimation = new TimeSpan(0, 3, 0, 0);
 
-            Assert.IsTrue(story.CheckSchattingTaken());
+            Assert.IsTrue(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }
 
         [Test]
         public void TestUrenSchattingTakenGelijkUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0, 1, 0, 0);
-            task2.Schatting = new TimeSpan(0, 1, 0, 0);
+            task.Estimation = new TimeSpan(0, 1, 0, 0);
+            task2.Estimation = new TimeSpan(0, 1, 0, 0);
 
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
-            story.Schatting = new TimeSpan(0, 2, 0, 0);
+            story.AddTask(task);
+            story.AddTask(task2);
+            story.Estimation = new TimeSpan(0, 2, 0, 0);
 
-            Assert.IsTrue(story.CheckSchattingTaken());
+            Assert.IsTrue(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }
 
         [Test]
         public void TestUrenSchattingTakenGroterUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0, 1, 0, 0);
-            task2.Schatting = new TimeSpan(0, 2, 0, 0);
+            task.Estimation = new TimeSpan(0, 1, 0, 0);
+            task2.Estimation = new TimeSpan(0, 2, 0, 0);
 
-            story.VoegTaskToe(task);
-            story.VoegTaskToe(task2);
-            story.Schatting = new TimeSpan(0, 2, 0, 0);
+            story.AddTask(task);
+            story.AddTask(task2);
+            story.Estimation = new TimeSpan(0, 2, 0, 0);
 
-            Assert.IsFalse(story.CheckSchattingTaken());
+            Assert.IsFalse(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }
     }
 }

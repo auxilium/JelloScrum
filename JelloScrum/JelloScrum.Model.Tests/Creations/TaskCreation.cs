@@ -26,20 +26,20 @@ namespace JelloScrum.Model.Tests.Creations
 
         public static Task TaskMetCompleteHierarchie()
         {
-            Gebruiker gebruiker = Gebruiker();
+            User gebruiker = Gebruiker();
                        
             Sprint sprint = Sprint();
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
 
-            Story story = StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Must, sprint);
+            Story story = StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Must, sprint);
             //new Story(project, gebruiker, null, StoryType.UserStory);
             //project.VoegStoryToe(story);
             //sprint.MaakSprintStoryVoor(story);
             Task task = Task();
-            story.VoegTaskToe(task);
+            story.AddTask(task);
 
-            SprintGebruiker sprintGebruiker = sprint.VoegGebruikerToe(gebruiker, SprintRol.Developer);
-            sprintGebruiker.PakTaakOp(task);
+            SprintUser sprintGebruiker = sprint.AddUser(gebruiker, SprintRole.Developer);
+            sprintGebruiker.TakeTask(task);
             return task;
         }
     }

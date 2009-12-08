@@ -51,11 +51,11 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprintStory">De sprintstory.</param>
         /// <param name="sprintGebruiker">De sprintgebruiker.</param>
         public void SaveSprintStoryToSprintGebruiker([ARFetch("sprintstory")] SprintStory sprintStory,
-                                                     [ARFetch("sprintgebruiker")] SprintGebruiker sprintGebruiker)
+                                                     [ARFetch("sprintgebruiker")] SprintUser sprintGebruiker)
         {
-            foreach (Task task in sprintStory.Story.GeefTakenMetStatus(Status.NietOpgepakt))
+            foreach (Task task in sprintStory.Story.GetTasksWith(State.Open))
             {
-                sprintGebruiker.PakTaakOp(task);
+                sprintGebruiker.TakeTask(task);
             }
             
             SprintGebruikerRepository.Save(sprintGebruiker);
@@ -71,9 +71,9 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">De task.</param>
         /// <param name="sprintGebruiker">De sprintgebruiker.</param>
         public void SaveTaskToSprintGebruiker([ARFetch("task")] Task task,
-                                              [ARFetch("sprintgebruiker")] SprintGebruiker sprintGebruiker)
+                                              [ARFetch("sprintgebruiker")] SprintUser sprintGebruiker)
         {
-            sprintGebruiker.PakTaakOp(task);
+            sprintGebruiker.TakeTask(task);
             SprintGebruikerRepository.Save(sprintGebruiker);
 
             NameValueCollection args = new NameValueCollection();
@@ -89,7 +89,7 @@ namespace JelloScrum.Web.Controllers
         {
             foreach (Task task in sprintStory.Story.Tasks)
             {
-                task.SluitTaak();
+                task.Close();
                 TaskRepository.Save(task);
             }
             CancelView();
@@ -100,7 +100,7 @@ namespace JelloScrum.Web.Controllers
         /// Gets the sprint stories by sprint gebruiker ordered by prioriteit.
         /// </summary>
         /// <param name="sprintGebruiker">The sprint gebruiker.</param>
-        public void GetSprintStoriesBySprintGebruikerOrderedByPrioriteit([ARFetch("id")] SprintGebruiker sprintGebruiker)
+        public void GetSprintStoriesBySprintGebruikerOrderedByPrioriteit([ARFetch("id")] SprintUser sprintGebruiker)
         {
             PropertyBag.Add("item", sprintGebruiker);
             CancelLayout();
@@ -108,11 +108,11 @@ namespace JelloScrum.Web.Controllers
 
         public void OpslaanPrioriteiten([ARFetch("id")] SprintStory sprintStory, int value)
         {
-            sprintStory.SprintBacklogPrioriteit = (Prioriteit)value;
+            sprintStory.SprintBacklogPriority = (Priority)value;
 
             SprintStoryRepository.Save(sprintStory);
 
-            RenderText(Enum.GetName(typeof(Prioriteit), value));
+            RenderText(Enum.GetName(typeof(Priority), value));
         }
     }
 }

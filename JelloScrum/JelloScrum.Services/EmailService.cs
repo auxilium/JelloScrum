@@ -46,7 +46,7 @@ namespace JelloScrum.Services
         /// Verzend een email naar de ontvanger
         /// </summary>
         /// <returns>een true als er geen foutmelding was</returns>
-        public void Verzend(string fromEmailAddress, string emailAdres, string onderwerp, string templateName, Dictionary<string, object> propertyBag, MessageAttachment[] attachments)
+        public void Send(string fromEmailAddress, string emailAdres, string onderwerp, string templateName, Dictionary<string, object> propertyBag, MessageAttachment[] attachments)
         {
             if (string.IsNullOrEmpty(emailAdres))
             {
@@ -86,7 +86,7 @@ namespace JelloScrum.Services
                     }
                 }
             }
-            Verzend(message);
+            Send(message);
         }
 
         /// <summary>
@@ -94,15 +94,15 @@ namespace JelloScrum.Services
         /// </summary>
         /// <param name="gebruiker"></param>
         /// <param name="wachtwoord"></param>
-        public void VerzendWachtwoord(Gebruiker gebruiker, string wachtwoord)
+        public void SendPassword(User gebruiker, string wachtwoord)
         {
             Dictionary<string, object> propertyBag = new Dictionary<string, object>();
             propertyBag.Add("gebruiker", gebruiker);
             propertyBag.Add("password", wachtwoord);
-            Verzend(string.Empty, gebruiker.Email, "Uw nieuwe Jellow wachtwoord", "password", propertyBag, null);
+            Send(string.Empty, gebruiker.Email, "Uw nieuwe Jellow wachtwoord", "password", propertyBag, null);
         }
 
-        public void Verzend(Message message)
+        public void Send(Message message)
         {
             try
             {

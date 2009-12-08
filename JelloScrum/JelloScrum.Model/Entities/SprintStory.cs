@@ -30,10 +30,10 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private Prioriteit sprintBacklogPrioriteit = Prioriteit.Onbekend;
-        private Sprint sprint = null;
-        private Story story = null;
-        private TimeSpan schatting;
+        private Priority sprintBacklogPriority = Priority.Unknown;
+        private Sprint sprint;
+        private Story story;
+        private TimeSpan estimation;
 
         #endregion
 
@@ -59,10 +59,10 @@ namespace JelloScrum.Model.Entities
             if (story == null)
                 throw new ArgumentNullException("story", "De story mag niet null zijn.");
 
-            sprint.VoegSprintStoryToe(this);
-            story.VoegSprintStoryToe(this);
+            sprint.AddSprintStory(this);
+            story.AddSprintStory(this);
 
-            this.schatting = schatting;
+            this.estimation = schatting;
         }
 
         #endregion
@@ -70,18 +70,18 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// Gets or sets the sprint backlog prioriteit.
+        /// Gets or sets the sprint backlog priority.
         /// </summary>
-        /// <value>The sprint backlog prioriteit.</value>
+        /// <value>The sprint backlog priority.</value>
         [Property]
-        public virtual Prioriteit SprintBacklogPrioriteit
+        public virtual Priority SprintBacklogPriority
         {
-            get { return sprintBacklogPrioriteit; }
-            set { sprintBacklogPrioriteit = value; }
+            get { return sprintBacklogPriority; }
+            set { sprintBacklogPriority = value; }
         }
 
         /// <summary>
-        /// Gets or sets the sprints where this story is part of.
+        /// Gets or sets the sprints this story is part of.
         /// </summary>
         /// <value>The sprint.</value>
         [BelongsTo(NotNull = true)]
@@ -103,14 +103,14 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the schatting.
+        /// Gets or sets the estimation.
         /// </summary>
-        /// <value>The schatting.</value>
+        /// <value>The estimation.</value>
         [Property(ColumnType = "TimeSpan")]
-        public virtual TimeSpan Schatting
+        public virtual TimeSpan Estimation
         {
-            get { return schatting; }
-            set { schatting = value; }
+            get { return estimation; }
+            set { estimation = value; }
         }
 
         #endregion
@@ -118,28 +118,26 @@ namespace JelloScrum.Model.Entities
         #region derived properties
 
         /// <summary>
-        /// Is deze sprintstory volledige opgepakt met alle onderliggende taken?
+        /// Are all tasks of this sprintstory taken?
         /// </summary>
-        /// <value>
-        /// 	<c>true</c> als alle taken van de story van deze sprintstory zijn opgepakt, anders <c>false</c>.
-        /// </value>
-        public virtual bool IsVolledigeOpgepakt
+        /// <value><c>true</c> if [all tasks are taken]; otherwise, <c>false</c>.</value>
+        public virtual bool AllTasksAreTaken
         {
             get
             {
-                if (story.GeefTakenMetStatus(Status.NietOpgepakt).Count == 0)
+                if (story.GetTasksWith(State.Open).Count == 0)
                     return true;
                 return false;
             }
         }
 
         /// <summary>
-        /// De status van de story
+        /// The state of the story
         /// </summary>
-        /// <value>De status van de Story.</value>
-        public virtual Status Status
+        /// <value>The state.</value>
+        public virtual State State
         {
-            get { return story.Status; }
+            get { return story.State; }
         }
 
         #endregion

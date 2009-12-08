@@ -1,9 +1,9 @@
 <div>
     ${Form.FormTag({@action: 'OpslaanTaakCommentaar', @id: 'Bewerk'})}
     ${Form.HiddenField("taak.Id")}
-      Taak: ${taak.Id} ${taak.Titel}<br/>
+      Taak: ${taak.Id} ${taak.Title}<br/>
       Omschrijving: <br/>
-      ${taak.Omschrijving} 
+      ${taak.Description} 
       <br/><br/>
       ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
       <a href="#" id="addcomment" class="button nieuw">Bericht toevoegen</a><br/>
@@ -23,8 +23,8 @@
         ?>
         <tr>
             <td>${comment.Id}</td>
-            <td>${comment.Datum.ToShortDateString()}</td>
-            <td>${comment.Gebruiker.VolledigeNaam}</td>
+            <td>${comment.Date.ToShortDateString()}</td>
+            <td>${comment.User.FullName}</td>
             <td>
               <input type="hidden" name="comment[${count}].Id" value="${comment.Id}" />
               <textarea name='comment[${count}].Tekst' cols="30" rows="5">${comment.Tekst}</textarea>
@@ -40,7 +40,7 @@
           <tr>
             <td>0</td>
             <td>${DateTime.Now}</td>
-            <td>${CurrentUser.VolledigeNaam}</td>
+            <td>${CurrentUser.FullName}</td>
             <td>
               <input type="hidden" name="comment[0].Id" value="0" />
               <textarea name='comment[0].Tekst' cols="30" rows="5"></textarea>
@@ -70,7 +70,7 @@
       $("#addcomment").click(function (event) {
         event.preventDefault();
         var count = $("#commentTable tbody tr").length;
-        $("#commentTable tbody").append("<tr><td>0</td><td>${DateTime.Now}</td><td>${CurrentUser.VolledigeNaam}</td><td><input type='hidden' name='comment["+count+"].Id' value='0' /><textarea name='comment["+count+"].Tekst' cols='30' rows='5'></textarea></td><td><a href='' class='removecomment'>Delete</a></td></tr>")
+        $("#commentTable tbody").append("<tr><td>0</td><td>${DateTime.Now}</td><td>${CurrentUser.FullName}</td><td><input type='hidden' name='comment["+count+"].Id' value='0' /><textarea name='comment["+count+"].Tekst' cols='30' rows='5'></textarea></td><td><a href='' class='removecomment'>Delete</a></td></tr>")
       });
 
         $(".removecomment").live("click", function(event){

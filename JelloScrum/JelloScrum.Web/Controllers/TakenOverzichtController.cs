@@ -31,9 +31,9 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Mijntaken([ARFetch("sprintId")] Sprint sprint)
         {
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
 
-            PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+            PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             PropertyBag.Add("sprint", sprint);
             CancelLayout();
         }
@@ -47,16 +47,18 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
-                sprintGebruiker.GeefTaakAf(taak);
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                sprintGebruiker.UnAssignTask(taak);
                 SprintGebruikerRepository.Save(sprintGebruiker);
-                PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+                PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             }
             catch
             {
                 AddErrorMessageToPropertyBag("Het afgeven van taak nr: " + taak.Id + " is niet gelukt.");
             }
             PropertyBag.Add("sprint", sprint);
+            
+            CancelLayout();
         }
 
         /// <summary>
@@ -68,16 +70,18 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
-                taak.SluitTaak();
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                taak.Close();
                 TaskRepository.Save(taak);
-                PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+                PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             }
             catch
             {
                 AddErrorMessageToPropertyBag("Het afsluiten van taak nr: " + taak.Id + " is niet gelukt.");
             }
             PropertyBag.Add("sprint", sprint);
+
+            CancelLayout();
         }
         #endregion
 
@@ -87,7 +91,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Nietopgepaktetaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GeefAlleTakenVanSprint(Status.NietOpgepakt);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Open);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);
@@ -102,13 +106,13 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void TaakOppakken([ARFetch("id")] Task taak, [ARFetch("sprintId")] Sprint sprint)
         {
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
 
             if (sprintGebruiker != null)
             {
                 try
                 {
-                    sprintGebruiker.PakTaakOp(taak);
+                    sprintGebruiker.TakeTask(taak);
                     SprintGebruikerRepository.Save(sprintGebruiker);
                 }
                 catch
@@ -119,10 +123,10 @@ namespace JelloScrum.Web.Controllers
             else
             {
                 //Hier proberen nieuwe sprint gebruiker te maken.
-                sprintGebruiker = sprint.VoegGebruikerToe(CurrentUser, SprintRol.Developer);
+                sprintGebruiker = sprint.AddUser(CurrentUser, SprintRole.Developer);
                 try
                 {
-                    sprintGebruiker.PakTaakOp(taak);
+                    sprintGebruiker.TakeTask(taak);
                     SprintGebruikerRepository.Save(sprintGebruiker);
                 }
                 catch
@@ -142,7 +146,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Andermanstaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GeefAlleTakenVanSprint(Status.Opgepakt);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Taken);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);
@@ -157,7 +161,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Afgerondetaken([ARFetch("sprintId")] Sprint sprint)
         {
-            IList<Task> taken = sprint.GeefAlleTakenVanSprint(Status.Afgesloten);
+            IList<Task> taken = sprint.GetAllTasksWith(State.Closed);
 
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("taken", taken);
@@ -173,8 +177,8 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
-                sprintGebruiker.PakTaakOp(taak);
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                sprintGebruiker.TakeTask(taak);
                 SprintGebruikerRepository.Save(sprintGebruiker);
             }
             catch

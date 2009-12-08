@@ -1,6 +1,6 @@
 ﻿<div class="gegevensBlock">
 	<h1>
-		Sprint: ${sprint.Doel}
+		Sprint: ${sprint.Goal}
 	</h1>
 	<hr/>
 	<div id="dashboardLeft">

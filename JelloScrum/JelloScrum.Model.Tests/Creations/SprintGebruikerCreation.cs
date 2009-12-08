@@ -19,9 +19,9 @@ namespace JelloScrum.Model.Tests.Creations
 
     public partial class Creation
     {
-        public static SprintGebruiker SprintGebruiker(Gebruiker gebruiker)
+        public static SprintUser SprintGebruiker(User gebruiker)
         {
-            return new SprintGebruiker(gebruiker, Sprint(), 0);
+            return new SprintUser(gebruiker, Sprint(), 0);
         }
     }
 }

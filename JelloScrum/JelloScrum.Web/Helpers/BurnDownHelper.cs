@@ -38,7 +38,7 @@ namespace JelloScrum.Web.Helpers
             TimeSpan totaal = new TimeSpan();
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                totaal += sprintStory.Schatting;
+                totaal += sprintStory.Estimation;
             }
             return totaal;
         }
@@ -92,27 +92,27 @@ namespace JelloScrum.Web.Helpers
             query.sprint = sprint;
 
             ICriteria crit = query.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
-            crit.AddOrder(Order.Asc("Datum"));
+            crit.AddOrder(Order.Asc("Date"));
             IList result = crit.List();
             IDictionary<DateTime, double> dataPoints = new SortedDictionary<DateTime, double>();
 
             double totaal = TotaalGeschatteTijd(sprint).TotalHours;
-            foreach (TijdRegistratie registratie in result)
+            foreach (TimeRegistration registratie in result)
             {
-                if (!dataPoints.ContainsKey(registratie.Datum.Date))
+                if (!dataPoints.ContainsKey(registratie.Date.Date))
                 {
-                    dataPoints.Add(registratie.Datum.Date, totaal);
+                    dataPoints.Add(registratie.Date.Date, totaal);
                 }
-                totaal -= registratie.Tijd.TotalHours;
-                dataPoints[registratie.Datum.Date] = totaal;
+                totaal -= registratie.Time.TotalHours;
+                dataPoints[registratie.Date.Date] = totaal;
             }
 
-            DateTime temp = sprint.StartDatum;
-            while (temp <= sprint.EindDatum)
+            DateTime temp = sprint.StartDate;
+            while (temp <= sprint.EndDate)
             {
                 if (temp.Date <= DateTime.Today)
                 {
-                    if (temp <= sprint.StartDatum && !dataPoints.ContainsKey(temp.Date))
+                    if (temp <= sprint.StartDate && !dataPoints.ContainsKey(temp.Date))
                     {
                         //Als er de eerste dag niet gewerkt is en hij probeer de dag er voor te pakken heb je een infinte loop..
                         dataPoints.Add(temp.Date, TotaalGeschatteTijd(sprint).TotalHours);
@@ -136,11 +136,11 @@ namespace JelloScrum.Web.Helpers
         {
             if (date == null)
             {
-                date = sprint.EindDatum.Date;
+                date = sprint.EndDate.Date;
             }
 
             int dayCount = 0;
-            DateTime temp = sprint.StartDatum;
+            DateTime temp = sprint.StartDate;
             while (temp <= date)
             {
                 if (temp.DayOfWeek != DayOfWeek.Saturday && temp.DayOfWeek != DayOfWeek.Sunday)

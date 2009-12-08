@@ -34,19 +34,19 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSaveTaakAlsDone()
         {
-            taak.SluitTaak();
+            taak.Close();
 
-            Assert.IsTrue(taak.Status == Status.Afgesloten);
+            Assert.IsTrue(taak.State == State.Closed);
         }
 
         [Test]
         public void TestTaakOppakkenGeeftEenBehandelaarDeTaak()
         {
             Task task = Creation.Task();
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.PakTaakOp(task);
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.TakeTask(task);
 
-            Assert.IsTrue(sprintGebruiker.Taken.Contains(task));
+            Assert.IsTrue(sprintGebruiker.Tasks.Contains(task));
 
         }
 
@@ -54,21 +54,21 @@ namespace JelloScrum.Model.Tests.Model
         public void TestTaakAlsNietOpgepaktZettenZorgtDatBehandelaarTaakNietMeerHeeft()
         {
             Task task = Creation.Task();
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.PakTaakOp(task);
-            sprintGebruiker.GeefTaakAf(task);
-            Assert.IsTrue(sprintGebruiker.Taken.Contains(task) == false);
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.TakeTask(task);
+            sprintGebruiker.UnAssignTask(task);
+            Assert.IsTrue(sprintGebruiker.Tasks.Contains(task) == false);
         }
 
         [Test]
         public void TestTaakOvernemenPaktTaakAfVanBehandelaar()
         {
             Task task = Creation.Task();
-            SprintGebruiker sprintGebruiker1 = Creation.SprintGebruiker(Creation.Gebruiker());
-            SprintGebruiker sprintGebruiker2 = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker1.PakTaakOp(task);
-            sprintGebruiker2.NeemTaakOver(task);
-            Assert.IsTrue(sprintGebruiker1.Taken.Contains(task) == false && sprintGebruiker2.Taken.Contains(task));
+            SprintUser sprintGebruiker1 = Creation.SprintGebruiker(Creation.Gebruiker());
+            SprintUser sprintGebruiker2 = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker1.TakeTask(task);
+            sprintGebruiker2.TakeOverTask(task);
+            Assert.IsTrue(sprintGebruiker1.Tasks.Contains(task) == false && sprintGebruiker2.Tasks.Contains(task));
         }
     }
 }

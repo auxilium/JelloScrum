@@ -5,24 +5,24 @@
         ${Form.FormTag({@id: 'Bewerk', @action: 'save'})}
           
           ${Form.HiddenField("item.Id")}
-          ${FormHelper.HiddenField("item.SysteemRol")}
+          ${FormHelper.HiddenField("item.SystemRole")}
           ${FormHelper.HiddenField("avatar.x1Cord")}
           ${FormHelper.HiddenField("avatar.y1Cord")}
           ${FormHelper.HiddenField("avatar.width")}
           ${FormHelper.HiddenField("avatar.height")}
 
           <div id="TextGegevens">
-            ${Form.LabelFor("item.VolledigeNaam", "Naam:")}
-            ${Form.TextField("item.VolledigeNaam")}
+            ${Form.LabelFor("item.FullName", "Naam:")}
+            ${Form.TextField("item.FUllName")}
             <br/><br/>
-            ${Form.LabelFor("item.GebruikersNaam", "GebruikersNaam:")}
-            ${Form.TextField("item.GebruikersNaam")}
+            ${Form.LabelFor("item.UserName", "GebruikersNaam:")}
+            ${Form.TextField("item.UserName")}
             <br/><br/>
             ${Form.LabelFor("item.Email", "Email adres:")}
             ${Form.TextField("item.Email")}
             <br/><br/>
-            ${Form.LabelFor("wachtwoord", "Wachtwoord:")}
-            ${Form.TextField("wachtwoord")}
+            ${Form.LabelFor("password", "Wachtwoord:")}
+            ${Form.TextField("password")}
             <br/><br/>
             ${Form.LabelFor("Avatar", "Huidige Avatar:")}
             <div id="AvatarCurrent">

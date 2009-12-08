@@ -42,7 +42,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="password"></param>
         public void Login(string username, string password)
         {
-            Gebruiker gebruiker;
+            User gebruiker;
             try
             {
                 gebruiker = loginService.LDapGebruikerCheck(username, password);
@@ -67,12 +67,12 @@ namespace JelloScrum.Web.Controllers
         /// Het is gelukt
         /// </summary>
         /// <param name="gebruiker"></param>
-        private void success(Gebruiker gebruiker)
+        private void success(User gebruiker)
         {
             Context.CurrentUser = gebruiker;
             authenticationService.SetAuthCookie(gebruiker, Context);
 
-            if (gebruiker.ActieveSprint!=null)
+            if (gebruiker.ActiveSprint!=null)
                 Redirect("Dashboard", "index");
             else 
                 Redirect("Home", "index");

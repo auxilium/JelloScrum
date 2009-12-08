@@ -30,7 +30,7 @@ namespace JelloScrum.Model.Tests.Model
         public override void SetUp()
         {
             sprint = new Sprint();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
             sprintStory = new SprintStory();
             
             base.SetUp();
@@ -39,7 +39,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryRelatieMetStoryIsGoed()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
             
             Assert.AreEqual(story, ss.Story);
         }   
@@ -54,34 +54,34 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaakSprintStoryNeemtStorySchattingOver()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
 
-            Assert.AreEqual(story.Schatting, ss.Schatting);
+            Assert.AreEqual(story.Estimation, ss.Estimation);
         }
 
         [Test]
         public void TestSprintStoryIsVolledigOpgepakt()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
-            SprintStory result = sprint.MaakSprintStoryVoor(story);
+            story.AddTask(new Task());
+            story.AddTask(new Task());
+            SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = Status.Opgepakt;
-            story.Tasks[1].Status = Status.Opgepakt;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Taken;
 
-            Assert.IsTrue(result.IsVolledigeOpgepakt);
+            Assert.IsTrue(result.AllTasksAreTaken);
         }
 
         [Test]
         public void TestSprintStoryIsNietVolledigOpgepakt()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
-            SprintStory result = sprint.MaakSprintStoryVoor(story);
+            story.AddTask(new Task());
+            story.AddTask(new Task());
+            SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = Status.Opgepakt;
+            story.Tasks[0].State = State.Taken;
 
-            Assert.IsFalse(result.IsVolledigeOpgepakt);
+            Assert.IsFalse(result.AllTasksAreTaken);
         }
     }
 }

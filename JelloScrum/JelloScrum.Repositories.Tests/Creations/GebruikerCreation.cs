@@ -24,26 +24,26 @@ namespace JelloScrum.Repositories.Tests.Creations
     /// </summary>
     public partial class Creation
     {
-        private static IGebruikerRepository gebruikerRepository = IoC.Resolve<IGebruikerRepository>();
+        private static IUserRepository gebruikerRepository = IoC.Resolve<IUserRepository>();
         
-        private static Gebruiker Persist(Gebruiker gebruiker)
+        private static User Persist(User gebruiker)
         {
             return gebruikerRepository.Save(gebruiker);
         }
 
-        public static Gebruiker Gebruiker()
+        public static User Gebruiker()
         {
-            return Persist(new Gebruiker());
+            return Persist(new User());
         }
 
-        public static Gebruiker Gebruiker(string gebruikersNaam)
+        public static User Gebruiker(string gebruikersNaam)
         {
-            return Persist(new Gebruiker(gebruikersNaam));
+            return Persist(new User(gebruikersNaam));
         }
 
-        public static Gebruiker Gebruiker(string gebruikersNaam, SysteemRol systeemRol)
+        public static User Gebruiker(string gebruikersNaam, SystemRole systeemRol)
         {
-            return Persist(new Gebruiker(gebruikersNaam, systeemRol));
+            return Persist(new User(gebruikersNaam, systeemRol));
         }
 
     }

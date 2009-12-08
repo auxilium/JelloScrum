@@ -17,26 +17,29 @@ namespace JelloScrum.Model.Services
     using Entities;
 
     /// <summary>
-    /// Interface voor de excel export Service
+    /// Interface for the ExcelExportService
     /// </summary>
     public interface IExcelExportService
     {
         /// <summary>
-        /// Maakt excel file met alle stories van de projectbacklog en geeft filename terug
+        /// Create an .xls file with all stories from the given backlog and return the filename of this .xls
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="project">The project.</param>
+        /// <returns></returns>
         string ExportProjectBacklog(Project project);
 
         /// <summary>
-        /// Maakt excel file met alle stories van de sprintbacklog en geeft filename terug
+        /// Create an .xls file with all stories from the given sprint and return the filename of this .xls
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="sprint">The sprint.</param>
+        /// <returns></returns>
         string ExportSprintBacklog(Sprint sprint);
 
         /// <summary>
-        /// Maakt excel file met alle stories en taken van de sprint cardwall en geeft filename terug
+        /// Create an .xls file with all stories and tasks from the sprint cardwall and return the filename of this .xls
         /// </summary>
-        /// <param name="sprint">Sprint</param>
+        /// <param name="sprint">The sprint.</param>
+        /// <returns></returns>
         string ExportSprintCardwall(Sprint sprint);
 
     }

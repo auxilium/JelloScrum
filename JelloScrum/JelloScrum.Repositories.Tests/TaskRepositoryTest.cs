@@ -53,7 +53,7 @@ namespace JelloScrum.Repositories.Tests
             TimeSpan ts = new TimeSpan(25, 30, 0);
 
             task = Creation.TaskMetStoryAndProjectAndGebruiker();
-            task.MaakTijdRegistratie(task.Story.AangemaaktDoor, DateTime.Now, Creation.Sprint(task.Story.Project), new TimeSpan(8, 0, 0));
+            task.RegisterTime(task.Story.CreatedBy, DateTime.Now, Creation.Sprint(task.Story.Project), new TimeSpan(8, 0, 0));
             taskRepository.Save(task);
            // UnitOfWork.CurrentSession.Clear();
             taskRepository.Delete(task);

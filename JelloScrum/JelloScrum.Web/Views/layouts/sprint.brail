@@ -63,7 +63,7 @@
 				<?brail OutputSubView('/shared/errorMessages') ?>
 				<div class="gegevensBlock" id="sprintdashboard">
 					<h1>
-						Sprint: ${sprint.Doel}
+						Sprint: ${sprint.Goal}
 					</h1>
 					<hr/>
 					<div id="dashboardLeft">

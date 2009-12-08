@@ -21,7 +21,7 @@
 			<div class="ingegevensBlock">
 				<div>
 					<h1 style="font-weight: bold; padding: 3px; float:left;">
-						Project: ${projectShortList.Project.Naam}
+						Project: ${projectShortList.Project.Name}
 					</h1>
 					<span style="font-weight: bold; padding: 3px; float:right;">
 						<a href="/project/project.rails?projectid=${projectShortList.Project.Id}">ga naar projectpagina</a>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="taakInputRegel">
 					<div>
-						${projectShortList.Project.Omschrijving}
+						${projectShortList.Project.Description}
 					</div>
 				</div>
 				<div class="taakInputRegel">
@@ -50,12 +50,12 @@
 							<?brail for sprint in projectShortList.Project.Sprints : ?>
 							<tr>
 								<td>
-									<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Doel}</a>
+									<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Goal}</a>
 									<?brail
-              if sprint.IsAfgesloten == false:              
+              if sprint.IsClosed == false:              
             ?>
 									<a href="/sprint/actieveSprintZetten.rails?sprintId=${sprint.Id}">
-										<img src="/Content/images/favosprint.png" title="Maak ${sprint.Doel} mijn actieve sprint." alt="Maak ${sprint.Doel} mijn actieve sprint."/>
+										<img src="/Content/images/favosprint.png" title="Maak ${sprint.Goal} mijn actieve sprint." alt="Maak ${sprint.Goal} mijn actieve sprint."/>
 									</a>
 									<?brail
               end
@@ -63,7 +63,7 @@
 								</td>
 								<td>
 									<?brail
-              if sprint.IsAfgesloten:              
+              if sprint.IsClosed:              
             ?>
 									Afgesloten
 									<?brail
@@ -74,8 +74,8 @@
               end
              ?>
 								</td>
-								<td>${sprint.StartDatum.ToShortDateString()}</td>
-								<td>${sprint.EindDatum.ToShortDateString()}</td>
+								<td>${sprint.StartDate.ToShortDateString()}</td>
+								<td>${sprint.EndDate.ToShortDateString()}</td>
 							</tr>
 							<?brail end ?>
 						</tbody>

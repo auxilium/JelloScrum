@@ -1,6 +1,6 @@
 <div id="developerBox" style="display: block;">
-    <?brail for sprintGebruiker in sprint.SprintGebruikers : ?>
-        <div class="developer" id="${sprintGebruiker.Gebruiker.Id}">
+    <?brail for sprintGebruiker in sprint.SprintUsers : ?>
+        <div class="developer" id="${sprintGebruiker.User.Id}">
             <?brail OutputSubView("planning_developer", {"sprintGebruiker": sprintGebruiker}) ?>
         </div>
     <?brail end ?>
@@ -10,33 +10,33 @@
 <?brail for sprintStory in sprint.SprintStories : ?>
     <div class="story">
         <span class="toggle" style="display: none;"><a class="switchTaskOmschrijving">taken/omschrijving</a></span>
-        <p class="${sprintStory.sprintBacklogPrioriteit} storytitle"> ${sprintStory.Story.Titel}</p>
+        <p class="${sprintStory.SprintBacklogPriority} storytitle"> ${sprintStory.Story.Title}</p>
         <div class="omschrijving" style="display: none;">
             <i>Omschrijving:</i><br />
-            ${sprintStory.Story.Omschrijving}
+            ${sprintStory.Story.Description}
             <br /><br />
-            <?brail if sprintStory.Status.Equals(JelloScrum.Model.Enumerations.Status.Afgesloten) :?>
+            <?brail if sprintStory.State.Equals(JelloScrum.Model.Enumerations.State.Closed) :?>
                 <p class="task-done">Alle taken zijn afgesloten</p>
-            <?brail elif sprintStory.Status.Equals(JelloScrum.Model.Enumerations.Status.Opgepakt) :?>
+            <?brail elif sprintStory.State.Equals(JelloScrum.Model.Enumerations.State.Taken) :?>
                 <p class="task-inprogress">Enkele taken zijn opgepakt</p>
             <?brail end ?>
         </div>
         <div class="tasks" style="display: none;">
             <i>Taken:</i>
             <?brail for task in sprintStory.Story.Tasks : ?>
-                <?brail if task.Status.Equals(JelloScrum.Model.Enumerations.Status.Opgepakt) : ?>
-                    <p class="task task-inprogress taskId_${task.Id}" id="${task.Id}" developer="${?task.Behandelaar.Id}">${task.Omschrijving}</p>
-                <?brail elif task.Status.Equals(JelloScrum.Model.Enumerations.Status.Afgesloten) : ?>
-                    <p class="task task-done taskId_${task.Id}" id="${task.Id}" developer="${?task.Behandelaar.Id}">${task.Omschrijving}</p>
+                <?brail if task.State.Equals(JelloScrum.Model.Enumerations.State.Taken) : ?>
+                    <p class="task task-inprogress taskId_${task.Id}" id="${task.Id}" developer="${?task.AssignedUser.Id}">${task.Description}</p>
+                <?brail elif task.State.Equals(JelloScrum.Model.Enumerations.State.Closed) : ?>
+                    <p class="task task-done taskId_${task.Id}" id="${task.Id}" developer="${?task.AssignedUser.Id}">${task.Description}</p>
                 <?brail else : ?>
-                    <p class="task taskId_${task.Id}" id="${task.Id}" developer="0">${task.Omschrijving}</p>
+                    <p class="task taskId_${task.Id}" id="${task.Id}" developer="0">${task.Description}</p>
                 <?brail end ?>
             <?brail end?>
             <!-- TODO: maybe later -->
             <!--a class="add">add task</a-->
         </div>
         <div class="details">
-            <span class="schatting">${sprintStory.Story.Schatting} geschat</span>
+            <span class="schatting">${sprintStory.Story.Estimation} geschat</span>
             <span class="geregistreerd">${sprintStory.Story.TotaalBestedeTijd()} geregistreerd</span>
             <span class="taskcount">${sprintStory.Story.GeefNogNietOpgepakteTaken().Count}/${sprintStory.Story.Tasks.Count} openstaande taken</span>
         </div>

@@ -35,7 +35,7 @@ namespace JelloScrum.Web.Controllers
                 RedirectToReferrer();
             }
 
-            CurrentUser.ActieveSprint = sprint;
+            CurrentUser.ActiveSprint = sprint;
 
             GebruikerRepository.Save(CurrentUser);
             

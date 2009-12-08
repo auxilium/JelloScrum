@@ -24,36 +24,36 @@ namespace JelloScrum.Model.Tests.Creations
         
         public static Story Story()
         {
-            return Story(new Gebruiker());
+            return Story(new User());
         }
 
-        public static Story Story(Gebruiker gebruiker)
+        public static Story Story(User gebruiker)
         {
             return new Story(project, gebruiker, null, StoryType.UserStory);
         }
 
-        public static Story StoryMetSprintStory(Gebruiker gebruiker)
+        public static Story StoryMetSprintStory(User gebruiker)
         {
-            return StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Onbekend, Sprint());
+            return StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Unknown, Sprint());
             
         }
 
-        public static Story StoryMetSprintStoryEnSprintBacklogPrioriteit(Gebruiker gebruiker, Prioriteit prioriteit, Sprint sprint)
+        public static Story StoryMetSprintStoryEnSprintBacklogPrioriteit(User gebruiker, Priority prioriteit, Sprint sprint)
         {
             Story story = Story(gebruiker);
 
-            sprint.MaakSprintStoryVoor(story);
-            story.SprintStories[0].SprintBacklogPrioriteit = prioriteit;
+            sprint.CreateSprintStoryFor(story);
+            story.SprintStories[0].SprintBacklogPriority = prioriteit;
 
             return story;
         }
         
-        public static Story Story(Project project, StoryPoint storyPoints, int hoursPerStoryPoint, Prioriteit moscowPrio, Gebruiker aangemaaktDoor)
+        public static Story Story(Project project, StoryPoint storyPoints, int hoursPerStoryPoint, Priority moscowPrio, User aangemaaktDoor)
         {
-            Story story = new Story(project, aangemaaktDoor, Impact.Normaal, StoryType.UserStory);
+            Story story = new Story(project, aangemaaktDoor, Impact.Normal, StoryType.UserStory);
             story.StoryPoints = storyPoints;
-            story.Schatting = new TimeSpan(story.WaardeStoryPoints*hoursPerStoryPoint);
-            story.ProductBacklogPrioriteit = moscowPrio;
+            story.Estimation = new TimeSpan(story.StoryPointsValue*hoursPerStoryPoint);
+            story.ProductBacklogPriority = moscowPrio;
             return story;
         }
     }

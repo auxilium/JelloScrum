@@ -31,23 +31,23 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVindSprintGebruikerVanGebruikerVoorSprint()
         {
-            Gebruiker gb = new Gebruiker();
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            User gb = new User();
+            sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
+            SprintUser sg = gb.GetSprintUserFor(sprint);
 
-            Assert.AreEqual(gb, sg.Gebruiker);
+            Assert.AreEqual(gb, sg.User);
         }
 
         [Test]
         public void TestVindGeenSprintGebruikerVanAndereSprints()
         {
-            Gebruiker gb = new Gebruiker();
+            User gb = new User();
             Sprint sprint2 = new Sprint();
-            sprint2.VoegGebruikerToe(gb, SprintRol.Developer);
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            sprint2.AddUser(gb, SprintRole.Developer);
+            sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefSprintGebruikerVoor(sprint);
+            SprintUser sg = gb.GetSprintUserFor(sprint);
 
             Assert.AreEqual(sprint, sg.Sprint);
         }
@@ -55,22 +55,22 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefActieveSprintGebruikerVanGebruiker()
         {
-            Gebruiker gb = new Gebruiker();
-            gb.ActieveSprint = sprint;
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            User gb = new User();
+            gb.ActiveSprint = sprint;
+            sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            SprintUser sg = gb.GetActiveSprintUser();
 
-            Assert.AreEqual(sg.Gebruiker, gb);
+            Assert.AreEqual(sg.User, gb);
         }
 
         [Test]
         public void TestGeefActieveSprintGebruikerVanGebruikerTerwijlDezeNogNietGezetIs()
         {
-            Gebruiker gb = new Gebruiker();
-            sprint.VoegGebruikerToe(gb, SprintRol.Developer);
+            User gb = new User();
+            sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            SprintUser sg = gb.GetActiveSprintUser();
 
             Assert.AreEqual(null, sg);
         }

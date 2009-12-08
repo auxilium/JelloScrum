@@ -40,7 +40,7 @@ namespace JelloScrum.Web.Helpers
             TimeSpan totaal = new TimeSpan();
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                totaal += sprintStory.Schatting;
+                totaal += sprintStory.Estimation;
             }
             return totaal;
         }
@@ -94,27 +94,27 @@ namespace JelloScrum.Web.Helpers
             query.sprint = sprint;
 
             ICriteria crit = query.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
-            crit.AddOrder(Order.Asc("Datum"));
+            crit.AddOrder(Order.Asc("Date"));
             IList result = crit.List();
             IDictionary<DateTime, double> dataPoints = new SortedDictionary<DateTime, double>();
 
             double totaal = TotaalGeschatteTijd(sprint).TotalHours;
-            foreach (TijdRegistratie registratie in result)
+            foreach (TimeRegistration registratie in result)
             {
-                if (!dataPoints.ContainsKey(registratie.Datum.Date))
+                if (!dataPoints.ContainsKey(registratie.Date.Date))
                 {
-                    dataPoints.Add(registratie.Datum.Date, totaal);
+                    dataPoints.Add(registratie.Date.Date, totaal);
                 }
-                totaal -= registratie.Tijd.TotalHours;
-                dataPoints[registratie.Datum.Date] = totaal;
+                totaal -= registratie.Time.TotalHours;
+                dataPoints[registratie.Date.Date] = totaal;
             }
 
-            DateTime temp = sprint.StartDatum;
-            while (temp <= sprint.EindDatum)
+            DateTime temp = sprint.StartDate;
+            while (temp <= sprint.EndDate)
             {
                 if (temp.Date <= DateTime.Today)
                 {
-                    if (temp <= sprint.StartDatum && !dataPoints.ContainsKey(temp.Date))
+                    if (temp <= sprint.StartDate && !dataPoints.ContainsKey(temp.Date))
                     {
                         //Als er de eerste dag niet gewerkt is en hij probeer de dag er voor te pakken heb je een infinte loop..
                         dataPoints.Add(temp.Date, TotaalGeschatteTijd(sprint).TotalHours);
@@ -138,11 +138,11 @@ namespace JelloScrum.Web.Helpers
         {
             if (date == null)
             {
-                date = sprint.EindDatum.Date;
+                date = sprint.EndDate.Date;
             }
 
             int dayCount = 0;
-            DateTime temp = sprint.StartDatum;
+            DateTime temp = sprint.StartDate;
             while (temp <= date)
             {
                 if (temp.DayOfWeek != DayOfWeek.Saturday && temp.DayOfWeek != DayOfWeek.Sunday)
@@ -158,8 +158,8 @@ namespace JelloScrum.Web.Helpers
         private string GenereerJavascript(Sprint sprint)
         {
 
-            DateTime startdatum = sprint.StartDatum;
-            DateTime einddatum = sprint.EindDatum;
+            DateTime startdatum = sprint.StartDate;
+            DateTime einddatum = sprint.EndDate;
 
             DateTime temp = startdatum;
 
@@ -182,23 +182,23 @@ namespace JelloScrum.Web.Helpers
 
             ICriteria crit = alleTijdregistratiesTussenDatumsPerSprint.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
 
-            IList<TijdRegistratie> tijdregistraties = crit.List<TijdRegistratie>();
+            IList<TimeRegistration> tijdregistraties = crit.List<TimeRegistration>();
 
             IDictionary<DateTime, TimeSpan> totaleTijdPerDag = new Dictionary<DateTime, TimeSpan>();
-            foreach (TijdRegistratie registratie in tijdregistraties)
+            foreach (TimeRegistration registratie in tijdregistraties)
             {
-                if (!totaleTijdPerDag.ContainsKey(registratie.Datum.Date))
+                if (!totaleTijdPerDag.ContainsKey(registratie.Date.Date))
                 {
-                    totaleTijdPerDag.Add(registratie.Datum.Date, TimeSpan.Zero);
+                    totaleTijdPerDag.Add(registratie.Date.Date, TimeSpan.Zero);
                 }
 
-                totaleTijdPerDag[registratie.Datum.Date] += registratie.Tijd;
+                totaleTijdPerDag[registratie.Date.Date] += registratie.Time;
             }
 
             TimeSpan totaalbestedeTijd = new TimeSpan();
 
             //Zaken voor de ideale lijn
-            double totaalTijd = sprint.GeefTijdTotaalAlleStories().TotalHours;
+            double totaalTijd = sprint.GetTotalTimeEstimatedForAllStories().TotalHours;
             double urenPerDag = totaalTijd / (werkdagen.Count - 1);
             double aantalNogTeBestedenUren = totaalTijd;
 
@@ -286,9 +286,9 @@ namespace JelloScrum.Web.Helpers
 
                     //Nu gaan we de blauwe balk opbouwen
                     
-                    resterendeUren = Math.Round(sprint.GeefNietAfgeslotenStoriesTotaalSchattingTotEnMetDatum(werkdag).TotalHours - afhalenVanNietAfgeslotenUren); //Blauw
+                    resterendeUren = Math.Round(sprint.GetTotalEstimatedTimeForNotClosedStoriesTil(werkdag).TotalHours - afhalenVanNietAfgeslotenUren); //Blauw
 
-                    tabelMetGegevens.Append("<tr><td>" + werkdag.DayOfWeek + " " + werkdag.ToShortDateString() + "</td><td>" + resterendeUren + "</td><td>" + sprint.GeefNietAfgeslotenStoriesTotaalSchattingTotEnMetDatum(werkdag).TotalHours + "</td><td>" + afhalenVanNietAfgeslotenUren + "</td><td>" + teveelBestedeUrenVandaag + "</td><td>" + gewonnenTijd + "</td><td>" + vandaagBestedeUren + "</td></tr>");
+                    tabelMetGegevens.Append("<tr><td>" + werkdag.DayOfWeek + " " + werkdag.ToShortDateString() + "</td><td>" + resterendeUren + "</td><td>" + sprint.GetTotalEstimatedTimeForNotClosedStoriesTil(werkdag).TotalHours + "</td><td>" + afhalenVanNietAfgeslotenUren + "</td><td>" + teveelBestedeUrenVandaag + "</td><td>" + gewonnenTijd + "</td><td>" + vandaagBestedeUren + "</td></tr>");
 
                     arrayDone.Append("[" + resterendeUren + "," + Math.Round(reductieTijdTeVeel) + "," + Math.Round(vandaagBestedeUren) + "]");
 
@@ -314,7 +314,7 @@ namespace JelloScrum.Web.Helpers
                 stringbuilder.Append("}");
                 stringbuilder.Append("], 'x_axis': { 'labels': { 'rotate': 300, 'labels': [" + arrayTicks +
                                      "]} }, 'y_axis': {'min':    0,'max':    " +
-                                     Math.Round((sprint.GeefTijdTotaalAlleStories().TotalHours), 0) +
+                                     Math.Round((sprint.GetTotalTimeEstimatedForAllStories().TotalHours), 0) +
                                      ", 'steps' : 10, 'offset': 300}, 'bg_colour': '#FFFFFF', 'title': { 'text': 'Burndown chart', 'style': 'font-size: 20px;' }");
                 
 
@@ -362,33 +362,33 @@ namespace JelloScrum.Web.Helpers
             double totaalGewerkteTijd = 0;
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                if (sprintStory.Status == Status.Afgesloten && dateTime.Date < sprintStory.Story.DatumAfgesloten.Value.Date)
+                if (sprintStory.State == State.Closed && dateTime.Date < sprintStory.Story.ClosedDate.Value.Date)
                 {
                     //Als er meer werk is gedaan dan dat er is geschat, sturen we de schatting mee. het teveel aan uren zal in rood worden weergegeven.
                     
                     
-                    if (sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime) < sprintStory.Schatting)
+                    if (sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime) < sprintStory.Estimation)
                     {
-                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime));
+                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime));
                     }
                     else
                     {
                         //er is meer tijd gewerkt dan geschat dus we gaan de schatting terug geven.
-                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting);
+                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Estimation);
                     }
 
                 }
-                else if (sprintStory.Status != Status.Afgesloten)
+                else if (sprintStory.State != State.Closed)
                 {
                     //Hier gaan we als de story nog niet is afgesloten.
-                    if (sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime) < sprintStory.Schatting)
+                    if (sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime) < sprintStory.Estimation)
                     {
-                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime));
+                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime));
                     }
                     else
                     {
                         //er is meer tijd gewerkt dan geschat dus we gaan de schatting terug geven.
-                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting);
+                        totaalGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Estimation);
                     }
                 }
             }
@@ -415,9 +415,9 @@ namespace JelloScrum.Web.Helpers
                 else if (sprintStory.Status != Status.Afgesloten)
                 {*/
                     //Hier gaan we als de story nog niet is afgesloten.
-                    if (sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime) > sprintStory.Schatting)
+                    if (sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime) > sprintStory.Estimation)
                     {
-                        totaalTeVeelGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime) - sprintStory.Schatting);
+                        totaalTeVeelGewerkteTijd += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime) - sprintStory.Estimation);
                     }
                 //}
             }
@@ -431,10 +431,10 @@ namespace JelloScrum.Web.Helpers
 
             foreach (SprintStory sprintStory in sprint.SprintStories)
             {
-                if (sprintStory.Status == Status.Afgesloten && dateTime.Date >= sprintStory.Story.DatumAfgesloten.Value.Date && sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime) < sprintStory.Schatting)
+                if (sprintStory.State == State.Closed && dateTime.Date >= sprintStory.Story.ClosedDate.Value.Date && sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime) < sprintStory.Estimation)
                 {
                     //Als het werk sneller is afgerond voor afgesloten stories betekend dit dat we extra ruimte hebben verkregen om te ontwikkellen.
-                    gewonnenUren += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting - sprintStory.Story.TotaalBestedeTijd(sprint.StartDatum, dateTime));
+                    gewonnenUren += TimeSpanHelper.TimeSpanInMinuten(sprintStory.Estimation - sprintStory.Story.TotalTimeSpent(sprint.StartDate, dateTime));
 
                 }
             }

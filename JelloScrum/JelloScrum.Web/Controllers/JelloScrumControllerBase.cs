@@ -70,9 +70,9 @@ namespace JelloScrum.Web.Controllers
         /// Gets the gebruiker service.
         /// </summary>
         /// <value>The gebruiker service.</value>
-        public static IGebruikerRepository GebruikerRepository
+        public static IUserRepository GebruikerRepository
         {
-            get { return IoC.Resolve<IGebruikerRepository>(); }
+            get { return IoC.Resolve<IUserRepository>(); }
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace JelloScrum.Web.Controllers
         /// Gets the sprint service.
         /// </summary>
         /// <value>The sprint service.</value>
-        public static ISprintGebruikerRepository SprintGebruikerRepository
+        public static ISprintUserRepository SprintGebruikerRepository
         {
-            get { return IoC.Resolve<ISprintGebruikerRepository>(); }
+            get { return IoC.Resolve<ISprintUserRepository>(); }
         }
 
         /// <summary>

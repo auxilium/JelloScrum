@@ -44,7 +44,7 @@ namespace JelloScrum.Repositories.Tests
             //UnitOfWork.CurrentSession.Clear();
             Project dbProject = ProjectRepository.Get(project.Id);
 
-            Assert.AreEqual(dbProject.Naam, "ProjectNaam");
+            Assert.AreEqual(dbProject.Name, "ProjectNaam");
         }
     }
 }

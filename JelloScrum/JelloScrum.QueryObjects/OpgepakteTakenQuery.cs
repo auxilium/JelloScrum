@@ -27,11 +27,11 @@ namespace JelloScrum.QueryObjects
     public class OpgepakteTakenQuery
     {
         public Sprint Sprint;
-        public SprintGebruiker BehalveVoorDezeSprintGebruiker;
+        public SprintUser BehalveVoorDezeSprintGebruiker;
 
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", Status.Opgepakt));
+            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", State.Taken));
                         
             if (this.BehalveVoorDezeSprintGebruiker != null)
                 criteria.Add(Restrictions.Not(Restrictions.Eq("Behandelaar", this.BehalveVoorDezeSprintGebruiker)));

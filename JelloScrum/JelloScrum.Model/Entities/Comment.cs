@@ -19,49 +19,49 @@ namespace JelloScrum.Model.Entities
     using Interfaces;
 
     /// <summary>
-    /// Commentaar Bericht
+    /// Represents a comment
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CommentaarBericht<T> : ModelBase where T : ILogable
+    public class Comment<T> : ModelBase where T : ILoggable
     {
         #region fields
 
-        private string tekst = string.Empty;
-        private DateTime datum = DateTime.Now;
-        private T logObject = default(T);
-        private Gebruiker gebruiker = null;
+        private string text = string.Empty;
+        private DateTime date = DateTime.Now;
+        private T logObject;
+        private User user;
 
         #endregion
 
         #region Constructors
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommentaarBericht&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="Comment&lt;T&gt;"/> class.
         /// </summary>
-        public CommentaarBericht()
+        public Comment()
         {
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommentaarBericht&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="Comment&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        public CommentaarBericht(T logObject)
+        public Comment(T logObject)
         {
             this.logObject = logObject;
-            datum = DateTime.Now;
+            date = DateTime.Now;
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommentaarBericht&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="Comment&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        /// <param name="tekst">The tekst.</param>
-        public CommentaarBericht(T logObject, string tekst)
+        /// <param name="text">The text.</param>
+        public Comment(T logObject, string text)
         {
             this.logObject = logObject;
-            this.tekst = tekst;
-            datum = DateTime.Now;
+            this.text = text;
+            date = DateTime.Now;
         }
 
         #endregion
@@ -69,25 +69,25 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// Gets or sets the tekst.
+        /// Gets or sets the text.
         /// </summary>
-        /// <value>The tekst.</value>
+        /// <value>The text.</value>
         [Property]
-        public virtual string Tekst
+        public virtual string Text
         {
-            get { return tekst; }
-            set { tekst = value; }
+            get { return text; }
+            set { text = value; }
         }
 
         /// <summary>
-        /// Gets or sets the datum.
+        /// Gets or sets the date.
         /// </summary>
-        /// <value>The datum.</value>
+        /// <value>The date.</value>
         [Property]
-        public virtual DateTime Datum
+        public virtual DateTime Date
         {
-            get { return datum; }
-            set { datum = value; }
+            get { return date; }
+            set { date = value; }
         }
 
         /// <summary>
@@ -101,48 +101,48 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the gebruiker.
+        /// Gets or sets the user.
         /// </summary>
-        /// <value>The gebruiker.</value>
-        [BelongsTo]
-        public virtual Gebruiker Gebruiker
+        /// <value>The user.</value>
+        [BelongsTo(Column = "JelloScrumUser")]
+        public virtual User User
         {
-            get { return gebruiker; }
-            set { gebruiker = value; }
+            get { return user; }
+            set { user = value; }
         }
 
         #endregion
     }
 
     /// <summary>
-    /// Een tasklogbericht
+    /// Represents a taskcomment
     /// </summary>
-    [ActiveRecord(Table = "CommentaarBericht", DiscriminatorColumn = "Type", DiscriminatorType = "string", DiscriminatorValue = "Task")]
-    public class TaskCommentaarBericht : CommentaarBericht<Task>
+    [ActiveRecord(Table = "Comment", DiscriminatorColumn = "Type", DiscriminatorType = "string", DiscriminatorValue = "Task")]
+    public class TaskComment : Comment<Task>
     {
         #region Constructors
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="TaskComment"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        /// <param name="tekst">The tekst.</param>
-        public TaskCommentaarBericht(Task logObject, string tekst) : base(logObject, tekst)
+        /// <param name="text">The text.</param>
+        public TaskComment(Task logObject, string text) : base(logObject, text)
         {
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="TaskComment"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        public TaskCommentaarBericht(Task logObject) : base(logObject)
+        public TaskComment(Task logObject) : base(logObject)
         {
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="TaskComment"/> class.
         /// </summary>
-        public TaskCommentaarBericht()
+        public TaskComment()
         {
         }
 
@@ -151,9 +151,9 @@ namespace JelloScrum.Model.Entities
         #region Properties
 
         /// <summary>
-        /// Gets or sets the log object.
+        /// Gets or sets the task object.
         /// </summary>
-        /// <value>The log object.</value>
+        /// <value>The task object.</value>
         [BelongsTo]
         public override Task LogObject
         {
@@ -165,34 +165,34 @@ namespace JelloScrum.Model.Entities
     }
 
     /// <summary>
-    /// Een storylogbericht
+    /// Represents a storycomment
     /// </summary>
-    [ActiveRecord(Table = "CommentaarBericht", DiscriminatorColumn = "Type", DiscriminatorType = "string", DiscriminatorValue = "Story")]
-    public class StoryCommentaarBericht : CommentaarBericht<Story>
+    [ActiveRecord(Table = "Comment", DiscriminatorColumn = "Type", DiscriminatorType = "string", DiscriminatorValue = "Story")]
+    public class StoryComment : Comment<Story>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="StoryComment"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        /// <param name="tekst">The tekst.</param>
-        public StoryCommentaarBericht(Story logObject, string tekst) : base(logObject, tekst)
+        /// <param name="text">The text.</param>
+        public StoryComment(Story logObject, string text) : base(logObject, text)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="StoryComment"/> class.
         /// </summary>
         /// <param name="logObject">The log object.</param>
-        public StoryCommentaarBericht(Story logObject) : base(logObject)
+        public StoryComment(Story logObject) : base(logObject)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCommentaarBericht"/> class.
+        /// Initializes a new instance of the <see cref="StoryComment"/> class.
         /// </summary>
-        public StoryCommentaarBericht()
+        public StoryComment()
         {
         }
 
@@ -201,9 +201,9 @@ namespace JelloScrum.Model.Entities
         #region Properties
 
         /// <summary>
-        /// Gets or sets the log object.
+        /// Gets or sets the story object.
         /// </summary>
-        /// <value>The log object.</value>
+        /// <value>The story object.</value>
         [BelongsTo]
         public override Story LogObject
         {

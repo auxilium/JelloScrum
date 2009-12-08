@@ -12,26 +12,26 @@ ${Form.HiddenField("projectId", project.Id)}
   <div>
     <label for="item_Doel">Sprint titel</label>
     <br/>
-    <input type="text" name="sprint.Doel" id="item_Doel"  value="${sprint.Doel}" style="width: 275px;"/><span style="color:#666767; margin-left:8px;">Geef hier de titel op die weergegeven zal worden binnen JelloScrum.</span>   
+    <input type="text" name="sprint.Goal" id="item_Doel"  value="${sprint.Goal}" style="width: 275px;"/><span style="color:#666767; margin-left:8px;">Geef hier de titel op die weergegeven zal worden binnen JelloScrum.</span>   
   </div>
   <div style="margin-top: 10px;">
 	<label for="item_Omschrijving">Omschrijving</label>
 	<br/>
-	${Form.TextArea("sprint.Omschrijving", {@cols: "60", @rows: "4"})}
+	${Form.TextArea("sprint.Description", {@cols: "60", @rows: "4"})}
   </div>
   <div style="margin-top: 22px;float:left;">
-    <label for="item_StartDatum">Startdatum</label><br/>
-    <input type="text" name="sprint.StartDatum" id="item_StartDatum" value="${sprint.StartDatum.ToShortDateString()}" style="float:left; width: 80px; text-align:right;"/>    
+    <label for="item_StartDate">Startdatum</label><br/>
+    <input type="text" name="sprint.StartDate" id="item_StartDate" value="${sprint.StartDate.ToShortDateString()}" style="float:left; width: 80px; text-align:right;"/>    
   </div>
   <div  style="margin-top: 22px;float:left; margin-left: 12px;">
-    <label for="item_EindDatum">Einddatum</label><br/>
-    <input type="text" name="sprint.EindDatum" id="item_EindDatum" value="${sprint.EindDatum.ToShortDateString()}" style="float:left; width: 80px; text-align:right;"/>    
+    <label for="item_EndDate">Einddatum</label><br/>
+    <input type="text" name="sprint.EndDate" id="item_EndDate" value="${sprint.EndDate.ToShortDateString()}" style="float:left; width: 80px; text-align:right;"/>    
   </div>
   <br class="clear"/>
   <div  style="margin-top: 10px;">
     <label for="BeschikbareUrenId">Beschikbare uren</label>
     <br/>
-    <input type="text" name="BeschikbareUren" id="BeschikbareUrenId" value="${TimeSpanHelper.TimeSpanInMinuten(sprint.BeschikbareUren)}" style="float:left; width: 60px; text-align:right;"/>
+    <input type="text" name="BeschikbareUren" id="BeschikbareUrenId" value="${TimeSpanHelper.TimeSpanInMinuten(sprint.AvailableTime)}" style="float:left; width: 60px; text-align:right;"/>
     <span style="color:#666767; margin-left:8px;">(hh,mm)</span>
     <br class="clear"/>
   </div>
@@ -45,7 +45,7 @@ ${Form.HiddenField("projectId", project.Id)}
     <thead>
       <tr>
         <th style="text-align:center; padding: 0px;">Gebruiker</th>
-        <?brail for rol in Enum.GetNames(typeof(SprintRol)): ?>
+        <?brail for rol in Enum.GetNames(typeof(SprintRole)): ?>
         <th style="text-align:center; padding: 0px;">${rol.ToString()}</th>
         <?brail end ?>
       </tr>
@@ -54,18 +54,18 @@ ${Form.HiddenField("projectId", project.Id)}
       <?brail for gebruiker in availableUsers: ?>
       <tr>
         <td>
-          <input type="hidden" name="rol[${gebruiker.Id}].Gebruiker.Id" id="rol_${gebruiker.Id}_Gebruiker_Id" value="${gebruiker.Id}"/>
-          ${gebruiker.GebruikersNaam}
+          <input type="hidden" name="rol[${gebruiker.Id}].User.Id" id="rol_${gebruiker.Id}_Gebruiker_Id" value="${gebruiker.Id}"/>
+          ${gebruiker.UserName}
         </td>
-        <?brail for rol in Enum.GetNames(typeof(SprintRol)): ?>
+        <?brail for rol in Enum.GetNames(typeof(SprintRole)): ?>
         <td>
           <?brail 
-             sprintGebruiker = gebruiker.GeefSprintGebruikerVoor(sprint)
-             if sprintGebruiker is null or sprintGebruiker.HeeftSprintRol(Enum.Parse(typeof(SprintRol), rol, true)) == false:
+             sprintGebruiker = gebruiker.GetSprintUserFor(sprint)
+             if sprintGebruiker is null or sprintGebruiker.HasSprintRole(Enum.Parse(typeof(SprintRole), rol, true)) == false:
           ?>
-          <input type="checkbox" class="checkbox" name="rol[${gebruiker.Id}].SprintRol" id="rol_${gebruiker.Id}_SprintRol" value="${rol}" />
+          <input type="checkbox" class="checkbox" name="rol[${gebruiker.Id}].SprintRole" id="rol_${gebruiker.Id}_SprintRole" value="${rol}" />
           <?brail else:?>
-          <input type="checkbox" checked="checked" class="checkbox" name="rol[${gebruiker.Id}].SprintRol" id="rol_${gebruiker.Id}_SprintRol" value="${rol}" />
+          <input type="checkbox" checked="checked" class="checkbox" name="rol[${gebruiker.Id}].SprintRole" id="rol_${gebruiker.Id}_SprintRole" value="${rol}" />
           <?brail end ?>
         </td>
         <?brail end ?>

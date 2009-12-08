@@ -30,13 +30,13 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Index()
         {
-            if (CurrentUser.ActieveSprint == null)
+            if (CurrentUser.ActiveSprint == null)
             {
                 Redirect("home", "index");
                 return;
             }
             NameValueCollection args = new NameValueCollection();
-            args.Add("sprintId", CurrentUser.ActieveSprint.Id.ToString());
+            args.Add("sprintId", CurrentUser.ActiveSprint.Id.ToString());
             Redirect("sprint", "sprint", args);
         }
     }

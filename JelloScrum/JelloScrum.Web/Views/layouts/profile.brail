@@ -9,7 +9,7 @@
     ?>
   </div>
   <div class="userPref">
-    <a href="/GebruikerBeheer/GebruikersProfiel.rails">${currentUser.VolledigeNaam}</a>
+    <a href="/GebruikerBeheer/GebruikersProfiel.rails">${currentUser.FullName}</a>
     <br/>
     <a href="/login/logout.rails">logout</a>
   </div>  

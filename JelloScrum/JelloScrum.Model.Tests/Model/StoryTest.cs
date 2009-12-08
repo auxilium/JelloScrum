@@ -30,7 +30,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             sprint = new Sprint();
             sprint2 = new Sprint();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
 
             base.SetUp();
         }
@@ -38,55 +38,55 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestStoryMagIngeplandWordenOmdatDezeNietAfgerondIs()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Opgepakt;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Closed;
 
-            Assert.IsTrue(story.IsTePlannen);
+            Assert.IsTrue(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagNietIngeplandWordenOmdatDezeAfgerondIs()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Afgesloten;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Closed;
             
-            Assert.IsFalse(story.IsTePlannen);
+            Assert.IsFalse(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagNietIngeplandWordenOmdatDezeNogInEenNietAfgeslotenSprintZit()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Afgesloten;
-            story.Tasks[1].Status = Status.Opgepakt;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Taken;
             
-            sprint.MaakSprintStoryVoor(story);
-            sprint2.MaakSprintStoryVoor(story);
-            sprint2.IsAfgesloten = true;
+            sprint.CreateSprintStoryFor(story);
+            sprint2.CreateSprintStoryFor(story);
+            sprint2.IsClosed = true;
 
-            Assert.IsFalse(story.IsTePlannen);
+            Assert.IsFalse(story.IsPlannable);
         }
 
         [Test]
         public void TestStoryMagIngeplandWordenOmdatDezeInEenAfgeslotenSprintZit()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Afgesloten;
-            story.Tasks[1].Status = Status.Opgepakt;
-            sprint.MaakSprintStoryVoor(story);
-            sprint.IsAfgesloten = true;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Taken;
+            sprint.CreateSprintStoryFor(story);
+            sprint.IsClosed = true;
 
-            Assert.IsTrue(story.IsTePlannen);
+            Assert.IsTrue(story.IsPlannable);
         }
     }
 }

@@ -98,7 +98,7 @@ namespace JelloScrum.Web.Controllers
             }
             catch (Exception)
             {
-                AddErrorMessageToFlashBag("Het opslaan van taak " + task.Omschrijving + " is niet gelukt.");
+                AddErrorMessageToFlashBag("Het opslaan van taak " + task.Description + " is niet gelukt.");
                 RedirectToAction("Overzicht", "id=" + task.Story.Id);
                 return;
             }
@@ -127,7 +127,7 @@ namespace JelloScrum.Web.Controllers
                     task = new Task(story);
                 }
             }
-            task.Omschrijving = omschrijving;
+            task.Description = omschrijving;
             TaskRepository.Save(task);
             CancelView();
         }
@@ -148,7 +148,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">De task.</param>
         public void TaskOpslaanAlsNietOpgepakt([ARFetch("id")] Task task)
         {
-            task.ZetTaakAlsNietOpgepakt();
+            task.SetAsNotTaken();
             TaskRepository.Save(task);
             CancelView();
             CancelLayout();
@@ -160,7 +160,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">De task.</param>
         public void BoekTijd([ARFetch("taskId")] Task task)
         {
-            TijdRegistratie tijdRegistratie = new TijdRegistratie();
+            TimeRegistration tijdRegistratie = new TimeRegistration();
             tijdRegistratie.Task = task;
             PropertyBag.Add("tijdRegistratie", tijdRegistratie);
             CancelLayout();
@@ -172,7 +172,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="taak">De taak.</param>
         public void SluitTaak([ARFetch("taakId")] Task taak)
         {
-            taak.SluitTaak();
+            taak.Close();
             TaskRepository.Save(taak);
 
             CancelView();
@@ -183,14 +183,14 @@ namespace JelloScrum.Web.Controllers
         /// Maak een nieuwe tijdregistratie aan de hand van het temp tijdregistratie object.
         /// </summary>
         /// <param name="tmpTijdRegistratie">Een tijdelijk tijdregistratie object.</param>
-        public void TijdBoekingOpslaan([ARDataBind("tijdRegistratie", AutoLoadBehavior.NewInstanceIfInvalidKey)] TijdRegistratie tmpTijdRegistratie)
+        public void TijdBoekingOpslaan([ARDataBind("tijdRegistratie", AutoLoadBehavior.NewInstanceIfInvalidKey)] TimeRegistration tmpTijdRegistratie)
         {
             if (tmpTijdRegistratie.Task == null)
                 return; //todo: foutmelding tonen?
 
-            Gebruiker gebruiker = CurrentUser;
+            User gebruiker = CurrentUser;
 
-            tmpTijdRegistratie.Task.MaakTijdRegistratie(gebruiker, DateTime.Now, gebruiker.ActieveSprint, tmpTijdRegistratie.Tijd);
+            tmpTijdRegistratie.Task.RegisterTime(gebruiker, DateTime.Now, gebruiker.ActiveSprint, tmpTijdRegistratie.Time);
 
             TaskRepository.Save(tmpTijdRegistratie.Task);
 
@@ -203,7 +203,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">The task.</param>
         public void LogBerichten([ARFetch("taskId", false, true)] Task task)
         {
-            PropertyBag.Add("logBerichten", task.LogBerichten);
+            PropertyBag.Add("logBerichten", task.LogMessages);
             CancelLayout();
         }
 
@@ -213,7 +213,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="task">The task.</param>
         public void CommentaarBerichten([ARFetch("taskId", false, true)] Task task)
         {
-            PropertyBag.Add("taskCommentaarBerichten", task.CommentaarBerichten);
+            PropertyBag.Add("taskCommentaarBerichten", task.Comments);
             PropertyBag.Add("taak", task);
             CancelLayout();
         }

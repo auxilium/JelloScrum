@@ -27,13 +27,13 @@ namespace JelloScrum.Repositories.Tests
     public class GebruikerRepositoryTest : TestBase
     {
         #region Setup/Teardown
-        private IGebruikerRepository gebruikerRepository;
+        private IUserRepository gebruikerRepository;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            gebruikerRepository = IoC.Resolve<IGebruikerRepository>();
+            gebruikerRepository = IoC.Resolve<IUserRepository>();
         }
 
         #endregion
@@ -44,18 +44,18 @@ namespace JelloScrum.Repositories.Tests
         [Test]
         public void TestOpgeslagenGebruikerKanWordenTeruggelezen()
         {
-            Gebruiker gebruiker = gebruikerRepository.Save(Creation.Gebruiker("TestUser"));
+            User gebruiker = gebruikerRepository.Save(Creation.Gebruiker("TestUser"));
             //UnitOfWork.CurrentSession.Clear();
-            Gebruiker dbgebruiker = gebruikerRepository.Get(gebruiker.Id);
+            User dbgebruiker = gebruikerRepository.Get(gebruiker.Id);
 
-            Assert.AreEqual(dbgebruiker.GebruikersNaam, "TestUser");
+            Assert.AreEqual(dbgebruiker.UserName, "TestUser");
         }
 
         [Test]
         public void TestZoekenOpGebruikersNaamGeeftResultaat()
         {
-            Gebruiker gebruiker = Creation.Gebruiker("BenIkInBeeld");
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
+            User gebruiker = Creation.Gebruiker("BenIkInBeeld");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
             Assert.IsTrue(gebruiker.Equals(dbGebruiker), "Gevonden gebruiker was niet de verwachte gebruiker");
         }
 
@@ -63,7 +63,7 @@ namespace JelloScrum.Repositories.Tests
         public void TestZoekenOpGebruikersNaamDieNietBestaatGeeftNullAlsResultaat()
         {
             Creation.Gebruiker("BenIkInBeeld");
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("IkZoekIetsAnders");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("IkZoekIetsAnders");
             Assert.IsNull(dbGebruiker, "Er is een gebruiker gevonden, terwijl dit niet had moeten gebeuren");
         }
 
@@ -76,7 +76,7 @@ namespace JelloScrum.Repositories.Tests
             Creation.Gebruiker("BenIkInBeeld");
             Creation.Gebruiker("BenIkInBeeld");
 
-            Gebruiker dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
+            User dbGebruiker = gebruikerRepository.ZoekOpGebruikersNaam("BenIkInBeeld");
             Assert.IsNull(dbGebruiker, "Er is een gebruiker gevonden, terwijl het resultaat null moest zijn");
         }
 
@@ -97,19 +97,19 @@ namespace JelloScrum.Repositories.Tests
         [Test]
         public void TestZoekenOpRolGeeftJuisteResultaat()
         {
-            Creation.Gebruiker("Gebruiker1", SysteemRol.Gebruiker);
-            Creation.Gebruiker("Gebruiker2", SysteemRol.Gebruiker);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SysteemRol.Gebruiker);
+            Creation.Gebruiker("Gebruiker1", SystemRole.User);
+            Creation.Gebruiker("Gebruiker2", SystemRole.User);
+            IList<User> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
             Assert.IsTrue(gebruikers.Count == 2, gebruikers.Count.ToString());
         }
 
         [Test]
         public void TestZoekenOpRolGeeftGeenAndereRollen()
         {
-            Creation.Gebruiker("Gebruiker1", SysteemRol.Gebruiker);
-            Creation.Gebruiker("Administrator1", SysteemRol.Administrator);
-            IList<Gebruiker> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SysteemRol.Gebruiker);
-            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SysteemRol == SysteemRol.Gebruiker, "Er zijn ook andere rollen gevonden.");
+            Creation.Gebruiker("Gebruiker1", SystemRole.User);
+            Creation.Gebruiker("Administrator1", SystemRole.Administrator);
+            IList<User> gebruikers = gebruikerRepository.ZoekOpSysteemRol(SystemRole.User);
+            Assert.IsTrue(gebruikers.Count == 1 && gebruikers[0].SystemRole == SystemRole.User, "Er zijn ook andere rollen gevonden.");
         }
     }
 }

@@ -19,55 +19,55 @@ namespace JelloScrum.Model.Entities
     using Castle.Components.Validator;
 
     /// <summary>
-    /// Het tijdregistratie object. Hierin wordt de door de gebruiker op een
-    /// taak geboekte tijd geregistreerd.
+    /// The timeregistration object. This is used to register the time a user has spent on a task
     /// </summary>
     [ActiveRecord(Lazy = true)]
-    public class TijdRegistratie : ModelBase
+    public class TimeRegistration : ModelBase
     {
         #region fields
-        private Gebruiker gebruiker;
-        private DateTime datum;
+
+        private User user;
+        private DateTime date;
         private Sprint sprint; 
         private Task task;
-        private TimeSpan tijd;
+        private TimeSpan time;
 
         #endregion
         
         #region constructors
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="TijdRegistratie"/> class.
+        /// Initializes a new instance of the <see cref="TimeRegistration"/> class.
         /// </summary>
-        public TijdRegistratie()
+        public TimeRegistration()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TijdRegistratie"/> class.
+        /// Initializes a new instance of the <see cref="TimeRegistration"/> class.
         /// </summary>
-        /// <param name="gebruiker">The gebruiker.</param>
-        /// <param name="datum">The datum.</param>
+        /// <param name="user">The user.</param>
+        /// <param name="date">The date.</param>
         /// <param name="sprint">The sprint.</param>
         /// <param name="task">The task.</param>
-        /// <param name="tijd">The tijd.</param>
-        public TijdRegistratie(Gebruiker gebruiker, DateTime datum, Sprint sprint, Task task, TimeSpan tijd)
+        /// <param name="time">The time.</param>
+        public TimeRegistration(User user, DateTime date, Sprint sprint, Task task, TimeSpan time)
         {
-            if (tijd.TotalMilliseconds == 0)
-                throw new ArgumentOutOfRangeException("tijd", "Een tijdregistratie moet wel tijd bevatten.");
-            if (gebruiker == null)
-                throw new ArgumentNullException("gebruiker", "De gebruiker is null.");
+            if (time.TotalMilliseconds == 0)
+                throw new ArgumentOutOfRangeException("time", "A timeregistration should contain time.");
+            if (user == null)
+                throw new ArgumentNullException("user", "The user can not be null.");
             if (sprint== null)
-                throw new ArgumentNullException("sprint", "De sprint is null.");
+                throw new ArgumentNullException("sprint", "The sprint can not be null.");
             if (task == null)
-                throw new ArgumentNullException("task", "De task is null.");
+                throw new ArgumentNullException("task", "The task can not be null.");
             
-            this.gebruiker = gebruiker;
+            this.user = user;
             this.sprint = sprint;
             this.task = task;
 
-            this.datum = datum;
-            this.tijd = tijd;
+            this.date = date;
+            this.time = time;
         }
 
         #endregion
@@ -75,31 +75,31 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// De gebruiker.
+        /// The user
         /// </summary>
-        /// <value>De gebruiker.</value>
-        [BelongsTo(NotNull = true)]
-        public virtual Gebruiker Gebruiker
+        /// <value>THe user.</value>
+        [BelongsTo(NotNull = true, Column = "JelloScrumUser")]
+        public virtual User User
         {
-            get { return gebruiker; }
-            set { gebruiker = value; }
+            get { return user; }
+            set { user = value; }
         }
 
         /// <summary>
-        /// De datum.
+        /// The date
         /// </summary>
-        /// <value>De datum.</value>
+        /// <value>The date.</value>
         [Property]
-        public virtual DateTime Datum
+        public virtual DateTime Date
         {
-            get { return datum; }
-            set { datum = value; }
+            get { return date; }
+            set { date = value; }
         }
 
         /// <summary>
-        /// De sprint.
+        /// The sprint
         /// </summary>
-        /// <value>De sprint.</value>
+        /// <value>The sprint.</value>
         [BelongsTo(NotNull = true)]
         public virtual Sprint Sprint
         {
@@ -108,9 +108,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De task.
+        /// The task.
         /// </summary>
-        /// <value>De task.</value>
+        /// <value>The task.</value>
         [BelongsTo(NotNull = true)]
         public virtual Task Task
         {
@@ -119,15 +119,14 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De tijd.
-        /// todo: waarom werkt ValidateTimeSpan niet?
+        /// The time
         /// </summary>
-        /// <value>De tijd.</value>
-        [Property(ColumnType = "TimeSpan"), ValidateNonEmpty("Geen geldige tijd.")]
-        public virtual TimeSpan Tijd
+        /// <value>The time.</value>
+        [Property(ColumnType = "TimeSpan"), ValidateNonEmpty("Not a valid time.")]
+        public virtual TimeSpan Time
         {
-            get { return tijd; }
-            set { tijd = value; }
+            get { return time; }
+            set { time = value; }
         }
 
         #endregion

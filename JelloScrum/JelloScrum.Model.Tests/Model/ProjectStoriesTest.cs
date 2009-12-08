@@ -31,8 +31,8 @@ namespace JelloScrum.Model.Tests.Model
         public override void SetUp()
         {
             project = new Project();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
-            story2 = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
+            story2 = new Story(new Project(), new User(), null, StoryType.UserStory);
 
             base.SetUp();
         }
@@ -40,7 +40,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegStoryToe()
         {
-            project.VoegStoryToe(story);
+            project.AddStory(story);
 
             Assert.AreEqual(project, project.Stories[0].Project);
         }
@@ -48,8 +48,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMeermaalsDezelfdeTaskToevoegenGaatNiet()
         {
-            project.VoegStoryToe(story);
-            project.VoegStoryToe(story);
+            project.AddStory(story);
+            project.AddStory(story);
 
             Assert.AreEqual(1, project.Stories.Count);  
         }
@@ -64,12 +64,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefStoriesZonderMoSCoWPrioriteit()
         {
-            story.ProductBacklogPrioriteit = Prioriteit.Must;
+            story.ProductBacklogPriority = Priority.Must;
 
-            project.VoegStoryToe(story);
-            project.VoegStoryToe(story2);
+            project.AddStory(story);
+            project.AddStory(story2);
 
-            IList<Story> result = project.GeefStoriesZonderMoSCoWPrioriteit();
+            IList<Story> result = project.GetAllStoriesWithUndefinedPriorities();
 
             Assert.IsTrue(result.Contains(story2), "GeefStoriesZonderMoSCoWPrioriteit() geeft niet de goede story terug.");
             Assert.AreEqual(1, result.Count);

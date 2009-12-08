@@ -19,32 +19,32 @@ namespace JelloScrum.Model.Services
     using Entities;
 
     /// <summary>
-    /// Interface voor de e-mail Service
+    /// Interface for the EmailService
     /// </summary>
     public interface IEmailService
     {
         /// <summary>
-        /// Verzend een email naar de ontvanger
+        /// Send an email
         /// </summary>
-        /// <param name="bronAdres">Het bron adres.</param>
-        /// <param name="doelAdres">Het doel adres.</param>
-        /// <param name="onderwerp">het onderwerp.</param>
+        /// <param name="fromAddress">The address the email is sent from.</param>
+        /// <param name="toAddress">The address the email is sent to.</param>
+        /// <param name="subject">The subject.</param>
         /// <param name="templateName">Name of the template.</param>
-        /// <param name="propertyBag">De property bag.</param>
-        /// <param name="attachments">De attachments.</param>
-        void Verzend(string bronAdres, string doelAdres, string onderwerp, string templateName, Dictionary<string, object> propertyBag, MessageAttachment[] attachments);
+        /// <param name="propertyBag">The property bag.</param>
+        /// <param name="attachments">The attachments.</param>
+        void Send(string fromAddress, string toAddress, string subject, string templateName, Dictionary<string, object> propertyBag, MessageAttachment[] attachments);
 
         /// <summary>
-        /// Verzend het wachtwoord naar gebruiker
+        /// Send a password to the given user.
         /// </summary>
-        /// <param name="gebruiker"></param>
-        /// <param name="wachtwoord"></param>
-        void VerzendWachtwoord(Gebruiker gebruiker, string wachtwoord);
+        /// <param name="user">The user</param>
+        /// <param name="password">The password</param>
+        void SendPassword(User user, string password);
 
         /// <summary>
-        /// Verzend een email naar de ontvanger
+        /// Send the given message
         /// </summary>
         /// <param name="message"></param>
-        void Verzend(Message message);
+        void Send(Message message);
     }
 }

@@ -1,3 +1,3 @@
 <?brail for sprintStory in sprintStories : ?>
-    ${sprintStory.Story.Titel}<br />
+    ${sprintStory.Story.Title}<br />
 <?brail end ?>

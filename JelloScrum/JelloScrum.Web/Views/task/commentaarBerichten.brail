@@ -25,9 +25,9 @@
   <ul>
     <?brail for comment in taskCommentaarBerichten:?>
       <li id="${comment.Id}" class="comment">
-        <div class="head">${comment.Gebruiker.VolledigeNaam} - ${comment.Datum.ToShortDateString()}</div>
+        <div class="head">${comment.User.FullName} - ${comment.Date.ToShortDateString()}</div>
         <div class="body">${comment.Tekst}</div>
-        <?brail if comment.Gebruiker == currentUser:?>
+        <?brail if comment.User == currentUser:?>
           <div class="foot">
             <button class='bewerk' type='button'><img src='/content/images/icons/edit.png' alt='Opslaan'/>Bewerk</button>
             <button class='verwijder' type='button'><img src='/content/images/icons/delete.png' alt='Verwijder'/>Verwijder</button>

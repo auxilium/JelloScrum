@@ -14,10 +14,10 @@
 					<div class="story_note_container storyTask_${sprintStory.Id}">
 						<div class="story_note">
 							<div class="story_note_content">
-								#${sprintStory.Story.Id}: ${sprintStory.Story.Titel}<br/>
+								#${sprintStory.Story.Id}: ${sprintStory.Story.Title}<br/>
 								<div class="details">
-									Prioriteit: ${sprintStory.SprintBacklogPrioriteit}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(sprintStory.Schatting)}
+									Prioriteit: ${sprintStory.SprintBacklogPriority}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(sprintStory.Estimation)}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
@@ -27,16 +27,16 @@
 					</div>
 				</td>
 				<td class="droppable NietOpgepakt">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.NietOpgepakt): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(State.Open): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>
 						<div class="task_note">
 							<div class="task_note_content">
-								#${taak.Id}: ${taak.Titel}
+								#${taak.Id}: ${taak.Title}
 								<div class="details">
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
@@ -48,16 +48,16 @@
 					<?brail end?>
 				</td>
 				<td class="droppable Opgepakt">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Opgepakt): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(State.Taken): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>
 						<div class="task_note">
 							<div class="task_note_content">
-								#${taak.Id}: ${taak.Titel}
+								#${taak.Id}: ${taak.Title}
 								<div class="details">
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>
@@ -69,17 +69,17 @@
 					<?brail end?>
 				</td>
 				<td class="droppable Afgesloten">
-					<?brail for taak in sprintStory.Story.GeefTakenMetStatus(Status.Afgesloten): ?>
+					<?brail for taak in sprintStory.Story.GetTasksWith(State.Closed): ?>
 
 					<div class="task_note_container storyTask_${sprintStory.Id}">
 						<input type="hidden" value="${taak.Id}"/>
 						<div class="task_note">
 							<div class="task_note_content">
-								#${taak.Id}: ${taak.Titel}
+								#${taak.Id}: ${taak.Title}
 								<div class="details">
 									<br/>
-									Behandelaar: ${taak.BehandelaarNaam}<br/>
-									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotaalBestedeTijd())}
+									Behandelaar: ${taak.AssignedUserName}<br/>
+									Uren: ${TimeSpanHelper.TimeSpanInMinuten(taak.TotalTimeSpent())}
 								</div>
 								<div style="clear:both">&nbsp;</div>
 							</div>

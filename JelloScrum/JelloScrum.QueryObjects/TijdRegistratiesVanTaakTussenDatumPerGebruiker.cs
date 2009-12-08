@@ -21,21 +21,21 @@ namespace JelloScrum.QueryObjects
 
     public class TijdRegistratiesVanTaakTussenDatumPerGebruiker
     {
-        public Gebruiker currentUser;
+        public User currentUser;
         public Sprint sprint;
         public DateTime startDate = new DateTime();
         public DateTime endDate = new DateTime();
 
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria crit = session.CreateCriteria(typeof(TijdRegistratie));
+            ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
 
             if (startDate !=  new DateTime() || endDate != new DateTime() || sprint != null || currentUser != null)
             {
                 crit.Add(Restrictions.Eq("Gebruiker", currentUser));
                 crit.Add(Restrictions.Eq("Sprint", sprint));
-                crit.Add(Restrictions.Ge("Datum", startDate));
-                crit.Add(Restrictions.Le("Datum", endDate));
+                crit.Add(Restrictions.Ge("Date", startDate));
+                crit.Add(Restrictions.Le("Date", endDate));
             }
 
             return crit;

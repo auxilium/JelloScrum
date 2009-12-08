@@ -17,21 +17,22 @@ namespace JelloScrum.Model.Helpers
     using FileHelpers;
 
     /// <summary>
-    /// Hulp klasse bij het exporteren van de sprintbacklog
+    /// Used to export the sprintbacklog to .xls
     /// </summary>
     [DelimitedRecord("|")] 
     public class SprintBackLog
     {
-        #region Fields
+        #region fields
+
         private string id;
         private string title;
-        private string sprintprio;
-        private string projectprio;
+        private string sprintPriority;
+        private string projectPriority;
         private string type;
-        private string punten;
-        private string schatting;
-        private string taken;
-        private string omschrijving;
+        private string points;
+        private string estimation;
+        private string tasks;
+        private string description;
 
         #endregion
 
@@ -47,7 +48,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Title project
+        /// Title
         /// </summary>
         public string Title
         {
@@ -56,24 +57,24 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Prioriteit van Story binnen de sprint
+        /// Priority of a story in the sprint
         /// </summary>
-        public string Sprintprio
+        public string SprintPriority
         {
-            get { return sprintprio; }
-            set { sprintprio = value; }
+            get { return sprintPriority; }
+            set { sprintPriority = value; }
         }
 
         /// <summary>
-        /// Prioriteit van Story binnen het project
+        /// Priority of a story in the project
         /// </summary>
-        public string Projectprio
+        public string ProjectPriority
         {
-            get { return projectprio; }
-            set { projectprio = value; }
+            get { return projectPriority; }
+            set { projectPriority = value; }
         }
         /// <summary>
-        /// Type story
+        /// Type of the story
         /// </summary>
         public string Type
         {
@@ -82,39 +83,39 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Omschrijving story
+        /// Description
         /// </summary>
-        public string Omschrijving
+        public string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
-        /// Story punten
+        /// Story points
         /// </summary>
-        public string Punten
+        public string Points
         {
-            get { return punten; }
-            set { punten = value; }
+            get { return points; }
+            set { points = value; }
         }
 
         /// <summary>
-        /// Urenschatting voor story
+        /// Estimation
         /// </summary>
-        public string Schatting
+        public string Estimation
         {
-            get { return schatting; }
-            set { schatting = value; }
+            get { return estimation; }
+            set { estimation = value; }
         }
 
         /// <summary>
-        /// Aantal taken bij story
+        /// Tasks
         /// </summary>
-        public string Taken
+        public string Tasks
         {
-            get { return taken; }
-            set { taken = value; }
+            get { return tasks; }
+            set { tasks = value; }
         }
 
         #endregion
