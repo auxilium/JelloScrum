@@ -56,21 +56,21 @@ namespace JelloScrum.Model.Tests.Model
         public void TestSluitSprintAf()
         {
             Task task = Creation.TaskMetCompleteHierarchie();
-            sprint = task.Behandelaar.Sprint;
+            sprint = task.AssignedUser.Sprint;
             sprint.Close();
 
-            Assert.AreEqual(State.Open, task.Status);
-            Assert.IsTrue(sprint.IsAfgesloten);
+            Assert.AreEqual(State.Open, task.State);
+            Assert.IsTrue(sprint.IsClosed);
         }
 
         [Test]
         public void TestSluitSprintAfMaaktLogBericht()
         {
             Task task = Creation.TaskMetCompleteHierarchie();
-            task.Behandelaar.Sprint.Close();
+            task.AssignedUser.Sprint.Close();
 
-            Assert.AreEqual(1, task.LogBerichten.Count);
-            Assert.AreEqual("Sprint closed", task.LogBerichten[0].Titel);
+            Assert.AreEqual(1, task.LogMessages.Count);
+            Assert.AreEqual("Sprint closed", task.LogMessages[0].Title);
         }
     }
 }

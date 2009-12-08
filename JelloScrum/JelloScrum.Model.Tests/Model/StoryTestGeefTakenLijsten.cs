@@ -39,8 +39,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Taken;
-            story.Tasks[1].Status = State.Closed;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Closed;
 
             Assert.AreEqual(0, story.GetTasksWith(State.Open).Count);
         }
@@ -51,8 +51,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Open;
-            story.Tasks[1].Status = State.Closed;
+            story.Tasks[0].State = State.Open;
+            story.Tasks[1].State = State.Closed;
 
             Assert.AreEqual(1, story.GetTasksWith(State.Closed).Count);
         }
@@ -63,8 +63,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Open;
-            story.Tasks[1].Status = State.Open;
+            story.Tasks[0].State = State.Open;
+            story.Tasks[1].State = State.Open;
 
             Assert.AreEqual(2, story.GetTasksWith(State.Open).Count);
         }

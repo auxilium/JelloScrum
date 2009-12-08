@@ -26,12 +26,12 @@ namespace JelloScrum.QueryObjects
 
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria crit = session.CreateCriteria(typeof(TijdRegistratie));
+            ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
 
             if (sprint != null)
             {
                 crit.Add(Restrictions.Eq("Sprint", sprint));
-                crit.Add(Restrictions.Le("Datum", DateTime.Now));
+                crit.Add(Restrictions.Le("Date", DateTime.Now));
                 crit.CreateCriteria("Task").Add(Restrictions.Eq("Status", State.Closed));
             }
 

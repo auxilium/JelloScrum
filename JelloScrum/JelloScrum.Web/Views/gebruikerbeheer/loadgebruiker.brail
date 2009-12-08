@@ -10,7 +10,7 @@
   <div class="block cornered" id="bc">
     <h4>Gebruiker: ${gebruiker.Name}</h4>
     Rol binnen Project
-    ${FormHelper.Select("gebruiker.GebruikerType", sprintRols)}
+    ${FormHelper.Select("gebruiker.UserType", sprintRols)}
   </div>
 </div>
 <script type="text/javascript">

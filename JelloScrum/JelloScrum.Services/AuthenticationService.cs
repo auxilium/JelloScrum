@@ -28,7 +28,7 @@ namespace JelloScrum.Services
 
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IGebruikerRepository userService = IoC.Resolve<IGebruikerRepository>();
+        private readonly IUserRepository userService = IoC.Resolve<IUserRepository>();
         private string cookie_name = string.Empty;
 
         public string Cookie_name

@@ -41,18 +41,18 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegNieuweGebruikerAanSprintToe()
         {
-            SprintGebruiker sg = sprint.AddUser(gebruiker, SprintRole.Developer);
+            SprintUser sg = sprint.AddUser(gebruiker, SprintRole.Developer);
 
             Assert.AreEqual(sg.Sprint, sprint);
-            Assert.AreEqual(sg.Gebruiker, gebruiker);
-            Assert.IsTrue(sprint.SprintGebruikers.Contains(sg));
+            Assert.AreEqual(sg.User, gebruiker);
+            Assert.IsTrue(sprint.SprintUsers.Contains(sg));
         }
         
         [Test]
         public void TestVoegGebruikerAanSprintToeWaarAlEenSprintGebruikerVoorDieSprintEnGebruikerBestaat()
         {
-            SprintGebruiker sg1 = sprint.AddUser(gebruiker, SprintRole.Developer);
-            SprintGebruiker sg2 = sprint.AddUser(gebruiker, SprintRole.Developer);
+            SprintUser sg1 = sprint.AddUser(gebruiker, SprintRole.Developer);
+            SprintUser sg2 = sprint.AddUser(gebruiker, SprintRole.Developer);
             
             Assert.AreEqual(sg1, sg2);
         }
@@ -60,7 +60,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void TestSprintGebruikerDirectAanCollectieToevoegenGaatNiet()
         {
-            sprint.SprintGebruikers.Add(new SprintGebruiker());
+            sprint.SprintUsers.Add(new SprintUser());
             Assert.Fail();
         }
 
@@ -69,7 +69,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             Sprint sprint = Creation.SprintMetScrumMasterEnProductOwner();
             sprint.AddUser(Creation.Gebruiker(), SprintRole.Developer);
-            Assert.IsTrue(sprint.SprintGebruikers.Count == 3);
+            Assert.IsTrue(sprint.SprintUsers.Count == 3);
 
         }
     }

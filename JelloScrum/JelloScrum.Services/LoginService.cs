@@ -24,7 +24,7 @@ namespace JelloScrum.Services
     public class LoginService : ILoginService
     {
         private readonly IPasswordService passwordService = IoC.Resolve<IPasswordService>();
-        private readonly IGebruikerRepository userService = IoC.Resolve<IGebruikerRepository>();
+        private readonly IUserRepository userService = IoC.Resolve<IUserRepository>();
 
         private string lDAPPath = string.Empty;
         private string domain = string.Empty;

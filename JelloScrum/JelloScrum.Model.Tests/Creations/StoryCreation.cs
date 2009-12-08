@@ -43,7 +43,7 @@ namespace JelloScrum.Model.Tests.Creations
             Story story = Story(gebruiker);
 
             sprint.CreateSprintStoryFor(story);
-            story.SprintStories[0].SprintBacklogPrioriteit = prioriteit;
+            story.SprintStories[0].SprintBacklogPriority = prioriteit;
 
             return story;
         }
@@ -52,8 +52,8 @@ namespace JelloScrum.Model.Tests.Creations
         {
             Story story = new Story(project, aangemaaktDoor, Impact.Normal, StoryType.UserStory);
             story.StoryPoints = storyPoints;
-            story.Schatting = new TimeSpan(story.StoryPointsValue*hoursPerStoryPoint);
-            story.ProductBacklogPrioriteit = moscowPrio;
+            story.Estimation = new TimeSpan(story.StoryPointsValue*hoursPerStoryPoint);
+            story.ProductBacklogPriority = moscowPrio;
             return story;
         }
     }

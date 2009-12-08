@@ -2,7 +2,7 @@
 	<div>
 		<span style="float:left;">
 			<h1>
-				Project: ${project.Naam}
+				Project: ${project.Name}
 			</h1>
 		</span>
 		<span style="float:right;">
@@ -13,7 +13,7 @@
 	</div>
 	<div class="ingegevensBlock">
 		<span style="float:left;">
-			${project.Omschrijving}
+			${project.Description}
 		</span>
 		<span style="font-weight: bold; padding: 3px; float:right;">
 			<a href="/project/bewerk.rails?id=${project.Id}">bewerken</a>
@@ -71,12 +71,12 @@
 				<?brail for sprint in project.Sprints : ?>
 				<tr>
 					<td>
-						<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Doel}</a>
+						<a href="/sprint/sprint.rails?sprintId=${sprint.Id}">${sprint.Goal}</a>
 						<?brail
-              if sprint.IsAfgesloten == false:              
+              if sprint.IsClosed == false:              
             ?>
 						<a href="/sprint/actieveSprintZetten.rails?sprintId=${sprint.Id}">
-							<img src="/Content/images/favosprint.png" title="Maak ${sprint.Doel} mijn actieve sprint." alt="Maak ${sprint.Doel} mijn actieve sprint."/>
+							<img src="/Content/images/favosprint.png" title="Maak ${sprint.Goal} mijn actieve sprint." alt="Maak ${sprint.Goal} mijn actieve sprint."/>
 						</a>
 						<?brail
               end
@@ -84,7 +84,7 @@
 					</td>
 					<td>
 						<?brail
-              if sprint.IsAfgesloten:              
+              if sprint.IsClosed:              
             ?>
 						Afgesloten
 						<?brail
@@ -95,12 +95,12 @@
               end
              ?>
 					</td>
-					<td>${sprint.StartDatum.ToShortDateString()}</td>
-					<td>${sprint.EindDatum.ToShortDateString()}</td>
+					<td>${sprint.StartDate.ToShortDateString()}</td>
+					<td>${sprint.EndDate.ToShortDateString()}</td>
 
 					<td>
 						<?brail
-              if sprint.IsAfgesloten == false:              
+              if sprint.IsClosed == false:              
             ?>
 						<a href="/sprint/bewerk.rails?sprintId=${sprint.Id}&projectId=${project.Id}">Sprintgegevens bewerken</a>
 						<?brail
@@ -109,7 +109,7 @@
 					</td>
 					<td>
 						<?brail
-              if sprint.IsAfgesloten == false:              
+              if sprint.IsClosed == false:              
             ?>
 						<a href="/sprint/sprintplanning.rails?sprintId=${sprint.Id}">Sprint plannen</a>
 						<?brail
@@ -121,7 +121,7 @@
 					</td>
 					<td>
 						<?brail
-              if sprint.IsAfgesloten == false:              
+              if sprint.IsClosed == false:              
             ?>
 						<a href="/sprint/sluit.rails?sprintId=${sprint.Id}">Sprint afsluiten</a>
 						<?brail

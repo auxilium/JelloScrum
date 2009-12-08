@@ -90,7 +90,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             sprint.CreateSprintStoryFor(story);
             sprint.CreateSprintStoryFor(story2);
-            story.Tasks[0].Status = State.Closed;
+            story.Tasks[0].State = State.Closed;
 
             IList<SprintStory> result = sprint.GetAllOpenSprintStories();
             
@@ -103,12 +103,12 @@ namespace JelloScrum.Model.Tests.Model
         {
             sprint.CreateSprintStoryFor(story);
             sprint.CreateSprintStoryFor(story2);
-            story2.Tasks[0].Status = State.Closed;
-            sprint.SprintStories[0].SprintBacklogPrioriteit = Priority.Must;
+            story2.Tasks[0].State = State.Closed;
+            sprint.SprintStories[0].SprintBacklogPriority = Priority.Must;
             
             IList<SprintStory> result = sprint.GetAllOpenSprintStories(Priority.Must);
 
-            Assert.AreEqual(Priority.Must, result[0].SprintBacklogPrioriteit);
+            Assert.AreEqual(Priority.Must, result[0].SprintBacklogPriority);
         }
     }
 }

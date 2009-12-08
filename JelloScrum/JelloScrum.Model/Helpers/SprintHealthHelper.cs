@@ -274,18 +274,18 @@ namespace JelloScrum.Model.Helpers
 
             if(sprint != null)
             {
-                velocity.NumberOfDaysInSprint = sprint.WerkDagen;
+                velocity.NumberOfDaysInSprint = sprint.WorkDays;
 
                 foreach (SprintStory sprintStory in sprint.SprintStories)
                 {
-                    velocity.HoursTotalEstimatedInSprint += Convert.ToDecimal(sprintStory.Schatting.TotalHours);
+                    velocity.HoursTotalEstimatedInSprint += Convert.ToDecimal(sprintStory.Estimation.TotalHours);
                     if (sprintStory.Story.StoryPoints != StoryPoint.Unknown)
                         velocity.StoryPointsTotalEstimatedInSprint += sprintStory.Story.StoryPointsValue;
 
-                    if (sprintStory.Status == State.Closed)
+                    if (sprintStory.State == State.Closed)
                     {
                         velocity.HoursTotalEstimatedForCompletedStoriesInSprint +=
-                            Convert.ToDecimal(sprintStory.Schatting.TotalHours);
+                            Convert.ToDecimal(sprintStory.Estimation.TotalHours);
                         if (sprintStory.Story.StoryPoints != StoryPoint.Unknown)
                             velocity.StoryPointsTotalEstimatedForCompletedStoriesInSprint +=
                                 sprintStory.Story.StoryPointsValue;
@@ -293,16 +293,16 @@ namespace JelloScrum.Model.Helpers
 
                     foreach (Task task in sprintStory.Story.Tasks)
                     {
-                        foreach (TijdRegistratie tijdRegistratie in task.TijdRegistraties)
+                        foreach (TimeRegistration tijdRegistratie in task.TimeRegistrations)
                         {
                             if (tijdRegistratie.Sprint == sprintStory.Sprint)
                             {
-                                velocity.HoursTotalRegisteredInSprint += Convert.ToDecimal(tijdRegistratie.Tijd.TotalHours);
+                                velocity.HoursTotalRegisteredInSprint += Convert.ToDecimal(tijdRegistratie.Time.TotalHours);
 
-                                if (task.Status == State.Closed)
+                                if (task.State == State.Closed)
                                 {
                                     velocity.HoursTotalRegisteredForCompletedStoriesInSprint +=
-                                        Convert.ToDecimal(tijdRegistratie.Tijd.TotalHours);
+                                        Convert.ToDecimal(tijdRegistratie.Time.TotalHours);
                                 }
                             }
                         }
@@ -336,12 +336,12 @@ namespace JelloScrum.Model.Helpers
             {
                 taskProgress.TotalTasks++;
 
-                if (task.Status == State.Closed)
+                if (task.State == State.Closed)
                     taskProgress.CompletedTasks++;
                 else
                     taskProgress.IncompleteTasks++;
 
-                if (task.Behandelaar == null)
+                if (task.AssignedUser == null)
                     taskProgress.UnassignedTasks++;
                 else
                     taskProgress.AssignedTasks++;

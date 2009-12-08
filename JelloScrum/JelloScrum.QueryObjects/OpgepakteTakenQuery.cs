@@ -27,7 +27,7 @@ namespace JelloScrum.QueryObjects
     public class OpgepakteTakenQuery
     {
         public Sprint Sprint;
-        public SprintGebruiker BehalveVoorDezeSprintGebruiker;
+        public SprintUser BehalveVoorDezeSprintGebruiker;
 
         public ICriteria GetQuery(ISession session)
         {

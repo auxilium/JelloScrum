@@ -28,18 +28,18 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private string doel = string.Empty;
-        private string omschrijving = string.Empty;
-        private DateTime startDatum = DateTime.Now;
-        private DateTime eindDatum = DateTime.Now;
-        private int werkDagen;
-        private bool afgesloten;
-        private TimeSpan beschikbareUren;
+        private string goal = string.Empty;
+        private string description = string.Empty;
+        private DateTime startDate = DateTime.Now;
+        private DateTime endDate = DateTime.Now;
+        private int workDays;
+        private bool isClosed;
+        private TimeSpan availableTime;
 
         private Project project;
 
         private IList<SprintStory> sprintStories = new List<SprintStory>();
-        private IList<SprintGebruiker> sprintGebruikers = new List<SprintGebruiker>();
+        private IList<SprintUser> sprintUsers = new List<SprintUser>();
 
         #endregion
 
@@ -73,10 +73,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The goal</value>
         [Property]
-        public virtual string Doel
+        public virtual string Goal
         {
-            get { return doel; }
-            set { doel = value; }
+            get { return goal; }
+            set { goal = value; }
         }
 
         /// <summary>
@@ -84,10 +84,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The description.</value>
         [Property(SqlType = "ntext")]
-        public virtual string Omschrijving
+        public virtual string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
@@ -95,10 +95,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The start date.</value>
         [Property]
-        public virtual DateTime StartDatum
+        public virtual DateTime StartDate
         {
-            get { return startDatum; }
-            set { startDatum = value; }
+            get { return startDate; }
+            set { startDate = value; }
         }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The end date.</value>
         [Property]
-        public virtual DateTime EindDatum
+        public virtual DateTime EndDate
         {
-            get { return eindDatum; }
-            set { eindDatum = value; }
+            get { return endDate; }
+            set { endDate = value; }
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace JelloScrum.Model.Entities
         /// Gets a readonly collection of sprintstories.
         /// To make a new sprintstory and add it to this list, use <see cref="CreateSprintStoryFor(Story)"/>
         /// </summary>
-        [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase, OrderBy = "SprintBacklogPrioriteit")]
+        [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase, OrderBy = "SprintBacklogPriority")]
         public virtual IList<SprintStory> SprintStories
         {
             get { return new ReadOnlyCollection<SprintStory>(sprintStories); }
@@ -138,9 +138,9 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The sprintusers.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
-        public virtual IList<SprintGebruiker> SprintGebruikers
+        public virtual IList<SprintUser> SprintUsers
         {
-            get { return new ReadOnlyCollection<SprintGebruiker>(sprintGebruikers); }
+            get { return new ReadOnlyCollection<SprintUser>(sprintUsers); }
         }
 
         /// <summary>
@@ -148,10 +148,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The available time.</value>
         [Property(ColumnType = "TimeSpan")]
-        public virtual TimeSpan BeschikbareUren
+        public virtual TimeSpan AvailableTime
         {
-            get { return beschikbareUren; }
-            set { beschikbareUren = value; }
+            get { return availableTime; }
+            set { availableTime = value; }
         }
 
         /// <summary>
@@ -159,10 +159,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The amount of workdays.</value>
         [Property]
-        public virtual int WerkDagen
+        public virtual int WorkDays
         {
-            get { return werkDagen; }
-            set { werkDagen = value; }
+            get { return workDays; }
+            set { workDays = value; }
         }
 
         /// <summary>
@@ -170,10 +170,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value><c>true</c> if closed; else, <c>false</c>.</value>
         [Property]
-        public virtual bool IsAfgesloten
+        public virtual bool IsClosed
         {
-            get { return afgesloten; }
-            set { afgesloten = value; }
+            get { return isClosed; }
+            set { isClosed = value; }
         }
 
         #endregion
@@ -215,11 +215,11 @@ namespace JelloScrum.Model.Entities
         /// <param name="gebruiker">The user.</param>
         /// <param name="sprintRol">The role.</param>
         /// <returns>The (new) sprintuser.</returns>
-        public virtual SprintGebruiker AddUser(User gebruiker, SprintRole sprintRol)
+        public virtual SprintUser AddUser(User gebruiker, SprintRole sprintRol)
         {
-            SprintGebruiker sprintGebruiker = GetSprintUserFor(gebruiker);
+            SprintUser sprintGebruiker = GetSprintUserFor(gebruiker);
 
-            return sprintGebruiker ?? new SprintGebruiker(gebruiker, this, sprintRol);
+            return sprintGebruiker ?? new SprintUser(gebruiker, this, sprintRol);
         }
 
         /// <summary>
@@ -232,11 +232,11 @@ namespace JelloScrum.Model.Entities
             if (user == null)
                 throw new ArgumentNullException("user");
 
-            SprintGebruiker sprintUser = user.GetSprintUserFor(this);
+            SprintUser sprintUser = user.GetSprintUserFor(this);
             if (sprintUser == null)
                 return;
 
-            sprintUser.KoppelSprintGebruikerLos();
+            sprintUser.DecoupleSprintUser();
         }
 
         /// <summary>
@@ -244,9 +244,9 @@ namespace JelloScrum.Model.Entities
         /// Removes the given sprintuser from this sprint.
         /// </summary>
         /// <param name="sprintUser">The sprintuser.</param>
-        protected internal virtual void RemoveSprintUser(SprintGebruiker sprintUser)
+        protected internal virtual void RemoveSprintUser(SprintUser sprintUser)
         {
-            sprintGebruikers.Remove(sprintUser);
+            sprintUsers.Remove(sprintUser);
             sprintUser.Sprint = null;
         }
 
@@ -254,11 +254,11 @@ namespace JelloScrum.Model.Entities
         /// Add the given sprintuser to this sprints collection of sprintusers
         /// </summary>
         /// <param name="sprintUser">The sprintuser.</param>
-        protected internal virtual void AddSprintUser(SprintGebruiker sprintUser)
+        protected internal virtual void AddSprintUser(SprintUser sprintUser)
         {
-            if (!sprintGebruikers.Contains(sprintUser))
+            if (!sprintUsers.Contains(sprintUser))
             {
-                sprintGebruikers.Add(sprintUser);
+                sprintUsers.Add(sprintUser);
             }
             sprintUser.Sprint = this;
         }
@@ -276,7 +276,7 @@ namespace JelloScrum.Model.Entities
                     return ss;
             }
 
-            return new SprintStory(this, story, story.Schatting);
+            return new SprintStory(this, story, story.Estimation);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace JelloScrum.Model.Entities
         public virtual void AddWorkday(WorkDay workday)
         {
             if (!HasWorkday(workday))
-                werkDagen += (int) workday;
+                workDays += (int) workday;
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace JelloScrum.Model.Entities
         /// </returns>
         public virtual bool HasWorkday(WorkDay workday)
         {
-            return (int) workday == ((int) workday & werkDagen);
+            return (int) workday == ((int) workday & workDays);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace JelloScrum.Model.Entities
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.Status != State.Closed)
+                if (sprintStory.State != State.Closed)
                     stories.Add(sprintStory);
             }
             return stories;
@@ -340,7 +340,7 @@ namespace JelloScrum.Model.Entities
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.IsVolledigeOpgepakt == false && sprintStory.SprintBacklogPrioriteit == prioriteit)
+                if (sprintStory.AllTasksAreTaken == false && sprintStory.SprintBacklogPriority == prioriteit)
                     stories.Add(sprintStory);
             }
             return stories;
@@ -356,11 +356,11 @@ namespace JelloScrum.Model.Entities
             IList<SprintStory> stories = new List<SprintStory>();
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.SprintBacklogPrioriteit == priority)
+                if (sprintStory.SprintBacklogPriority == priority)
                 {
                     foreach (Task task in sprintStory.Story.Tasks)
                     {
-                        if (task.Status == State.Closed)
+                        if (task.State == State.Closed)
                         {
                             stories.Add(sprintStory);
                             break;
@@ -431,9 +431,9 @@ namespace JelloScrum.Model.Entities
         public virtual IList<User> GetAllUsers()
         {
             IList<User> users = new List<User>();
-            foreach (SprintGebruiker sprintUser in sprintGebruikers)
+            foreach (SprintUser sprintUser in sprintUsers)
             {
-                users.Add(sprintUser.Gebruiker);
+                users.Add(sprintUser.User);
             }
             return users;
         }
@@ -451,7 +451,7 @@ namespace JelloScrum.Model.Entities
             {
                 foreach (Task task in sprintStory.Story.Tasks)
                 {
-                    if (task.Status == State.Taken)
+                    if (task.State == State.Taken)
                     {
                         tasks.Add(task);
                         task.UnassignTaskAndSetSatusAsOpen("Sprint closed", "This sprint is closed. ");
@@ -459,7 +459,7 @@ namespace JelloScrum.Model.Entities
                 }
             }
 
-            afgesloten = true;
+            isClosed = true;
 
             return tasks;
         }
@@ -469,11 +469,11 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public virtual SprintGebruiker GetSprintUserFor(User user)
+        public virtual SprintUser GetSprintUserFor(User user)
         {
-            foreach (SprintGebruiker sprintUser in sprintGebruikers)
+            foreach (SprintUser sprintUser in sprintUsers)
             {
-                if (sprintUser.Gebruiker == user)
+                if (sprintUser.User == user)
                     return sprintUser;
             }
             return null;
@@ -527,7 +527,7 @@ namespace JelloScrum.Model.Entities
             {
                 foreach (Task task in sprintStory.Story.Tasks)
                 {
-                    if(task.Status == status)
+                    if(task.State == status)
                         sprintTasks.Add(task);
                 }
             }
@@ -562,7 +562,7 @@ namespace JelloScrum.Model.Entities
 
             foreach (SprintStory sprintStory in sprintStories)
             {
-                totalTime += sprintStory.Story.Schatting;
+                totalTime += sprintStory.Story.Estimation;
             }
 
             return totalTime;
@@ -574,7 +574,7 @@ namespace JelloScrum.Model.Entities
         /// <returns></returns>
         public virtual TimeSpan RemainingTimeAvailable()
         {
-            TimeSpan remainingTime = BeschikbareUren - GetTotalTimeEstimatedForAllStories();
+            TimeSpan remainingTime = AvailableTime - GetTotalTimeEstimatedForAllStories();
 
             return remainingTime;
         }
@@ -590,8 +590,8 @@ namespace JelloScrum.Model.Entities
 
             foreach (SprintStory sprintStory in sprintStories)
             {
-                if (sprintStory.Story.Status != State.Closed || (sprintStory.Story.Status == State.Closed && sprintStory.Story.ClosedDate.Value.Date > date.Date))
-                    totalTime += sprintStory.Story.Schatting;
+                if (sprintStory.Story.State != State.Closed || (sprintStory.Story.State == State.Closed && sprintStory.Story.ClosedDate.Value.Date > date.Date))
+                    totalTime += sprintStory.Story.Estimation;
             }
 
             return totalTime;

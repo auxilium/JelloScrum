@@ -140,10 +140,10 @@ namespace JelloScrum.Web.Helpers
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<a href='/tijdregistratie/geeftijdregistratieoverzicht.rails?storyId={0}&width=600' class='jTip' name='Overzicht geboekte uren' id='{1}' style='color: #000000;'>", story.Id, Guid.NewGuid());
-            if (story.Schatting > story.TotalTimeSpent())
-                sb.AppendFormat("[<span class='statusOk'>{0}</span> / {1}]", Tijd(story.Schatting), Tijd(story.TotalTimeSpent()));
+            if (story.Estimation > story.TotalTimeSpent())
+                sb.AppendFormat("[<span class='statusOk'>{0}</span> / {1}]", Tijd(story.Estimation), Tijd(story.TotalTimeSpent()));
             else
-                sb.AppendFormat("[{0} / <span class='statusAlarm'>{1}</span>]", Tijd(story.Schatting), Tijd(story.TotalTimeSpent()));
+                sb.AppendFormat("[{0} / <span class='statusAlarm'>{1}</span>]", Tijd(story.Estimation), Tijd(story.TotalTimeSpent()));
             sb.Append("</a>");
             return sb.ToString();
         }

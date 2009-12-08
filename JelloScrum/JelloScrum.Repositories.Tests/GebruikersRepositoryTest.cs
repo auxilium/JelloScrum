@@ -27,13 +27,13 @@ namespace JelloScrum.Repositories.Tests
     public class GebruikerRepositoryTest : TestBase
     {
         #region Setup/Teardown
-        private IGebruikerRepository gebruikerRepository;
+        private IUserRepository gebruikerRepository;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            gebruikerRepository = IoC.Resolve<IGebruikerRepository>();
+            gebruikerRepository = IoC.Resolve<IUserRepository>();
         }
 
         #endregion

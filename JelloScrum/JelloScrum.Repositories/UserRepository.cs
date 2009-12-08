@@ -26,7 +26,7 @@ namespace JelloScrum.Repositories
     /// <summary>
     /// Service voor gebruikers
     /// </summary>
-    public class GebruikerRepository : JelloScrumRepository<User>, IGebruikerRepository
+    public class UserRepository : JelloScrumRepository<User>, IUserRepository
     {
         #region IGebruikerRepository Members
 

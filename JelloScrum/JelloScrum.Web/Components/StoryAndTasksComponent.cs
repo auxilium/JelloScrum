@@ -99,7 +99,7 @@ namespace JelloScrum.Web.Components
 
             if (ss != null)
             {
-                switch (ss.SprintBacklogPrioriteit)
+                switch (ss.SprintBacklogPriority)
                 {
                     case Priority.Must:
                         priority = "<img src='/content/images/moscow_must.png' title='Must'/>";
@@ -124,10 +124,10 @@ namespace JelloScrum.Web.Components
                 }
             }
 
-            sb.AppendFormat("<span class='moscow'>{0}</span>{1}", priority, story.Titel);
-            sb.AppendFormat("<span class='time'>{0}</span>", OpmaakHelper.UrenStatus(story.Schatting, story.TotalTimeSpent()));
+            sb.AppendFormat("<span class='moscow'>{0}</span>{1}", priority, story.Title);
+            sb.AppendFormat("<span class='time'>{0}</span>", OpmaakHelper.UrenStatus(story.Estimation, story.TotalTimeSpent()));
             sb.AppendLine("</div>");
-            sb.AppendFormat("<div class='stext'>{0}</div>", RenderMarkdown(story.Omschrijving));
+            sb.AppendFormat("<div class='stext'>{0}</div>", RenderMarkdown(story.Description));
             sb.AppendFormat("<div class='stasks {0}'>", prioritycss);
 
             sb.AppendLine("<ul class='tasklist'>");
@@ -158,7 +158,7 @@ namespace JelloScrum.Web.Components
             StringBuilder sb = new StringBuilder();
           
             sb.AppendLine("<li class='taskli'>");
-            sb.AppendFormat("<div class='theader'>{0}<span class='time'>[{1}]</span></div>", task.Titel, OpmaakHelper.Tijd(task.TotalTimeSpent()));
+            sb.AppendFormat("<div class='theader'>{0}<span class='time'>[{1}]</span></div>", task.Title, OpmaakHelper.Tijd(task.TotalTimeSpent()));
             sb.AppendLine("<div class='tcontent'>");
 
             switch (mode)
@@ -180,7 +180,7 @@ namespace JelloScrum.Web.Components
                     throw new ArgumentOutOfRangeException();
             }
             
-            sb.AppendFormat("<div class='ttext'>{0}</div>", RenderMarkdown(task.Omschrijving));
+            sb.AppendFormat("<div class='ttext'>{0}</div>", RenderMarkdown(task.Description));
             sb.AppendLine("</div>");
             sb.AppendLine("</li>");
 

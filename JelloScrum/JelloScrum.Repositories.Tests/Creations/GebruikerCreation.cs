@@ -24,7 +24,7 @@ namespace JelloScrum.Repositories.Tests.Creations
     /// </summary>
     public partial class Creation
     {
-        private static IGebruikerRepository gebruikerRepository = IoC.Resolve<IGebruikerRepository>();
+        private static IUserRepository gebruikerRepository = IoC.Resolve<IUserRepository>();
         
         private static User Persist(User gebruiker)
         {

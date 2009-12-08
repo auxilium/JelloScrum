@@ -2,13 +2,13 @@
     <div class="inner">
         <p class="title">
             <span></span>
-            ${sprintGebruiker.Gebruiker.FullName} (<i>${sprintGebruiker.SprintRole} </i>)
+            ${sprintGebruiker.User.FullName} (<i>${sprintGebruiker.SprintRole} </i>)
         </p>
     </div>
     <div class="tasks">
          <i>Taken door ontwikkelaar opgepakt:</i>
          <?brail for task in sprintGebruiker.Taken : ?>
-            <p class="task" id="${task.Id}" developer="0">${task.Omschrijving}</p>
+            <p class="task" id="${task.Id}" developer="0">${task.Description}</p>
          <?brail end ?>
     </div>
     <span class="toggle"><a class="showTasksOfDeveloper">Aantal taken: ${sprintGebruiker.Taken.Count}</a></span>

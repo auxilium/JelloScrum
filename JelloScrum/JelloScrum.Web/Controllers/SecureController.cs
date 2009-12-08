@@ -46,7 +46,7 @@ namespace JelloScrum.Web.Controllers
         /// <summary>
         /// Geef sprintgebruiker van actievesprint
         /// </summary>
-        public virtual SprintGebruiker ActieveSprintSprintGebruiker
+        public virtual SprintUser ActieveSprintSprintGebruiker
         {
             get
             {

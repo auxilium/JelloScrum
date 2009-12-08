@@ -52,21 +52,21 @@ namespace JelloScrum.Model.Helpers
             if (user == null || sprint == null)
                 return;
 
-            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(user);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(user);
 
             if (sprintRole == 0)
             {
                 if (sprintGebruiker == null)
                     return;
                 
-                sprintGebruiker.KoppelSprintGebruikerLos();
+                sprintGebruiker.DecoupleSprintUser();
             }
             else
             {
                 if (sprintGebruiker == null)
                     sprint.AddUser(user, sprintRole);
                 else
-                    sprintGebruiker.SprintRol = sprintRole;
+                    sprintGebruiker.SprintRole = sprintRole;
             }
         }
     }

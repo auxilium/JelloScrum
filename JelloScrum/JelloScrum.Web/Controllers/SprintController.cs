@@ -58,11 +58,11 @@ namespace JelloScrum.Web.Controllers
         public void MijnTaken()
         {
             User gb = CurrentUser;
-            SprintGebruiker sg = gb.GetActiveSprintUser();
+            SprintUser sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
-                PropertyBag.Add("mijnTaken", sg.GeefOpgepakteTaken());
+                PropertyBag.Add("mijnTaken", sg.GetTakenTasks());
         }
 
         /// <summary>
@@ -95,11 +95,11 @@ namespace JelloScrum.Web.Controllers
         public void MijnAfgeslotenTaken()
         {
             User gb = CurrentUser;
-            SprintGebruiker sg = gb.GetActiveSprintUser();
+            SprintUser sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
-                PropertyBag.Add("mijnTaken", sg.GeefAfgeslotenTaken());
+                PropertyBag.Add("mijnTaken", sg.GetClosedTasks());
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("project", project);
 
             PropertyBag.Add("availableUsers", GebruikerRepository.FindAll());
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Sprint toevoegen";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > Sprint toevoegen";
             RenderView("bewerk");
         }
 
@@ -166,7 +166,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("availableUsers", GebruikerRepository.FindAll());
             PropertyBag.Add("project", project);
 
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a>  > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprint bewerken";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a>  > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprint bewerken";
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace JelloScrum.Web.Controllers
                                 sprintRolGebruikerHelpers,
                             [ARFetch("projectId")] Project project)
         {
-            sprint.BeschikbareUren = TimeSpanHelper.Parse(BeschikbareUren);
+            sprint.AvailableTime = TimeSpanHelper.Parse(BeschikbareUren);
             project.AddSprint(sprint);
             foreach (SprintRoleUserHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
             {
@@ -242,7 +242,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void Sprint([ARFetch("sprintId")] Sprint sprint)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > " + sprint.Doel;
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > " + sprint.Goal;
             PropertyBag.Add("sprint", sprint);
         }
 
@@ -263,9 +263,9 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("sprint", sprint);
         }
 
-        public void KoppelTaskAanSprintGebruiker([ARFetch("sprintGebruiker")] SprintGebruiker sprintGebruiker, [ARFetch("task")] Task task)
+        public void KoppelTaskAanSprintGebruiker([ARFetch("sprintGebruiker")] SprintUser sprintGebruiker, [ARFetch("task")] Task task)
         {
-            sprintGebruiker.PakTaakOp(task);
+            sprintGebruiker.TakeTask(task);
             SprintGebruikerRepository.Save(sprintGebruiker);
 
             PropertyBag.Add("sprintGebruiker", sprintGebruiker);
@@ -291,7 +291,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("sprint", sprint);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprintbacklog";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprintbacklog";
         }
 
         /// <summary>
@@ -316,8 +316,8 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story">The story.</param>
         public void KoppelStoryAanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story)
         {
-            SprintStory sprintStory = new SprintStory(sprint, story, story.Schatting);
-            sprintStory.SprintBacklogPrioriteit = story.ProductBacklogPrioriteit;
+            SprintStory sprintStory = new SprintStory(sprint, story, story.Estimation);
+            sprintStory.SprintBacklogPriority = story.ProductBacklogPriority;
             SprintStoryRepository.Save(sprintStory);
 
             PropertyBag.Add("gekozenSprint", sprint);
@@ -361,8 +361,8 @@ namespace JelloScrum.Web.Controllers
         public void KoppelStoryAanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story,
                                          Priority prioriteit)
         {
-            SprintStory sprintStory = new SprintStory(sprint, story, story.Schatting);
-            sprintStory.SprintBacklogPrioriteit = prioriteit;
+            SprintStory sprintStory = new SprintStory(sprint, story, story.Estimation);
+            sprintStory.SprintBacklogPriority = prioriteit;
             SprintStoryRepository.Save(sprintStory);
 
             NameValueCollection args = new NameValueCollection();
@@ -383,7 +383,7 @@ namespace JelloScrum.Web.Controllers
             ingeplandeStories.Sprint = sprint;
             IList list =
                 ingeplandeStories.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).Add(
-                    Restrictions.Eq("SprintBacklogPrioriteit", prioriteit)).List();
+                    Restrictions.Eq("SprintBacklogPriority", prioriteit)).List();
 
             PropertyBag.Add("sprintStories", list);
             CancelLayout();
@@ -429,7 +429,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="project"></param>
         public void SprintPlanning([ARFetch("projectId")] Project project)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Sprintplanning";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > Sprintplanning";
 
             IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
@@ -452,7 +452,7 @@ namespace JelloScrum.Web.Controllers
         public void SprintPlanning([ARFetch("sprintId")] Sprint sprint)
         {
             Project project = sprint.Project;
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprintplanning";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprintplanning";
 
             IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
@@ -534,7 +534,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("sprintstories", sprint.SprintStories);
             PropertyBag.Add("sprint", sprint);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Burndown";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Burndown";
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace JelloScrum.Web.Controllers
             try
             {
                 GebruikerRepository.Save(gb);
-                AddPositiveMessageToFlashBag(sprint.Doel + " is nu je actieve sprint.");
+                AddPositiveMessageToFlashBag(sprint.Goal + " is nu je actieve sprint.");
             }
             catch (Exception e)
             {
@@ -567,7 +567,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("sprint", sprint);
            
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Taken";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Taken";
             RenderText("Deze pagina wijkt af van het normale dashboard, dit moet dus even gefixed worden.");
         }
 
@@ -576,8 +576,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Voortgang([ARFetch("sprintId")] Sprint sprint)
         {
-            DateTime startdatum = sprint.StartDatum;
-            DateTime einddatum = sprint.EindDatum;
+            DateTime startdatum = sprint.StartDate;
+            DateTime einddatum = sprint.EndDate;
 
             DateTime temp = startdatum;
 
@@ -597,7 +597,7 @@ namespace JelloScrum.Web.Controllers
 
             PropertyBag.Add("werkdagen", werkdagen);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Voortgang";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Voortgang";
         }
 
         #region Uren registeren
@@ -606,10 +606,10 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void UrenRegistreren([ARFetch("sprintId")] Sprint sprint, DateTime maandag)
         {
-            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
            
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Uren registreren";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Uren registreren";
 
             PropertyBag.Add("maandag", maandag);
             PropertyBag.Add("sprint", sprint);

@@ -4,7 +4,7 @@
             <td class="Column">Not checked out</td>
             <td class="Column">Checked out</td>
             <td class="Column">Done</td>
-            <td class="BigColumn">Sprint Goal: "${sprint.Doel}"</td>
+            <td class="BigColumn">Sprint Goal: "${sprint.Goal}"</td>
         </tr>
     </thead>
     <tbody>
@@ -16,10 +16,10 @@
             </td>
             <td class="Column">
 <!-- DEVELOPERS -->
-                <?brail for sprintGebruiker in sprint.SprintGebruikers : ?>
-                    <?brail if sprintGebruiker.HeeftSprintRol(SprintRole.Developer|SprintRole.ScrumMaster): ?>
+                <?brail for sprintGebruiker in sprint.SprintUsers : ?>
+                    <?brail if sprintGebruiker.HasSprintRole(SprintRole.Developer|SprintRole.ScrumMaster): ?>
                     <div class="Developer" rel="${sprintGebruiker.Id}" id="Developer_${sprintGebruiker.Id}">
-                        <p class="name"><b>${sprintGebruiker.Gebruiker.FullName}</b> (${sprintGebruiker.SprintRole})</p>
+                        <p class="name"><b>${sprintGebruiker.User.FullName}</b> (${sprintGebruiker.SprintRole})</p>
                         <div class="tasks"></div>
                     </div>
                     <?brail end ?>
@@ -53,7 +53,7 @@
 var previousPoint;
 
 $(document).ready(function() {
-    setTitle("Daily Scrum - ${sprint.Doel}");
+    setTitle("Daily Scrum - ${sprint.Goal}");
     $('.cornered').corner("10px");
     
     // load the external content with ajax

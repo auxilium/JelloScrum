@@ -37,7 +37,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Cardwall([ARFetch("sprintId")]Sprint sprint)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Cardwall";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Cardwall";
    
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("sprintStories", sprint.SprintStories);
@@ -50,15 +50,15 @@ namespace JelloScrum.Web.Controllers
         public void OpslaanTaak([ARDataBind("task", AutoLoad = AutoLoadBehavior.NullIfInvalidKey)] Task task, [ARFetch("sprintId")]Sprint sprint)
         {
             //de status wordt meegezonden, dus als de taak de status opgepakt krijgt, gaat de huidige gebruiker de taak oppakken
-            if (task.Status == State.Taken)
-                task.Behandelaar = sprint.GetSprintUserFor(CurrentUser);
+            if (task.State == State.Taken)
+                task.AssignedUser = sprint.GetSprintUserFor(CurrentUser);
             try
             {
                 TaskRepository.Save(task);
             }
             catch (Exception)
             {
-                AddErrorMessageToFlashBag("Het opslaan van taak " + task.Titel + " is niet gelukt.");
+                AddErrorMessageToFlashBag("Het opslaan van taak " + task.Title + " is niet gelukt.");
             }
             CancelView();
         }

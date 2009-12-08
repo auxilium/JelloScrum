@@ -41,8 +41,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Taken;
-            story.Tasks[1].Status = State.Closed;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Closed;
 
             Assert.IsTrue(story.IsPlannable);
         }
@@ -53,8 +53,8 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Closed;
-            story.Tasks[1].Status = State.Closed;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Closed;
             
             Assert.IsFalse(story.IsPlannable);
         }
@@ -65,12 +65,12 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Closed;
-            story.Tasks[1].Status = State.Taken;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Taken;
             
             sprint.CreateSprintStoryFor(story);
             sprint2.CreateSprintStoryFor(story);
-            sprint2.IsAfgesloten = true;
+            sprint2.IsClosed = true;
 
             Assert.IsFalse(story.IsPlannable);
         }
@@ -81,10 +81,10 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             story.AddTask(new Task());
 
-            story.Tasks[0].Status = State.Closed;
-            story.Tasks[1].Status = State.Taken;
+            story.Tasks[0].State = State.Closed;
+            story.Tasks[1].State = State.Taken;
             sprint.CreateSprintStoryFor(story);
-            sprint.IsAfgesloten = true;
+            sprint.IsClosed = true;
 
             Assert.IsTrue(story.IsPlannable);
         }

@@ -28,21 +28,21 @@ namespace JelloScrum.Repositories.Tests
     {
         #region Setup/Teardown
 
-        private ISprintGebruikerRepository sprintGebruikerRepository;
+        private ISprintUserRepository sprintGebruikerRepository;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            sprintGebruikerRepository = IoC.Resolve<ISprintGebruikerRepository>();
+            sprintGebruikerRepository = IoC.Resolve<ISprintUserRepository>();
         }
 
         [Test]
         public void TestOpgeslagenSprintGebruikerKanTerugGelezenWorden()
         {
-            SprintGebruiker sprintGebruiker = sprintGebruikerRepository.Save(Creation.SprintGebruiker(Creation.Gebruiker(), Creation.Sprint(), SprintRole.Developer));
+            SprintUser sprintGebruiker = sprintGebruikerRepository.Save(Creation.SprintGebruiker(Creation.Gebruiker(), Creation.Sprint(), SprintRole.Developer));
             //UnitOfWork.CurrentSession.Clear();
-            SprintGebruiker dbSprintGebruiker = sprintGebruikerRepository.Get(sprintGebruiker.Id);
+            SprintUser dbSprintGebruiker = sprintGebruikerRepository.Get(sprintGebruiker.Id);
 
             Assert.IsFalse(dbSprintGebruiker == null);            
         }

@@ -30,20 +30,20 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private string titel = string.Empty;
-        private string omschrijving = string.Empty;
+        private string title = string.Empty;
+        private string description = string.Empty;
         private string howtoDemo = string.Empty;
-        private string notitie = string.Empty;
+        private string note = string.Empty;
         private TimeSpan schatting;
 
         private Project project;
-        private User aangemaaktDoor;
+        private User createdBy;
         private Impact? impact;
-        private Priority productBacklogPrioriteit = Priority.Unknown;
+        private Priority productBacklogPriority = Priority.Unknown;
         private StoryType storyType = StoryType.UserStory;
 
-        private IList<StoryLogBericht> logBerichten = new List<StoryLogBericht>();
-        private IList<StoryComment> commentaarBerichten = new List<StoryComment>();
+        private IList<StoryLogMessage> logMessages = new List<StoryLogMessage>();
+        private IList<StoryComment> comments = new List<StoryComment>();
 
         private IList<SprintStory> sprintStories = new List<SprintStory>();
         private IList<Task> tasks = new List<Task>();
@@ -80,7 +80,7 @@ namespace JelloScrum.Model.Entities
             }
 
             project.AddStory(this);
-            this.aangemaaktDoor = createdBy;
+            this.createdBy = createdBy;
             this.impact = impact;
             this.storyType = storyType;
         }
@@ -90,25 +90,25 @@ namespace JelloScrum.Model.Entities
         #region properties
 
         /// <summary>
-        /// Gets or sets the titel.
+        /// Gets or sets the title.
         /// </summary>
-        /// <value>The titel.</value>
-        [Property, ValidateNonEmpty("Vul een titel in.")]
-        public virtual string Titel
+        /// <value>The title.</value>
+        [Property, ValidateNonEmpty("Please provide a title.")]
+        public virtual string Title
         {
-            get { return titel; }
-            set { titel = value; }
+            get { return title; }
+            set { title = value; }
         }
 
         /// <summary>
-        /// Gets or sets the omschrijving.
+        /// Gets or sets the description.
         /// </summary>
-        /// <value>The omschrijving.</value>
-        [Property(SqlType = "ntext"), ValidateNonEmpty("Vul een omschrijving in.")]
-        public virtual string Omschrijving
+        /// <value>The description.</value>
+        [Property(SqlType = "ntext"), ValidateNonEmpty("Please provide a description.")]
+        public virtual string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
@@ -123,22 +123,22 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the notitie.
+        /// Gets or sets the note.
         /// </summary>
-        /// <value>The notitie.</value>
+        /// <value>The note.</value>
         [Property(SqlType = "ntext")]
-        public virtual string Notitie
+        public virtual string Note
         {
-            get { return notitie; }
-            set { notitie = value; }
+            get { return note; }
+            set { note = value; }
         }
 
         /// <summary>
-        /// De tijd die geschat is voor deze story
+        /// The estimated time this story should take
         /// </summary>
-        /// <value>De schatting.</value>
-        [Property, ValidateNonEmpty("Vul een schatting in.")]
-        public virtual TimeSpan Schatting
+        /// <value>The estimation.</value>
+        [Property, ValidateNonEmpty("Please provide an estimation.")]
+        public virtual TimeSpan Estimation
         {
             get { return schatting; }
             set { schatting = value; }
@@ -156,19 +156,19 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De gebruiker die deze story aangemaakt heeft
+        /// The user that created this story
         /// </summary>
         [BelongsTo(NotNull = true)]
-        public virtual User AangemaaktDoor
+        public virtual User CreatedBy
         {
-            get { return aangemaaktDoor; }
-            set { aangemaaktDoor = value; }
+            get { return createdBy; }
+            set { createdBy = value; }
         }
 
         /// <summary>
-        /// Dee impact.
+        /// The impact.
         /// </summary>
-        /// <value>De impact.</value>
+        /// <value>The impact.</value>
         [Property]
         public virtual Impact? Impact
         {
@@ -177,14 +177,14 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the product backlog prioriteit.
+        /// Gets or sets the product backlog priority.
         /// </summary>
-        /// <value>The product backlog prioriteit.</value>
+        /// <value>The product backlog priority.</value>
         [Property]
-        public virtual Priority ProductBacklogPrioriteit
+        public virtual Priority ProductBacklogPriority
         {
-            get { return productBacklogPrioriteit; }
-            set { productBacklogPrioriteit = value; }
+            get { return productBacklogPriority; }
+            set { productBacklogPriority = value; }
         }
 
         /// <summary>
@@ -199,32 +199,32 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Gets or sets the log berichten.
+        /// Gets or sets the log messages.
         /// </summary>
-        /// <value>The log berichten.</value>
-        [HasMany(Table = "LogBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
-        public virtual IList<StoryLogBericht> LogBerichten
+        /// <value>The log messages.</value>
+        [HasMany(Table = "LogMessage", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
+        public virtual IList<StoryLogMessage> LogMessages
         {
-            get { return logBerichten; }
-            set { logBerichten = value; }
+            get { return logMessages; }
+            set { logMessages = value; }
         }
 
         /// <summary>
         /// Gets or sets the commentaren.
         /// </summary>
         /// <value>The commentaren.</value>
-        [HasMany(Table = "CommentaarBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
-        public virtual IList<StoryComment> CommentaarBerichten
+        [HasMany(Table = "Comment", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
+        public virtual IList<StoryComment> Comments
         {
-            get { return commentaarBerichten; }
-            set { commentaarBerichten = value; }
+            get { return comments; }
+            set { comments = value; }
         }
 
         /// <summary>
-        /// Geeft een readonly collectie met de sprintstories van deze story
-        /// Let Op: om een nieuwe sprintstory te maken en toe te voegen gebruik je <see cref="Sprint.MaakSprintStoryVoor(Story)"/>
+        /// Gets a readonly collection of sprintstories belonging to this story
+        /// To create a new sprintstory, use <see cref="Sprint.CreateSprintStoryFor(Story)"/>
         /// </summary>
-        /// <value>The sprints.</value>
+        /// <value>The sprintstories.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<SprintStory> SprintStories
         {
@@ -232,9 +232,9 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// De tasks.
+        /// Gets a readonly collection of tasks belonging to this story.
         /// </summary>
-        /// <value>De tasks.</value>
+        /// <value>The tasks.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
         public virtual IList<Task> Tasks
         {
@@ -242,7 +242,7 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Het aantal storypunten dat door middel van een planning game gerealiseerd is.
+        /// The amount of storypoints that has been estimated in a game of planning poker.
         /// </summary>
         [Property]
         public virtual StoryPoint StoryPoints
@@ -263,7 +263,7 @@ namespace JelloScrum.Model.Entities
         /// todo: different states for stories and tasks?
         /// </summary>
         /// <value>The state.</value>
-        public virtual State Status
+        public virtual State State
         {
             get
             {
@@ -272,10 +272,10 @@ namespace JelloScrum.Model.Entities
                 
                 foreach (Task task in tasks)
                 {
-                    if (task.Status == State.Taken)
+                    if (task.State == State.Taken)
                         taken++;
 
-                    if (task.Status == State.Closed)
+                    if (task.State == State.Closed)
                         closed++;
                 }
 
@@ -299,13 +299,13 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (Status == State.Closed)
+                if (State == State.Closed)
                     return false;
 
                 foreach (SprintStory sprintStory in SprintStories)
                 {
                     // story has an active sprintstory / sprint
-                    if (!sprintStory.Sprint.IsAfgesloten)
+                    if (!sprintStory.Sprint.IsClosed)
                         return false;
                 }
 
@@ -335,16 +335,16 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                if (Status != State.Closed)
+                if (State != State.Closed)
                     return null;
 
                 DateTime? lastDate = null;
 
                 foreach (Task task in tasks)
                 {
-                    if (lastDate.HasValue == false || task.DatumAfgesloten > lastDate.Value)
+                    if (lastDate.HasValue == false || task.DateClosed > lastDate.Value)
                     {
-                        lastDate = task.DatumAfgesloten;
+                        lastDate = task.DateClosed;
                     }
                 }
 
@@ -397,7 +397,7 @@ namespace JelloScrum.Model.Entities
         {
             if (!string.IsNullOrEmpty(text))
             {
-                commentaarBerichten.Add(new StoryComment(this, text));
+                comments.Add(new StoryComment(this, text));
             }
         }
 
@@ -441,7 +441,7 @@ namespace JelloScrum.Model.Entities
             IList<Task> tasksWithState = new List<Task>();
             foreach (Task task in tasks)
             {
-                if (task.Status == state)
+                if (task.State == state)
                     tasksWithState.Add(task);
             }
             return tasksWithState;
@@ -451,16 +451,16 @@ namespace JelloScrum.Model.Entities
         /// Gets all timeregistrations for all tasks belonging to this story.
         /// </summary>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GetTimeRegistrations()
+        public virtual IList<TimeRegistration> GetTimeRegistrations()
         {
-            List<TijdRegistratie> timeRegistrations = new List<TijdRegistratie>();
+            List<TimeRegistration> timeRegistrations = new List<TimeRegistration>();
             foreach (Task task in tasks)
             {
-                timeRegistrations.AddRange(task.TijdRegistraties);
+                timeRegistrations.AddRange(task.TimeRegistrations);
             }
-            timeRegistrations.Sort(delegate(TijdRegistratie t1, TijdRegistratie t2)
+            timeRegistrations.Sort(delegate(TimeRegistration t1, TimeRegistration t2)
                                       {
-                                          return t1.Datum.CompareTo(t2.Datum);
+                                          return t1.Date.CompareTo(t2.Date);
                                       });
 
             return timeRegistrations;
@@ -477,10 +477,10 @@ namespace JelloScrum.Model.Entities
             double timeTasks = 0; 
             foreach (Task task in Tasks)
             {
-                timeTasks += task.Schatting.TotalMinutes;
+                timeTasks += task.Estimation.TotalMinutes;
             }
 
-            return timeTasks <= Schatting.TotalMinutes;
+            return timeTasks <= Estimation.TotalMinutes;
         }
 
         #endregion

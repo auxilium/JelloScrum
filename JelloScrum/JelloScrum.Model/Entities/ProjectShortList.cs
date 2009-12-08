@@ -24,14 +24,15 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private User gebruiker;
+        private User user;
         private Project project;
 
         #endregion
 
         #region constructors
+
         /// <summary>
-        /// Empty Constructor
+        /// Initializes a new instance of the <see cref="ProjectShortList"/> class.
         /// </summary>
         public ProjectShortList()
         {
@@ -39,11 +40,13 @@ namespace JelloScrum.Model.Entities
         }
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="ProjectShortList"/> class.
         /// </summary>
-        public ProjectShortList(User gebruiker, Project project)
+        /// <param name="user">The user.</param>
+        /// <param name="project">The project.</param>
+        public ProjectShortList(User user, Project project)
         {
-            this.gebruiker = gebruiker;
+            this.user = user;
             this.project = project;
         }
 
@@ -52,17 +55,17 @@ namespace JelloScrum.Model.Entities
         #region Properties
 
         /// <summary>
-        /// De gebruiker
+        /// The user
         /// </summary>
-        [BelongsTo]
-        public virtual User Gebruiker
+        [BelongsTo(Column = "JelloScrumUser")]
+        public virtual User User
         {
-            get { return gebruiker; }
-            set { gebruiker = value; }
+            get { return user; }
+            set { user = value; }
         }
 
         /// <summary>
-        /// Project van de shortlist
+        /// The project
         /// </summary>
         [BelongsTo]
         public virtual Project Project
@@ -70,11 +73,6 @@ namespace JelloScrum.Model.Entities
             get { return project; }
             set { project = value; }
         }
-
-        #endregion
-
-        #region Methodes
-
 
         #endregion
     }

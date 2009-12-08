@@ -59,7 +59,7 @@
     <thead>
       <tr>
         <th>Type</th>
-        <th>Titel</th>
+        <th>Title</th>
         <th>Developer</th>
         <td>Rest. uren</td>
         <td>Uren</td>
@@ -91,16 +91,16 @@
           </div>
         </td>
         <td style="font-size: 11px;">
-          <a href="#linkjenaarstory">${sprintstory.Story.Titel}</a>
+          <a href="#linkjenaarstory">${sprintstory.Story.Title}</a>
         </td>
         <td>
           &nbsp;
         </td>
         <td style="text-align:right;">
-          ${OpmaakHelper.Tijd(sprintstory.Story.Schatting)}
+          ${OpmaakHelper.Tijd(sprintstory.Story.Estimation)}
         </td>
         <td>
-          ${OpmaakHelper.Tijd(sprintstory.Story.TotaalBestedeTijd())}
+          ${OpmaakHelper.Tijd(sprintstory.Story.TotaalTimeSpent())}
         </td>
         <td style="text-align:center;" colspan="${werkdagen.Count}">
           &nbsp;
@@ -123,14 +123,14 @@
         </td>
         <td style="font-size: 11px; padding-left: 30px;">
 
-          <a href="#linkjenaarstory">${task.Titel}</a>
+          <a href="#linkjenaarstory">${task.Title}</a>
 
         </td>
         <td class="toewijzen">         
           <?brail
-              if task.Behandelaar != null:
+              if task.AssignedUser != null:
             ?>
-          <a href="#linkie naar die persoonofzo">${task.Behandelaar.Gebruiker.FullName}</a>
+          <a href="#linkie naar die persoonofzo">${task.AssignedUser.User.FullName}</a>
           <?brail
             else:
             ?>

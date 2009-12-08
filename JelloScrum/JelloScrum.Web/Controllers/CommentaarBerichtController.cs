@@ -41,7 +41,7 @@ namespace JelloScrum.Web.Controllers
             {
                 bericht.User = CurrentUser;
                 bericht.LogObject = task;
-                task.CommentaarBerichten.Add(bericht);
+                task.Comments.Add(bericht);
             }
             TaskRepository.SaveOrUpdate(task);
             RedirectToReferrer();
@@ -65,7 +65,7 @@ namespace JelloScrum.Web.Controllers
         public void TaakCommentaar([ARFetch("Id")] Task taak)
         {
             PropertyBag.Add("taak", taak);
-            PropertyBag.Add("taskCommentaarBerichten", taak.CommentaarBerichten);
+            PropertyBag.Add("taskCommentaarBerichten", taak.Comments);
 
             CancelLayout();
         }
@@ -79,7 +79,7 @@ namespace JelloScrum.Web.Controllers
             IList<TaskComment> taakCommentaren = new List<TaskComment>(comments);
 
             //verwijder gedelete commentaren
-            foreach (TaskComment taakCommentaar in new List<TaskComment>(taak.CommentaarBerichten))
+            foreach (TaskComment taakCommentaar in new List<TaskComment>(taak.Comments))
             {
                 if (!taakCommentaren.Contains(taakCommentaar))
                     taak.RemoveComment(taakCommentaar);

@@ -37,7 +37,7 @@ namespace JelloScrum.Model.Entities
         private string userName = string.Empty;
         private bool isActive = true;
         private SystemRole systemRole = SystemRole.User;
-        private IList<SprintGebruiker> sprintUsers = new List<SprintGebruiker>();
+        private IList<SprintUser> sprintUsers = new List<SprintUser>();
         private IList<ProjectShortList> projectShortList = new List<ProjectShortList>();
         private string email = string.Empty;
         private Sprint activeSprint;
@@ -178,9 +178,9 @@ namespace JelloScrum.Model.Entities
         /// Add sprintuser with <see cref="AddSprintUser"/>
         /// </summary>
         [HasMany(Cascade = ManyRelationCascadeEnum.SaveUpdate, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
-        public IList<SprintGebruiker> SprintUsers
+        public IList<SprintUser> SprintUsers
         {
-            get { return new ReadOnlyCollection<SprintGebruiker>(sprintUsers); }
+            get { return new ReadOnlyCollection<SprintUser>(sprintUsers); }
         }
 
         /// <summary>
@@ -268,21 +268,21 @@ namespace JelloScrum.Model.Entities
         /// Add a sprintuser
         /// </summary>
         /// <param name="sprintUser">The sprint user.</param>
-        internal virtual void AddSprintUser(SprintGebruiker sprintUser)
+        internal virtual void AddSprintUser(SprintUser sprintUser)
         {
             if (!sprintUsers.Contains(sprintUser))
                 sprintUsers.Add(sprintUser);
-            sprintUser.Gebruiker = this;
+            sprintUser.User = this;
         }
 
         /// <summary>
         /// Removes the sprint user.
         /// </summary>
         /// <param name="sprintUser">The sprint user.</param>
-        internal virtual void RemoveSprintUser(SprintGebruiker sprintUser)
+        internal virtual void RemoveSprintUser(SprintUser sprintUser)
         {
             sprintUsers.Remove(sprintUser);
-            sprintUser.Gebruiker = null;
+            sprintUser.User = null;
         }
 
         /// <summary>
@@ -294,11 +294,11 @@ namespace JelloScrum.Model.Entities
             if (sprint == null)
                 throw new ArgumentNullException("sprint", "The sprint cannot be null.");
 
-            SprintGebruiker sprintUser = sprint.GetSprintUserFor(this);
+            SprintUser sprintUser = sprint.GetSprintUserFor(this);
             if (sprintUser == null)
                 return;
 
-            sprintUser.KoppelSprintGebruikerLos();
+            sprintUser.DecoupleSprintUser();
         }
 
         /// <summary>
@@ -306,9 +306,9 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="sprint">The sprint.</param>
         /// <returns>The sprintuser</returns>
-        public SprintGebruiker GetSprintUserFor(Sprint sprint)
+        public SprintUser GetSprintUserFor(Sprint sprint)
         {
-            foreach (SprintGebruiker sprintUser in sprintUsers)
+            foreach (SprintUser sprintUser in sprintUsers)
             {
                 if (sprintUser.Sprint == sprint)
                     return sprintUser;
@@ -321,7 +321,7 @@ namespace JelloScrum.Model.Entities
         /// Gets the sprintuser for the active sprint of this user.
         /// </summary>
         /// <returns>The sprintuser</returns>
-        public SprintGebruiker GetActiveSprintUser()
+        public SprintUser GetActiveSprintUser()
         {
             return ActiveSprint == null ? null : GetSprintUserFor(ActiveSprint);
         }

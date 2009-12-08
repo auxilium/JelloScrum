@@ -32,17 +32,17 @@ namespace JelloScrum.Model.Entities
     {
         #region Fields
 
-        private string titel = string.Empty;
+        private string title = string.Empty;
         private Story story;
-        private string omschrijving = string.Empty;
-        private State status = State.Open;
-        private SprintGebruiker behandelaar;
-        private DateTime? datumAfgesloten;
-        private TimeSpan schatting;
+        private string description = string.Empty;
+        private State state = State.Open;
+        private SprintUser assignedUser;
+        private DateTime? dateClosed;
+        private TimeSpan estimation;
 
-        private IList<TijdRegistratie> tijdRegistraties = new List<TijdRegistratie>();
-        private IList<TaskLogBericht> logBerichten = new List<TaskLogBericht>();
-        private IList<TaskComment> commentaarBerichten = new List<TaskComment>();
+        private IList<TimeRegistration> timeRegistrations = new List<TimeRegistration>();
+        private IList<TaskLogMessage> logMessages = new List<TaskLogMessage>();
+        private IList<TaskComment> comments = new List<TaskComment>();
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace JelloScrum.Model.Entities
         /// <param name="description">The description.</param>
         public Task(string description)
         {
-            omschrijving = description;
+            description = description;
         }
 
         #endregion
@@ -81,10 +81,10 @@ namespace JelloScrum.Model.Entities
         /// Title of the task
         /// </summary>
         [Property]
-        public virtual string Titel
+        public virtual string Title
         {
-            get { return titel; }
-            set { titel = value; }
+            get { return title; }
+            set { title = value; }
         }
 
         /// <summary>
@@ -103,10 +103,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The description.</value>
         [Property(SqlType = "ntext")]
-        public virtual string Omschrijving
+        public virtual string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
@@ -114,10 +114,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The status.</value>
         [Property]
-        public virtual State Status
+        public virtual State State
         {
-            get { return status; }
-            set { status = value; }
+            get { return state; }
+            set { state = value; }
         }
 
         /// <summary>
@@ -125,10 +125,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The assigned user.</value>
         [BelongsTo]
-        public virtual SprintGebruiker Behandelaar
+        public virtual SprintUser AssignedUser
         {
-            get { return behandelaar; }
-            set { behandelaar = value; }
+            get { return assignedUser; }
+            set { assignedUser = value; }
         }
 
         /// <summary>
@@ -136,10 +136,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>Estimated time.</value>
         [Property(ColumnType = "TimeSpan"), ValidateNonEmpty("Estimate the time.")]
-        public virtual TimeSpan Schatting
+        public virtual TimeSpan Estimation
         {
-            get { return schatting; }
-            set { schatting = value; }
+            get { return estimation; }
+            set { estimation = value; }
         }
 
         ///// <summary>
@@ -157,40 +157,40 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The time registrations.</value>
         [HasMany(Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true, Lazy = true, Access = PropertyAccess.FieldCamelcase)]
-        public virtual IList<TijdRegistratie> TijdRegistraties
+        public virtual IList<TimeRegistration> TimeRegistrations
         {
-            get { return new ReadOnlyCollection<TijdRegistratie>(tijdRegistraties); }
+            get { return new ReadOnlyCollection<TimeRegistration>(timeRegistrations); }
         }
 
         /// <summary>
         /// The logmessages
         /// </summary>
         /// <value>the logmessages.</value>
-        [HasMany(Table = "LogBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
-        public virtual IList<TaskLogBericht> LogBerichten
+        [HasMany(Table = "LogMessage", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
+        public virtual IList<TaskLogMessage> LogMessages
         {
-            get { return logBerichten; }
-            set { logBerichten = value; }
+            get { return logMessages; }
+            set { logMessages = value; }
         }
 
         /// <summary>
         /// Gets or sets the comments.
         /// </summary>
         /// <value>The comments.</value>
-        [HasMany(Table = "LogBericht", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
-        public virtual IList<TaskComment> CommentaarBerichten
+        [HasMany(Table = "Comments", Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Lazy = true, Inverse = true)]
+        public virtual IList<TaskComment> Comments
         {
-            get { return commentaarBerichten; }
-            set { commentaarBerichten = value; }
+            get { return comments; }
+            set { comments = value; }
         }
 
         /// <summary>
         /// The date this task was closed.
         /// </summary>
         [Property(Access = PropertyAccess.NosetterCamelcase)]
-        public virtual DateTime? DatumAfgesloten
+        public virtual DateTime? DateClosed
         {
-            get { return datumAfgesloten; }
+            get { return dateClosed; }
         }
         #endregion
 
@@ -203,7 +203,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                return Behandelaar != null ? Behandelaar.Gebruiker.Name : string.Empty;
+                return AssignedUser != null ? AssignedUser.User.Name : string.Empty;
             }
         }
 
@@ -214,7 +214,7 @@ namespace JelloScrum.Model.Entities
         {
             get
             {
-                return (Schatting - TotalTimeSpent());
+                return (Estimation - TotalTimeSpent());
             }
         }
 
@@ -236,7 +236,7 @@ namespace JelloScrum.Model.Entities
                 throw new ArgumentException("The given sprint does not belong to this project.", "sprint");
             }
 
-            foreach (TijdRegistratie registratie in GetTimeRegistrationsFor(user, sprint, date))
+            foreach (TimeRegistration registratie in GetTimeRegistrationsFor(user, sprint, date))
             {
                 RemoveTimeRegistration(registratie);
             }
@@ -245,7 +245,7 @@ namespace JelloScrum.Model.Entities
             if (time.TotalSeconds == 0)
                 return;
             
-            TijdRegistratie timeRegistration = new TijdRegistratie(user, date, sprint, this, time);
+            TimeRegistration timeRegistration = new TimeRegistration(user, date, sprint, this, time);
             AddTimeRegistration(timeRegistration);
         }
 
@@ -255,9 +255,9 @@ namespace JelloScrum.Model.Entities
         /// <param name="comment">The comment.</param>
         public virtual void AddComment(TaskComment comment)
         {
-            if (!commentaarBerichten.Contains(comment))
+            if (!comments.Contains(comment))
             {
-                commentaarBerichten.Add(comment);
+                comments.Add(comment);
             }
         }
 
@@ -267,9 +267,9 @@ namespace JelloScrum.Model.Entities
         /// <param name="comment">The comment.</param>
         public virtual void RemoveComment(TaskComment comment)
         {
-            if (commentaarBerichten.Contains(comment))
+            if (comments.Contains(comment))
             {
-                commentaarBerichten.Remove(comment);
+                comments.Remove(comment);
             }
         }
 
@@ -280,9 +280,9 @@ namespace JelloScrum.Model.Entities
         public virtual TimeSpan TotalTimeSpent()
         {
             TimeSpan total = new TimeSpan(0);
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                total = total.Add(timeRegistration.Tijd);
+                total = total.Add(timeRegistration.Time);
             }
             return total;
         }
@@ -296,11 +296,11 @@ namespace JelloScrum.Model.Entities
         public virtual TimeSpan TotalTimeSpent(User user, DateRange? dateRange)
         {
             TimeSpan total = new TimeSpan(0);
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if ((user != null || timeRegistration.Gebruiker == user) && (dateRange == null || dateRange.Value.Overlap(timeRegistration.Datum.Date)))
+                if ((user != null || timeRegistration.User == user) && (dateRange == null || dateRange.Value.Overlap(timeRegistration.Date.Date)))
                 {
-                    total = total.Add(timeRegistration.Tijd);
+                    total = total.Add(timeRegistration.Time);
                 }
             }
             return total;
@@ -314,11 +314,11 @@ namespace JelloScrum.Model.Entities
         public virtual TimeSpan TotalTimeSpent(DateTime date)
         {
             TimeSpan total = new TimeSpan(0);
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if (timeRegistration.Datum.Date == date.Date)
+                if (timeRegistration.Date.Date == date.Date)
                 {
-                    total = total.Add(timeRegistration.Tijd);
+                    total = total.Add(timeRegistration.Time);
                 }
             }
             return total;
@@ -333,11 +333,11 @@ namespace JelloScrum.Model.Entities
         public virtual TimeSpan TotalTimeSpent(DateTime startDate, DateTime endDate)
         {
             TimeSpan total = new TimeSpan(0);
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if (timeRegistration.Datum.Date >= startDate.Date && timeRegistration.Datum.Date <= endDate.Date)
+                if (timeRegistration.Date.Date >= startDate.Date && timeRegistration.Date.Date <= endDate.Date)
                 {
-                    total = total.Add(timeRegistration.Tijd);
+                    total = total.Add(timeRegistration.Time);
                 }
             }
             return total;
@@ -352,11 +352,11 @@ namespace JelloScrum.Model.Entities
         public virtual TimeSpan TotaalBestedeTijd(User user, DateTime date)
         {
             TimeSpan total = new TimeSpan(0);
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if (timeRegistration.Gebruiker == user && timeRegistration.Datum.Date == date.Date)
+                if (timeRegistration.User == user && timeRegistration.Date.Date == date.Date)
                 {
-                    total = total.Add(timeRegistration.Tijd);
+                    total = total.Add(timeRegistration.Time);
                 }
             }
             return total;
@@ -367,12 +367,12 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GetTimeRegistrationsFor(User user)
+        public virtual IList<TimeRegistration> GetTimeRegistrationsFor(User user)
         {
-            IList<TijdRegistratie> userTimeRegistrations = new List<TijdRegistratie>();
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            IList<TimeRegistration> userTimeRegistrations = new List<TimeRegistration>();
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if (timeRegistration.Gebruiker == user)
+                if (timeRegistration.User == user)
                 {
                     userTimeRegistrations.Add(timeRegistration);
                 }
@@ -387,12 +387,12 @@ namespace JelloScrum.Model.Entities
         /// <param name="sprint">The sprint.</param>
         /// <param name="date">The date.</param>
         /// <returns></returns>
-        public virtual IList<TijdRegistratie> GetTimeRegistrationsFor(User user, Sprint sprint, DateTime date)
+        public virtual IList<TimeRegistration> GetTimeRegistrationsFor(User user, Sprint sprint, DateTime date)
         {
-            IList<TijdRegistratie> userTimeRegistrations = new List<TijdRegistratie>();
-            foreach (TijdRegistratie timeRegistration in tijdRegistraties)
+            IList<TimeRegistration> userTimeRegistrations = new List<TimeRegistration>();
+            foreach (TimeRegistration timeRegistration in timeRegistrations)
             {
-                if (timeRegistration.Gebruiker == user && timeRegistration.Sprint == sprint && timeRegistration.Datum.ToShortDateString() == date.ToShortDateString())
+                if (timeRegistration.User == user && timeRegistration.Sprint == sprint && timeRegistration.Date.ToShortDateString() == date.ToShortDateString())
                 {
                     userTimeRegistrations.Add(timeRegistration);
                 }
@@ -405,8 +405,8 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public virtual void Close()
         {
-            status = State.Closed;
-            datumAfgesloten = DateTime.Now;
+            state = State.Closed;
+            dateClosed = DateTime.Now;
         }
 
         /// <summary>
@@ -414,9 +414,9 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public virtual void SetAsNotTaken()
         {
-            if (behandelaar != null)
+            if (assignedUser != null)
             {
-                behandelaar.GeefTaakAf(this);
+                assignedUser.UnAssignTask(this);
             }
         }
 
@@ -426,10 +426,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public virtual void UnassignTaskAndSetSatusAsOpen(string logTitle, string logText)
         {
-            if (behandelaar != null)
+            if (assignedUser != null)
             {
-                logText = logText + " \nWas assigned to: " + behandelaar.Gebruiker.FullName;
-                behandelaar.GeefTaakAf(this);
+                logText = logText + " \nWas assigned to: " + assignedUser.User.FullName;
+                assignedUser.UnAssignTask(this);
             }
 
             CreateLogmessage(logTitle, logText);
@@ -442,10 +442,10 @@ namespace JelloScrum.Model.Entities
         /// <param name="text">The text.</param>
         private void CreateLogmessage(string title, string text)
         {
-            TaskLogBericht logMessage = new TaskLogBericht(this, title, text);
-            if (!logBerichten.Contains(logMessage))
+            TaskLogMessage logMessage = new TaskLogMessage(this, title, text);
+            if (!logMessages.Contains(logMessage))
             {
-                logBerichten.Add(logMessage);
+                logMessages.Add(logMessage);
             }
         }
 
@@ -453,11 +453,11 @@ namespace JelloScrum.Model.Entities
         /// Adds a timeregistration.
         /// </summary>
         /// <param name="timeRegistration">The time registration.</param>
-        private void AddTimeRegistration(TijdRegistratie timeRegistration)
+        private void AddTimeRegistration(TimeRegistration timeRegistration)
         {
-            if (!tijdRegistraties.Contains(timeRegistration))
+            if (!timeRegistrations.Contains(timeRegistration))
             {
-                tijdRegistraties.Add(timeRegistration);
+                timeRegistrations.Add(timeRegistration);
             }
             timeRegistration.Task = this;
         }
@@ -466,11 +466,11 @@ namespace JelloScrum.Model.Entities
         /// Removes a timeregistration.
         /// </summary>
         /// <param name="timeRegistration">The time registration.</param>
-        public virtual void RemoveTimeRegistration(TijdRegistratie timeRegistration)
+        public virtual void RemoveTimeRegistration(TimeRegistration timeRegistration)
         {
-            if (tijdRegistraties.Contains(timeRegistration))
+            if (timeRegistrations.Contains(timeRegistration))
             {
-                tijdRegistraties.Remove(timeRegistration);
+                timeRegistrations.Remove(timeRegistration);
             }
         }
 

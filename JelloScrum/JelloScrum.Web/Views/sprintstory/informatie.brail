@@ -1,7 +1,7 @@
 <div class="storyInfo" id="tip_${item.Story.Id}">
-    <p class="titel">${item.Story.Titel} - ${item.Story.StoryType}</p>
+    <p class="titel">${item.Story.Title} - ${item.Story.StoryType}</p>
     <span class="titel">Omschrijving:</span>
-    <p id="omschrijving">${item.Story.Omschrijving}</p>
+    <p id="omschrijving">${item.Story.Description}</p>
 
     <span class="titel">Howto Demo:</span>
     <p id="howtodemo">${item.Story.HowtoDemo}</p>
@@ -11,14 +11,14 @@
     <span class="titel" id="taken">Taken (${taken.Count}):</span>
     <div id="tasks" style="">
         <?brail for taak in taken : ?>
-            <div class="taskItem" rel="${taak.Id}">- ${taak.Omschrijving}</div>
+            <div class="taskItem" rel="${taak.Id}">- ${taak.Description}</div>
         <?brail end ?>
     </div>
 
     <div class="extra">
-        <span class="titel">Schatting:</span> ${item.Story.Schatting}
-        <span class="titel">Door:</span> ${item.Story.AangemaaktDoor.FullName}
-        <span class="titel">ProjectMoSCoW:</span> ${item.Story.ProductBacklogPrioriteit}
+        <span class="titel">Schatting:</span> ${item.Story.Estimation}
+        <span class="titel">Door:</span> ${item.Story.CreatedBy.FullName}
+        <span class="titel">ProjectMoSCoW:</span> ${item.Story.ProductBacklogPriority}
     </div>
 </div>
 <script type="text/javascript">

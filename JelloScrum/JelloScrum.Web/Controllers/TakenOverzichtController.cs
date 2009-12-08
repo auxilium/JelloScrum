@@ -31,9 +31,9 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Mijntaken([ARFetch("sprintId")] Sprint sprint)
         {
-            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
 
-            PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+            PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             PropertyBag.Add("sprint", sprint);
             CancelLayout();
         }
@@ -47,10 +47,10 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
-                sprintGebruiker.GeefTaakAf(taak);
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                sprintGebruiker.UnAssignTask(taak);
                 SprintGebruikerRepository.Save(sprintGebruiker);
-                PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+                PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             }
             catch
             {
@@ -70,10 +70,10 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
                 taak.Close();
                 TaskRepository.Save(taak);
-                PropertyBag.Add("taken", sprintGebruiker.GeefOpgepakteTaken());
+                PropertyBag.Add("taken", sprintGebruiker.GetTakenTasks());
             }
             catch
             {
@@ -106,13 +106,13 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void TaakOppakken([ARFetch("id")] Task taak, [ARFetch("sprintId")] Sprint sprint)
         {
-            SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
 
             if (sprintGebruiker != null)
             {
                 try
                 {
-                    sprintGebruiker.PakTaakOp(taak);
+                    sprintGebruiker.TakeTask(taak);
                     SprintGebruikerRepository.Save(sprintGebruiker);
                 }
                 catch
@@ -126,7 +126,7 @@ namespace JelloScrum.Web.Controllers
                 sprintGebruiker = sprint.AddUser(CurrentUser, SprintRole.Developer);
                 try
                 {
-                    sprintGebruiker.PakTaakOp(taak);
+                    sprintGebruiker.TakeTask(taak);
                     SprintGebruikerRepository.Save(sprintGebruiker);
                 }
                 catch
@@ -177,8 +177,8 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                SprintGebruiker sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
-                sprintGebruiker.PakTaakOp(taak);
+                SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
+                sprintGebruiker.TakeTask(taak);
                 SprintGebruikerRepository.Save(sprintGebruiker);
             }
             catch

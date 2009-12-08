@@ -26,7 +26,7 @@ namespace JelloScrum.Web.Helpers
         private Task task;
         private DateTime dag;
         private double aantalUren = 0;
-        private SprintGebruiker sprintGebruiker;
+        private SprintUser sprintGebruiker;
 
         /// <summary>
         /// De taak waarop uren geboekt worden
@@ -58,7 +58,7 @@ namespace JelloScrum.Web.Helpers
         /// <summary>
         /// De gebruiker die de uren ingevuld heeft
         /// </summary>
-        public virtual SprintGebruiker SprintGebruiker
+        public virtual SprintUser SprintGebruiker
         {
             get { return this.sprintGebruiker; }
             set { this.sprintGebruiker = value; }
@@ -69,7 +69,7 @@ namespace JelloScrum.Web.Helpers
         /// </summary>
         public void MaakUrenRegistratie()
         {
-            task.RegisterTime(sprintGebruiker.Gebruiker, dag, sprintGebruiker.Sprint, TimeSpanHelper.Parse(aantalUren.ToString()));
+            task.RegisterTime(sprintGebruiker.User, dag, sprintGebruiker.Sprint, TimeSpanHelper.Parse(aantalUren.ToString()));
         }
     }
 }

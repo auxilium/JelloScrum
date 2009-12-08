@@ -27,12 +27,12 @@
        for story in sprint.SprintStories: ?>
       <tr>
         <td>${story.Id}</td>
-        <td>${story.Story.Titel}</td>
-        <td class="sprintprio">${story.sprintBacklogPrioriteit}</td>
-        <td >${story.Story.ProductBacklogPrioriteit}</td>
+        <td>${story.Story.Title}</td>
+        <td class="sprintprio">${story.SprintBacklogPriority}</td>
+        <td >${story.Story.ProductBacklogPriority}</td>
         <td>${story.Story.StoryType}</td>
         <td>${story.State}</td>
-        <td>${TimeSpanHelper.TimeSpanInMinuten(story.Story.Schatting)}</td>
+        <td>${TimeSpanHelper.TimeSpanInMinuten(story.Story.Estimation)}</td>
         <td>${story.Story.Tasks.Count}</td>
         <td style="text-align:center;">
           <a href="/Story/Bewerk.rails?storyId=${story.Story.Id}&sprintId=${sprint.Id}" class="button wijzigen">Bewerk</a>

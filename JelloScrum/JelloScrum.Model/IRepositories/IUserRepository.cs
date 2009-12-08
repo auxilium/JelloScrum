@@ -21,7 +21,7 @@ namespace JelloScrum.Model.IRepositories
     /// <summary>
     /// Interface for the user repository
     /// </summary>
-    public interface IGebruikerRepository : IJelloScrumRepository<User>
+    public interface IUserRepository : IJelloScrumRepository<User>
     {
         /// <summary>
         /// Find the user belonging to the given username

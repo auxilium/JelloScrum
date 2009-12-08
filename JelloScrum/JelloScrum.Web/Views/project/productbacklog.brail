@@ -40,14 +40,14 @@
         <td>${story.Id}</td>
         <td>
           <a href="/story/story.rails?storyId=${story.Id}">
-            ${story.Titel}
+            ${story.Title}
           </a>
         </td>
-        <td class="prio inlineEdit">${story.ProductBacklogPrioriteit}</td>
+        <td class="prio inlineEdit">${story.ProductBacklogPriority}</td>
         <td>${story.StoryType}</td>
-        <td>${MarkDownOutput(story.Omschrijving)}</td>
+        <td>${MarkDownOutput(story.Description)}</td>
         <td class="point inlineEdit">${story.StoryPoints}</td>
-        <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Schatting)}</td>
+        <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}</td>
         <td>${story.Tasks.Count}</td>
         <td style="text-align:center;">
           <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>

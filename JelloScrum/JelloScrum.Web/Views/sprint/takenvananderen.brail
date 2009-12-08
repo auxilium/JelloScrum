@@ -19,15 +19,15 @@ if IsDefined("takenVanAnderen") and takenVanAnderen is not null:
   for taak in takenVanAnderen:
     ?>
     <li class="task" id="${taak.Id}">
-      <span class="storyTitle">${taak.Story.Titel}</span>
-      <span class="storyTime">[${OpmaakHelper.UrenStatus(taak.Story.Schatting, taak.Story.TotaalBestedeTijd())}]</span>
-      <span class="taskTitle">${HtmlEncode(taak.Omschrijving)}      
+      <span class="storyTitle">${taak.Story.Title}</span>
+      <span class="storyTime">[${OpmaakHelper.UrenStatus(taak.Story.Estimation, taak.Story.TotaalBestedeTijd())}]</span>
+      <span class="taskTitle">${HtmlEncode(taak.Description)}      
       </span>
-      <span class="behandelaar">${taak.Behandelaar.Gebruiker.Name}</span>
+      <span class="behandelaar">${taak.AssignedUser.User.Name}</span>
       <span class="totalTaskTime" title="De totaal bestede tijd">${OpmaakHelper.Tijd(taak.TotalTimeSpent())}</span>
       
-      <a href="#" class="log">Logberichten (${taak.LogBerichten.Count})</a>
-      <a href="#" class="commentaar">Commentaar (${taak.CommentaarBerichten.Count})</a>      
+      <a href="#" class="log">Logberichten (${taak.LogMessages.Count})</a>
+      <a href="#" class="commentaar">Commentaar (${taak.Comments.Count})</a>      
       <div class="taskButtons">
         <a class="edit" title="Edit taak"><img src="/content/images/icons/note.png" alt="Edit taak"/></a>
         <a class="addtime" href="#" title="Boek tijd"><img src="/content/images/icons/add.png" alt="Boek tijd"/></a>        
@@ -48,7 +48,7 @@ $(document).ready(function(){
   <?brail 
     if IsDefined("currentUser") and currentUser.ActiveSprint is not null:
   ?>
-      setTitle("${currentUser.ActiveSprint.Project.Naam} / ${currentUser.ActiveSprint.Doel}");
+      setTitle("${currentUser.ActiveSprint.Project.Name} / ${currentUser.ActiveSprint.Goal}");
   <?brail
     else:
   ?>

@@ -19,7 +19,7 @@ namespace JelloScrum.Model.IRepositories
     /// <summary>
     /// Interface for the sprintuser repository
     /// </summary>
-    public interface ISprintGebruikerRepository : IJelloScrumRepository<SprintGebruiker>
+    public interface ISprintUserRepository : IJelloScrumRepository<SprintUser>
     {
 
     }

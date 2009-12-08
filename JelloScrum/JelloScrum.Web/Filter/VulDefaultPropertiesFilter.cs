@@ -44,7 +44,7 @@ namespace JelloScrum.Web.Filter
             User ingelogdeGebruiker = (User)context.CurrentUser;
 
             /* TODO:hier moet een lijstje inkomen met jou eigen lijst met projecten */
-            foreach (SprintGebruiker sprintGebruiker in ingelogdeGebruiker.SprintUsers)
+            foreach (SprintUser sprintGebruiker in ingelogdeGebruiker.SprintUsers)
             {
                 if (!projecten.Contains(sprintGebruiker.Sprint.Project))
                     projecten.Add(sprintGebruiker.Sprint.Project);

@@ -28,8 +28,8 @@ namespace JelloScrum.Model.Entities
     {
         #region fields
 
-        private string naam = string.Empty;
-        private string omschrijving = string.Empty;
+        private string name = string.Empty;
+        private string description = string.Empty;
 
         private IList<Story> stories = new List<Story>();
         private IList<Sprint> sprints = new List<Sprint>();
@@ -54,8 +54,8 @@ namespace JelloScrum.Model.Entities
         /// <param name="description">The description.</param>
         public Project(string name, string description)
         {
-            this.naam = name;
-            this.omschrijving = description;
+            this.name = name;
+            this.description = description;
         }
 
         #endregion
@@ -67,10 +67,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The name.</value>
         [Property, ValidateNonEmpty("Please provide a name.")]
-        public virtual string Naam
+        public virtual string Name
         {
-            get { return naam; }
-            set { naam = value; }
+            get { return name; }
+            set { name = value; }
         }
 
         /// <summary>
@@ -78,10 +78,10 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value>The description.</value>
         [Property(SqlType = "ntext")]
-        public virtual string Omschrijving
+        public virtual string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace JelloScrum.Model.Entities
             List<Story> storiesWithoudPriorities = new List<Story>();
             foreach (Story story in Stories)
             {
-                if (story.ProductBacklogPrioriteit == Priority.Unknown)
+                if (story.ProductBacklogPriority == Priority.Unknown)
                     storiesWithoudPriorities.Add(story);
             }
             return storiesWithoudPriorities;
@@ -184,7 +184,7 @@ namespace JelloScrum.Model.Entities
             IList<Sprint> notClosedSprints = new List<Sprint>();
             foreach (Sprint sprint in sprints)
             {
-                if (!sprint.IsAfgesloten)
+                if (!sprint.IsClosed)
                     notClosedSprints.Add(sprint);
             }
             return notClosedSprints;

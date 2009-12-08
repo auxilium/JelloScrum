@@ -81,7 +81,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestBepaalWelkeTakenNogNietZijnOpgepakt()
         {
-            task.Status = State.Taken;
+            task.State = State.Taken;
             
             story.AddTask(task);
             story.AddTask(task2); //task2 heeft nog de default status: NietOpgepakt
@@ -98,41 +98,41 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(State.Open, story.Status);
+            Assert.AreEqual(State.Open, story.State);
         }
                
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_EenOpgepakteStory()
         {
-            task.Status = State.Taken;
+            task.State = State.Taken;
 
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(State.Taken, story.Status);
+            Assert.AreEqual(State.Taken, story.State);
         }
 
         [Test]
         public void TestBepaalStoryStatusAanDeHandVanTasksStatus_AlleStoriesZijnAfgesloten()
         {
-            task.Status = State.Closed;
-            task2.Status = State.Closed;
+            task.State = State.Closed;
+            task2.State = State.Closed;
 
             story.AddTask(task);
             story.AddTask(task2);
 
-            Assert.AreEqual(State.Closed, story.Status);
+            Assert.AreEqual(State.Closed, story.State);
         }
 
         [Test]
         public void TestUrenSchattingTakenKleinerUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0,1,0,0);
-            task2.Schatting = new TimeSpan(0, 1, 0, 0);
+            task.Estimation = new TimeSpan(0,1,0,0);
+            task2.Estimation = new TimeSpan(0, 1, 0, 0);
 
             story.AddTask(task);
             story.AddTask(task2);
-            story.Schatting = new TimeSpan(0, 3, 0, 0);
+            story.Estimation = new TimeSpan(0, 3, 0, 0);
 
             Assert.IsTrue(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }
@@ -140,12 +140,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestUrenSchattingTakenGelijkUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0, 1, 0, 0);
-            task2.Schatting = new TimeSpan(0, 1, 0, 0);
+            task.Estimation = new TimeSpan(0, 1, 0, 0);
+            task2.Estimation = new TimeSpan(0, 1, 0, 0);
 
             story.AddTask(task);
             story.AddTask(task2);
-            story.Schatting = new TimeSpan(0, 2, 0, 0);
+            story.Estimation = new TimeSpan(0, 2, 0, 0);
 
             Assert.IsTrue(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }
@@ -153,12 +153,12 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestUrenSchattingTakenGroterUrenSchattingStory()
         {
-            task.Schatting = new TimeSpan(0, 1, 0, 0);
-            task2.Schatting = new TimeSpan(0, 2, 0, 0);
+            task.Estimation = new TimeSpan(0, 1, 0, 0);
+            task2.Estimation = new TimeSpan(0, 2, 0, 0);
 
             story.AddTask(task);
             story.AddTask(task2);
-            story.Schatting = new TimeSpan(0, 2, 0, 0);
+            story.Estimation = new TimeSpan(0, 2, 0, 0);
 
             Assert.IsFalse(story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory());
         }

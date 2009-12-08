@@ -34,9 +34,9 @@ namespace JelloScrum.Model.Tests.Model
             User gb = new User();
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GetSprintUserFor(sprint);
+            SprintUser sg = gb.GetSprintUserFor(sprint);
 
-            Assert.AreEqual(gb, sg.Gebruiker);
+            Assert.AreEqual(gb, sg.User);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace JelloScrum.Model.Tests.Model
             sprint2.AddUser(gb, SprintRole.Developer);
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GetSprintUserFor(sprint);
+            SprintUser sg = gb.GetSprintUserFor(sprint);
 
             Assert.AreEqual(sprint, sg.Sprint);
         }
@@ -59,9 +59,9 @@ namespace JelloScrum.Model.Tests.Model
             gb.ActiveSprint = sprint;
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GetActiveSprintUser();
+            SprintUser sg = gb.GetActiveSprintUser();
 
-            Assert.AreEqual(sg.Gebruiker, gb);
+            Assert.AreEqual(sg.User, gb);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace JelloScrum.Model.Tests.Model
             User gb = new User();
             sprint.AddUser(gb, SprintRole.Developer);
 
-            SprintGebruiker sg = gb.GetActiveSprintUser();
+            SprintUser sg = gb.GetActiveSprintUser();
 
             Assert.AreEqual(null, sg);
         }

@@ -27,13 +27,13 @@ namespace JelloScrum.QueryObjects
 
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria crit = session.CreateCriteria(typeof(TijdRegistratie));
+            ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
 
             if (startDate != new DateTime() || endDate != new DateTime() || sprint != null)
             {
                 crit.Add(Restrictions.Eq("Sprint", sprint));
-                crit.Add(Restrictions.Ge("Datum", startDate));
-                crit.Add(Restrictions.Le("Datum", endDate));
+                crit.Add(Restrictions.Ge("Date", startDate));
+                crit.Add(Restrictions.Le("Date", endDate));
             }
 
             return crit;

@@ -56,7 +56,7 @@ namespace JelloScrum.Model.Tests.Model
         {
             SprintStory ss = sprint.CreateSprintStoryFor(story);
 
-            Assert.AreEqual(story.Schatting, ss.Schatting);
+            Assert.AreEqual(story.Estimation, ss.Estimation);
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = State.Taken;
-            story.Tasks[1].Status = State.Taken;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Taken;
 
-            Assert.IsTrue(result.IsVolledigeOpgepakt);
+            Assert.IsTrue(result.AllTasksAreTaken);
         }
 
         [Test]
@@ -79,9 +79,9 @@ namespace JelloScrum.Model.Tests.Model
             story.AddTask(new Task());
             SprintStory result = sprint.CreateSprintStoryFor(story);
 
-            story.Tasks[0].Status = State.Taken;
+            story.Tasks[0].State = State.Taken;
 
-            Assert.IsFalse(result.IsVolledigeOpgepakt);
+            Assert.IsFalse(result.AllTasksAreTaken);
         }
     }
 }

@@ -48,13 +48,13 @@ namespace JelloScrum.Model.Tests.Model
 
             // 1 sprint
             testCaseSprint = Creation.Sprint(testCaseProject);
-            testCaseSprint.WerkDagen = 40; // 4 devvers voor 2 weken = 4 * 2 * 5 dagen.
+            testCaseSprint.WorkDays = 40; // 4 devvers voor 2 weken = 4 * 2 * 5 dagen.
 
             foreach (User developer in testCaseDevelopers)
             {
                 testCaseSprint.AddUser(developer, SprintRole.Developer);
             }
-            testCaseSprint.SprintGebruikers[0].VoegRolToe(SprintRole.ScrumMaster);
+            testCaseSprint.SprintUsers[0].AddRole(SprintRole.ScrumMaster);
 
             // 1 story, 2 taken, beide afgesloten
             const int hoursPerStoryPoint = 2;

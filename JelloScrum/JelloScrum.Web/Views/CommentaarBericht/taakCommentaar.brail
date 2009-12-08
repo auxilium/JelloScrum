@@ -1,9 +1,9 @@
 <div>
     ${Form.FormTag({@action: 'OpslaanTaakCommentaar', @id: 'Bewerk'})}
     ${Form.HiddenField("taak.Id")}
-      Taak: ${taak.Id} ${taak.Titel}<br/>
+      Taak: ${taak.Id} ${taak.Title}<br/>
       Omschrijving: <br/>
-      ${taak.Omschrijving} 
+      ${taak.Description} 
       <br/><br/>
       ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
       <a href="#" id="addcomment" class="button nieuw">Bericht toevoegen</a><br/>
@@ -23,8 +23,8 @@
         ?>
         <tr>
             <td>${comment.Id}</td>
-            <td>${comment.Datum.ToShortDateString()}</td>
-            <td>${comment.Gebruiker.FullName}</td>
+            <td>${comment.Date.ToShortDateString()}</td>
+            <td>${comment.User.FullName}</td>
             <td>
               <input type="hidden" name="comment[${count}].Id" value="${comment.Id}" />
               <textarea name='comment[${count}].Tekst' cols="30" rows="5">${comment.Tekst}</textarea>

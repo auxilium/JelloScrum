@@ -23,7 +23,7 @@ namespace JelloScrum.Model.Tests.Model
     [TestFixture]
     public class SprintGebruikerTest : TestBase
     {
-        private SprintGebruiker sprintGebruiker;
+        private SprintUser sprintGebruiker;
         private User gebruiker;
         private Task taak;
         private Task taak2;
@@ -41,38 +41,38 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestPakTaakOpZetRelaties()
         {
-            sprintGebruiker.PakTaakOp(taak);
+            sprintGebruiker.TakeTask(taak);
 
-            Assert.AreEqual(taak, sprintGebruiker.Taken[0]);
-            Assert.AreEqual(taak.Behandelaar, sprintGebruiker);
+            Assert.AreEqual(taak, sprintGebruiker.Tasks[0]);
+            Assert.AreEqual(taak.AssignedUser, sprintGebruiker);
         }
 
         [Test]
         public void TestPakTaakOpZetTaakStatus()
         {
-            sprintGebruiker.PakTaakOp(taak);
+            sprintGebruiker.TakeTask(taak);
 
-            Assert.AreEqual(State.Taken, sprintGebruiker.Taken[0].Status);
+            Assert.AreEqual(State.Taken, sprintGebruiker.Tasks[0].State);
         }
 
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void TestHandmatigEenTaakAanDeTakenColletieToevoegenGaatNiet()
         {
-            sprintGebruiker.Taken.Add(taak);
+            sprintGebruiker.Tasks.Add(taak);
             Assert.Fail();
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void TestMaakNieuweSprintGebruikerWaarbijGebruikerNullIsFaalt()
         {
-            new SprintGebruiker(null, new Sprint(), SprintRole.Developer);
+            new SprintUser(null, new Sprint(), SprintRole.Developer);
             Assert.Fail();
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void TestMaakNieuweSprintGebruikerWaarbijSprintNullIsFaalt()
         {
-            new SprintGebruiker(new User(), null, SprintRole.Developer);
+            new SprintUser(new User(), null, SprintRole.Developer);
             Assert.Fail();
         }
         
@@ -85,27 +85,27 @@ namespace JelloScrum.Model.Tests.Model
             Story story2 = Creation.StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Must, sprintGebruiker.Sprint);
             story2.AddTask(taak2);
 
-            sprintGebruiker.PakTaakOp(taak);
-            sprintGebruiker.PakTaakOp(taak2);
+            sprintGebruiker.TakeTask(taak);
+            sprintGebruiker.TakeTask(taak2);
 
-            Assert.AreEqual(1, sprintGebruiker.GeefOpgepakteTakenMetSprintBacklogPrioriteit(Priority.Must).Count);
+            Assert.AreEqual(1, sprintGebruiker.GetTakenTasksWithSprintBacklogPriority(Priority.Must).Count);
         }
 
         [Test]
         public void TestSprintRolToekennenKentSprintRolToe()
         {
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.VoegRolToe(SprintRole.ProductOwner);
-            Assert.IsTrue(sprintGebruiker.HeeftSprintRol(SprintRole.ProductOwner));
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.AddRole(SprintRole.ProductOwner);
+            Assert.IsTrue(sprintGebruiker.HasSprintRole(SprintRole.ProductOwner));
         }
 
         [Test]
         public void TestSprintRolVerwijderenVerwijdertRol()
         {
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.VoegRolToe(SprintRole.ProductOwner);
-            sprintGebruiker.VerwijderRol(SprintRole.ProductOwner);
-            Assert.IsFalse(sprintGebruiker.HeeftSprintRol(SprintRole.ProductOwner));
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.AddRole(SprintRole.ProductOwner);
+            sprintGebruiker.RemoveRole(SprintRole.ProductOwner);
+            Assert.IsFalse(sprintGebruiker.HasSprintRole(SprintRole.ProductOwner));
         }
 
     }

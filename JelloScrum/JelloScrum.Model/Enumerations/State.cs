@@ -15,22 +15,22 @@
 namespace JelloScrum.Model.Enumerations
 {
     /// <summary>
-    /// De status van een story of van een task
+    /// The state of a story or task
     /// </summary>
     public enum State
     {
         /// <summary>
-        /// De story of task is nog niet opgepakt
+        /// Open
         /// </summary>
         Open = 0,
 
         /// <summary>
-        /// De story of task is opgepakt
+        /// Taken
         /// </summary>
         Taken = 1,
 
         /// <summary>
-        /// De story of task is afgesloten
+        /// Closed
         /// </summary>
         Closed = 2
     }

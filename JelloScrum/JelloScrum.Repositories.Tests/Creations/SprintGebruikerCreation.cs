@@ -24,16 +24,16 @@ namespace JelloScrum.Repositories.Tests.Creations
     /// </summary>
     public partial class Creation
     {
-        private static ISprintGebruikerRepository sprintGebruikerRepository = IoC.Resolve<ISprintGebruikerRepository>();
+        private static ISprintUserRepository sprintGebruikerRepository = IoC.Resolve<ISprintUserRepository>();
 
-        private static SprintGebruiker Persist(SprintGebruiker sprintGebruiker)
+        private static SprintUser Persist(SprintUser sprintGebruiker)
         {
             return sprintGebruikerRepository.Save(sprintGebruiker);
         }
 
-        public static SprintGebruiker SprintGebruiker(User gebruiker, Sprint sprint, SprintRole sprintRol)
+        public static SprintUser SprintGebruiker(User gebruiker, Sprint sprint, SprintRole sprintRol)
         {
-            SprintGebruiker sprintGebruiker = new SprintGebruiker(gebruiker, sprint, sprintRol);
+            SprintUser sprintGebruiker = new SprintUser(gebruiker, sprint, sprintRol);
             Project project = Project();
             project.AddSprint(sprint);
             return Persist(sprintGebruiker);

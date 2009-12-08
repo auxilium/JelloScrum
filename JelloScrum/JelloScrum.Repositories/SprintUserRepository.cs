@@ -17,7 +17,7 @@ namespace JelloScrum.Repositories
     using JelloScrum.Model.Entities;
     using JelloScrum.Model.IRepositories;
 
-    public class SprintGebruikerRepository : JelloScrumRepository<SprintGebruiker>, ISprintGebruikerRepository
+    public class SprintUserRepository : JelloScrumRepository<SprintUser>, ISprintUserRepository
     {
 
     }
