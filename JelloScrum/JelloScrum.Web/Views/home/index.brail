@@ -1,10 +1,8 @@
 <div>
-	<div class="gegevensBlock" style="width: 1000px; margin-top: 10px;">
+	<div class="gegevensBlock">
 		<div>
 			<span style="float:left;">
-				<h1>
-					Mijn projecten
-				</h1>
+				<h1>Mijn projecten</h1>
 			</span>
 			<span style="float:right;">
 				<a href="/GebruikerBeheer/mijnprojecten.rails">Kies mijn projecten</a>
@@ -14,10 +12,9 @@
 		</div>
 		<div>
 			<?brail
-                  count = 0
-                  for projectShortList in currentUser.ProjectShortList : 
-                ?>
-
+        count = 0
+        for projectShortList in currentUser.ProjectShortList : 
+      ?>
 			<div class="ingegevensBlock">
 				<div>
 					<h1 style="font-weight: bold; padding: 3px; float:left;">
@@ -86,17 +83,13 @@
 			</div>
 			<br class="clear"/>
 			<?brail
-    end
-  ?>
-
-
-
+        end
+      ?>
 		</div>
-
 		<br class="clear"/>
 	</div>
 
-	<div class="gegevensBlock" style="width: 1000px; margin-top: 10px;">
+	<div class="gegevensBlock">
 		<span style="float:left;">
 			<h1>
 				Alle projecten

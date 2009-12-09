@@ -14,29 +14,31 @@
 
 namespace JelloScrum.QueryObjects
 {
-    using System;
-    using JelloScrum.Model.Entities;
+    using Model.Entities;
+    using Model.Enumerations;
     using NHibernate;
     using NHibernate.Criterion;
 
-    public class AlleTijdregistratiesTussenDatumsPerSprint
+    /// <summary>
+    /// Query open tasks
+    /// </summary>
+    public class OpenTasksQuery
     {
-        public Sprint sprint;
-        public DateTime startDate = new DateTime();
-        public DateTime endDate = new DateTime();
+        public Sprint Sprint;
 
+        /// <summary>
+        /// Gets all open tasks (for a specific sprint if specified)
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
-
-            if (startDate != new DateTime() || endDate != new DateTime() || sprint != null)
-            {
-                crit.Add(Restrictions.Eq("Sprint", sprint));
-                crit.Add(Restrictions.Ge("Date", startDate));
-                crit.Add(Restrictions.Le("Date", endDate));
-            }
-
-            return crit;
+            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("State", State.Open));
+            
+            if (Sprint != null)
+                criteria.CreateCriteria("Story").CreateCriteria("SprintStories").Add(Restrictions.Eq("Sprint", Sprint));
+            
+            return criteria;
         }
     }
 }

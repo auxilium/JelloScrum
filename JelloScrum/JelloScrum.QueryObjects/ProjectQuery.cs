@@ -18,18 +18,26 @@ namespace JelloScrum.QueryObjects
     using NHibernate;
     using NHibernate.Criterion;
 
+    /// <summary>
+    /// Query projects
+    /// </summary>
     public class ProjectQuery
     {
-        public string zoekterm;
-        
+        public string SearchTerm;
+
+        /// <summary>
+        /// Search for a project with a name or description like the given searchterm.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
             ICriteria crit = session.CreateCriteria(typeof (Project));
 
-            if (!string.IsNullOrEmpty(zoekterm))
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
-                string interneZoekterm = "%" + zoekterm + "%";
-                crit.Add(Restrictions.Or(Restrictions.Like("Naam", interneZoekterm),Restrictions.Like("Omschrijving", interneZoekterm)));
+                string likeQuery = "%" + SearchTerm + "%";
+                crit.Add(Restrictions.Or(Restrictions.Like("Name", likeQuery),Restrictions.Like("Description", likeQuery)));
             }
 
             return crit;

@@ -19,25 +19,31 @@ namespace JelloScrum.QueryObjects
     using NHibernate;
     using NHibernate.Criterion;
 
-    public class NogNietAfgerondeStoriesQuery
+    /// <summary>
+    /// Query not closed stories
+    /// </summary>
+    public class NotClosedStoriesQuery
     {
         public Project Project;
-        
+
+        /// <summary>
+        /// Query all stories that are not closed.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Story));
             DetachedCriteria detachedCriteria =
                 DetachedCriteria.For(typeof(Task))
                 .SetProjection(Projections.Property("Id"))
-                .Add(Restrictions.Not(Restrictions.Eq("Status", State.Closed)));
+                .Add(Restrictions.Not(Restrictions.Eq("State", State.Closed)));
 
-            if(Project != null)
-            {
+            if (Project != null)
                 criteria.CreateCriteria("Project").Add(Restrictions.Eq("Id", Project.Id));
-            }
 
-
-            criteria.CreateCriteria("Tasks").Add(Subqueries.PropertyIn("Id", detachedCriteria)).SetResultTransformer(CriteriaSpecification.DistinctRootEntity);
+            criteria.CreateCriteria("Tasks").Add(Subqueries.PropertyIn("Id", detachedCriteria)).SetResultTransformer(
+                CriteriaSpecification.DistinctRootEntity);
 
             return criteria;
         }

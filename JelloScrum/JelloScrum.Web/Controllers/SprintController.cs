@@ -648,8 +648,8 @@ namespace JelloScrum.Web.Controllers
         /// <returns>De onopgepakte taken</returns>
         private static IList GeefOnopgepakteTaken(Sprint sprint)
         {
-            NietOpgepakteTakenQuery nietOpgepakteTakenQuery = new NietOpgepakteTakenQuery();
-            nietOpgepakteTakenQuery.sprint = sprint;
+            OpenTasksQuery nietOpgepakteTakenQuery = new OpenTasksQuery();
+            nietOpgepakteTakenQuery.Sprint = sprint;
             return nietOpgepakteTakenQuery.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List();
         }
 
@@ -660,9 +660,9 @@ namespace JelloScrum.Web.Controllers
         /// <returns>De taken van anderen.</returns>
         private static IList GeefTakenVanAnderen(User gebruiker)
         {
-            OpgepakteTakenQuery opgepakteTakenQuery = new OpgepakteTakenQuery();
+            TakenTasksQuery opgepakteTakenQuery = new TakenTasksQuery();
             opgepakteTakenQuery.Sprint = gebruiker.ActiveSprint;
-            opgepakteTakenQuery.BehalveVoorDezeSprintGebruiker = gebruiker.GetActiveSprintUser();
+            opgepakteTakenQuery.ExceptForSprintUser = gebruiker.GetActiveSprintUser();
             return opgepakteTakenQuery.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List();
         }
         #endregion

@@ -37,17 +37,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlleTijdregistratiesTussenDatumsPerSprintQuery.cs" />
+    <Compile Include="AllTimeRegistrationsBetweenDatesForSprint.cs" />
+    <Compile Include="NotClosedStoriesQuery.cs" />
+    <Compile Include="OpenTasksQuery.cs" />
     <Compile Include="ProjectQuery.cs" />
-    <Compile Include="NietOpgepakteTakenQuery.cs" />
-    <Compile Include="NogNietAfgerondeStoriesQuery.cs" />
-    <Compile Include="OpgepakteTakenQuery.cs" />
-    <Compile Include="NogNietIngedeeldeStoriesQuery.cs" />
     <Compile Include="SprintStoriesQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TakenVanSprintQuery.cs" />
-    <Compile Include="TijdRegistratiesVanTaakTussenDatumPerGebruiker.cs" />
-    <Compile Include="TotaalBestedenTijdOpSprintQuery.cs" />
+    <Compile Include="StoriesNotInSprintQuery.cs" />
+    <Compile Include="TakenTasksQuery.cs" />
+    <Compile Include="TasksOfSprintQuery.cs" />
+    <Compile Include="TimeRegistrationsForSprintAndUserBetweenStartAndEndDate.cs" />
+    <Compile Include="TotalTimeSpentOnClosedTasksInSprintQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

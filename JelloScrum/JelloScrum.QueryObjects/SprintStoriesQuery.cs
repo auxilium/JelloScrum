@@ -18,10 +18,18 @@ namespace JelloScrum.QueryObjects
     using NHibernate;
     using NHibernate.Criterion;
 
+    /// <summary>
+    /// Query for sprintstories
+    /// </summary>
     public class SprintStoriesQuery
     {
         public Sprint Sprint;
-        
+
+        /// <summary>
+        /// Query for sprintstories that belong to the given sprint
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
             ICriteria crit = session.CreateCriteria(typeof (SprintStory));

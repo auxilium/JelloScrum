@@ -55,7 +55,7 @@ namespace JelloScrum.Web.Controllers
         public void Index(string zoektekst)
         {
             ProjectQuery projecten = new ProjectQuery();
-            projecten.zoekterm = zoektekst;
+            projecten.SearchTerm = zoektekst;
 
             IList<Project> projects = projecten.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List<Project>();
 

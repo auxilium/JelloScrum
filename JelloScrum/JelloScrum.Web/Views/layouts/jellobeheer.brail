@@ -26,6 +26,7 @@
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jelloscrum.js"></script>
 
+  <!--for avatar cropping -->
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.imageareaselect/jquery.imgareaselect.min.js"></script>
 	
 </head>
@@ -34,7 +35,7 @@
 		<div id="header">
       <div id="title">
         <a href="/dashboard/index.rails" class="logo">
-          <img src="/Content/images/jelloscrum.png"/>
+           <img src="/Content/images/logo.png" alt="JelloScrum"/>
         </a>
       </div>
       <div id="navigation">

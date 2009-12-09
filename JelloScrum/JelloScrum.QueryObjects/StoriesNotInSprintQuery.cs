@@ -18,21 +18,32 @@ namespace JelloScrum.QueryObjects
     using NHibernate;
     using NHibernate.Criterion;
 
-    public class NogNietIngedeeldeStoriesQuery
+    /// <summary>
+    /// Query stories not in the given sprint.
+    /// </summary>
+    public class StoriesNotInSprintQuery
     {
-        public Sprint Sprint;
-
-        public ICriteria GetQuery(ISession session)
+        /// <summary>
+        /// Query all stories not in the given sprint.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <param name="sprint">The sprint.</param>
+        /// <returns></returns>
+        public ICriteria GetQuery(ISession session, Sprint sprint)
         {
-            NogNietAfgerondeStoriesQuery alleStoriesVanProject = new NogNietAfgerondeStoriesQuery();
-            alleStoriesVanProject.Project = Sprint.Project;
-            ICriteria criteria = alleStoriesVanProject.GetQuery(session);
+            NotClosedStoriesQuery allStoriesInProject = new NotClosedStoriesQuery();
+            
+            if (sprint.Project != null)
+                allStoriesInProject.Project = sprint.Project;
+
+            ICriteria criteria = allStoriesInProject.GetQuery(session);
             
             DetachedCriteria allSprintStoriesBelongingToSprint = DetachedCriteria.For(typeof (SprintStory))
                 .SetProjection(Projections.Property("Story.Id"))
-                .Add(Restrictions.Eq("Sprint", Sprint));
+                .Add(Restrictions.Eq("Sprint", sprint));
 
-            criteria.Add(Subqueries.PropertyNotIn("Id", allSprintStoriesBelongingToSprint)).SetResultTransformer(CriteriaSpecification.DistinctRootEntity);
+            criteria.Add(Subqueries.PropertyNotIn("Id", allSprintStoriesBelongingToSprint)).SetResultTransformer(
+                CriteriaSpecification.DistinctRootEntity);
 
             return criteria;
         }
