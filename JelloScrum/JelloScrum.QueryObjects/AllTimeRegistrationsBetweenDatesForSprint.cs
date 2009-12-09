@@ -15,24 +15,34 @@
 namespace JelloScrum.QueryObjects
 {
     using System;
-    using JelloScrum.Model.Entities;
-    using JelloScrum.Model.Enumerations;
+    using Model.Entities;
     using NHibernate;
     using NHibernate.Criterion;
 
-    public class TotaalBestedenTijdOpSprintQuery
+    /// <summary>
+    /// Query timeregistrations 
+    /// </summary>
+    public class AllTimeRegistrationsBetweenDatesForSprint
     {
-        public Sprint sprint;
+        public Sprint Sprint;
+        public DateTime? StartDate;
+        public DateTime? EndDate;
 
+        /// <summary>
+        /// Query timeregistrations (between the given start and enddate for the given sprint)
+        /// One of Sprint/StartDate/EndDate needs to be set.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
             ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
 
-            if (sprint != null)
+            if (StartDate.HasValue || EndDate.HasValue || Sprint != null)
             {
-                crit.Add(Restrictions.Eq("Sprint", sprint));
-                crit.Add(Restrictions.Le("Date", DateTime.Now));
-                crit.CreateCriteria("Task").Add(Restrictions.Eq("Status", State.Closed));
+                crit.Add(Restrictions.Eq("Sprint", Sprint));
+                crit.Add(Restrictions.Ge("Date", StartDate));
+                crit.Add(Restrictions.Le("Date", EndDate));
             }
 
             return crit;

@@ -20,24 +20,29 @@ namespace JelloScrum.QueryObjects
     using NHibernate.Criterion;
 
     /// <summary>
-    /// Geef alle opgepakte taken.
-    ///  - Specifieer in sprint voor welke sprint dit moet gelden
-    ///  - Specificeer in behalveVoorDezeSprintGebruiker van welke sprintgebruiker de taken niet meegenomen moeten worden.
+    /// Query taken tasks
     /// </summary>
-    public class OpgepakteTakenQuery
+    public class TakenTasksQuery
     {
         public Sprint Sprint;
-        public SprintUser BehalveVoorDezeSprintGebruiker;
+        public SprintUser ExceptForSprintUser;
 
+        /// <summary>
+        /// Query taken tasks
+        ///  - Specify a sprint to query on tasks belonging to that sprint.
+        ///  - Specify ExceptForSprintUser to exclude that SprintUser.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", State.Taken));
+            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("State", State.Taken));
                         
-            if (this.BehalveVoorDezeSprintGebruiker != null)
-                criteria.Add(Restrictions.Not(Restrictions.Eq("Behandelaar", this.BehalveVoorDezeSprintGebruiker)));
+            if (ExceptForSprintUser != null)
+                criteria.Add(Restrictions.Not(Restrictions.Eq("AssignedUser", ExceptForSprintUser)));
 
-            if (this.Sprint != null)
-                criteria.CreateCriteria("Behandelaar").Add(Restrictions.Eq("Sprint", this.Sprint));
+            if (Sprint != null)
+                criteria.CreateCriteria("AssignedUser").Add(Restrictions.Eq("Sprint", Sprint));
 
             return criteria;
         }

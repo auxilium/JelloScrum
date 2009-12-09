@@ -14,31 +14,29 @@
 
 namespace JelloScrum.QueryObjects
 {
-    using System;
-    using JelloScrum.Model.Entities;
+    using Model.Entities;
     using NHibernate;
     using NHibernate.Criterion;
 
-    public class TakenVanSprintQuery
+    /// <summary>
+    /// Query for tasks
+    /// </summary>
+    public class TasksOfSprintQuery
     {
-        private Sprint sprint;
+        public Sprint Sprint;
 
         /// <summary>
-        /// Geeft aan om welke sprint het gaat.
+        /// Query for all tasks that belong to the given sprint.
         /// </summary>
-        public Sprint Sprint
-        {
-            get { return sprint; }
-            set { sprint = value; }
-        }
-
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
             ICriteria crit = session.CreateCriteria(typeof (Task));
             
-            if (sprint != null)
+            if (Sprint != null)
             {
-                crit.CreateCriteria("Story").CreateCriteria("SprintStories").Add(Restrictions.Eq("Sprint", sprint));
+                crit.CreateCriteria("Story").CreateCriteria("SprintStories").Add(Restrictions.Eq("Sprint", Sprint));
             }
 
             return crit;

@@ -88,8 +88,8 @@ namespace JelloScrum.Web.Helpers
         /// <returns></returns>
         public static IDictionary<DateTime, double> Werk(Sprint sprint)
         {
-            TotaalBestedenTijdOpSprintQuery query = new TotaalBestedenTijdOpSprintQuery();
-            query.sprint = sprint;
+            TotalTimeSpentOnClosedTasksInSprintQuery query = new TotalTimeSpentOnClosedTasksInSprintQuery();
+            query.Sprint = sprint;
 
             ICriteria crit = query.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
             crit.AddOrder(Order.Asc("Date"));

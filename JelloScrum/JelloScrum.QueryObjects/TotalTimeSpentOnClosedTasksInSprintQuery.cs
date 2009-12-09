@@ -14,29 +14,36 @@
 
 namespace JelloScrum.QueryObjects
 {
+    using System;
     using Model.Entities;
     using Model.Enumerations;
     using NHibernate;
     using NHibernate.Criterion;
 
     /// <summary>
-    /// Geeft alle niet opgepakte taken.
-    ///  - Specifieer een sprint voor alle niet opgepakte taken in een bepaalde sprint.
+    /// Query timeregistrations on closed tasks
     /// </summary>
-    public class NietOpgepakteTakenQuery
+    public class TotalTimeSpentOnClosedTasksInSprintQuery
     {
-        public Sprint sprint;
+        public Sprint Sprint;
 
+        /// <summary>
+        /// Query timeregistrations made before today on closed tasks in the given sprint .
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <returns></returns>
         public ICriteria GetQuery(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Task)).Add(Restrictions.Eq("Status", State.Open));
-            
-            if (sprint != null)
-                criteria.CreateCriteria("Story").CreateCriteria("SprintStories").Add(Restrictions.Eq("Sprint", sprint));
+            ICriteria crit = session.CreateCriteria(typeof(TimeRegistration));
 
-            //criteria.CreateCriteria("LogBerichten");
+            if (Sprint != null)
+            {
+                crit.Add(Restrictions.Eq("Sprint", Sprint));
+                crit.Add(Restrictions.Le("Date", DateTime.Now));
+                crit.CreateCriteria("Task").Add(Restrictions.Eq("State", State.Closed));
+            }
 
-            return criteria;
+            return crit;
         }
     }
 }

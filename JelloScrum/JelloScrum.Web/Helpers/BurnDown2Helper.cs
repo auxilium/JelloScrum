@@ -90,8 +90,8 @@ namespace JelloScrum.Web.Helpers
         /// <returns></returns>
         public IDictionary<DateTime, double> Werk(Sprint sprint)
         {
-            TotaalBestedenTijdOpSprintQuery query = new TotaalBestedenTijdOpSprintQuery();
-            query.sprint = sprint;
+            TotalTimeSpentOnClosedTasksInSprintQuery query = new TotalTimeSpentOnClosedTasksInSprintQuery();
+            query.Sprint = sprint;
 
             ICriteria crit = query.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
             crit.AddOrder(Order.Asc("Date"));
@@ -175,10 +175,10 @@ namespace JelloScrum.Web.Helpers
             }
 
             //Zaken voor de balkjes
-            AlleTijdregistratiesTussenDatumsPerSprint alleTijdregistratiesTussenDatumsPerSprint = new AlleTijdregistratiesTussenDatumsPerSprint();
-            alleTijdregistratiesTussenDatumsPerSprint.startDate = startdatum;
-            alleTijdregistratiesTussenDatumsPerSprint.endDate = einddatum;
-            alleTijdregistratiesTussenDatumsPerSprint.sprint = sprint;
+            AllTimeRegistrationsBetweenDatesForSprint alleTijdregistratiesTussenDatumsPerSprint = new AllTimeRegistrationsBetweenDatesForSprint();
+            alleTijdregistratiesTussenDatumsPerSprint.StartDate = startdatum;
+            alleTijdregistratiesTussenDatumsPerSprint.EndDate = einddatum;
+            alleTijdregistratiesTussenDatumsPerSprint.Sprint = sprint;
 
             ICriteria crit = alleTijdregistratiesTussenDatumsPerSprint.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase)));
 
