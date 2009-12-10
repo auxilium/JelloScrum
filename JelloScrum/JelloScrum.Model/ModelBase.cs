@@ -22,7 +22,7 @@ namespace JelloScrum.Model
     /// </summary>
     public abstract class ModelBase : IEquatable<ModelBase>
     {
-        private int id = 0;
+        private long id = 0;
         private Guid guid = Guid.NewGuid();
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace JelloScrum.Model
         /// <summary>
         /// This is the unique ID for all entities in Foleta
         /// </summary>
-        [PrimaryKey]
-        public virtual int Id
+        [PrimaryKey(PrimaryKeyType.Identity)]
+        public virtual long Id
         {
             get { return this.id; }
             set { this.id = value; }
@@ -108,7 +108,7 @@ namespace JelloScrum.Model
         /// <filterPriority>2</filterPriority>
         public override int GetHashCode()
         {
-            return Id + (29 * Guid.GetHashCode());
+            return 29 * this.Id.GetHashCode() * this.Guid.GetHashCode();
         }
     }
 }

@@ -38,7 +38,9 @@ namespace JelloScrum.Repositories.Tests.Creations
 
         public static User Gebruiker(string gebruikersNaam)
         {
-            return Persist(new User(gebruikersNaam));
+            User user = new User();
+            user.ChangeUserName(gebruikersNaam);
+            return Persist(user);
         }
 
         public static User Gebruiker(string gebruikersNaam, SystemRole systeemRol)

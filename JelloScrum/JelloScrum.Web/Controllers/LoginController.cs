@@ -14,11 +14,10 @@
 
 namespace JelloScrum.Web.Controllers
 {
-    using System;
     using Castle.MonoRail.Framework;
     using Container;
-    using JelloScrum.Model.Entities;
-    using JelloScrum.Model.Services;
+    using Login.Authentication;
+    using Model.Entities;
 
     /// <summary>
     /// Controller om in te loggen in het systeem
@@ -26,8 +25,7 @@ namespace JelloScrum.Web.Controllers
     [Layout("login")]
     public class LoginController : JelloScrumControllerBase
     {
-        private readonly ILoginService loginService = IoC.Resolve<ILoginService>();
-        private readonly IAuthenticationService authenticationService = IoC.Resolve<IAuthenticationService>();
+        private readonly IAuthenticationUtil<User> authenticationService = IoC.Resolve<IAuthenticationUtil<User>>();
 
         /// <summary>
         /// 
@@ -35,6 +33,7 @@ namespace JelloScrum.Web.Controllers
         public void Index()
         {
         }
+
         /// <summary>
         /// Log de gebruiker in
         /// </summary>
@@ -42,40 +41,21 @@ namespace JelloScrum.Web.Controllers
         /// <param name="password"></param>
         public void Login(string username, string password)
         {
-            User gebruiker;
-            try
+            User user = this.authenticationService.Authenticate(Context, username, password);
+            if (user != null)
             {
-                gebruiker = loginService.LDapGebruikerCheck(username, password);
-                success(gebruiker);
+                if (user.ActiveSprint != null)
+                    Redirect("Dashboard", "index");
+                else
+                    Redirect("Home", "index");
             }
-            catch
+            else
             {
-                try
-                {
-                    gebruiker = loginService.Login(password, username);
-                    success(gebruiker);
-                }
-                catch (Exception e)
-                {
-                    AddErrorMessageToFlashBag(e.Message);
-                    RedirectToReferrer();
-                }
+                // At this point we either have a valid user or we don't
+                // If we don't the login failed, return to referrer and flash the "login failed" message.
+                AddErrorMessageToFlashBag("The username / password combination is not valid.");
+                RedirectToReferrer();
             }
-        }
-
-        /// <summary>
-        /// Het is gelukt
-        /// </summary>
-        /// <param name="gebruiker"></param>
-        private void success(User gebruiker)
-        {
-            Context.CurrentUser = gebruiker;
-            authenticationService.SetAuthCookie(gebruiker, Context);
-
-            if (gebruiker.ActiveSprint!=null)
-                Redirect("Dashboard", "index");
-            else 
-                Redirect("Home", "index");
         }
 
         /// <summary>
@@ -83,7 +63,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Logout()
         {
-            authenticationService.SignOut(Context);
+            this.authenticationService.SignOut(Context);
             RedirectToAction("index");
         }
     }

@@ -23,6 +23,6 @@ namespace JelloScrum.Model.Interfaces
         /// Gets or sets the id.
         /// </summary>
         /// <value>The id.</value>
-        int Id { get; set;}
+        long Id { get; set;}
     }
 }
