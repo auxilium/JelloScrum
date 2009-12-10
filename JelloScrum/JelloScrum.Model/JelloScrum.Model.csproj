@@ -94,7 +94,6 @@
     <Compile Include="Enumerations\Impact.cs" />
     <Compile Include="Enumerations\StoryType.cs" />
     <Compile Include="Interfaces\IJelloScrumControllerBase.cs" />
-    <Compile Include="Services\Login\IPasswordService.cs" />
     <Compile Include="ModelBase.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,9 +136,13 @@
     <Compile Include="Services\IExcelExportService.cs" />
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\ITemplateParserService.cs" />
-    <Compile Include="Services\Login\IAuthenticationService.cs" />
-    <Compile Include="Services\Login\ILoginService.cs" />
     <None Include="Model.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JelloScrum.Login\JelloScrum.Login.csproj">
+      <Project>{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}</Project>
+      <Name>JelloScrum.Login</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\" />

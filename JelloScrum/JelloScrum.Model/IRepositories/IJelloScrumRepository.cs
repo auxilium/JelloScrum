@@ -27,7 +27,7 @@ namespace JelloScrum.Model.IRepositories
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
-        T Get(int id);
+        T Get(long id);
 
         /// <summary>
         /// Loads the object with the given id from the databse. If no object with that id exists, an exception is thrown.
@@ -36,7 +36,7 @@ namespace JelloScrum.Model.IRepositories
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
-        T Load(int id);
+        T Load(long id);
 
         /// <summary>
         /// Delete the given entity from the database

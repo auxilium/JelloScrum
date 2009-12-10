@@ -68,6 +68,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Container", "Jel
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JelloScrum.Login", "JelloScrum\JelloScrum.Login\JelloScrum.Login.csproj", "{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +112,10 @@ Global
 		{EC11D662-1098-421B-A785-073C7889199C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC11D662-1098-421B-A785-073C7889199C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC11D662-1098-421B-A785-073C7889199C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

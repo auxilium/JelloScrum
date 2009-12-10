@@ -92,20 +92,20 @@ namespace JelloScrum.Web.Controllers
             #region Gebruikers
             User user1 = new User();
             user1.Name = "user1";
-            user1.UserName = "ProductOwner";
+            user1.ChangeUserName("ProductOwner");
             user1.FullName = "Gebruiker 1";
             GebruikerRepository.Save(user1);
             
             User user2 = new User();
             user2.Name = "user2";
-            user2.UserName = "ScrumMaster";
+            user2.ChangeUserName("ScrumMaster");
             user2.SystemRole = SystemRole.Administrator;
             user2.FullName = "Gebruiker 2";
             GebruikerRepository.Save(user2);
 
             User user3 = new User();
             user3.Name = "user3";
-            user3.UserName = "Developer";
+            user3.ChangeUserName("Developer");
             user3.SystemRole = SystemRole.User;
             user3.FullName = "Gebruiker 3";
             GebruikerRepository.Save(user3);
