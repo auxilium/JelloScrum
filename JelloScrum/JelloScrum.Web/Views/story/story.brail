@@ -23,14 +23,14 @@
       <div style="margin-top: 12px;">
         <span style="font-weight: bold;">Titel</span>
         <br class="clear"/>
-        ${story.Titel}
+        ${story.Title}
       </div>
 
       <div style="margin-top: 12px;">
         <div style="width: 145px; float:left;">
           <span style="font-weight: bold;">Prioriteit</span>          
           <br class="clear"/>
-          ${story.ProductBacklogPrioriteit}
+          ${story.ProductBacklogPriority}
         </div>
         <div style="width: 145px; float:left;">
           <span style="font-weight: bold;">
@@ -54,7 +54,7 @@
           Omschrijving
         </span>
         <br class="clear"/>
-        ${MarkDownOutput(story.Omschrijving)}
+        ${MarkDownOutput(story.Description)}
       </div>
 
       <div style="margin-top: 12px;">
@@ -72,7 +72,7 @@
 
       <div style="margin-top: 12px;">
         <span style="font-weight: bold;">Schatting</span><br class="clear"/>
-        ${TimeSpanHelper.TimeSpanInMinuten(story.Schatting)}
+        ${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}
       </div>
     </div>
     <div style="float:left; width: 400px; margin-left:25px;">

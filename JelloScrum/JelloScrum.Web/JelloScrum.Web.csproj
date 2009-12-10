@@ -202,6 +202,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\StoryAndTasksComponent.cs" />
     <Compile Include="Components\UrenRegistratieComponent.cs" />
     <Compile Include="Controllers\CardwallController.cs" />
     <Compile Include="Controllers\CommentaarBerichtController.cs" />

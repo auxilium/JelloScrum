@@ -57,12 +57,12 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void MijnTaken()
         {
-            Gebruiker gb = CurrentUser;
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            User gb = CurrentUser;
+            SprintUser sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
-                PropertyBag.Add("mijnTaken", sg.GeefOpgepakteTaken());
+                PropertyBag.Add("mijnTaken", sg.GetTakenTasks());
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void TakenVanAnderen()
         {
-            Gebruiker gb = CurrentUser;
+            User gb = CurrentUser;
             IList takenVanAnderen = GeefTakenVanAnderen(gb);
 
             if (takenVanAnderen.Count > 0)
@@ -82,8 +82,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void OnOpgepakteTaken()
         {
-            Gebruiker gb = CurrentUser;
-            IList onopgepakteTaken = GeefOnopgepakteTaken(gb.ActieveSprint);
+            User gb = CurrentUser;
+            IList onopgepakteTaken = GeefOnopgepakteTaken(gb.ActiveSprint);
 
             if (onopgepakteTaken.Count > 0)
                 PropertyBag.Add("onopgepakteTaken", onopgepakteTaken);
@@ -94,12 +94,12 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void MijnAfgeslotenTaken()
         {
-            Gebruiker gb = CurrentUser;
-            SprintGebruiker sg = gb.GeefActieveSprintGebruiker();
+            User gb = CurrentUser;
+            SprintUser sg = gb.GetActiveSprintUser();
 
             //mijn taken
             if (sg != null)
-                PropertyBag.Add("mijnTaken", sg.GeefAfgeslotenTaken());
+                PropertyBag.Add("mijnTaken", sg.GetClosedTasks());
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("project", project);
 
             PropertyBag.Add("availableUsers", GebruikerRepository.FindAll());
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Sprint toevoegen";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > Sprint toevoegen";
             RenderView("bewerk");
         }
 
@@ -166,7 +166,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("availableUsers", GebruikerRepository.FindAll());
             PropertyBag.Add("project", project);
 
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a>  > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprint bewerken";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a>  > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprint bewerken";
         }
 
         /// <summary>
@@ -177,15 +177,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="project"></param>
         public void Opslaan([ARDataBind("sprint", AutoLoad = AutoLoadBehavior.NewInstanceIfInvalidKey)] Sprint sprint,
                             string BeschikbareUren,
-                            [ARDataBind("rol", AutoLoadBehavior.NewRootInstanceIfInvalidKey)] SprintRolGebruikerHelper[]
+                            [ARDataBind("rol", AutoLoadBehavior.NewRootInstanceIfInvalidKey)] SprintRoleUserHelper[]
                                 sprintRolGebruikerHelpers,
                             [ARFetch("projectId")] Project project)
         {
-            sprint.BeschikbareUren = TimeSpanHelper.Parse(BeschikbareUren);
-            project.VoegSprintToe(sprint);
-            foreach (SprintRolGebruikerHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
+            sprint.AvailableTime = TimeSpanHelper.Parse(BeschikbareUren);
+            project.AddSprint(sprint);
+            foreach (SprintRoleUserHelper sprintRolGebruikerHelper in sprintRolGebruikerHelpers)
             {
-                sprintRolGebruikerHelper.Verwerk(sprint);
+                sprintRolGebruikerHelper.Process(sprint);
             }
 
             SprintRepository.Save(sprint);
@@ -201,15 +201,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="item">Sprint.</param>
         public void SprintStories([ARFetch("id")] Sprint item)
         {
-            Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
-            sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Must)));
-            sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Should)));
-            sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Could)));
-            sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GeefNogNietAfgeslotenSprintStories(Prioriteit.Would)));
+            Dictionary<Priority, IList<SprintStory>> sprintStories = new Dictionary<Priority, IList<SprintStory>>();
+            sprintStories.Add(Priority.Must,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Must)));
+            sprintStories.Add(Priority.Should,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Should)));
+            sprintStories.Add(Priority.Could,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Could)));
+            sprintStories.Add(Priority.Would,
+                              new List<SprintStory>(item.GetAllOpenSprintStories(Priority.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
             CancelLayout();
@@ -221,15 +221,15 @@ namespace JelloScrum.Web.Controllers
         /// <param name="item">The item.</param>
         public void SprintStoriesAfgerond([ARFetch("id")] Sprint item)
         {
-            Dictionary<Prioriteit, IList<SprintStory>> sprintStories = new Dictionary<Prioriteit, IList<SprintStory>>();
-            sprintStories.Add(Prioriteit.Must,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Must)));
-            sprintStories.Add(Prioriteit.Should,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Should)));
-            sprintStories.Add(Prioriteit.Could,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Could)));
-            sprintStories.Add(Prioriteit.Would,
-                              new List<SprintStory>(item.GeefDeelsOfGeheleAfgeslotenSprintStories(Prioriteit.Would)));
+            Dictionary<Priority, IList<SprintStory>> sprintStories = new Dictionary<Priority, IList<SprintStory>>();
+            sprintStories.Add(Priority.Must,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Must)));
+            sprintStories.Add(Priority.Should,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Should)));
+            sprintStories.Add(Priority.Could,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Could)));
+            sprintStories.Add(Priority.Would,
+                              new List<SprintStory>(item.GetSprintStoriesWithClosedTasks(Priority.Would)));
 
             PropertyBag.Add("sprintStories", sprintStories);
 
@@ -242,7 +242,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void Sprint([ARFetch("sprintId")] Sprint sprint)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > " + sprint.Doel;
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > " + sprint.Goal;
             PropertyBag.Add("sprint", sprint);
         }
 
@@ -263,9 +263,9 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("sprint", sprint);
         }
 
-        public void KoppelTaskAanSprintGebruiker([ARFetch("sprintGebruiker")] SprintGebruiker sprintGebruiker, [ARFetch("task")] Task task)
+        public void KoppelTaskAanSprintGebruiker([ARFetch("sprintGebruiker")] SprintUser sprintGebruiker, [ARFetch("task")] Task task)
         {
-            sprintGebruiker.PakTaakOp(task);
+            sprintGebruiker.TakeTask(task);
             SprintGebruikerRepository.Save(sprintGebruiker);
 
             PropertyBag.Add("sprintGebruiker", sprintGebruiker);
@@ -291,7 +291,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("sprint", sprint);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprintbacklog";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprintbacklog";
         }
 
         /// <summary>
@@ -316,8 +316,8 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story">The story.</param>
         public void KoppelStoryAanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story)
         {
-            SprintStory sprintStory = new SprintStory(sprint, story, story.Schatting);
-            sprintStory.SprintBacklogPrioriteit = story.ProductBacklogPrioriteit;
+            SprintStory sprintStory = new SprintStory(sprint, story, story.Estimation);
+            sprintStory.SprintBacklogPriority = story.ProductBacklogPriority;
             SprintStoryRepository.Save(sprintStory);
 
             PropertyBag.Add("gekozenSprint", sprint);
@@ -333,7 +333,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story"></param>
         public void OntkoppelStoryVanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story)
         {
-            sprint.VerwijderStory(story);
+            sprint.RemoveStory(story);
             SprintRepository.Save(sprint);
 
             PropertyBag.Add("gekozenSprint", sprint);
@@ -359,10 +359,10 @@ namespace JelloScrum.Web.Controllers
         /// <param name="story">The story.</param>
         /// <param name="prioriteit">The prioriteit.</param>
         public void KoppelStoryAanSprint([ARFetch("sprintId")] Sprint sprint, [ARFetch("storyId")] Story story,
-                                         Prioriteit prioriteit)
+                                         Priority prioriteit)
         {
-            SprintStory sprintStory = new SprintStory(sprint, story, story.Schatting);
-            sprintStory.SprintBacklogPrioriteit = prioriteit;
+            SprintStory sprintStory = new SprintStory(sprint, story, story.Estimation);
+            sprintStory.SprintBacklogPriority = prioriteit;
             SprintStoryRepository.Save(sprintStory);
 
             NameValueCollection args = new NameValueCollection();
@@ -377,13 +377,13 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="sprint">The sprint.</param>
         /// <param name="prioriteit">The prioriteit.</param>
-        public void RenderIngeplandeStorieList([ARFetch("sprintId")] Sprint sprint, Prioriteit prioriteit)
+        public void RenderIngeplandeStorieList([ARFetch("sprintId")] Sprint sprint, Priority prioriteit)
         {
             SprintStoriesQuery ingeplandeStories = new SprintStoriesQuery();
             ingeplandeStories.Sprint = sprint;
             IList list =
                 ingeplandeStories.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).Add(
-                    Restrictions.Eq("SprintBacklogPrioriteit", prioriteit)).List();
+                    Restrictions.Eq("SprintBacklogPriority", prioriteit)).List();
 
             PropertyBag.Add("sprintStories", list);
             CancelLayout();
@@ -405,7 +405,7 @@ namespace JelloScrum.Web.Controllers
         public void SprintAfsluiten([ARFetch("sprintId")] Sprint sprint)
         {
             //todo: security!
-            IList<Task> taken = sprint.SluitSprintAf();
+            IList<Task> taken = sprint.Close();
 
             SprintRepository.Save(sprint);
 
@@ -429,9 +429,9 @@ namespace JelloScrum.Web.Controllers
         /// <param name="project"></param>
         public void SprintPlanning([ARFetch("projectId")] Project project)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Sprintplanning";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > Sprintplanning";
 
-            IList<Sprint> sprints = project.GeefNietAfgerondeSprints();
+            IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
 
             PropertyBag.Add("project", project);
@@ -452,9 +452,9 @@ namespace JelloScrum.Web.Controllers
         public void SprintPlanning([ARFetch("sprintId")] Sprint sprint)
         {
             Project project = sprint.Project;
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Sprintplanning";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Sprintplanning";
 
-            IList<Sprint> sprints = project.GeefNietAfgerondeSprints();
+            IList<Sprint> sprints = project.GetAllOpenSprints();
             PropertyBag.Add("sprints", sprints);
             PropertyBag.Add("sprint", sprint);
             PropertyBag.Add("project", project);
@@ -482,14 +482,14 @@ namespace JelloScrum.Web.Controllers
         public void Stories([ARFetch("sprintId")] Sprint sprint)
         {
             // Dit moet dus zowel voor een project de stories geven als mede voor de sprint
-            PropertyBag.Add("stories", sprint.GeefAlleIngeplandeStories());
+            PropertyBag.Add("stories", sprint.GetAllStories());
             CancelLayout();
         }
 
         public void Stories([ARFetch("projectId")] Project project)
         {
             // Dit moet dus zowel voor een project de stories geven als mede voor de sprint
-            PropertyBag.Add("stories", project.GeefStoriesDieIngeplandMogenWorden());
+            PropertyBag.Add("stories", project.GetAllPlannableStories());
             CancelLayout();
         }
 
@@ -534,7 +534,7 @@ namespace JelloScrum.Web.Controllers
             PropertyBag.Add("sprintstories", sprint.SprintStories);
             PropertyBag.Add("sprint", sprint);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Burndown";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Burndown";
         }
 
         /// <summary>
@@ -543,13 +543,13 @@ namespace JelloScrum.Web.Controllers
         /// <param name="sprint"></param>
         public void ActieveSprintZetten([ARFetch("sprintId")] Sprint sprint)
         {
-            Gebruiker gb = CurrentUser;
-            gb.ActieveSprint = sprint;
+            User gb = CurrentUser;
+            gb.ActiveSprint = sprint;
 
             try
             {
                 GebruikerRepository.Save(gb);
-                AddPositiveMessageToFlashBag(sprint.Doel + " is nu je actieve sprint.");
+                AddPositiveMessageToFlashBag(sprint.Goal + " is nu je actieve sprint.");
             }
             catch (Exception e)
             {
@@ -567,7 +567,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("sprint", sprint);
            
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Taken";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Taken";
             RenderText("Deze pagina wijkt af van het normale dashboard, dit moet dus even gefixed worden.");
         }
 
@@ -576,8 +576,8 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Voortgang([ARFetch("sprintId")] Sprint sprint)
         {
-            DateTime startdatum = sprint.StartDatum;
-            DateTime einddatum = sprint.EindDatum;
+            DateTime startdatum = sprint.StartDate;
+            DateTime einddatum = sprint.EndDate;
 
             DateTime temp = startdatum;
 
@@ -597,7 +597,7 @@ namespace JelloScrum.Web.Controllers
 
             PropertyBag.Add("werkdagen", werkdagen);
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Voortgang";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Voortgang";
         }
 
         #region Uren registeren
@@ -606,10 +606,10 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void UrenRegistreren([ARFetch("sprintId")] Sprint sprint, DateTime maandag)
         {
-            SprintGebruiker sprintGebruiker = sprint.GeefSprintGebruikerVoor(CurrentUser);
+            SprintUser sprintGebruiker = sprint.GetSprintUserFor(CurrentUser);
            
 
-            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > Uren registreren";
+            Titel = "<a href='/project/project.rails?projectId=" + sprint.Project.Id + "'>" + sprint.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > Uren registreren";
 
             PropertyBag.Add("maandag", maandag);
             PropertyBag.Add("sprint", sprint);
@@ -648,8 +648,8 @@ namespace JelloScrum.Web.Controllers
         /// <returns>De onopgepakte taken</returns>
         private static IList GeefOnopgepakteTaken(Sprint sprint)
         {
-            NietOpgepakteTakenQuery nietOpgepakteTakenQuery = new NietOpgepakteTakenQuery();
-            nietOpgepakteTakenQuery.sprint = sprint;
+            OpenTasksQuery nietOpgepakteTakenQuery = new OpenTasksQuery();
+            nietOpgepakteTakenQuery.Sprint = sprint;
             return nietOpgepakteTakenQuery.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List();
         }
 
@@ -658,11 +658,11 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="gebruiker">De gebruiker.</param>
         /// <returns>De taken van anderen.</returns>
-        private static IList GeefTakenVanAnderen(Gebruiker gebruiker)
+        private static IList GeefTakenVanAnderen(User gebruiker)
         {
-            OpgepakteTakenQuery opgepakteTakenQuery = new OpgepakteTakenQuery();
-            opgepakteTakenQuery.Sprint = gebruiker.ActieveSprint;
-            opgepakteTakenQuery.BehalveVoorDezeSprintGebruiker = gebruiker.GeefActieveSprintGebruiker();
+            TakenTasksQuery opgepakteTakenQuery = new TakenTasksQuery();
+            opgepakteTakenQuery.Sprint = gebruiker.ActiveSprint;
+            opgepakteTakenQuery.ExceptForSprintUser = gebruiker.GetActiveSprintUser();
             return opgepakteTakenQuery.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List();
         }
         #endregion

@@ -11,8 +11,8 @@ Developer:		Manuel van Rijn
 
 *
 {
-	margin: 0px;
-	padding: 0px;	
+/*	margin: 0px;
+	padding: 0px;	*/
 }
 
 img
@@ -1155,3 +1155,142 @@ div.taakInputRegel label, div.taakInputRegel div
 	background-color: #F0F0F6;
 }
 
+
+/***********************/
+/* story and task component accordion styles 
+/***********************/
+
+li.storyli {				
+	list-style: none;
+	padding-top: 5px;
+	padding-bottom: 2px;
+}
+
+div.sheader {
+	background: url('/content/images/bg.png');
+	padding: 2px;
+	cursor: pointer;
+	border: 1px solid #CCCCCC;	
+	color: #0088CC;
+	height: 18px;
+	font-weight: bold;
+}
+
+div.stext {
+	background: #F0F0F6 url('/content/images/txtshadow.png') repeat-x top left;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 2px;
+	display: none;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+}
+
+div.stasks {
+	padding-left: 25px;
+	border-right: 1px solid #CCCCCC;
+}
+
+div.smust 
+{
+	background: #cccccc url('/content/images/stripe_must.png');
+}
+
+div.sshould 
+{
+	background: #cccccc url('/content/images/stripe_should.png');
+}
+
+div.scould
+{
+	background: #cccccc url('/content/images/stripe_could.png');
+}
+
+div.swont
+{
+	background: #cccccc url('/content/images/stripe_wont.png');
+}
+
+div.sunknown
+{
+	background: #cccccc url('/content/images/stripe_unknown.png');
+}
+
+ul.storylist {
+	padding: 0;
+	margin: 0;
+}
+
+.time {
+	float: right;
+	font-weight: normal;
+}
+
+ul.tasklist {
+	padding: 0;
+	margin: 0;
+}
+
+li.taskli {
+	list-style: none;
+}
+
+li.taskli h3 {
+	background: yellow;
+	padding: 0;
+	margin: 0;
+}
+
+div.theader {
+	background: yellow;
+	clear: both;
+	cursor: pointer;
+	background: #F0F0F6 url('/content/images/bgtask.png') repeat-x top left;
+	border-left: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 2px;
+	height: 18px;
+	font-weight: bold;
+}
+
+div.tcontent {
+	background: #F0F0F6 url('/content/images/ttxtshadow.png') repeat-x top left;
+	overflow: auto;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	padding: 2px;
+}
+
+li.taskli div {
+	/*background: grey;
+	margin: 0;
+	padding: 0;
+	display: none;*/
+}
+
+p {
+	padding: 0;
+	margin: 0;
+}
+
+.show {
+	display: block !important;
+	
+}
+
+div.ttext {
+	/*float: left;*/
+}
+
+div.tbuttons {				
+	float: right;
+}
+
+span.moscow {
+	display: block;
+	width: 20px;
+	float: left;
+	padding: 1px;
+	vertical-align: top;
+}
+      
+/* todo: de verschillende moscow prioriteiten allemaal wat valer maken? */

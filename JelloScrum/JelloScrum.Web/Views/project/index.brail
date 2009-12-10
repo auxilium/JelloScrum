@@ -20,9 +20,9 @@
           <tr rel="${project.Id}">
             <td>${project.Id}</td>
             <td nowrap="nowrap">
-              <a href="/project/project.rails?projectId=${project.Id}">${project.Naam}</a>
+              <a href="/project/project.rails?projectId=${project.Id}">${project.Name}</a>
             </td>
-            <td>${project.Omschrijving}</td>
+            <td>${project.Description}</td>
             <td style="text-align:center;">
               <a href="/Project/Bewerk.rails?id=${project.Id}" class="button wijzigen">Bewerk</a>
             </td>

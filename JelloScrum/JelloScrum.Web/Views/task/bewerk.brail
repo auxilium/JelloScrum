@@ -3,8 +3,8 @@
   ${Form.HiddenField("item.Id")}
   <table>
     <tr>
-      <td>${Form.LabelFor("item.Omschrijving", "Omschrijving:")}</td>
-      <td>${Form.TextField("item.Omschrijving")}</td>
+      <td>${Form.LabelFor("item.Description", "Omschrijving:")}</td>
+      <td>${Form.TextField("item.Description")}</td>
     </tr>
     <tr>
       <td colspan="2" align="right">

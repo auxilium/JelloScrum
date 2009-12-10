@@ -55,7 +55,7 @@ namespace JelloScrum.Web.Controllers
         public void Index(string zoektekst)
         {
             ProjectQuery projecten = new ProjectQuery();
-            projecten.zoekterm = zoektekst;
+            projecten.SearchTerm = zoektekst;
 
             IList<Project> projects = projecten.GetQuery(ActiveRecordMediator.GetSessionFactoryHolder().CreateSession(typeof(ModelBase))).List<Project>();
 
@@ -83,7 +83,7 @@ namespace JelloScrum.Web.Controllers
         ///</summary>
         public void Project([ARFetch("projectId")] Project project)
         {
-            Titel = project.Naam;
+            Titel = project.Name;
             PropertyBag.Add("project", project);
         }
 
@@ -103,7 +103,7 @@ namespace JelloScrum.Web.Controllers
         public void Bewerk([ARFetch("id")] Project project)
         {
             PropertyBag.Add("item", project);
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > Bewerk project";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > Bewerk project";
         }
 
         #region ProjectBackLog
@@ -113,7 +113,7 @@ namespace JelloScrum.Web.Controllers
         /// <param name="project">The project.</param>
         public void ProductBacklog([ARFetch("projectId")] Project project)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > ProductBacklog";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > ProductBacklog";
 
             PropertyBag.Add("project", project);
         }
@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void OphalenPrioriteiten()
         {
-            string js = ConvertEnumToJavascript(typeof (Prioriteit));
+            string js = ConvertEnumToJavascript(typeof (Priority));
             Response.ContentType = "application/json";
             RenderText(js);
         }
@@ -171,7 +171,7 @@ namespace JelloScrum.Web.Controllers
 
             try
             {
-                story.ProductBacklogPrioriteit = (Prioriteit) Enum.ToObject(typeof (Prioriteit), Convert.ToInt32(value));
+                story.ProductBacklogPriority = (Priority) Enum.ToObject(typeof (Priority), Convert.ToInt32(value));
                 StoryRepository.Save(story);
             }
             catch (JelloScrumRepositoryException e)
@@ -182,7 +182,7 @@ namespace JelloScrum.Web.Controllers
                 RedirectToAction("ProductBacklog", args);
             }
 
-            RenderText(Enum.GetName(typeof (Prioriteit), Convert.ToInt32(value)));
+            RenderText(Enum.GetName(typeof (Priority), Convert.ToInt32(value)));
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace JelloScrum.Web.Controllers
             try
             {
                 if (!string.IsNullOrEmpty(value))
-                    story.Schatting = TimeSpanHelper.Parse(value);
+                    story.Estimation = TimeSpanHelper.Parse(value);
                 StoryRepository.Save(story);
             }
             catch (JelloScrumRepositoryException e)
@@ -233,7 +233,7 @@ namespace JelloScrum.Web.Controllers
                 RedirectToAction("ProductBacklog", args);
             }
 
-            RenderText(TimeSpanHelper.TimeSpanInMinuten(story.Schatting).ToString());
+            RenderText(TimeSpanHelper.TimeSpanInMinuten(story.Estimation).ToString());
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace JelloScrum.Web.Controllers
                 RenderView("Bewerk");
             }
 
-            AddPositiveMessageToPropertyBag("Het project " + project.Naam + " is opgeslagen.");
+            AddPositiveMessageToPropertyBag("Het project " + project.Name + " is opgeslagen.");
             Project(project);
             RenderView("project");
         }
@@ -296,7 +296,7 @@ namespace JelloScrum.Web.Controllers
                 if (project.Stories.Count == 0)
                     ProjectRepository.Delete(project);
                 else
-                    AddErrorMessageToFlashBag("Kan project " + project.Naam + " niet verwijderen. Dit project bevat nog stories.");
+                    AddErrorMessageToFlashBag("Kan project " + project.Name + " niet verwijderen. Dit project bevat nog stories.");
                 RenderText("true");
             }
             catch (JelloScrumRepositoryException e)
@@ -317,7 +317,7 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("project", project);
             if (project != null)
-                PropertyBag.Add("item", project.GeefStoriesZonderMoSCoWPrioriteit());
+                PropertyBag.Add("item", project.GetAllStoriesWithUndefinedPriorities());
         }
 
         /// <summary>

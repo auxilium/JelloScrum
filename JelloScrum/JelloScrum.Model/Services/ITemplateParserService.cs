@@ -17,17 +17,17 @@ namespace JelloScrum.Model.Services
     using System.Collections.Generic;
 
     /// <summary>
-    /// De interface van de TemplateParserService
+    /// Interface for the TemplateParserService
     /// </summary>
     public interface ITemplateParserService
     {
         /// <summary>
-        /// Deze functie parsed een template adhv de gespecificeerde argumenten
+        /// Parse a template with the given arguments
         /// </summary>
-        /// <param name="templateFolder">folder binnen de viewdirectory waar de brail template zich bevindt</param>
-        /// <param name="templateName">naam van de brail template</param>
-        /// <param name="propertyBag">eventuele items die tijdens het parsen van de template nodig zijn</param>
-        /// <returns>een string met het resultaat van het parsen van het gespecificeerde template</returns>
+        /// <param name="templateFolder">folder under the viewdirectiry where the brail template exists</param>
+        /// <param name="templateName">name of the brail template</param>
+        /// <param name="propertyBag">propertybag for objects used in the brail template</param>
+        /// <returns>the parsed template as string</returns>
         string Parse(string templateFolder, string templateName, Dictionary<string, object> propertyBag);
     }
 }

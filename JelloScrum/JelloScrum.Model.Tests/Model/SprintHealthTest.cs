@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using JelloScrum.Model.Helpers;
+
 namespace JelloScrum.Model.Tests.Model
 {
     using System;
@@ -27,7 +29,7 @@ namespace JelloScrum.Model.Tests.Model
         private Sprint testCaseSprint;
         private Project testCaseProject;
         private Story[] testCaseStories = new Story[10];
-        private Gebruiker[] testCaseDevelopers = new Gebruiker[4];
+        private User[] testCaseDevelopers = new User[4];
 
         public override void SetUp()
         {
@@ -38,7 +40,7 @@ namespace JelloScrum.Model.Tests.Model
             // 4 gebruikers
             for (int i = 0; i<testCaseDevelopers.Length; i++ )
             {
-                testCaseDevelopers[i] = Creation.Gebruiker(SysteemRol.Gebruiker);
+                testCaseDevelopers[i] = Creation.Gebruiker(SystemRole.User);
             }
 
             // 1 project
@@ -46,27 +48,27 @@ namespace JelloScrum.Model.Tests.Model
 
             // 1 sprint
             testCaseSprint = Creation.Sprint(testCaseProject);
-            testCaseSprint.WerkDagen = 40; // 4 devvers voor 2 weken = 4 * 2 * 5 dagen.
+            testCaseSprint.WorkDays = 40; // 4 devvers voor 2 weken = 4 * 2 * 5 dagen.
 
-            foreach (Gebruiker developer in testCaseDevelopers)
+            foreach (User developer in testCaseDevelopers)
             {
-                testCaseSprint.VoegGebruikerToe(developer, SprintRol.Developer);
+                testCaseSprint.AddUser(developer, SprintRole.Developer);
             }
-            testCaseSprint.SprintGebruikers[0].VoegRolToe(SprintRol.ScrumMaster);
+            testCaseSprint.SprintUsers[0].AddRole(SprintRole.ScrumMaster);
 
             // 1 story, 2 taken, beide afgesloten
             const int hoursPerStoryPoint = 2;
-            Story testCaseStory1 = Creation.Story(testCaseProject, StoryPoint.Acht, hoursPerStoryPoint, Prioriteit.Must, testCaseDevelopers[random.Next(0,3)]);
-            testCaseSprint.MaakSprintStoryVoor(testCaseStory1);
+            Story testCaseStory1 = Creation.Story(testCaseProject, StoryPoint.Eight, hoursPerStoryPoint, Priority.Must, testCaseDevelopers[random.Next(0,3)]);
+            testCaseSprint.CreateSprintStoryFor(testCaseStory1);
 
             Task task1_1 = Creation.Task();
-            testCaseStory1.VoegTaskToe(task1_1);
-            task1_1.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(8,0,0));
-            task1_1.SluitTaak();
+            testCaseStory1.AddTask(task1_1);
+            task1_1.RegisterTime(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(8,0,0));
+            task1_1.Close();
             Task task1_2 = Creation.Task();
-            testCaseStory1.VoegTaskToe(task1_2);
-            task1_2.MaakTijdRegistratie(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(12, 0, 0));
-            task1_2.SluitTaak();
+            testCaseStory1.AddTask(task1_2);
+            task1_2.RegisterTime(testCaseDevelopers[random.Next(0, 3)], DateTime.Now, testCaseSprint, new TimeSpan(12, 0, 0));
+            task1_2.Close();
         }
 
         [Test]

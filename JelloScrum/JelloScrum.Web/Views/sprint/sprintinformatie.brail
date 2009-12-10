@@ -1,4 +1,4 @@
-${item.Doel}
+${item.Goal}
 
 <script type="text/javascript">
 $(document).ready(function() {

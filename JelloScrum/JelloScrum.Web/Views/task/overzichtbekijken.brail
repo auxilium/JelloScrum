@@ -16,13 +16,13 @@
         <tr rel="${task.Id}">
           <td>${task.Id}</td>
           <td>
-           ${task.Titel}
+           ${task.Title}
           </td>
           <td>
-              ${task.Omschrijving}
+              ${task.Description}
           </td>
           <td>
-            ${TimeSpanHelper.TimeSpanInMinuten(task.Schatting)}
+            ${TimeSpanHelper.TimeSpanInMinuten(task.Estimation)}
           </td>
         </tr>
         <?brail 

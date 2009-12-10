@@ -4,7 +4,7 @@
 <button id="closesprint">
   <img src="/content/images/bigicons/lock_big.png" alt="Sluit deze sprint"/>
   <h1>Sluit deze sprint</h1>
-  <p>U wilt ${sprint.Doel} afsluiten?</p>
+  <p>U wilt ${sprint.Goal} afsluiten?</p>
 </button>
 
 <script type="text/javascript">
@@ -12,7 +12,7 @@
     setTitle("Sprint afsluiten");
     
     $("#closesprint").click(function (e) {
-      if (!confirm("Weet je zeker dat je sprint ${sprint.Doel} wilt afsluiten?"))
+      if (!confirm("Weet je zeker dat je sprint ${sprint.Goal} wilt afsluiten?"))
         return;
       
       if (!confirm("Heel zeker?"))

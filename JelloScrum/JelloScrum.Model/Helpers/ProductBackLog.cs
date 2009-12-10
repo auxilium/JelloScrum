@@ -17,27 +17,28 @@ namespace JelloScrum.Model.Helpers
     using FileHelpers;
 
     /// <summary>
-    /// Hulp klasse bij het exporteren van de productbacklog
+    /// Used to export the productbacklog to .xls
     /// </summary>
     [DelimitedRecord("|")] 
     public class ProductBackLog
     {
-        #region Fields
+        #region fields
+
         private string id;
         private string title;
-        private string prioriteit;
+        private string priority;
         private string type;
-        private string omschrijving;
-        private string punten;
-        private string schatting;
-        private string taken;
+        private string description;
+        private string points;
+        private string estimation;
+        private string tasks;
 
         #endregion
 
-        #region Properties
+        #region properties
 
         /// <summary>
-        /// ID
+        /// Id of the project
         /// </summary>
         public string Id
         {
@@ -46,7 +47,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Title project
+        /// Title of the project
         /// </summary>
         public string Title
         {
@@ -55,16 +56,16 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Prioriteit van Story
+        /// Priority
         /// </summary>
-        public string Prioriteit
+        public string Priority
         {
-            get { return prioriteit; }
-            set { prioriteit = value; }
+            get { return priority; }
+            set { priority = value; }
         }
 
         /// <summary>
-        /// Type story
+        /// Type of story
         /// </summary>
         public string Type
         {
@@ -73,39 +74,39 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Omschrijving story
+        /// Description
         /// </summary>
-        public string Omschrijving
+        public string Description
         {
-            get { return omschrijving; }
-            set { omschrijving = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         /// <summary>
-        /// Story punten
+        /// Story points
         /// </summary>
-        public string Punten
+        public string Points
         {
-            get { return punten; }
-            set { punten = value; }
+            get { return points; }
+            set { points = value; }
         }
 
         /// <summary>
-        /// Urenschatting voor story
+        /// Estimated time
         /// </summary>
-        public string Schatting
+        public string Estimation
         {
-            get { return schatting; }
-            set { schatting = value; }
+            get { return estimation; }
+            set { estimation = value; }
         }
 
         /// <summary>
-        /// Aantal taken bij story
+        /// Tasks
         /// </summary>
-        public string Taken
+        public string Tasks
         {
-            get { return taken; }
-            set { taken = value; }
+            get { return tasks; }
+            set { tasks = value; }
         }
 
         #endregion

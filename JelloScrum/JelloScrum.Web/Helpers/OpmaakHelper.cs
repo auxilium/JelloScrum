@@ -28,7 +28,7 @@ namespace JelloScrum.Web.Helpers
         /// </summary>
         /// <param name="timeSpan">De timespan.</param>
         /// <returns>"HH:MM"</returns>
-        public string Tijd(TimeSpan timeSpan)
+        public static string Tijd(TimeSpan timeSpan)
         {
             StringBuilder sb = new StringBuilder();
                        
@@ -118,7 +118,7 @@ namespace JelloScrum.Web.Helpers
         /// <param name="schatting">De schatting.</param>
         /// <param name="daadwerkelijk">De daadwerkelijke uren.</param>
         /// <returns>De urenstatus.</returns>
-        public string UrenStatus(TimeSpan schatting, TimeSpan daadwerkelijk)
+        public static string UrenStatus(TimeSpan schatting, TimeSpan daadwerkelijk)
         {
             StringBuilder sb = new StringBuilder();
             if (schatting > daadwerkelijk)
@@ -140,10 +140,10 @@ namespace JelloScrum.Web.Helpers
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<a href='/tijdregistratie/geeftijdregistratieoverzicht.rails?storyId={0}&width=600' class='jTip' name='Overzicht geboekte uren' id='{1}' style='color: #000000;'>", story.Id, Guid.NewGuid());
-            if (story.Schatting > story.TotaalBestedeTijd())
-                sb.AppendFormat("[<span class='statusOk'>{0}</span> / {1}]", Tijd(story.Schatting), Tijd(story.TotaalBestedeTijd()));
+            if (story.Estimation > story.TotalTimeSpent())
+                sb.AppendFormat("[<span class='statusOk'>{0}</span> / {1}]", Tijd(story.Estimation), Tijd(story.TotalTimeSpent()));
             else
-                sb.AppendFormat("[{0} / <span class='statusAlarm'>{1}</span>]", Tijd(story.Schatting), Tijd(story.TotaalBestedeTijd()));
+                sb.AppendFormat("[{0} / <span class='statusAlarm'>{1}</span>]", Tijd(story.Estimation), Tijd(story.TotalTimeSpent()));
             sb.Append("</a>");
             return sb.ToString();
         }

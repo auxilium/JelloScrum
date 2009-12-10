@@ -5,8 +5,8 @@
                 <p class="title">${KeyValuePair.Key}</p>
                 <?brail for sprintStory in KeyValuePair.Value : ?>
                 <div class="doneStoryItem storyItem" id="${sprintStory.Id}" rel="${sprintStory.Id}">
-                    <div class="est">${sprintStory.Story.Schatting}</div>
-                    <div class="content">${sprintStory.Story.Titel}</div>
+                    <div class="est">${sprintStory.Story.Estimation}</div>
+                    <div class="content">${sprintStory.Story.Title}</div>
                 </div>
                 <?brail end ?>
                 <div class="clear"></div>

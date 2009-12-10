@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Threading;
+
 namespace JelloScrum.Model.Helpers
 {
     using System;
@@ -32,7 +34,9 @@ namespace JelloScrum.Model.Helpers
         /// <param name="end">The end date.</param>
         public DateRange(DateTime start, DateTime end)
         {
-            //todo: check guard
+            if (start > end)
+                throw new ArgumentException("Start date should be before the end date", "start");
+            
             this.start = start;
             this.end = end;
         }

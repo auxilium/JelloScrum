@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <?brail 
-        for story in project.GeefStoriesDieIngeplandMogenWorden():
+        for story in project.GetAllPlannableStories():
          OutputSubView("productbacklogitem", {@story : story} );
         end 
         ?>
@@ -43,12 +43,12 @@
         <thead>
           <tr>
             <th colspan="5">
-              Sprint: <span style="font-weight: normal;">${gekozenSprint.Doel}</span>
+              Sprint: <span style="font-weight: normal;">${gekozenSprint.Goal}</span>
             </th>
           </tr>
           <tr>
             <th colspan="5">
-              Tijd: <span style="font-weight: normal;" id="tijdResterend">${OpmaakHelper.Tijd(gekozenSprint.GeefTijdTotaalAlleStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}</span>
+              Tijd: <span style="font-weight: normal;" id="tijdResterend">${OpmaakHelper.Tijd(gekozenSprint.GetTotalTimeEstimatedForAllStories())} / ${OpmaakHelper.Tijd(gekozenSprint.AvailableTime)}</span>
             </th>
           </tr>
           <tr>
@@ -61,7 +61,7 @@
         </thead>
         <tbody>
           <?brail 
-        for story in gekozenSprint.GeefAlleIngeplandeStories():
+        for story in gekozenSprint.GetAllStories():
           OutputSubView("sprintlogitem", {@story:story});
         end 
         ?>

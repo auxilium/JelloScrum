@@ -43,7 +43,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         public void Index()
         {
-            PropertyBag.Add("systemRols", Enum.GetNames(typeof(SysteemRol)));
+            PropertyBag.Add("systemRols", Enum.GetNames(typeof(SystemRole)));
             Titel = "Gebruikers";
         }
 
@@ -63,7 +63,7 @@ namespace JelloScrum.Web.Controllers
         /// Geeft een lijst terug met gebruikers aan de hand van de systeem rol
         /// </summary>
         /// <param name="rol"></param>
-        public void ListGebruikers(SysteemRol rol)
+        public void ListGebruikers(SystemRole rol)
         {
             PropertyBag.Add("gebruikers", GebruikerRepository.ZoekOpSysteemRol(rol));
             CancelLayout();
@@ -73,7 +73,7 @@ namespace JelloScrum.Web.Controllers
         /// Laad de gebruiker
         /// </summary>
         /// <param name="gebruiker"></param>
-        public void LoadGebruiker([ARFetch("id")] Gebruiker gebruiker)
+        public void LoadGebruiker([ARFetch("id")] User gebruiker)
         {
             PropertyBag.Add("item", gebruiker);
             RenderView("edit");
@@ -84,9 +84,9 @@ namespace JelloScrum.Web.Controllers
         /// Nieuwe gebruiker aan maken
         /// </summary>
         /// <param name="rol"></param>
-        public void Nieuw(SysteemRol rol)
+        public void Nieuw(SystemRole rol)
         {
-            PropertyBag.Add("item", new Gebruiker(rol));
+            PropertyBag.Add("item", new User(rol));
             RenderView("edit");
             CancelLayout();
         }
@@ -125,7 +125,7 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="gebruiker"></param>
         /// <param name="avatar"></param>
-        public void Save([ARDataBind("item", AutoLoadBehavior.NewInstanceIfInvalidKey)] Gebruiker gebruiker,
+        public void Save([ARDataBind("item", AutoLoadBehavior.NewInstanceIfInvalidKey)] User gebruiker,
                 [ARDataBind("avatar", AutoLoadBehavior.NewInstanceIfInvalidKey)] Avatar avatar)
         {
             try
@@ -175,7 +175,7 @@ namespace JelloScrum.Web.Controllers
         public void MijnProjecten()
         {
             Titel = "Kies mijn projecten";
-            ICollection<Project> projects = ProjectRepository.FindAll();
+            IList<Project> projects = new List<Project>(ProjectRepository.FindAll());
             PropertyBag.Add("projecten", projects);
             if (projects.Count == 0)
             {
@@ -198,7 +198,7 @@ namespace JelloScrum.Web.Controllers
         {
             try
             {
-                CurrentUser.ShortListProjectToevoegen(project);
+                CurrentUser.AddProjectToShortList(project);
                 GebruikerRepository.Save(CurrentUser);
             }
             catch

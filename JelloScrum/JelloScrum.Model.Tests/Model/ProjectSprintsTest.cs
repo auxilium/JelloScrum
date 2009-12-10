@@ -36,7 +36,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegSprintToe()
         {
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
 
             Assert.AreEqual(project, project.Sprints[0].Project);
         }
@@ -44,8 +44,8 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestVoegMeermaalsDezelfdeSprintToeGaatNiet()
         {
-            project.VoegSprintToe(sprint);
-            project.VoegSprintToe(sprint);
+            project.AddSprint(sprint);
+            project.AddSprint(sprint);
 
             Assert.AreEqual(1, project.Sprints.Count);
         }

@@ -15,7 +15,7 @@
 namespace JelloScrum.Model.Interfaces
 {
     /// <summary>
-    /// De base controller interface
+    /// The base controller interface
     /// </summary>
     public interface IJelloScrumControllerBase
     {

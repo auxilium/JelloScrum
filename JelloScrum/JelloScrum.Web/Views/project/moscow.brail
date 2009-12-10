@@ -2,8 +2,8 @@
     <div style="width: 420px; height: 450px; overflow-y: auto; overflow-x: hidden; float: left; z-index: 1000;" class="postIt">
     <?brail for story in item : ?>
         <div class="storyItem" id="${story.Id}">
-            <div class="est">${story.Schatting}</div>
-            <div class="content">${story.Titel}</div>
+            <div class="est">${story.Estimation}</div>
+            <div class="content">${story.Title}</div>
         </div>
     <?brail end ?>
     </div>
@@ -47,7 +47,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-    setTitle("${project.Naam} - Prioriteiten");
+    setTitle("${project.Name} - Prioriteiten");
     $('.cornered').corner("10px");
     
     var dropMust = {

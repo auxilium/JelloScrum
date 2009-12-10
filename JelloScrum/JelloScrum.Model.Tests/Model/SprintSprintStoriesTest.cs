@@ -37,9 +37,9 @@ namespace JelloScrum.Model.Tests.Model
         {
             project = new Project();
             sprint = new Sprint();
-            project.VoegSprintToe(sprint);
-            story = new Story(project, new Gebruiker(), null, StoryType.UserStory);
-            story2 = new Story(project, new Gebruiker(), null, StoryType.UserStory);
+            project.AddSprint(sprint);
+            story = new Story(project, new User(), null, StoryType.UserStory);
+            story2 = new Story(project, new User(), null, StoryType.UserStory);
             sprintStory = new SprintStory();
             task = new Task(story);
             task2 = new Task(story2);
@@ -50,7 +50,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestMaakSprintStory()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
 
             Assert.AreEqual(story, ss.Story);
         }
@@ -58,7 +58,7 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestSprintStoryRelatieMetSprintIsGoed()
         {
-            SprintStory ss = sprint.MaakSprintStoryVoor(story);
+            SprintStory ss = sprint.CreateSprintStoryFor(story);
                         
             Assert.AreEqual(sprint, ss.Sprint);
         }
@@ -75,24 +75,24 @@ namespace JelloScrum.Model.Tests.Model
         {
             task3 = new Task(story2);
 
-            task.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 15, 10));
-            task2.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 20, 10));
-            task3.MaakTijdRegistratie(new Gebruiker(), DateTime.Now, sprint, new TimeSpan(1, 25, 10));
+            task.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(1, 15, 10));
+            task2.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(1, 20, 10));
+            task3.RegisterTime(new User(), DateTime.Now, sprint, new TimeSpan(1, 25, 10));
 
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
 
-            Assert.AreEqual(new TimeSpan(4, 0, 30), sprint.TotaalBestedeTijd());
+            Assert.AreEqual(new TimeSpan(4, 0, 30), sprint.TotalTimeSpent());
         }
 
         [Test]
         public void TestGeefNogNietAfgeslotenSprintStories()
         {
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
-            story.Tasks[0].Status = Status.Afgesloten;
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
+            story.Tasks[0].State = State.Closed;
 
-            IList<SprintStory> result = sprint.GeefNogNietAfgeslotenSprintStories();
+            IList<SprintStory> result = sprint.GetAllOpenSprintStories();
             
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(story2, result[0].Story);
@@ -101,14 +101,14 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeefNogNietAfgeslotenSprintStoriesMetMustHavePrioriteit()
         {
-            sprint.MaakSprintStoryVoor(story);
-            sprint.MaakSprintStoryVoor(story2);
-            story2.Tasks[0].Status = Status.Afgesloten;
-            sprint.SprintStories[0].SprintBacklogPrioriteit = Prioriteit.Must;
+            sprint.CreateSprintStoryFor(story);
+            sprint.CreateSprintStoryFor(story2);
+            story2.Tasks[0].State = State.Closed;
+            sprint.SprintStories[0].SprintBacklogPriority = Priority.Must;
             
-            IList<SprintStory> result = sprint.GeefNogNietAfgeslotenSprintStories(Prioriteit.Must);
+            IList<SprintStory> result = sprint.GetAllOpenSprintStories(Priority.Must);
 
-            Assert.AreEqual(Prioriteit.Must, result[0].SprintBacklogPrioriteit);
+            Assert.AreEqual(Priority.Must, result[0].SprintBacklogPriority);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace JelloScrum.Model.Helpers
     using FileHelpers;
 
     /// <summary>
-    /// Hulp klasse bij het exporteren van de cardwall
+    /// Used to export the cardwall to .xls
     /// </summary>
     [DelimitedRecord("|")] 
     public class Cardwall
@@ -26,23 +26,23 @@ namespace JelloScrum.Model.Helpers
         
         private string storyId;
         private string storyTitle;
-        private string storyPrioriteit;
-        private string storyGeschatteUren;
+        private string storyPriority;
+        private string storyEstimatedHours;
         
         private string taskOpenId;
         private string taskOpenTitle;
-        private string taskOpenBehandelaar;
-        private string taskOpenBestedeUren;
+        private string taskOpenAssignee;
+        private string taskOpenTimeSpent;
 
         private string taskInProgressId;
         private string taskInProgressTitle;
-        private string taskInProgressBehandelaar;
-        private string taskInProgressBestedeUren;
+        private string taskInProgressAsignee;
+        private string taskInProgressTimeSpent;
 
         private string taskDoneId;
         private string taskDoneTitle;
-        private string taskDoneBehandelaar;
-        private string taskDoneBestedeUren;
+        private string taskDoneAsignee;
+        private string taskDoneTimeSpent;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Story titel
+        /// Story title
         /// </summary>
         public string StoryTitle
         {
@@ -67,25 +67,25 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Story sprint prioriteit
+        /// Story sprint priority
         /// </summary>
-        public string StoryPrioriteit
+        public string StoryPriority
         {
-            get { return storyPrioriteit; }
-            set { storyPrioriteit = value; }
+            get { return storyPriority; }
+            set { storyPriority = value; }
         }
 
         /// <summary>
-        /// Geschatte uren voor story
+        /// Estimated hours for story
         /// </summary>
-        public string StoryGeschatteUren
+        public string StoryEstimatedHours
         {
-            get { return storyGeschatteUren; }
-            set { storyGeschatteUren = value; }
+            get { return storyEstimatedHours; }
+            set { storyEstimatedHours = value; }
         }
 
         /// <summary>
-        /// Taak id
+        /// Open task id
         /// </summary>
         public string TaskOpenId
         {
@@ -94,7 +94,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak title
+        /// Open task title
         /// </summary>
         public string TaskOpenTitle
         {
@@ -103,25 +103,25 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak behandelaar
+        /// Open task assigned user?? todo: this should not be possible?
         /// </summary>
-        public string TaskOpenBehandelaar
+        public string TaskOpenAssignee
         {
-            get { return taskOpenBehandelaar; }
-            set { taskOpenBehandelaar = value; }
+            get { return taskOpenAssignee; }
+            set { taskOpenAssignee = value; }
         }
 
         /// <summary>
-        /// Bestede uren aan taak
+        /// Open task time spent
         /// </summary>
-        public string TaskOpenBestedeUren
+        public string TaskOpenTimeSpent
         {
-            get { return taskOpenBestedeUren; }
-            set { taskOpenBestedeUren = value; }
+            get { return taskOpenTimeSpent; }
+            set { taskOpenTimeSpent = value; }
         }
 
         /// <summary>
-        /// Taak id
+        /// Taken task id
         /// </summary>
         public string TaskInProgressId
         {
@@ -130,7 +130,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak title
+        /// Taken task title
         /// </summary>
         public string TaskInProgressTitle
         {
@@ -139,25 +139,25 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak behandelaar
+        /// Taken task assigned user
         /// </summary>
-        public string TaskInProgressBehandelaar
+        public string TaskInProgressAssignee
         {
-            get { return taskInProgressBehandelaar; }
-            set { taskInProgressBehandelaar = value; }
+            get { return taskInProgressAsignee; }
+            set { taskInProgressAsignee = value; }
         }
 
         /// <summary>
-        /// Bestede uren aan taak
+        /// Taken task time spent
         /// </summary>
-        public string TaskInProgressBestedeUren
+        public string TaskInProgressTimeSpent
         {
-            get { return taskInProgressBestedeUren; }
-            set { taskInProgressBestedeUren = value; }
+            get { return taskInProgressTimeSpent; }
+            set { taskInProgressTimeSpent = value; }
         }
 
         /// <summary>
-        /// Taak id
+        /// Done task id
         /// </summary>
         public string TaskDoneId
         {
@@ -166,7 +166,7 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak title
+        /// Done task title
         /// </summary>
         public string TaskDoneTitle
         {
@@ -175,21 +175,21 @@ namespace JelloScrum.Model.Helpers
         }
 
         /// <summary>
-        /// Taak behandelaar
+        /// Done task assigned user
         /// </summary>
-        public string TaskDoneBehandelaar
+        public string TaskDoneAssignee
         {
-            get { return taskDoneBehandelaar; }
-            set { taskDoneBehandelaar = value; }
+            get { return taskDoneAsignee; }
+            set { taskDoneAsignee = value; }
         }
 
         /// <summary>
-        /// Bestede uren aan taak
+        /// Done task time spent
         /// </summary>
-        public string TaskDoneBestedeUren
+        public string TaskDoneTimeSpent
         {
-            get { return taskDoneBestedeUren; }
-            set { taskDoneBestedeUren = value; }
+            get { return taskDoneTimeSpent; }
+            set { taskDoneTimeSpent = value; }
         }
 
         #endregion

@@ -78,36 +78,36 @@ namespace JelloScrum.Web.Controllers
         {
             #region Projecten
             Project project_JelloScrum = new Project();
-            project_JelloScrum.Naam = "Jello Scrum";
-            project_JelloScrum.Omschrijving = "Scrum project managment tool";
+            project_JelloScrum.Name = "Jello Scrum";
+            project_JelloScrum.Description = "Scrum project managment tool";
             
             ProjectRepository.Save(project_JelloScrum);
 
             Project project_James = new Project();
-            project_James.Naam = "James";
-            project_James.Omschrijving = "Inklok systeem voor Auxilium BV";
+            project_James.Name = "James";
+            project_James.Description = "Inklok systeem voor Auxilium BV";
             ProjectRepository.Save(project_James);
             #endregion
 
             #region Gebruikers
-            Gebruiker user1 = new Gebruiker();
-            user1.Naam = "user1";
-            user1.GebruikersNaam = "ProductOwner";
-            user1.VolledigeNaam = "Gebruiker 1";
+            User user1 = new User();
+            user1.Name = "user1";
+            user1.UserName = "ProductOwner";
+            user1.FullName = "Gebruiker 1";
             GebruikerRepository.Save(user1);
             
-            Gebruiker user2 = new Gebruiker();
-            user2.Naam = "user2";
-            user2.GebruikersNaam = "ScrumMaster";
-            user2.SysteemRol = SysteemRol.Administrator;
-            user2.VolledigeNaam = "Gebruiker 2";
+            User user2 = new User();
+            user2.Name = "user2";
+            user2.UserName = "ScrumMaster";
+            user2.SystemRole = SystemRole.Administrator;
+            user2.FullName = "Gebruiker 2";
             GebruikerRepository.Save(user2);
 
-            Gebruiker user3 = new Gebruiker();
-            user3.Naam = "user3";
-            user3.GebruikersNaam = "Developer";
-            user3.SysteemRol = SysteemRol.Gebruiker;
-            user3.VolledigeNaam = "Gebruiker 3";
+            User user3 = new User();
+            user3.Name = "user3";
+            user3.UserName = "Developer";
+            user3.SystemRole = SystemRole.User;
+            user3.FullName = "Gebruiker 3";
             GebruikerRepository.Save(user3);
             #endregion
 
@@ -117,11 +117,11 @@ namespace JelloScrum.Web.Controllers
             {
                 Story story = new Story(project_JelloScrum, user1, null, StoryType.UserStory);
                 story.HowtoDemo = "uitleg voor de demo " + i.ToString();
-                story.Notitie = "notitie " + i.ToString();
-                story.Omschrijving = "omschrijving " + i.ToString();
-                story.ProductBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
-                story.Schatting = new TimeSpan(4, 30, 0);
-                story.Titel = "JelloScrum story number: " + i.ToString();
+                story.Note = "notitie " + i.ToString();
+                story.Description = "omschrijving " + i.ToString();
+                story.ProductBacklogPriority = (Priority)RandomNumber(0, 3);
+                story.Estimation = new TimeSpan(4, 30, 0);
+                story.Title = "JelloScrum story number: " + i.ToString();
                 
                 ProjectRepository.Save(project_JelloScrum);
             }
@@ -132,11 +132,11 @@ namespace JelloScrum.Web.Controllers
             {
                 Story story = new Story(project_James, user1, null, StoryType.UserStory);
                 story.HowtoDemo = "uitleg voor de demo " + i.ToString();
-                story.Notitie = "notitie " + i.ToString();
-                story.Omschrijving = "omschrijving " + i.ToString();
-                story.ProductBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
-                story.Schatting = new TimeSpan(6, 0, 0);
-                story.Titel = "James story number: " + i.ToString();
+                story.Note = "notitie " + i.ToString();
+                story.Description = "omschrijving " + i.ToString();
+                story.ProductBacklogPriority = (Priority)RandomNumber(0, 3);
+                story.Estimation = new TimeSpan(6, 0, 0);
+                story.Title = "James story number: " + i.ToString();
 
                 ProjectRepository.Save(project_James);
             }
@@ -150,14 +150,14 @@ namespace JelloScrum.Web.Controllers
                 for (int i = RandomNumber(0, 4); i < 6; i++)
                 {
                     Task task = new Task();
-                    task.Omschrijving = "Omschrijving voor JelloScrum story " + story.Titel + " taak nummer " + i.ToString();
+                    task.Description = "Omschrijving voor JelloScrum story " + story.Title + " taak nummer " + i.ToString();
                     task.Story = story;
-                    story.VoegTaskToe(task);
-                    TaskCommentaarBericht bericht = new TaskCommentaarBericht(task, "blabla comment teskt " + i.ToString());
-                    task.VoegCommentaarBerichtToe(bericht);
+                    story.AddTask(task);
+                    TaskComment bericht = new TaskComment(task, "blabla comment teskt " + i.ToString());
+                    task.AddComment(bericht);
                     StoryRepository.SaveOrUpdate(story);
                 }
-                story.VoegCommentaarBerichtToe("Storycomment James teskt");
+                story.AddComment("Storycomment James teskt");
                 StoryRepository.Save(story);
             }
             #endregion
@@ -168,14 +168,14 @@ namespace JelloScrum.Web.Controllers
                 for (int i = RandomNumber(0, 4); i < 5; i++)
                 {
                     Task task = new Task();
-                    task.Omschrijving = "Omschrijving voor James story " + story.Titel + " taak nummer " + i.ToString();
+                    task.Description = "Omschrijving voor James story " + story.Title + " taak nummer " + i.ToString();
                     task.Story = story;
-                    story.VoegTaskToe(task);
-                    TaskCommentaarBericht bericht = new TaskCommentaarBericht(task,"blabla comment teskt " + i.ToString());
-                    task.VoegCommentaarBerichtToe(bericht);
+                    story.AddTask(task);
+                    TaskComment bericht = new TaskComment(task,"blabla comment teskt " + i.ToString());
+                    task.AddComment(bericht);
                     StoryRepository.Save(story);
                 }
-                story.VoegCommentaarBerichtToe("Storycomment James teskt");
+                story.AddComment("Storycomment James teskt");
                 StoryRepository.Save(story);
             }
             #endregion
@@ -187,15 +187,15 @@ namespace JelloScrum.Web.Controllers
             for (int i = 0; i < 6; i++)
             {
                 Sprint sprint = new Sprint();
-                sprint.Doel = "JelloScrum SprintDoel #" + i.ToString();
-                sprint.StartDatum = DateTime.Now.AddDays((5 * i));
-                sprint.EindDatum = DateTime.Now.AddDays((5 * i) + 20);
+                sprint.Goal = "JelloScrum SprintDoel #" + i.ToString();
+                sprint.StartDate = DateTime.Now.AddDays((5 * i));
+                sprint.EndDate = DateTime.Now.AddDays((5 * i) + 20);
                 sprint.Project = project_JelloScrum;
                 SprintRepository.Save(sprint);
                 
-                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRol.ProductOwner);
-                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRol.Developer);
-                SprintGebruiker sprintGebruiker3 = new SprintGebruiker(user2, sprint, SprintRol.ScrumMaster);
+                SprintUser sprintGebruiker = new SprintUser(user1, sprint, SprintRole.ProductOwner);
+                SprintUser sprintGebruiker2 = new SprintUser(user3, sprint, SprintRole.Developer);
+                SprintUser sprintGebruiker3 = new SprintUser(user2, sprint, SprintRole.ScrumMaster);
                 SprintGebruikerRepository.Save(sprintGebruiker);
                 SprintGebruikerRepository.Save(sprintGebruiker2);
                 SprintGebruikerRepository.Save(sprintGebruiker3);
@@ -232,14 +232,14 @@ namespace JelloScrum.Web.Controllers
             for (int i = 0; i < 4; i++)
             {
                 Sprint sprint = new Sprint();
-                sprint.Doel = "James SprintDoel #" + i.ToString();
-                sprint.StartDatum = DateTime.Now.AddDays((4 * i));
-                sprint.EindDatum = DateTime.Now.AddDays((4 * i) + 16);
+                sprint.Goal = "James SprintDoel #" + i.ToString();
+                sprint.StartDate = DateTime.Now.AddDays((4 * i));
+                sprint.EndDate = DateTime.Now.AddDays((4 * i) + 16);
                 sprint.Project = project_James;
                 SprintRepository.Save(sprint);
 
-                SprintGebruiker sprintGebruiker = new SprintGebruiker(user1, sprint, SprintRol.ScrumMaster);
-                SprintGebruiker sprintGebruiker2 = new SprintGebruiker(user3, sprint, SprintRol.Developer);
+                SprintUser sprintGebruiker = new SprintUser(user1, sprint, SprintRole.ScrumMaster);
+                SprintUser sprintGebruiker2 = new SprintUser(user3, sprint, SprintRole.Developer);
                 SprintGebruikerRepository.Save(sprintGebruiker);
                 SprintGebruikerRepository.Save(sprintGebruiker2);
 
@@ -249,16 +249,16 @@ namespace JelloScrum.Web.Controllers
 
                 for (int y = 0; y < 3; y++)
                 {
-                    SprintStory sprintStory = sprint.MaakSprintStoryVoor(project_James.Stories[num]);
+                    SprintStory sprintStory = sprint.CreateSprintStoryFor(project_James.Stories[num]);
                     
-                    sprintStory.SprintBacklogPrioriteit = (Prioriteit)RandomNumber(0, 3);
+                    sprintStory.SprintBacklogPriority = (Priority)RandomNumber(0, 3);
                     SprintStoryRepository.Save(sprintStory);
 
-                    if (sprintStory.Status != Status.NietOpgepakt)
+                    if (sprintStory.State != State.Open)
                     {
                         // ook even wat werkuren toevoegen
-                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].MaakTijdRegistratie(user2, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
-                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].MaakTijdRegistratie(user3, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
+                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].RegisterTime(user2, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
+                        sprintStory.Story.Tasks[RandomNumber(0, sprintStory.Story.Tasks.Count - 1)].RegisterTime(user3, DateTime.Today, sprintStory.Sprint, new TimeSpan(0, 0, RandomNumber(1, 60)));
 
                         SprintStoryRepository.Save(sprintStory);
                     }
@@ -274,9 +274,9 @@ namespace JelloScrum.Web.Controllers
             for (int i = 0; i < 10; i++)
             {
                 Story impediment = new Story(project_JelloScrum, user3, null, StoryType.Impediment);
-                impediment.Titel = "Impediment JelloScrum #" + i.ToString();
-                impediment.Omschrijving = "JelloScrum Impediment omschrijving";
-                impediment.VoegCommentaarBerichtToe("Ahum comment voor....." + i);
+                impediment.Title = "Impediment JelloScrum #" + i.ToString();
+                impediment.Description = "JelloScrum Impediment omschrijving";
+                impediment.AddComment("Ahum comment voor....." + i);
                 StoryRepository.Save(impediment);
             }
             #endregion
@@ -285,9 +285,9 @@ namespace JelloScrum.Web.Controllers
             for (int i = 0; i < 10; i++)
             {
                 Story impediment = new Story(project_James, user2, null, StoryType.Impediment);
-                impediment.Titel = "Impediment James #" + i.ToString();
-                impediment.Omschrijving = "James Impediment omschrijving";
-                impediment.VoegCommentaarBerichtToe("Ahum comment voor....." + i);
+                impediment.Title = "Impediment James #" + i.ToString();
+                impediment.Description = "James Impediment omschrijving";
+                impediment.AddComment("Ahum comment voor....." + i);
                 StoryRepository.Save(impediment);
             }
             #endregion
@@ -299,10 +299,10 @@ namespace JelloScrum.Web.Controllers
             {
                 Story bug = new Story(project_JelloScrum, user1, (Impact)RandomNumber(0, 4), StoryType.Bug);
                 bug.HowtoDemo = "Bug demo description for JelloScrum #" + i.ToString();
-                bug.Notitie = "Note " + i.ToString();
-                bug.Omschrijving = "Description " + i.ToString();
-                bug.Schatting = new TimeSpan(0);
-                bug.Titel = "BUG JelloScrum #" + i.ToString();
+                bug.Note = "Note " + i.ToString();
+                bug.Description = "Description " + i.ToString();
+                bug.Estimation = new TimeSpan(0);
+                bug.Title = "BUG JelloScrum #" + i.ToString();
                 StoryRepository.Save(bug);
             }
             #endregion
@@ -312,10 +312,10 @@ namespace JelloScrum.Web.Controllers
             {
                 Story bug = new Story(project_James, user1, (Impact)RandomNumber(0, 4), StoryType.Bug);
                 bug.HowtoDemo = "Bug demo description for James #" + i.ToString();
-                bug.Notitie = "Note " + i.ToString();
-                bug.Omschrijving = "Description " + i.ToString();
-                bug.Schatting = new TimeSpan(0);
-                bug.Titel = "BUG James #" + i.ToString();
+                bug.Note = "Note " + i.ToString();
+                bug.Description = "Description " + i.ToString();
+                bug.Estimation = new TimeSpan(0);
+                bug.Title = "BUG James #" + i.ToString();
                 StoryRepository.Save(bug);
             }
             #endregion

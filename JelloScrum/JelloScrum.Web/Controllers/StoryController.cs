@@ -58,9 +58,9 @@ namespace JelloScrum.Web.Controllers
         {
             Story story = new Story(project, CurrentUser, null, StoryType.UserStory);
 
-            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Naam + "</a> > <a href='/project/productBacklog.rails?projectId=" + project.Id + "'>ProductBacklog</a> > Story toevoegen";
+            Titel = "<a href='/project/project.rails?projectId=" + project.Id + "'>" + project.Name + "</a> > <a href='/project/productBacklog.rails?projectId=" + project.Id + "'>ProductBacklog</a> > Story toevoegen";
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
             PropertyBag.Add("story", story);
             PropertyBag.Add("Schatting", new TimeSpan(0, 0, 0));
@@ -75,19 +75,19 @@ namespace JelloScrum.Web.Controllers
         {
             if (sprint != null)
             {
-                Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Naam + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Doel + "</a> > <a href='/sprint/sprintBacklog.rails?sprintId=" + sprint.Id + "'>SprintBacklog</a> > Story (" + story.Id + ") bewerken";
+                Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Name + "</a> > <a href='/sprint/sprint.rails?sprintId=" + sprint.Id + "'>" + sprint.Goal + "</a> > <a href='/sprint/sprintBacklog.rails?sprintId=" + sprint.Id + "'>SprintBacklog</a> > Story (" + story.Id + ") bewerken";
                 LayoutName = "sprint";
                 PropertyBag.Add("sprint", sprint);
             }
             else
             {
-                Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Naam + "</a> > <a href='/project/productBacklog.rails?projectId=" + story.Project.Id + "'>ProductBacklog</a> > Story (" + story.Id + ") bewerken";
+                Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Name + "</a> > <a href='/project/productBacklog.rails?projectId=" + story.Project.Id + "'>ProductBacklog</a> > Story (" + story.Id + ") bewerken";
             }
 
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
-            PropertyBag.Add("Schatting", story.Schatting);
+            PropertyBag.Add("Schatting", story.Estimation);
             PropertyBag.Add("story", story);
         }
 
@@ -106,8 +106,8 @@ namespace JelloScrum.Web.Controllers
                             [ARDataBind("sprint", AutoLoad = AutoLoadBehavior.NullIfInvalidKey)] Sprint sprint,
                             [ARDataBind("task", AutoLoad = AutoLoadBehavior.NewInstanceIfInvalidKey)] Task[] tasks, bool opslaanVolgendeHidden)
         {
-            story.AangemaaktDoor = CurrentUser;
-            story.Schatting = TimeSpanHelper.Parse(schatting);
+            story.CreatedBy = CurrentUser;
+            story.Estimation = TimeSpanHelper.Parse(schatting);
 
             IList<Task> taken = new List<Task>(tasks);
 
@@ -115,7 +115,7 @@ namespace JelloScrum.Web.Controllers
             foreach (Task task in new List<Task>(story.Tasks))
             {
                 if (!taken.Contains(task))
-                    story.VerwijderTask(task);
+                    story.RemoveTask(task);
             }
 
             //voeg alle nieuwe taken toe
@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Controllers
             {
                 if (tasks[i].Id == 0)
                 {
-                    story.VoegTaskToe(tasks[i]);
+                    story.AddTask(tasks[i]);
                 }
             }
 
@@ -133,7 +133,7 @@ namespace JelloScrum.Web.Controllers
             }
             catch (JelloScrumRepositoryException jre)
             {
-                AddErrorMessageToFlashBag("Het opslaan van story" + story.Titel + " is niet gelukt." + jre.LogMessage);
+                AddErrorMessageToFlashBag("Het opslaan van story" + story.Title + " is niet gelukt." + jre.LogMessage);
                 RedirectToAction("Bewerk");
             }
 
@@ -144,7 +144,7 @@ namespace JelloScrum.Web.Controllers
             else
                 args.Add("projectId", story.Project.Id);
 
-            if (story.CheckSchattingTaken())
+            if (story.IsEstimatedTimeOfTasksLessThenEstimatedTimeOfStory())
             {
                 AddPositiveMessageToFlashBag("Story is opgeslagen.");
                 if (opslaanVolgendeHidden)
@@ -172,9 +172,9 @@ namespace JelloScrum.Web.Controllers
         /// </summary>
         /// <param name="story">De story.</param>
         /// <param name="prioriteit">De prioriteit.</param>
-        public void VeranderPrioriteit([ARFetch("id")] Story story, Prioriteit prioriteit)
+        public void VeranderPrioriteit([ARFetch("id")] Story story, Priority prioriteit)
         {
-            story.ProductBacklogPrioriteit = prioriteit;
+            story.ProductBacklogPriority = prioriteit;
             StoryRepository.Save(story);
 
             RenderText("done");
@@ -187,10 +187,10 @@ namespace JelloScrum.Web.Controllers
         ///</summary>
         public void Story([ARFetch("storyId")] Story story)
         {
-            Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Naam + "</a> > <a href='/project/productBacklog.rails?projectId=" + story.Project.Id + "'>ProductBacklog</a> > Story (" + story.Id + ") bekijken";
+            Titel = "<a href='/project/project.rails?projectId=" + story.Project.Id + "'>" + story.Project.Name + "</a> > <a href='/project/productBacklog.rails?projectId=" + story.Project.Id + "'>ProductBacklog</a> > Story (" + story.Id + ") bekijken";
 
             PropertyBag.Add("storyTypes", Enum.GetNames(typeof (StoryType)));
-            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Prioriteit)));
+            PropertyBag.Add("prioriteit", Enum.GetNames(typeof (Priority)));
             PropertyBag.Add("punten", Enum.GetNames(typeof (StoryPoint)));
             PropertyBag.Add("story", story);
         }

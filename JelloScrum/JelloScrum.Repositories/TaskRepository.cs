@@ -26,7 +26,7 @@ namespace JelloScrum.Repositories
 
         public override void Delete(Task task)
         {
-            if (task.TijdRegistraties.Count != 0)
+            if (task.TimeRegistrations.Count != 0)
             {
                 throw new JelloScrumRepositoryException("Er zijn nog Tijdregistraties gekoppeld");
             }

@@ -90,50 +90,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\CommentaarBericht.cs" />
-    <Compile Include="Entities\Gebruiker.cs" />
     <Compile Include="Entities\SprintStory.cs" />
     <Compile Include="Enumerations\Impact.cs" />
-    <Compile Include="Enumerations\Status.cs" />
     <Compile Include="Enumerations\StoryType.cs" />
     <Compile Include="Interfaces\IJelloScrumControllerBase.cs" />
     <Compile Include="Services\Login\IPasswordService.cs" />
     <Compile Include="ModelBase.cs" />
-    <Compile Include="Enumerations\Prioriteit.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Sprint.cs" />
     <Compile Include="Entities\Story.cs" />
     <Compile Include="Entities\Task.cs" />
-    <Compile Include="Entities\TijdRegistratie.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\LogBericht.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\LogMessage.cs" />
     <Compile Include="Entities\ProjectShortList.cs" />
-    <Compile Include="Entities\SprintGebruiker.cs" />
+    <Compile Include="Entities\SprintUser.cs" />
+    <Compile Include="Entities\TimeRegistration.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Enumerations\Priority.cs" />
+    <Compile Include="Enumerations\SprintRole.cs" />
+    <Compile Include="Enumerations\State.cs" />
     <Compile Include="Enumerations\StoryPoint.cs" />
-    <Compile Include="Enumerations\SprintRol.cs" />
-    <Compile Include="Enumerations\SysteemRol.cs" />
-    <Compile Include="Enumerations\WerkDag.cs" />
+    <Compile Include="Enumerations\SystemRole.cs" />
+    <Compile Include="Enumerations\WorkDay.cs" />
     <Compile Include="Helpers\Cardwall.cs" />
     <Compile Include="Helpers\DateRange.cs" />
     <Compile Include="Helpers\SprintBackLog.cs" />
     <Compile Include="Helpers\ProductBackLog.cs" />
     <Compile Include="Helpers\SprintHealthHelper.cs" />
-    <Compile Include="Helpers\SprintRolGebruikerHelper.cs" />
+    <Compile Include="Helpers\SprintRoleUserHelper.cs" />
     <Compile Include="Interfaces\ILogable.cs" />
     <Compile Include="IRepositories\IProjectShortListRepository.cs" />
-    <Compile Include="IRepositories\ISprintGebruikerRepository.cs" />
-    <Compile Include="IRepositories\IGebruikerRepository.cs" />
     <Compile Include="IRepositories\IJelloScrumRepository.cs" />
     <Compile Include="IRepositories\IProjectRepository.cs" />
     <Compile Include="IRepositories\ISprintRepository.cs" />
     <Compile Include="IRepositories\ISprintStoryRepository.cs" />
+    <Compile Include="IRepositories\ISprintUserRepository.cs" />
     <Compile Include="IRepositories\IStoryRepository.cs" />
     <Compile Include="IRepositories\ITaskRepository.cs" />
+    <Compile Include="IRepositories\IUserRepository.cs" />
     <Compile Include="Services\IExcelExportService.cs" />
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\ITemplateParserService.cs" />

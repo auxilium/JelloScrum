@@ -28,7 +28,7 @@ namespace JelloScrum.Model.Tests.Model
         public override void SetUp()
         {
             sprint = new Sprint();
-            story = new Story(new Project(), new Gebruiker(), null, StoryType.UserStory);
+            story = new Story(new Project(), new User(), null, StoryType.UserStory);
 
             base.SetUp();
         }
@@ -36,37 +36,37 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestGeenOpenStaandeTaken()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.Opgepakt;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].State = State.Taken;
+            story.Tasks[1].State = State.Closed;
 
-            Assert.AreEqual(0, story.GeefTakenMetStatus(Status.NietOpgepakt).Count);
+            Assert.AreEqual(0, story.GetTasksWith(State.Open).Count);
         }
 
         [Test]
         public void TestEenOpenStaandeTaak()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.NietOpgepakt;
-            story.Tasks[1].Status = Status.Afgesloten;
+            story.Tasks[0].State = State.Open;
+            story.Tasks[1].State = State.Closed;
 
-            Assert.AreEqual(1, story.GeefTakenMetStatus(Status.Afgesloten).Count);
+            Assert.AreEqual(1, story.GetTasksWith(State.Closed).Count);
         }
 
         [Test]
         public void TestTweeOpenStaandeTaken()
         {
-            story.VoegTaskToe(new Task());
-            story.VoegTaskToe(new Task());
+            story.AddTask(new Task());
+            story.AddTask(new Task());
 
-            story.Tasks[0].Status = Status.NietOpgepakt;
-            story.Tasks[1].Status = Status.NietOpgepakt;
+            story.Tasks[0].State = State.Open;
+            story.Tasks[1].State = State.Open;
 
-            Assert.AreEqual(2, story.GeefTakenMetStatus(Status.NietOpgepakt).Count);
+            Assert.AreEqual(2, story.GetTasksWith(State.Open).Count);
         }
 
   

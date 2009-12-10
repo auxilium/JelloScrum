@@ -1,1 +1,1 @@
-﻿${OpmaakHelper.Tijd(gekozenSprint.GeefTijdTotaalAlleStories())} / ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}
+﻿${OpmaakHelper.Tijd(gekozenSprint.GetTotalTimeEstimatedForAllStories())} / ${OpmaakHelper.Tijd(gekozenSprint.TimeAvailable)}

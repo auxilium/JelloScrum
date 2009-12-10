@@ -23,14 +23,14 @@ namespace JelloScrum.Model.Tests.Model
     [TestFixture]
     public class SprintGebruikerTest : TestBase
     {
-        private SprintGebruiker sprintGebruiker;
-        private Gebruiker gebruiker;
+        private SprintUser sprintGebruiker;
+        private User gebruiker;
         private Task taak;
         private Task taak2;
 
         public override void SetUp()
         {
-            gebruiker = new Gebruiker();
+            gebruiker = new User();
             sprintGebruiker = Creation.SprintGebruiker(gebruiker);
             taak = new Task();
             taak2 = new Task();
@@ -41,38 +41,38 @@ namespace JelloScrum.Model.Tests.Model
         [Test]
         public void TestPakTaakOpZetRelaties()
         {
-            sprintGebruiker.PakTaakOp(taak);
+            sprintGebruiker.TakeTask(taak);
 
-            Assert.AreEqual(taak, sprintGebruiker.Taken[0]);
-            Assert.AreEqual(taak.Behandelaar, sprintGebruiker);
+            Assert.AreEqual(taak, sprintGebruiker.Tasks[0]);
+            Assert.AreEqual(taak.AssignedUser, sprintGebruiker);
         }
 
         [Test]
         public void TestPakTaakOpZetTaakStatus()
         {
-            sprintGebruiker.PakTaakOp(taak);
+            sprintGebruiker.TakeTask(taak);
 
-            Assert.AreEqual(Status.Opgepakt, sprintGebruiker.Taken[0].Status);
+            Assert.AreEqual(State.Taken, sprintGebruiker.Tasks[0].State);
         }
 
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void TestHandmatigEenTaakAanDeTakenColletieToevoegenGaatNiet()
         {
-            sprintGebruiker.Taken.Add(taak);
+            sprintGebruiker.Tasks.Add(taak);
             Assert.Fail();
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void TestMaakNieuweSprintGebruikerWaarbijGebruikerNullIsFaalt()
         {
-            new SprintGebruiker(null, new Sprint(), SprintRol.Developer);
+            new SprintUser(null, new Sprint(), SprintRole.Developer);
             Assert.Fail();
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void TestMaakNieuweSprintGebruikerWaarbijSprintNullIsFaalt()
         {
-            new SprintGebruiker(new Gebruiker(), null, SprintRol.Developer);
+            new SprintUser(new User(), null, SprintRole.Developer);
             Assert.Fail();
         }
         
@@ -80,32 +80,32 @@ namespace JelloScrum.Model.Tests.Model
         public void TestGeefOpgepakteTakenMetSprintBacklogPrioriteitMustHave()
         {
             Story story = Creation.StoryMetSprintStory(gebruiker);
-            story.VoegTaskToe(taak);
+            story.AddTask(taak);
 
-            Story story2 = Creation.StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Prioriteit.Must, sprintGebruiker.Sprint);
-            story2.VoegTaskToe(taak2);
+            Story story2 = Creation.StoryMetSprintStoryEnSprintBacklogPrioriteit(gebruiker, Priority.Must, sprintGebruiker.Sprint);
+            story2.AddTask(taak2);
 
-            sprintGebruiker.PakTaakOp(taak);
-            sprintGebruiker.PakTaakOp(taak2);
+            sprintGebruiker.TakeTask(taak);
+            sprintGebruiker.TakeTask(taak2);
 
-            Assert.AreEqual(1, sprintGebruiker.GeefOpgepakteTakenMetSprintBacklogPrioriteit(Prioriteit.Must).Count);
+            Assert.AreEqual(1, sprintGebruiker.GetTakenTasksWithSprintBacklogPriority(Priority.Must).Count);
         }
 
         [Test]
         public void TestSprintRolToekennenKentSprintRolToe()
         {
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.VoegRolToe(SprintRol.ProductOwner);
-            Assert.IsTrue(sprintGebruiker.HeeftSprintRol(SprintRol.ProductOwner));
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.AddRole(SprintRole.ProductOwner);
+            Assert.IsTrue(sprintGebruiker.HasSprintRole(SprintRole.ProductOwner));
         }
 
         [Test]
         public void TestSprintRolVerwijderenVerwijdertRol()
         {
-            SprintGebruiker sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
-            sprintGebruiker.VoegRolToe(SprintRol.ProductOwner);
-            sprintGebruiker.VerwijderRol(SprintRol.ProductOwner);
-            Assert.IsFalse(sprintGebruiker.HeeftSprintRol(SprintRol.ProductOwner));
+            SprintUser sprintGebruiker = Creation.SprintGebruiker(Creation.Gebruiker());
+            sprintGebruiker.AddRole(SprintRole.ProductOwner);
+            sprintGebruiker.RemoveRole(SprintRole.ProductOwner);
+            Assert.IsFalse(sprintGebruiker.HasSprintRole(SprintRole.ProductOwner));
         }
 
     }

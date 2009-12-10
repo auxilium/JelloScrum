@@ -28,7 +28,7 @@
 								<?brail for projectShortList in item.ProjectShortList : ?>
 								<tr>
 									<td>${projectShortList.Project.Id}</td>
-									<td>${projectShortList.Project.Naam}</td>
+									<td>${projectShortList.Project.Name}</td>
 									<td>
 										<a href="ProjectVerwijderenVanShortList.rails?id=${projectShortList.Id}" class="button verwijderen">Verwijderen</a>
 									</td>
@@ -67,7 +67,7 @@
 										for project in projecten : ?>
 								<tr>
 									<td>${project.Id}</td>
-									<td>${project.Naam}</td>
+									<td>${project.Name}</td>
 									<td>
 										<a href="ProjectToevoegenAanShortList.rails?id=${project.Id}" class="button nieuw">Toevoegen</a>
 									</td>

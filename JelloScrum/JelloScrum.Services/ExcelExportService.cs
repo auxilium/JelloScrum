@@ -39,7 +39,7 @@ namespace JelloScrum.Services
         {
             SetCultureInfo();
 
-            string fileName = String.Format("ProductBacklog_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd") ,project.Naam);
+            string fileName = String.Format("ProductBacklog_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd") ,project.Name);
            
             ExcelStorage provider = new ExcelStorage(typeof(ProductBackLog));
             provider.StartRow = 2;
@@ -54,13 +54,13 @@ namespace JelloScrum.Services
                 ProductBackLog row = new ProductBackLog();
 
                 row.Id = story.Id.ToString();
-                row.Title = story.Titel;
-                row.Prioriteit = Enum.GetName(typeof(Prioriteit), story.ProductBacklogPrioriteit);
+                row.Title = story.Title;
+                row.Priority = Enum.GetName(typeof(Priority), story.ProductBacklogPriority);
                 row.Type = Enum.GetName(typeof(StoryType), story.StoryType);
-                row.Omschrijving = story.Omschrijving;
-                row.Punten = Enum.GetName(typeof(StoryPoint), story.StoryPoints);
-                row.Schatting = TimeSpanInMinuten(story.Schatting).ToString();
-                row.Taken = story.Tasks.Count.ToString();
+                row.Description = story.Description;
+                row.Points = Enum.GetName(typeof(StoryPoint), story.StoryPoints);
+                row.Estimation = TimeSpanInMinuten(story.Estimation).ToString();
+                row.Tasks = story.Tasks.Count.ToString();
 
                 res.Add(row);
             }
@@ -80,7 +80,7 @@ namespace JelloScrum.Services
         {
             SetCultureInfo();
 
-            string fileName = String.Format("SprintBacklog_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd"), sprint.Doel);
+            string fileName = String.Format("SprintBacklog_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd"), sprint.Goal);
 
             ExcelStorage provider = new ExcelStorage(typeof(SprintBackLog));
             provider.StartRow = 2;
@@ -95,14 +95,14 @@ namespace JelloScrum.Services
                 SprintBackLog row = new SprintBackLog();
 
                 row.Id = sprintStory.Id.ToString();
-                row.Title = sprintStory.Story.Titel;
-                row.Sprintprio = Enum.GetName(typeof(Prioriteit), sprintStory.SprintBacklogPrioriteit);
-                row.Projectprio = Enum.GetName(typeof(Prioriteit), sprintStory.Story.ProductBacklogPrioriteit);
+                row.Title = sprintStory.Story.Title;
+                row.SprintPriority = Enum.GetName(typeof(Priority), sprintStory.SprintBacklogPriority);
+                row.ProjectPriority = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPriority);
                 row.Type = Enum.GetName(typeof(StoryType), sprintStory.Story.StoryType);
-                row.Omschrijving = sprintStory.Story.Omschrijving;
-                row.Punten = Enum.GetName(typeof(StoryPoint), sprintStory.Story.StoryPoints);
-                row.Schatting = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
-                row.Taken = sprintStory.Story.Tasks.Count.ToString();
+                row.Description = sprintStory.Story.Description;
+                row.Points = Enum.GetName(typeof(StoryPoint), sprintStory.Story.StoryPoints);
+                row.Estimation = TimeSpanInMinuten(sprintStory.Story.Estimation).ToString();
+                row.Tasks = sprintStory.Story.Tasks.Count.ToString();
 
                 res.Add(row);
             }
@@ -122,7 +122,7 @@ namespace JelloScrum.Services
         {
             SetCultureInfo();
 
-            string fileName = String.Format("SprintCardwall_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd"), sprint.Doel);
+            string fileName = String.Format("SprintCardwall_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd"), sprint.Goal);
 
             ExcelStorage provider = new ExcelStorage(typeof(Cardwall));
             provider.StartRow = 3;
@@ -137,34 +137,34 @@ namespace JelloScrum.Services
                 Cardwall storyRow = new Cardwall();
 
                 storyRow.StoryId = sprintStory.Id.ToString();
-                storyRow.StoryTitle = sprintStory.Story.Titel;
-                storyRow.StoryPrioriteit = Enum.GetName(typeof(Prioriteit), sprintStory.Story.ProductBacklogPrioriteit);
-                storyRow.StoryGeschatteUren = TimeSpanInMinuten(sprintStory.Story.Schatting).ToString();
+                storyRow.StoryTitle = sprintStory.Story.Title;
+                storyRow.StoryPriority = Enum.GetName(typeof(Priority), sprintStory.Story.ProductBacklogPriority);
+                storyRow.StoryEstimatedHours = TimeSpanInMinuten(sprintStory.Story.Estimation).ToString();
                 res.Add(storyRow);
 
                 foreach (Task task in sprintStory.Story.Tasks)
                 {
                     Cardwall taskRow = new Cardwall();
 
-                    switch(task.Status)
+                    switch(task.State)
                     {
-                        case Status.NietOpgepakt:
+                        case State.Open:
                             taskRow.TaskOpenId = task.Id.ToString();
-                            taskRow.TaskOpenTitle = task.Titel;
-                            taskRow.TaskOpenBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskOpenBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskOpenTitle = task.Title;
+                            taskRow.TaskOpenAssignee = task.AssignedUserName;
+                            taskRow.TaskOpenTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
-                        case Status.Opgepakt:
+                        case State.Taken:
                             taskRow.TaskInProgressId = task.Id.ToString();
-                            taskRow.TaskInProgressTitle = task.Titel;
-                            taskRow.TaskInProgressBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskInProgressBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskInProgressTitle = task.Title;
+                            taskRow.TaskInProgressAssignee = task.AssignedUserName;
+                            taskRow.TaskInProgressTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
-                        case Status.Afgesloten:
+                        case State.Closed:
                             taskRow.TaskDoneId = task.Id.ToString();
-                            taskRow.TaskDoneTitle = task.Titel;
-                            taskRow.TaskDoneBehandelaar = task.BehandelaarNaam;
-                            taskRow.TaskDoneBestedeUren = TimeSpanInMinuten(task.TotaalBestedeTijd()).ToString();
+                            taskRow.TaskDoneTitle = task.Title;
+                            taskRow.TaskDoneAssignee = task.AssignedUserName;
+                            taskRow.TaskDoneTimeSpent = TimeSpanInMinuten(task.TotalTimeSpent()).ToString();
                             break;
                     }
 

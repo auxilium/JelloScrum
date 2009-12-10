@@ -15,33 +15,28 @@
 namespace JelloScrum.Model.Enumerations
 {
     /// <summary>
-    /// Set's the impact of a bug
+    /// The different states of impact.
     /// </summary>
     public enum Impact
     {
         /// <summary>
-        /// De impact is blokkerend
+        /// The impact is blokking
         /// </summary>
-        Blokkerend = 0,
+        Blocking = 0,
 
         /// <summary>
-        /// De impact is kritisch
+        /// The impact is critical
         /// </summary>
-        Kritische = 1,
+        Critical = 1,
 
         /// <summary>
-        /// De impact is normaal
+        /// The impact is normal
         /// </summary>
-        Normaal = 2,
+        Normal = 2,
 
         /// <summary>
-        /// De impact is klein
+        /// The impact is small
         /// </summary>
-        Klein = 3,
-
-        /// <summary>
-        /// De impact is toebehoren?
-        /// </summary>
-        Toebehoren = 4
+        Small = 3
     }
 }

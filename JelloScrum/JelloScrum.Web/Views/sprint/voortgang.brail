@@ -76,7 +76,7 @@
       
       storyStatusClass=""
       
-      if sprintstory.Story.Status.ToString() == Status.Afgesloten.ToString():
+      if sprintstory.Story.State.ToString() == State.Closed.ToString():
         storyStatusClass="afgesloten";
       end
     ?>
@@ -87,16 +87,16 @@
           </div>
         </td>
         <td style="font-size: 11px;">
-          <a href="#linkjenaarstory">${sprintstory.Story.Titel}</a>
+          <a href="#linkjenaarstory">${sprintstory.Story.Title}</a>
         </td>
         <td>
           &nbsp;
         </td>
         <td style="text-align:right;">
-          ${OpmaakHelper.Tijd(sprintstory.Story.Schatting)}
+          ${OpmaakHelper.Tijd(sprintstory.Story.Estimation)}
         </td>
         <td>
-          ${OpmaakHelper.Tijd(sprintstory.Story.TotaalBestedeTijd())}
+          ${OpmaakHelper.Tijd(sprintstory.Story.TotalTimeSpent())}
         </td>
         <td style="text-align:center;" colspan="${werkdagen.Count}">
           &nbsp;
@@ -107,7 +107,7 @@
         
         taskStatusClass=""
       
-        if task.Status.ToString() == Status.Afgesloten.ToString():
+        if task.State.ToString() == State.Closed.ToString():
           taskStatusClass="afgesloten";
         end
       ?>
@@ -119,14 +119,14 @@
         </td>
         <td style="font-size: 11px; padding-left: 30px;">
 
-          <a href="#linkjenaarstory">${task.Titel}</a>
+          <a href="#linkjenaarstory">${task.Title}</a>
 
         </td>
         <td class="toewijzen">         
           <?brail
-              if task.Behandelaar != null:
+              if task.AssignedUser != null:
             ?>
-          <a href="#linkie naar die persoonofzo">${task.Behandelaar.Gebruiker.VolledigeNaam}</a>
+          <a href="#linkie naar die persoonofzo">${task.AssignedUser.User.FullName}</a>
           <?brail
             else:
             ?>
@@ -137,16 +137,16 @@
         </td>
         <td>&nbsp;</td>
         <td>
-          ${OpmaakHelper.Tijd(task.TotaalBestedeTijd())}
+          ${OpmaakHelper.Tijd(task.TotalTimeSpent())}
         </td>
         <?brail
             for werkdag in werkdagen:
           ?>
         <td style="text-align:center;">
           <?brail
-                  if task.TotaalBestedeTijd(werkdag) != TimeSpan.Zero:
+                  if task.TotalTimeSpent(werkdag) != TimeSpan.Zero:
                 ?>
-          ${OpmaakHelper.Tijd(task.TotaalBestedeTijd(werkdag))}
+          ${OpmaakHelper.Tijd(task.TotalTimeSpent(werkdag))}
           <?brail
                   end
                 ?>

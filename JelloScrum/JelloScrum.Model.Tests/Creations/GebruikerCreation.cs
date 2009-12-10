@@ -19,14 +19,14 @@ namespace JelloScrum.Model.Tests.Creations
 
     public partial class Creation
     {
-        public static Gebruiker Gebruiker()
+        public static User Gebruiker()
         {
-            return new Gebruiker();
+            return new User();
         }
 
-        public static Gebruiker Gebruiker(SysteemRol rol)
+        public static User Gebruiker(SystemRole rol)
         {
-            return new Gebruiker(rol);
+            return new User(rol);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
       <div>Doel:</div>
-      <div>${gekozenSprint.Doel}</div>
+      <div>${gekozenSprint.Goal}</div>
       <div style="margin-top: 12px;">
         <div>
           <div style="float:left; width: 50%;">
@@ -13,10 +13,10 @@
         </div>
         <div>
           <div style="float:left; width: 50%;">
-            ${gekozenSprint.StartDatum.ToString("dd-MM-yyyy")}
+            ${gekozenSprint.StartDate.ToString("dd-MM-yyyy")}
           </div>
           <div style="float:left; width: 50%;">
-            ${gekozenSprint.EindDatum.ToString("dd-MM-yyyy")}
+            ${gekozenSprint.EndDate.ToString("dd-MM-yyyy")}
           </div>
           <br class="clear"/>
         </div>
@@ -32,10 +32,10 @@
       </div>
       <div>
         <div style="float:left;width: 50%;">
-          ${OpmaakHelper.Tijd(gekozenSprint.BeschikbareUren)}
+          ${OpmaakHelper.Tijd(gekozenSprint.AvailableTime)}
         </div>
         <div style="float:left;">
-          ${OpmaakHelper.Tijd(gekozenSprint.ResterendBeschikbareUren())}
+          ${OpmaakHelper.Tijd(gekozenSprint.RemainingTimeAvailable())}
         </div>
         <br class="clear"/>
       </div>

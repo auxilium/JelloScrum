@@ -10,7 +10,7 @@ for prioriteit in prioriteiten :
             <div class="story">
                 <p class="title">${prioriteit}</p>
                 <?brail for taak in taken : ?>
-                    <div class="DeveloperTaskItem" rel="${taak.Id}" gebruiker="${item.Id}">${taak.Omschrijving}</div>
+                    <div class="DeveloperTaskItem" rel="${taak.Id}" gebruiker="${item.Id}">${taak.Description}</div>
                 <?brail end ?>
                 <div class="clear"></div>
             </div>

@@ -30,7 +30,7 @@ namespace JelloScrum.Web.Components
     public class UrenRegistratieComponent : ViewComponent
     {
         private Sprint sprint;
-        private SprintGebruiker sprintGebruiker;
+        private SprintUser sprintGebruiker;
         private DateTime maandag;
         private DateTime dinsdag;
         private DateTime woensdag;
@@ -43,7 +43,7 @@ namespace JelloScrum.Web.Components
         {
             maandag = ((DateTime) ComponentParams["maandag"]);
             sprint = ((Sprint) ComponentParams["sprint"]);
-            sprintGebruiker = ((SprintGebruiker) ComponentParams["sprintGebruiker"]);
+            sprintGebruiker = ((SprintUser) ComponentParams["sprintGebruiker"]);
             formaction = ((string)ComponentParams["formaction"]);
 
             dinsdag = maandag.AddDays(1);
@@ -147,7 +147,7 @@ namespace JelloScrum.Web.Components
         {
             //de eerste row bevat de sprintstory
             this.component.Append("<tr>");
-            this.component.Append("<td class='story'><span style='font-weight: bold;padding-right: 10px;'>" + sprintStory.Story.Titel + "</span>" + new OpmaakHelper().UrenStatus(sprintStory.Story) + " status: " + sprintStory.Status + "</td>");
+            this.component.Append("<td class='story'><span style='font-weight: bold;padding-right: 10px;'>" + sprintStory.Story.Title + "</span>" + new OpmaakHelper().UrenStatus(sprintStory.Story) + " status: " + sprintStory.State + "</td>");
             //aantal zelf geboekte uren op story per dag
             this.component.Append("<td class='story" + HighlightVandaag(maandag) + "'>&nbsp;</td>");
             this.component.Append("<td class='story" + HighlightVandaag(dinsdag) + "'>&nbsp;</td>");
@@ -166,7 +166,7 @@ namespace JelloScrum.Web.Components
         private void RenderTaskRow(Task task)
         {
             this.component.Append("<tr class='expand-child'>");
-            this.component.Append("<td class='" + HighlightEigenTaak(task) + "'><span style='padding-right: 10px;padding-left:20px;'>Taak: <a href='/CommentaarBericht/TaakCommentaar.rails?Id=" + task.Id + "&height=800&width=600' class='thickbox' style='color: #000000;'>" + task.Titel + "</a> status: " + task.Status + "</td>");
+            this.component.Append("<td class='" + HighlightEigenTaak(task) + "'><span style='padding-right: 10px;padding-left:20px;'>Taak: <a href='/CommentaarBericht/TaakCommentaar.rails?Id=" + task.Id + "&height=800&width=600' class='thickbox' style='color: #000000;'>" + task.Title + "</a> status: " + task.State + "</td>");
             RenderTaskRegistrationInput(task, maandag);
             RenderTaskRegistrationInput(task, dinsdag);
             RenderTaskRegistrationInput(task, woensdag);
@@ -177,7 +177,7 @@ namespace JelloScrum.Web.Components
 
         private string HighlightEigenTaak(Task task)
         {
-            if (task.Behandelaar == sprintGebruiker && task.Status != Status.Afgesloten)
+            if (task.AssignedUser == sprintGebruiker && task.State != State.Closed)
                 return " owntask";
             return string.Empty;
         }
@@ -190,7 +190,7 @@ namespace JelloScrum.Web.Components
             {
                 //this.component.Append("<div class='uren_readonly " + HighlightVandaag(dag)  + "'>" + TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(this.sprintGebruiker.Gebruiker, dag)) + "</div>");
                 this.component.Append("<div class='uren_input" + HighlightVandaag(dag) + HighlightEigenTaak(task) + "'>");
-                this.component.Append("<input type='text' name='urenregistratie[" + index + "].AantalUren' id='urenregistratie[" + index + "]_AantalUren' value='" + TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(this.sprintGebruiker.Gebruiker, dag)) + "'/>");
+                this.component.Append("<input type='text' name='urenregistratie[" + index + "].AantalUren' id='urenregistratie[" + index + "]_AantalUren' value='" + TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(this.sprintGebruiker.User, dag)) + "'/>");
                 this.component.Append("<input type='hidden' name='urenregistratie[" + index + "].Dag' id='urenregistratie[" + index + "]_Dag' value='" + dag.ToString("dd-MM-yyyy") + "'/>");
                 this.component.Append("<input type='hidden' name='urenregistratie[" + index + "].Task.Id' id='urenregistratie[" + index + "]_Task.Id' value='" + task.Id + "'/>");
                 this.component.Append("<input type='hidden' name='urenregistratie[" + index + "].SprintGebruiker.Id' id='urenregistratie[" + index + "]_SprintGebruiker_Id' value='" + this.sprintGebruiker.Id + "'/>");
@@ -210,12 +210,12 @@ namespace JelloScrum.Web.Components
         /// <param name="dag"></param>
         /// <param name="gebruiker"></param>
         /// <returns></returns>
-        private string BerekenTotaalGeregistreerdeTijd(DateTime dag, SprintGebruiker gebruiker)
+        private string BerekenTotaalGeregistreerdeTijd(DateTime dag, SprintUser gebruiker)
         {
             double total = 0;
-            foreach (Task task in sprint.GeefAlleTakenVanSprint())
+            foreach (Task task in sprint.GetAllTasks())
             {
-                total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(gebruiker.Gebruiker, dag));
+                total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(gebruiker.User, dag));
             }
             return total.ToString();
         }
@@ -228,9 +228,9 @@ namespace JelloScrum.Web.Components
         private string BerekenTotaalGeregistreerdeTijd(DateTime dag)
         {
             double total = 0;
-            foreach (Task task in sprint.GeefAlleTakenVanSprint())
+            foreach (Task task in sprint.GetAllTasks())
             {
-                total += TimeSpanHelper.TimeSpanInMinuten(task.TotaalBestedeTijd(dag));
+                total += TimeSpanHelper.TimeSpanInMinuten(task.TotalTimeSpent(dag));
             }
             return total.ToString();
         }

@@ -15,7 +15,7 @@
           <?brail for item in gebruikers: ?>
             <tr rel="${item.Id}">
               <td>${item.Id}</td>
-              <td>${item.VolledigeNaam}</td>
+              <td>${item.FullName}</td>
               <td>${item.Email}</td>
               <td>
                 <?brail if item.Email != "":?>
