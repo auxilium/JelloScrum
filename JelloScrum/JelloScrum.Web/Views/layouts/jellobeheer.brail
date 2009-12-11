@@ -26,6 +26,7 @@
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jelloscrum.js"></script>
 
+  <!--for avatar cropping -->
   <script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.imageareaselect/jquery.imgareaselect.min.js"></script>
 	
 </head>

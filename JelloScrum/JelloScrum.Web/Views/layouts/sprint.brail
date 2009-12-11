@@ -27,6 +27,8 @@
 		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.livequery/jquery.livequery.js"></script>
 		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.jeditable/jquery.jeditable.js"></script>
 		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.thickbox/thickbox-compressed.js"></script>
+		
+		
 		<script type="text/javascript" charset="utf-8" src="/Content/Javascript/jquery.jtip/jtip.js"></script>
 
 		<!-- table sorter + pagination plugin -->
@@ -99,7 +101,7 @@
 			</div>
 			<div id="footer">
 				<p>
-					Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" alt="Auxilium BV">Auxilium BV</a>. All rights reserved.
+					Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" title="Auxilium BV">Auxilium BV</a>. All rights reserved.
 				</p>
 			</div>
 			<script type="text/javascript">

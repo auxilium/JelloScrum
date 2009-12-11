@@ -314,13 +314,12 @@
     <Content Include="Content\Javascript\jelloscrum.js" />
     <Content Include="Content\Javascript\jquery-1.3.2.js" />
     <Content Include="Content\Javascript\jquery-ui-1.7.2.custom.min.js" />
-    <Content Include="Content\Javascript\jquery.corner\excanvas.js" />
-    <Content Include="Content\Javascript\jquery.corner\jquery.corner.js" />
-    <Content Include="Content\Javascript\jquery.corner\jquery.corner.src.js" />
+    <Content Include="Content\Javascript\jquery.imageareaselect\jquery.imgareaselect.min.js" />
     <Content Include="Content\Javascript\jquery.jeditable\jquery.jeditable.js" />
     <Content Include="Content\Javascript\jquery.jtip\jtip.js" />
     <Content Include="Content\Javascript\jquery.livequery\jquery.livequery.js" />
     <Content Include="Content\Javascript\jquery.progressbar\jquery.progressbar.js" />
+    <Content Include="Content\Javascript\jquery.qtip\jquery.qtip-1.0.0-beta3.1.min.js" />
     <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\first.png" />
     <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\last.png" />
     <Content Include="Content\Javascript\jquery.tablesorter\addons\pager\icons\next.png" />
