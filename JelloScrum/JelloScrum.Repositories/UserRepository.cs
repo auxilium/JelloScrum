@@ -17,11 +17,8 @@ namespace JelloScrum.Repositories
     using System;
     using System.Collections.Generic;
     using Castle.ActiveRecord.Queries;
-    using Exceptions;
-    using JelloScrum.Model.IRepositories;
     using Model.Entities;
-    using Model.Services;
-    using Repositories;
+    using Model.IRepositories;
 
     /// <summary>
     /// Service voor gebruikers
@@ -29,7 +26,6 @@ namespace JelloScrum.Repositories
     public class UserRepository : JelloScrumRepository<User>, IUserRepository
     {
         #region IGebruikerRepository Members
-
         /// <summary>
         /// Vind de gebruiker aan de hand van zijn / haar gebruikers naam
         /// </summary>
@@ -43,7 +39,7 @@ namespace JelloScrum.Repositories
             }
 
             string hql = "SELECT g FROM User g WHERE g.UserName = :naam";
-            SimpleQuery<User> query = new SimpleQuery<User>(typeof(User), hql);
+            SimpleQuery<User> query = new SimpleQuery<User>(typeof (User), hql);
             query.SetParameter("naam", gebruikersNaam);
 
             IList<User> list = query.Execute();
@@ -64,12 +60,11 @@ namespace JelloScrum.Repositories
         public IList<User> ZoekOpSysteemRol(JelloScrum.Model.Enumerations.SystemRole rol)
         {
             string hql = "SELECT g FROM User g WHERE g.SystemRole = :SysteemRol";
-            SimpleQuery<User> query = new SimpleQuery<User>(typeof(User), hql);
+            SimpleQuery<User> query = new SimpleQuery<User>(typeof (User), hql);
             query.SetParameter("SysteemRol", rol);
             IList<User> list = query.Execute();
             return list;
         }
-
 
         public IList<User> ZoekOpNietInSprint(Sprint sprint)
         {
@@ -82,7 +77,6 @@ namespace JelloScrum.Repositories
 
             return new List<User>();
         }
-
 
 //        public Gebruiker SaveGebruiker(Gebruiker gebruiker, string wachtwoord)
 //        {
@@ -99,7 +93,6 @@ namespace JelloScrum.Repositories
 //            IoC.Resolve<IEmailService>().VerzendWachtwoord(gebruiker, wachtwoord);
 //            return Save(gebruiker);  
 //        }
-
         #endregion
     }
 }

@@ -83,6 +83,10 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JelloScrum.Login\JelloScrum.Login.csproj">
+      <Project>{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}</Project>
+      <Name>JelloScrum.Login</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JelloScrum.Model\JelloScrum.Model.csproj">
       <Project>{9C63CF64-5192-42E5-9881-13CE1CF08C0B}</Project>
       <Name>JelloScrum.Model</Name>

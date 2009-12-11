@@ -14,50 +14,22 @@
 
 namespace JelloScrum.Web.Filter
 {
-    using System;
     using Castle.MonoRail.Framework;
-    using Container;
-    using JelloScrum.Model.Entities;
-    using JelloScrum.Model.Services;
+    using Login.Authentication;
+    using Model.Entities;
 
     /// <summary>
     /// Check if user
     /// </summary>
-    public class AuthenticationFilter : Filter
+    public class AuthenticationFilter : AuthenticationFilterBase<User>
     {
-        private readonly IAuthenticationService authenticationService = IoC.Resolve<IAuthenticationService>();
-
         
-
         /// <summary>
-        /// 
+        /// Redirect the user to the login page
+        /// Method should be implemented in subclass, each project has a different url for the login page
         /// </summary>
-        /// <param name="exec"></param>
-        /// <param name="context"></param>
-        /// <param name="controller"></param>
-        /// <param name="controllerContext"></param>
-        /// <returns></returns>
-        // public bool Perform(ExecuteWhen exec, IEngineContext context, IController controller, IControllerContext controllerContext)
-        protected override bool  OnBeforeAction(IEngineContext context, IController controller, IControllerContext controllerContext)
-        {
-            try
-            {
-                User user = authenticationService.Authenticatie(context);
-                controllerContext.PropertyBag.Add("currentUser", user);
-            }
-            catch
-            {
-                SendToLoginPage(context);
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Redirect naar login pagina.
-        /// </summary>
-        /// <param name="context">Current context</param>
-        private static void SendToLoginPage(IEngineContext context)
+        /// <param name="context">Current MonoRail http context</param>
+        public override void SendToLoginPage(IEngineContext context)
         {
             context.Response.Redirect(string.Empty, "login", "index");
         }

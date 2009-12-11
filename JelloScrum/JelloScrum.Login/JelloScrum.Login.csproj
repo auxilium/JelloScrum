@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F654B475-5B71-49B8-A303-067CB604CD4A}</ProjectGuid>
+    <ProjectGuid>{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JelloScrum.QueryObjects</RootNamespace>
-    <AssemblyName>JelloScrum.QueryObjects</AssemblyName>
+    <RootNamespace>JelloScrum.Login</RootNamespace>
+    <AssemblyName>JelloScrum.Login</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,38 +28,46 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.ActiveRecord, Version=2.0.1000.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.ActiveRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\SharedLibs\release\Castle.MonoRail.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\SharedLibs\release\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllTimeRegistrationsBetweenDatesForSprint.cs" />
-    <Compile Include="NotClosedStoriesQuery.cs" />
-    <Compile Include="OpenTasksQuery.cs" />
-    <Compile Include="ProjectQuery.cs" />
-    <Compile Include="SprintStoriesQuery.cs" />
+    <Compile Include="Authentication\AuthenticationFilterBase.cs" />
+    <Compile Include="Authentication\AuthenticationUtil.cs" />
+    <Compile Include="Authentication\IAuthenticationUtil.cs" />
+    <Compile Include="Model\UserBase.cs" />
+    <Compile Include="Model\IUser.cs" />
+    <Compile Include="Model\IUniqueIdentifyable.cs" />
+    <Compile Include="Model\UniqueIdentifyableBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoriesNotInSprintQuery.cs" />
-    <Compile Include="TakenTasksQuery.cs" />
-    <Compile Include="TasksOfSprintQuery.cs" />
-    <Compile Include="TimeRegistrationsForSprintAndUserBetweenStartAndEndDate.cs" />
-    <Compile Include="TotalTimeSpentOnClosedTasksInSprintQuery.cs" />
+    <Compile Include="QueryObject\UsersWithUserNameQuery.cs" />
+    <Compile Include="Services\ILoginService.cs" />
+    <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Wachtwoord\Enum\HashAlgoritm.cs" />
+    <Compile Include="Wachtwoord\PassWordHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JelloScrum.Login\JelloScrum.Login.csproj">
-      <Project>{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}</Project>
-      <Name>JelloScrum.Login</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JelloScrum.Model\JelloScrum.Model.csproj">
-      <Project>{9C63CF64-5192-42E5-9881-13CE1CF08C0B}</Project>
-      <Name>JelloScrum.Model</Name>
+    <ProjectReference Include="..\JelloScrum.Container\JelloScrum.Container.csproj">
+      <Project>{EC11D662-1098-421B-A785-073C7889199C}</Project>
+      <Name>JelloScrum.Container</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

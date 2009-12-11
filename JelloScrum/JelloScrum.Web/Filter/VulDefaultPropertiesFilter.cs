@@ -56,6 +56,7 @@ namespace JelloScrum.Web.Filter
             }
 
             controllerContext.PropertyBag.Add("projects", projecten);
+            controllerContext.PropertyBag.Add("currentUser", context.CurrentUser);
 
             return true;
         }

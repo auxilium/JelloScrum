@@ -34,7 +34,7 @@ namespace JelloScrum.Repositories
         //    get { return ActiveRecordMediator<T>.GetSessionFactoryHolder().GetSessionFactory(typeof(ModelBase)).GetCurrentSession(); }
         //}
 
-        public T Get(int id)
+        public T Get(long id)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace JelloScrum.Repositories
             }
         }
 
-        public T Load(int id)
+        public T Load(long id)
         {
             try
             {

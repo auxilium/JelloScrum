@@ -96,6 +96,10 @@
       <Project>{EC11D662-1098-421B-A785-073C7889199C}</Project>
       <Name>JelloScrum.Container</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JelloScrum.Login\JelloScrum.Login.csproj">
+      <Project>{16B9BF15-B1D4-4954-A9B1-B128E6629BDF}</Project>
+      <Name>JelloScrum.Login</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JelloScrum.Model\JelloScrum.Model.csproj">
       <Project>{9C63CF64-5192-42E5-9881-13CE1CF08C0B}</Project>
       <Name>JelloScrum.Model</Name>

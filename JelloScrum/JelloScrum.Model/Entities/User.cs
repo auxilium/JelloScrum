@@ -21,21 +21,18 @@ namespace JelloScrum.Model.Entities
     using Castle.ActiveRecord;
     using Castle.Components.Validator;
     using Enumerations;
+    using Login.Model;
 
     /// <summary>
     /// Represents a user
     /// </summary>
     [ActiveRecord(Lazy = false, Table = "JelloScrumUser")]
-    public class User : ModelBase, IPrincipal
+    public class User : UserBase<User>
     {
         #region fields
 
         private string name = string.Empty;
-        private string password;
         private string fullName = string.Empty;
-        private string salt = string.Empty;
-        private string userName = string.Empty;
-        private bool isActive = true;
         private SystemRole systemRole = SystemRole.User;
         private IList<SprintUser> sprintUsers = new List<SprintUser>();
         private IList<ProjectShortList> projectShortList = new List<ProjectShortList>();
@@ -43,7 +40,8 @@ namespace JelloScrum.Model.Entities
         private Sprint activeSprint;
         private string bigAvatar = string.Empty;
         private string smallAvatar = string.Empty;
-
+        private Guid guid = Guid.NewGuid();
+        private long id;
         #endregion
 
         #region constructors
@@ -53,15 +51,6 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         public User()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="User"/> class.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        public User(string userName)
-        {
-            this.userName = userName;
         }
 
 
@@ -104,11 +93,11 @@ namespace JelloScrum.Model.Entities
         /// Gets or sets the password.
         /// </summary>
         /// <value>The password.</value>
-        [Property]
-        public virtual string Password
+        [Property(CustomAccess = "field.camelcase")]
+        public override string PassWord
         {
-            get { return password; }
-            set { password = value; }
+            get { return base.PassWord; }
+            
         }
 
         /// <summary>
@@ -125,31 +114,29 @@ namespace JelloScrum.Model.Entities
         /// <summary>
         /// The Salt
         /// </summary>
-        [Property]
-        public virtual string Salt
+        [Property(CustomAccess = "field.camelcase")]
+        public override string Salt
         {
-            get { return salt; }
-            set { salt = value; }
+            get { return base.Salt; }
         }
 
         /// <summary>
         /// The username
         /// </summary>
-        [Property]
-        public virtual string UserName
+        [Property(CustomAccess = "field.camelcase")]
+        public override string UserName
         {
-            get { return userName; }
-            set { userName = value; }
+            get { return base.UserName; }
         }
 
         /// <summary>
-        /// Is the user active (and allowd to login)?
+        /// Is the user active (and allowed to login)?
         /// </summary>
         [Property]
-        public virtual bool IsActive
+        public override bool IsActive
         {
-            get { return isActive; }
-            set { isActive = value; }
+            get { return base.IsActive; }
+            set { base.IsActive = value; }
         }
 
         /// <summary>
@@ -231,9 +218,9 @@ namespace JelloScrum.Model.Entities
         /// </summary>
         /// <value></value>
         /// <returns>The <see cref="T:System.Security.Principal.IIdentity"/> object associated with the current principal.</returns>
-        public virtual IIdentity Identity
+        public override IIdentity Identity
         {
-            get { return new GenericIdentity(userName, "User"); }
+            get { return new GenericIdentity(UserName, "User"); }
         }
 
         /// <summary>
@@ -243,7 +230,7 @@ namespace JelloScrum.Model.Entities
         /// <returns>
         /// true if the current principal is a member of the specified role; otherwise, false.
         /// </returns>
-        public bool IsInRole(string role)
+        public override bool IsInRole(string role)
         {
             return role == GetType().Name;
         }
@@ -352,5 +339,24 @@ namespace JelloScrum.Model.Entities
         }
 
         #endregion
+
+        /// <summary>
+        /// A globally unique identifier for the object
+        /// </summary>
+        [Property(Access = PropertyAccess.FieldCamelcase)]
+        public override Guid Guid
+        {
+            get { return guid; }
+        }
+
+        /// <summary>
+        /// A unique identifier for the object after the object was persisted.
+        /// Usually this identifier is used in the database as primary key.
+        /// </summary>
+        [PrimaryKey(PrimaryKeyType.Identity, CustomAccess = "field.camelcase")]
+        public override long Id
+        {
+            get { return id; }
+        }
     }
 }
