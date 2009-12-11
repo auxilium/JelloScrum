@@ -431,7 +431,6 @@
     <Content Include="Views\sprint\burndown.js" />
     <Content Include="Views\sprint\sprintbacklog.js" />
     <Content Include="Views\sprint\voortgang.js" />
-    <Content Include="Views\sprint\_sprintplanning.js" />
     <Content Include="Views\task\overzicht.js" />
     <None Include="Content\Images\pokercards\archive.zip" />
     <None Include="Content\Javascript\jquery.tablesorter\themes\blue\blue.zip" />
@@ -486,7 +485,6 @@
     <None Include="Views\sprint\shortsprintinfo.brail" />
     <None Include="Views\sprint\sluit.brail" />
     <None Include="Views\sprint\sprint.brail" />
-    <None Include="Views\sprint\___sprintplanning.brail" />
     <None Include="Views\sprint\stories.brail" />
     <None Include="Views\sprint\takenvananderen.brail" />
     <None Include="Views\sprint\mijntaken.brail" />
