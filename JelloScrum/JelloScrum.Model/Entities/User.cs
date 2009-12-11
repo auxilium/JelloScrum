@@ -52,7 +52,8 @@ namespace JelloScrum.Model.Entities
         public User()
         {
         }
-        
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>

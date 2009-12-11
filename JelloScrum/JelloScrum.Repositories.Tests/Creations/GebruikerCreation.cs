@@ -14,6 +14,7 @@
 
 namespace JelloScrum.Repositories.Tests.Creations
 {
+    using System.Reflection;
     using Container;
     using JelloScrum.Model.Entities;
     using JelloScrum.Model.Enumerations;
@@ -39,7 +40,9 @@ namespace JelloScrum.Repositories.Tests.Creations
         public static User Gebruiker(string gebruikersNaam)
         {
             User user = new User();
-            user.ChangeUserName(gebruikersNaam);
+            //gebruikersnaam zetten via reflectie 
+            FieldInfo info = user.GetType().BaseType.GetField("userName", BindingFlags.Instance | BindingFlags.NonPublic);
+            info.SetValue(user, gebruikersNaam);
             return Persist(user);
         }
 
