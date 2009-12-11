@@ -8,11 +8,16 @@
 	end
 ?>
 <div class="gegevensBlock">
-  <h1>
-    Story overzicht
-    <hr/>
-  </h1>
-  <table class="tablesorter" id="projectTable" style="width: 86%; float:left;">
+  <h1>Story overzicht</h1>
+  <hr />
+  
+  <div style="float: right; width: 130px; background: green; padding-left: 10px; ">
+    <a href="/Story/nieuw.rails?projectId=${project.Id}" id="A1" class="button nieuw">Story toevoegen</a>
+    <br />
+    <a href="ExportProductBackLog.rails?projectId=${project.Id}" id="A2" class="button excel">Excel</a>
+  </div>
+  <div style="overflow: hidden; background: red;">
+    <table class="tablesorter" id="Table1" style="width: 100%">
     <thead>
       <tr>
         <th>Id</th>
@@ -27,42 +32,92 @@
       </tr>
     </thead>
     <tbody>
-	  <?brail 
-		 if project.Stories.Count == 0:
-			?>
-		<tr>
-			<td colspan="9">&nbsp;</td>
-		</tr>
-	<?brail			   
-		 end
-		 for story in project.Stories: ?>
-      <tr rel="${story.Id}">
-        <td>${story.Id}</td>
-        <td>
-          <a href="/story/story.rails?storyId=${story.Id}">
-            ${story.Title}
-          </a>
-        </td>
-        <td class="prio inlineEdit">${story.ProductBacklogPriority}</td>
-        <td>${story.StoryType}</td>
-        <td>${MarkDownOutput(story.Description)}</td>
-        <td class="point inlineEdit">${story.StoryPoints}</td>
-        <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}</td>
-        <td>${story.Tasks.Count}</td>
-        <td style="text-align:center;">
-          <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>
-        </td>
-      </tr>
-      <?brail end ?>
+	    <?brail 
+		   if project.Stories.Count == 0:
+		  ?>
+		    <tr>
+			    <td colspan="9">&nbsp;</td>
+		    </tr>
+	    <?brail			   
+		   end
+		   for story in project.Stories: 
+		  ?>
+        <tr rel="${story.Id}">
+          <td>${story.Id}</td>
+          <td>
+            <a href="/story/story.rails?storyId=${story.Id}">${story.Title}</a>
+          </td>
+          <td class="prio inlineEdit">${story.ProductBacklogPriority}</td>
+          <td>${story.StoryType}</td>
+          <td>${MarkDownOutput(story.Description)}</td>
+          <td class="point inlineEdit">${story.StoryPoints}</td>
+          <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}</td>
+          <td>${story.Tasks.Count}</td>
+          <td style="text-align:center;">
+            <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>
+          </td>
+        </tr>
+      <?brail 
+        end 
+      ?>
     </tbody>
   </table>
-
-  <div id="newProjectButtonContainer" style="float:right; width: 13%">
+  </div>
+  
+  
+  
+  <div id="newProjectButtonContainer" style="width: 20%; float: right;">
     <a href="/Story/nieuw.rails?projectId=${project.Id}" id="voegToe" class="button nieuw">Story toevoegen</a>
     <br/>
     <br/>
     <a href="ExportProductBackLog.rails?projectId=${project.Id}" id="openExcel" class="button excel">Excel</a>
   </div>
+  
+  <table class="tablesorter" id="projectTable" style="width: 80%; float:left;">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Titel</th>
+        <th>Prioriteit</th>
+        <th>Type</th>
+        <th>Omschrijving</th>
+        <th>Punten</th>
+        <th>Schatting</th>
+        <th>Taken</th>
+        <th>Actie</th>
+      </tr>
+    </thead>
+    <tbody>
+	    <?brail 
+		   if project.Stories.Count == 0:
+		  ?>
+		    <tr>
+			    <td colspan="9">&nbsp;</td>
+		    </tr>
+	    <?brail			   
+		   end
+		   for story in project.Stories: 
+		  ?>
+        <tr rel="${story.Id}">
+          <td>${story.Id}</td>
+          <td>
+            <a href="/story/story.rails?storyId=${story.Id}">${story.Title}</a>
+          </td>
+          <td class="prio inlineEdit">${story.ProductBacklogPriority}</td>
+          <td>${story.StoryType}</td>
+          <td>${MarkDownOutput(story.Description)}</td>
+          <td class="point inlineEdit">${story.StoryPoints}</td>
+          <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}</td>
+          <td>${story.Tasks.Count}</td>
+          <td style="text-align:center;">
+            <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>
+          </td>
+        </tr>
+      <?brail 
+        end 
+      ?>
+    </tbody>
+  </table>
 
   <br class="clear"/>
   <?brail OutputSubView("/subviews/pager") ?>

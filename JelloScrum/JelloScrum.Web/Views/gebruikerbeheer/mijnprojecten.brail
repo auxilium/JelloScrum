@@ -1,5 +1,5 @@
 <div>
-	<div class="gegevensBlock" style="width: 1000px;; margin-top: 10px;">
+	<div class="gegevensBlock">
 		<div>
 			<span style="float:left;">
 				<h1>
@@ -9,7 +9,7 @@
 			<br class="clear"/>
 			<hr/>
 		</div>
-		<div class="ingegevensBlock" style="float:left;">
+		<div class="ingegevensBlock" style="float:left; margin-right: 10px;">
 			<div>
 				<h1 style="font-weight: bold; padding: 3px; float:left;">
 					Lijst met mijn projecten:
@@ -43,7 +43,7 @@
 			<br class="clear"/>
 		</div>
 
-		<div class="ingegevensBlock" style="float:left;margin-left:10px;">
+		<div class="ingegevensBlock" style="overflow: hidden;">
 			<div>
 				<h1 style="font-weight: bold; padding: 3px; float:left;">
 					Projecten toevoegen aan mijn projecten:
@@ -85,24 +85,24 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
+		  //Zet sorteer funtie op kolommen
+		  $("#projectShortList").tablesorter({
+		    headers: {
+		      2: { sorter: false}
+		    },
+		    widgets: ['zebra']
+		  });
 
-		//Zet sorteer funtie op kolommen
-		$("#projectShortList").tablesorter({
-		headers: {
-		2: { sorter: false}
-		},
-		widgets: ['zebra']
-		});
-
-		//Zet sorteer funtie op kolommen
-		$("#projectTable").tablesorter({
-		headers: {
-		2: { sorter: false}
-		},
-		widgets: ['zebra']
-		});
-		//Zet client side paginering aan
-		$("#projectTable").tablesorterPager({container: $("#pager")});
+		  //Zet sorteer funtie op kolommen
+		  $("#projectTable").tablesorter({
+		    headers: {
+		      2: { sorter: false}
+		    },
+		    widgets: ['zebra']
+		  });
+  		
+		  //Zet client side paginering aan
+		  $("#projectTable").tablesorterPager({container: $("#pager")});
 		});
 	</script>
 	</div>

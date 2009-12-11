@@ -41,7 +41,7 @@
 			<div id="header">
 				<div id="title">
 					<a href="/dashboard/index.rails" class="logo">
-						<img src="/Content/images/jelloscrum.png" alt="jellologo"/>
+					  <img src="/Content/images/logo.png" alt="JelloScrum"/>
 					</a>
 				</div>
 				<?brail OutputSubView("profile") ?>
@@ -101,30 +101,9 @@
 			</div>
 			<div id="footer">
 				<p>
-					Copyright &copy; 2009 <a href="http://www.auxilium.nl" target="_blank" title="Auxilium BV">Auxilium BV</a>. All rights reserved.
+					Copyright &copy; 2009 <a href="http://www.auxilium.nl" title="Auxilium BV">Auxilium BV</a>. All rights reserved.
 				</p>
-			</div>
-			<script type="text/javascript">
-				function herstelBreedte()
-				{
-				  paginaBreedte = parseInt($("#sprintdashboard").width());
-				  kleineContentBreedte = parseInt($("#dashboardmenu").width());
-
-				  groteContentBreedte = paginaBreedte - kleineContentBreedte;
-				  groteContentBreedte = groteContentBreedte - 80;//Correctie
-
-				  $("#dashboardContent").width(groteContentBreedte);
-				}
-
-				$(document).ready(function(){
-				  herstelBreedte();
-
-				  $(window).resize(function(){
-				    herstelBreedte();
-				  });
-				   
-				});
-			</script>
-			</div>		
+			</div>			
+		</div>		
 	</body>
 </html>

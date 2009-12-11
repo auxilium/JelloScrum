@@ -43,7 +43,7 @@
       <div id="header"> 
 		    <div id="title">
 		      <a href="/dashboard/index.rails" class="logo">
-			    <img src="/Content/images/jelloscrum.png" alt="jellologo"/>
+			    <img src="/Content/images/logo.png" alt="JelloScrum"/>
 		      </a>
         </div>
         <?brail OutputSubView("profile") ?>

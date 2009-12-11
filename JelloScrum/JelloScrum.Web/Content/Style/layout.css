@@ -115,11 +115,9 @@ img.absmiddle
 #  Header                            #
 #####################################*/
 div#header
-{
-	padding-left: 8px;
-	margin-top: 20px;
-	margin-left: 20px;
-	height: 37px;
+{	
+	/*margin-top: 20px; */	
+	height: 50px;
 	display: block;
 }
 /*####################################
@@ -128,13 +126,13 @@ div#header
 div#header div#title
 {
 	width: 300px;
-	height: 37px;
+	
 	float: left;
 }
 
 a.logo
 {
-	margin-left: 15px;
+	margin-left: 20px;
 }
 /*####################################
 #  Profile                           #
@@ -142,7 +140,8 @@ a.logo
 #Profile
 {
 	float: right;
-	margin-right: 30px;
+	margin-right: 20px;
+	margin-top: 9px;
 }
 .avatar
 {
@@ -428,6 +427,7 @@ a.button
 	cursor: pointer;
 	padding: 3px;
 	padding-left: 20px;
+	vertical-align: top;
 }
 
 .login
@@ -481,7 +481,7 @@ a.button
 
 .opslaan
 {
-	background: url( "/content/images/save.gif" ) no-repeat 3px 3px;
+	background: url( "/content/images/media-floppy.png" ) no-repeat 3px 3px;
 	padding-left: 20px;
 }
 
@@ -917,7 +917,8 @@ li.active div.outContent
 
 #dashboardContent
 {
-	float: left;
+	/*float: left;	*/
+	overflow: hidden;
 }
 
 #dashboardStatus
