@@ -17,12 +17,11 @@ namespace JelloScrum.Services
     using System;
     using System.DirectoryServices;
     using Container;
-    using JelloScrum.Model.Entities;
-    using JelloScrum.Model.IRepositories;
-    using JelloScrum.Model.Services;
     using Login.Model;
     using Login.Services;
     using Login.Wachtwoord;
+    using Model.Entities;
+    using Model.IRepositories;
 
     /// <summary>
     /// Generic Service for logging on in a LDAP environment
@@ -38,22 +37,22 @@ namespace JelloScrum.Services
 
         public string LDAPPath
         {
-            get { return ldapPath; }
-            set { ldapPath = value; }
+            get { return this.ldapPath; }
+            set { this.ldapPath = value; }
         }
 
         public string Domain
         {
-            get { return domain; }
-            set { domain = value; }
+            get { return this.domain; }
+            set { this.domain = value; }
         }
 
         /// <summary>
-        /// check the password against the user
+        /// check if the encrypted version of password is equal to the user's password
         /// </summary>
         /// <param name="password"></param>
         /// <param name="user"></param>
-        private static bool CheckPassword(string password, IUser user)
+        private static bool CheckPasswordEncryption(string password, IUser user)
         {
             return PassWordHelper.EncryptPassWord(password, user.Salt) == user.PassWord;
         }
@@ -62,14 +61,14 @@ namespace JelloScrum.Services
         {
             if (sr.Properties[field] != null)
             {
-                return (String)sr.Properties[field][0];
+                return (String) sr.Properties[field][0];
             }
             return null;
         }
-        
-        private User LDapGebruikerCheck(string username, string password)
+
+        private User LDAPAccountCheck(string username, string password)
         {
-            string domainAndUsername = domain + @"\" + username;
+            string domainAndUsername = this.domain + @"\" + username;
             string fullName;
 
             DirectoryEntry entry = new DirectoryEntry(LDAPPath, domainAndUsername, password);
@@ -87,27 +86,27 @@ namespace JelloScrum.Services
                 }
                 fullName = SearchResultProperty(result, "cn");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
 
-            User gebruiker = userService.ZoekOpGebruikersNaam(username);
-            if(gebruiker == null)
+            User user = this.userService.ZoekOpGebruikersNaam(username);
+            if (user == null)
             {
-                gebruiker = new User();
-                gebruiker.ChangeUserName(username);
-                gebruiker.ChangePassWord(password);
-                gebruiker.Name = username;
-                gebruiker.FullName = fullName;
-                userService.Save(gebruiker);
+                user = new User();
+                user.ChangeUserName(username);
+                user.ChangePassWord(password);
+                user.Name = username;
+                user.FullName = fullName;
+                this.userService.Save(user);
             }
-            else
+            else if (!CheckPasswordEncryption(password, user))
             {
-                gebruiker.ChangePassWord(password);
-                userService.Save(gebruiker);
+                user.ChangePassWord(password);
+                this.userService.Save(user);
             }
-            return gebruiker;
+            return user;
         }
 
         /// <summary>
@@ -118,7 +117,7 @@ namespace JelloScrum.Services
         /// <returns></returns>
         public bool CheckPassWord(string userName, string passWord)
         {
-            return GetUser(userName, passWord) != null;
+            return LDAPAccountCheck(userName, passWord) != null;
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace JelloScrum.Services
         /// <returns></returns>
         public bool IsAllowedToLogin(string userName, string passWord)
         {
-            User user = GetUser(userName, passWord) as User;
+            User user = LDAPAccountCheck(userName, passWord);
             return user != null && user.IsActive;
         }
 
@@ -141,7 +140,7 @@ namespace JelloScrum.Services
         /// <returns></returns>
         public T GetUser(long id)
         {
-            return userService.Load(id) as T;
+            return this.userService.Load(id) as T;
         }
 
         /// <summary>
@@ -154,12 +153,12 @@ namespace JelloScrum.Services
         {
             //first search the database, if a user with that password exists
             User user = this.userService.ZoekOpGebruikersNaam(userName);
-            if (CheckPassword(passWord, user))
+            if (CheckPasswordEncryption(passWord, user))
             {
                 return user as T;
             }
             //an invalid password was entered, let's check if the password has changed using LDAP check
-            return LDapGebruikerCheck(userName, passWord) as T;
+            return LDAPAccountCheck(userName, passWord) as T;
         }
 
         /// <summary>
@@ -170,9 +169,9 @@ namespace JelloScrum.Services
         /// <returns></returns>
         public bool IsUserNameValid(string userName, T user)
         {
-            User foundUser = userService.ZoekOpGebruikersNaam(userName);
+            User foundUser = this.userService.ZoekOpGebruikersNaam(userName);
 
-            return foundUser == null || foundUser.Equals(user); 
+            return foundUser == null || foundUser.Equals(user);
         }
     }
 }
