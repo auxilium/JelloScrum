@@ -152,12 +152,14 @@ namespace JelloScrum.Services
         /// <returns></returns>
         public T GetUser(string userName, string passWord)
         {
-            //first search the database, if null is returned, try the LDAP check
-            User user = this.userService.ZoekOpGebruikersNaam(userName) ?? LDapGebruikerCheck(userName, passWord);
-
-            if (user != null && CheckPassword(passWord, user))
+            //first search the database, if a user with that password exists
+            User user = this.userService.ZoekOpGebruikersNaam(userName);
+            if (CheckPassword(passWord, user))
+            {
                 return user as T;
-            return null;
+            }
+            //an invalid password was entered, let's check if the password has changed using LDAP check
+            return LDapGebruikerCheck(userName, passWord) as T;
         }
 
         /// <summary>
