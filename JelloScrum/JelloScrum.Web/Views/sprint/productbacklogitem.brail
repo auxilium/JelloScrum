@@ -4,11 +4,8 @@
     <span title="${story.Description}" style="text-decoration: underline; cursor: help;">${story.Title}</span>
   </td>
   <td>${story.productBacklogPriority}</td>
-  <td>
-    ${OpmaakHelper.Tijd(story.Estimation)}
-  </td>
+  <td>${OpmaakHelper.Tijd(story.Estimation)}</td>
   <td>
     <a href="KoppelStoryAanSprint.rails?sprintId=${gekozenSprint.Id}&storyId=${story.Id}" class="button naarSprint">naar sprint</a>
-  </td>
-  
+  </td>  
 </tr>

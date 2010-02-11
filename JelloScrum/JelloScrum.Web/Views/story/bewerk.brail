@@ -74,11 +74,7 @@
 	</div>
 	<br class="clear"/>
 	<div style="margin-top: 12px;" class="gegevensBlock">
-		<?brail if IsDefined("sprint"):?>
-		<a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button reset">Annuleren</a>
-		<?brail else: ?>
-		<a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button reset">Annuleren</a>
-		<?brail end ?>
+		
 		${Form.Submit("Opslaan", {@class: 'button opslaan'})}
 		<?brail 
         if story.Id == 0:
@@ -88,6 +84,11 @@
         end
       ?>
 		<input type="hidden" id="Opslaan_Volgende_Hidden" name="OpslaanVolgendeHidden"  value="false"/>
+		<?brail if IsDefined("sprint"):?>
+		<a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button reset">Annuleren</a>
+		<?brail else: ?>
+		<a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button reset">Annuleren</a>
+		<?brail end ?>
 		<br class="clear"/>
 	</div>
 

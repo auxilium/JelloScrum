@@ -7,7 +7,7 @@
 	<hr/>
 
   <div>
-    <label for="item_Doel">Sprint titel</label>
+    <label for="item_Doel">Sprint doel</label>
     <br/>
     <input type="text" name="sprint.Goal" id="item_Doel"  value="${sprint.Goal}" style="width: 275px;" />
     <span style="color:#666767; margin-left:8px;">Geef hier de titel op die weergegeven zal worden binnen JelloScrum.</span>

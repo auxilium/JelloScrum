@@ -83,7 +83,9 @@
 	
 		<tr class="sectionheader"><td colspan="2">Part Cover - Coverage by class</td></tr>
 		
-		<xsl:for-each select="//PartCoverReport/type">
+		<xsl:variable name="asms" select="/PartCoverReport/Type"/>
+		<xsl:for-each select="$asms">
+      <xsl:variable name="current-asm-node" select="."/>
 			<tr>
 				<xsl:variable name="className" select="@name"/>
 				<td>
@@ -97,8 +99,8 @@
 					<xsl:value-of select="$className"/>
 				</td>
 				
-				<xsl:variable name="codeSize" select="sum(./method/code/pt/@len)+0"/>
-				<xsl:variable name="coveredCodeSize" select="sum(./method/code/pt[@visit>0]/@len)+0"/>
+				<xsl:variable name="codeSize" select="sum(Method/pt/@len)+0"/>
+				<xsl:variable name="coveredCodeSize" select="sum(Method/pt[@visit>0]/@len)+0"/>
 				
 				<td>          
 				  <div>
@@ -127,9 +129,10 @@
                 <td style="width:10%;">Code size</td>
                 <td style="width:10%;">Covered</td>
               </tr>
-  						<xsl:for-each select="./method">					
-  						  <xsl:variable name="methodCodeSize" select="sum(./code/pt/@len)+0"/>
-				        <xsl:variable name="methodCoveredCodeSize" select="sum(./code/pt[@visit>0]/@len)+0"/>
+
+  						<xsl:for-each select="./Method">
+  						  <xsl:variable name="methodCodeSize" select="sum(pt/@len)+0"/>
+				        <xsl:variable name="methodCoveredCodeSize" select="sum(pt[@visit>0]/@len)+0"/>
   						  <tr>
   						  	<xsl:if test="position() mod 2 = 0">
             				<xsl:attribute name="class">section-oddrow</xsl:attribute>	

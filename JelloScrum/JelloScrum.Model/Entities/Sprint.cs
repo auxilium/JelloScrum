@@ -18,6 +18,7 @@ namespace JelloScrum.Model.Entities
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Castle.ActiveRecord;
+    using Castle.Components.Validator;
     using Enumerations;
 
     /// <summary>
@@ -72,7 +73,7 @@ namespace JelloScrum.Model.Entities
         /// Gets or sets the goal of this sprint.
         /// </summary>
         /// <value>The goal</value>
-        [Property]
+        [Property, ValidateNonEmpty("Please provide a goal.")]
         public virtual string Goal
         {
             get { return goal; }

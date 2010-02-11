@@ -485,6 +485,18 @@ a.button
 	padding-left: 20px;
 }
 
+.naarSprint
+{
+	background: url( "/content/images/go-next.png" ) no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
+.uitSprint
+{
+	background: url("/content/images/go-previous.png") no-repeat 3px 3px;
+	padding-left: 20px;
+}
+
 .excel
 {
 	background: url( "/content/images/excel.gif" ) no-repeat 3px 3px;
@@ -493,10 +505,13 @@ a.button
 
 #newProjectButtonContainer
 {
-	margin-top: 10px;
+	float: right; 
+	width: 125px; 
+	padding-left: 10px;
+	/*margin-top: 10px;
 	float: right;
 	width: 15%;
-	text-align: right;
+	text-align: right;*/
 }
 
 .ButtonContainer
