@@ -16,3 +16,5 @@ Debug
 TestResult.xml
 *avatars*
 Thumbs.db
+Libs/Coverage/report.xslt
+Libs/Coverage/result.*
