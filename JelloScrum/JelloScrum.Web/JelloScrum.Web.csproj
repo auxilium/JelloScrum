@@ -439,6 +439,8 @@
     <None Include="Views\dashboard\dashboardmenu.brail" />
     <None Include="Views\dashboard\index.brail" />
     <None Include="Views\cardwall\cardwall.brail" />
+    <None Include="Views\subviews\_header.brail" />
+    <None Include="Views\subviews\_footer.brail" />
     <None Include="Views\sprint\productbacklogitem.brail" />
     <None Include="Views\sprint\sprintlogitem.brail" />
     <None Include="Views\sprint\sprintplanning.brail" />
@@ -459,7 +461,7 @@
     <None Include="Views\layouts\projectbeheer.brail" />
     <None Include="Views\layouts\databaselayout.brail" />
     <None Include="Views\layouts\login.brail" />
-    <None Include="Views\layouts\profile.brail" />
+    <None Include="Views\subviews\_profile.brail" />
     <None Include="Views\layouts\sprint.brail" />
     <None Include="Views\login\index.brail" />
     <None Include="Views\management\index.brail" />

@@ -39,14 +39,11 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<div id="title">
-					<a href="/dashboard/index.rails" class="logo">
-					  <img src="/Content/images/logo.png" alt="JelloScrum"/>
-					</a>
-				</div>
-				<?brail OutputSubView("profile") ?>
+				<?brail
+          OutputSubView("/subviews/_header")
+        ?>
 			</div>
-			<div class="cornered clear" id="contentblock">
+			<div id="contentblock">
 				<div class="heading cornered">
 					<div id="beginTitel" style="float: left;">
 						<div style="float: left; margin-left: 10px;">
@@ -59,7 +56,9 @@
 					<br style="clear: both;"/>
 					<?brail end ?>
 				</div>
+				
 				<?brail OutputSubView('/shared/errorMessages') ?>
+				
 				<div class="gegevensBlock" id="sprintdashboard">
 					<h1>
 						Sprint: ${sprint.Goal}
@@ -67,7 +66,7 @@
 					<hr/>
 					<div id="dashboardLeft">
 						<div id="dashboardmenu">
-							<div id="dashboardmenuTop" class="corneredTop">
+							<div id="dashboardmenuTop">
 								Sprint menu
 							</div>
 							<div id="dashboardmenuContent">
@@ -81,7 +80,7 @@
 							</div>
 						</div>
 						<div id="dashboardStatus">
-							<div id="dashboardStatusTop" class="corneredTop">
+							<div id="dashboardStatusTop">
 								Sprint status
 							</div>
 							<div id="dashboardStatusContent">
@@ -100,9 +99,9 @@
 				
 			</div>
 			<div id="footer">
-				<p>
-					Copyright &copy; 2009 <a href="http://www.auxilium.nl" title="Auxilium BV">Auxilium BV</a>. All rights reserved.
-				</p>
+			 <?brail
+        OutputSubView("/subviews/_footer")
+       ?>
 			</div>			
 		</div>		
 	</body>

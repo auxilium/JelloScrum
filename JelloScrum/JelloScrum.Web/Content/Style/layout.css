@@ -31,6 +31,7 @@ body
 	font-variant: normal;
 	font-weight: normal;
 	overflow-y: scroll;
+	margin: 0px;
 }
 
 em
@@ -117,18 +118,81 @@ img.absmiddle
 div#header
 {	
 	/*margin-top: 20px; */	
-	height: 50px;
+	height: 58px;
 	display: block;
 }
+
 /*####################################
 #  Title                             #
 #####################################*/
 div#header div#title
 {
+	margin-top: 8px;
 	width: 300px;
 	
 	float: left;
 }
+
+ul#topnav 
+{	
+	border-color: #C2C2C2;
+	border-style: none solid solid solid;
+	border-width: 1px;
+	/*background: #E8F1FF;*/
+	background: url("/content/images/bg.png") repeat scroll 0 0 transparent;
+	
+	padding: 2px 5px 2px 5px;
+	float: right;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.2);
+	margin: 0px 20px 0px 0px;
+	list-style: none;
+}
+
+ul#topnav a 
+{
+	text-decoration: none;
+	color: #272D32;
+}
+
+ul#topnav a.active 
+{
+	font-weight: bold;
+}
+
+ul#topnav li 
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+
+#topnav li:before { content: "| "; }
+#topnav li:first-child:before { content: ""; }
+
+* html #topnav li
+{
+border-left: 1px solid black;
+padding: 0 0.4em 0 0.4em;
+margin: 0 0.4em 0 -0.4em;
+}
+
+
+
+/*IE workaround*/
+/*All IE browsers*/
+/*Win IE browsers - hide from Mac IE\*/
+* html #topnav { height: 1%; }
+
+* html #topnav li
+{
+display: block;
+float: left;
+}
+
+/*End hide*/
+/*Mac IE 5*/
+* html #topnav li:first-child { border-left: 0; }
+
 
 a.logo
 {
@@ -137,11 +201,12 @@ a.logo
 /*####################################
 #  Profile                           #
 #####################################*/
-#Profile
+#profile
 {
+	clear: right;
 	float: right;
 	margin-right: 20px;
-	margin-top: 9px;
+	margin-top: 5px;	
 }
 .avatar
 {
@@ -1309,4 +1374,23 @@ span.moscow {
 	vertical-align: top;
 }
       
-/* todo: de verschillende moscow prioriteiten allemaal wat valer maken? */
+
+
+div#productBackLog 
+{
+	float:left;
+	width: 50%; 
+	padding-right: 5px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+div#sprintBackLog
+{
+	float:left;
+	width: 50%; 	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}

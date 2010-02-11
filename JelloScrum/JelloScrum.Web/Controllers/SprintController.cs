@@ -392,7 +392,6 @@ namespace JelloScrum.Web.Controllers
         /// <summary>
         /// Toont een knop waarmee een sprint kan worden afgesloten.
         /// </summary>
-        [Layout("projectbeheer")]
         public void Sluit([ARFetch("sprintId")] Sprint sprint)
         {
             PropertyBag.Add("sprint", sprint);
@@ -401,7 +400,6 @@ namespace JelloScrum.Web.Controllers
         /// <summary>
         /// Sluit de gegeven sprint af.
         /// </summary>
-        [Layout("projectbeheer")]
         public void SprintAfsluiten([ARFetch("sprintId")] Sprint sprint)
         {
             //todo: security!

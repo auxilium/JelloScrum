@@ -41,25 +41,22 @@
   <body>
     <div id="container">
       <div id="header"> 
-		    <div id="title">
-		      <a href="/dashboard/index.rails" class="logo">
-			    <img src="/Content/images/logo.png" alt="JelloScrum"/>
-		      </a>
-        </div>
-        <?brail OutputSubView("profile") ?>
+		    <?brail
+          OutputSubView("/subviews/_header")
+        ?>
       </div>
-      <div class="cornered clear" id="contentblock">
+      <div id="contentblock">
         <div class="heading cornered">
-			<div id="beginTitel" style="float: left;">
-				<div style="float: left; margin-left: 10px;">
-					<a href="/home/index.rails" style="color: #FFFFFF;">Home</a>&nbsp;
-				</div>
-				<br class="clear"/>
-			</div>
-             <?brail if titel != "" : ?>
-			           <div id="restTitel" style="float:left">>&nbsp;${titel}</div>
-                <br style="clear: both;"/>
-            <?brail end ?>
+			    <div id="beginTitel" style="float: left;">
+				    <div style="float: left; margin-left: 10px;">
+					    <a href="/home/index.rails" style="color: #FFFFFF;">Home</a>&nbsp;
+				    </div>
+				    <br class="clear"/>
+			    </div>
+          <?brail if titel != "" : ?>
+			      <div id="restTitel" style="float:left">>&nbsp;${titel}</div>
+            <br style="clear: both;"/>
+          <?brail end ?>
         </div>
         
         <?brail OutputSubView('/shared/errorMessages') ?>
@@ -67,16 +64,10 @@
         <br class="clear"/>
       </div>
       <div id="footer">
-        <p>
-          Copyright &copy; 2010 <a href="http://www.auxilium.nl" target="_blank" title="Auxilium BV">Auxilium BV</a>. All rights reserved.
-        </p>
+       <?brail
+        OutputSubView("/subviews/_footer")
+       ?>
       </div>
-    </div>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			/*$('.cornered').corner("7px");
-			$('.corneredTop').corner("7px top");*/
-		});
-	</script>
+    </div>	
   </body>
 </html>

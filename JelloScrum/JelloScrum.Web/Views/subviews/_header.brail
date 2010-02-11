@@ -1,0 +1,27 @@
+<div id="title">
+  <a href="/dashboard/index.rails" class="logo">
+	  <img src="/Content/images/logo.png" alt="JelloScrum"/>
+  </a>
+</div>
+<ul id="topnav">
+  <li><a href="/home/index.rails">all projects</a></li>
+  <li><a href="/project/activeproject.rails">active project</a></li>
+  <li><a href="/project/activeprojectbacklog.rails">project backlog</a></li>
+  <li><a href="/dashboard/index.rails">active sprint</a></li>
+</ul>
+<div id="profile">
+  <div class="avatar">
+    <?brail 
+      if (currentUser.smallAvatar != ""):      
+    ?>
+    <img src="${currentUser.smallAvatar}"/>
+    <?brail 
+      end
+    ?>
+  </div>
+  <div class="userPref">
+    <a href="/GebruikerBeheer/GebruikersProfiel.rails">${currentUser.FullName}</a>
+    <br/>
+    <a href="/login/logout.rails">logout</a>
+  </div>  
+</div>

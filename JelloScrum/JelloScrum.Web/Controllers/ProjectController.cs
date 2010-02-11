@@ -17,6 +17,7 @@ namespace JelloScrum.Web.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Configuration;
     using Castle.ActiveRecord;
     using Castle.MonoRail.ActiveRecordSupport;
@@ -328,6 +329,38 @@ namespace JelloScrum.Web.Controllers
         {
             PropertyBag.Add("project", project);
             CancelLayout();
+        }
+
+        /// <summary>
+        /// Redirect the user to the dashboard of its active project
+        /// </summary>
+        public void ActiveProject()
+        {
+            if (CurrentUser.ActiveSprint == null)
+            {
+                Redirect("home", "index");
+                return;
+            }
+
+            NameValueCollection args = new NameValueCollection();
+            args.Add("projectId", CurrentUser.ActiveSprint.Project.Id.ToString());
+            Redirect("project", "project", args);
+        }
+
+        /// <summary>
+        /// Redirect the user to the projectbacklog of its active project
+        /// </summary>
+        public void ActiveProjectBacklog()
+        {
+            if (CurrentUser.ActiveSprint == null)
+            {
+                Redirect("home", "index");
+                return;
+            }
+
+            NameValueCollection args = new NameValueCollection();
+            args.Add("projectId", CurrentUser.ActiveSprint.Project.Id.ToString());
+            Redirect("project", "productbacklog", args);
         }
     }
 }
