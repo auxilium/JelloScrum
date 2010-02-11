@@ -70,47 +70,53 @@
   </div>
   
   <script type="text/javascript">
-  function updateTijd(){
-    $.ajax({  
-      url: "/Sprint/sprintplanningsprinttijd.rails?sprintId=${gekozenSprint.Id}",
-      success: function(html){
-        $("#tijdResterend").html(html);
-      }
-    });
-  }
   
-  $("#productBackLog .naarSprint").live("click", function(event){
-    event.preventDefault();
-    element  = $(this);
-    $.ajax({        
-        url: element.attr("href"),
+  $(document).ready(function(){
+    $("#sprintplanning").removeClass("newButton").addClass("selectedButton");
+    
+    function updateTijd(){
+      $.ajax({  
+        url: "/Sprint/sprintplanningsprinttijd.rails?sprintId=${gekozenSprint.Id}",
         success: function(html){
-          updateTijd();
-          $("#sprintLogTable tbody").prepend(html);
-          element.parent().parent().remove();          
-           //voeg wat terug komt toe aan de sprintlog
-        },
-        error: function(html){
-           // location.reload();
+          $("#tijdResterend").html(html);
         }
-    });
-  });
+      });
+    }
   
-  $("#sprintLogTable .uitSprint").live("click", function(event){
-    event.preventDefault();
-    element  = $(this);
-    $.ajax({        
-        url: element.attr("href"),
-        success: function(html){
-          updateTijd();
-          $("#productBacklogTable tbody").prepend(html);
-          element.parent().parent().remove();
-           //voeg wat terug komt toe aan de sprintlog
-        },
-        error: function(html){
-           // location.reload();
-        }
+    $("#productBackLog .naarSprint").live("click", function(event){
+      event.preventDefault();
+      element  = $(this);
+      $.ajax({        
+          url: element.attr("href"),
+          success: function(html){
+            updateTijd();
+            $("#sprintLogTable tbody").prepend(html);
+            element.parent().parent().remove();          
+             //voeg wat terug komt toe aan de sprintlog
+          },
+          error: function(html){
+             // location.reload();
+          }
+      });
     });
+
+    $("#sprintLogTable .uitSprint").live("click", function(event){
+      event.preventDefault();
+      element  = $(this);
+      $.ajax({        
+          url: element.attr("href"),
+          success: function(html){
+            updateTijd();
+            $("#productBacklogTable tbody").prepend(html);
+            element.parent().parent().remove();
+             //voeg wat terug komt toe aan de sprintlog
+          },
+          error: function(html){
+             // location.reload();
+          }
+      });
+    });
+  
   });
   </script>
   
