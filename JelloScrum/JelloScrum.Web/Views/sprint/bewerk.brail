@@ -72,8 +72,14 @@
     </table>
   </div>
   <div>
-    <input class="button opslaan" type="submit" value="Opslaan"/>
-    <a class="button reset" href="/Project/project.rails?projectId=${project.Id}">Annuleren</a>
+    <button class="button">
+      <img src="/content/images/save.png" alt="Save" />Opslaan
+    </button>
+    
+    
+    <a href="/Project/project.rails?projectId=${project.Id}" class="button">
+      <img src="/content/images/view-refresh.png" alt="Cancel"/>Annuleren
+    </a>
     <br class="clear"/>
   </div>
 

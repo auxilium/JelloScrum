@@ -16,7 +16,10 @@
   <br clear="all"/>
   
   <div>
-    ${Form.Submit("Opslaan", {@class: 'button opslaan'})}
+    
+    <button class="button">
+      <img src="/content/images/save.png" alt="Save" />Opslaan
+    </button>
   
     <?brail 
 	    href = "/home/index.rails"
@@ -24,7 +27,9 @@
 		    href = "/project/project.rails?projectid=" + item.Id
 	    end
 		?>		
-    <a href="${href}" class="button reset">Annuleren</a>
+    <a href="${href}" class="button">
+      <img src="/content/images/view-refresh.png" alt="Cancel" />Annuleren
+    </a>
     <br class="clear"/>
   </div>
 

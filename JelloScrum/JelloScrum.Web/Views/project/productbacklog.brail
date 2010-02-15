@@ -12,9 +12,9 @@
   <hr />
   
   <div id="newProjectButtonContainer">
-    <a href="/Story/nieuw.rails?projectId=${project.Id}" id="A1" class="button nieuw">Story toevoegen</a>
+    <a href="/Story/nieuw.rails?projectId=${project.Id}" class="button"><img src="/content/images/list-add.png" alt="Add a new story." />Story toevoegen</a>
     <br />
-    <a href="ExportProductBackLog.rails?projectId=${project.Id}" id="A2" class="button excel">Excel</a>
+    <a href="ExportProductBackLog.rails?projectId=${project.Id}" class="button"><img src="/content/images/excel.gif" alt="Export the productbacklog to excel." />Excel</a>
   </div>
   <div style="overflow: hidden">
     <table class="tablesorter" id="projectTable" style="width: 100%">
@@ -54,7 +54,9 @@
           <td class="schatting inlineEdit">${TimeSpanHelper.TimeSpanInMinuten(story.Estimation)}</td>
           <td>${story.Tasks.Count}</td>
           <td style="text-align:center;">
-            <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button wijzigen">Bewerk</a>
+            <a href="/story/Bewerk.rails?storyId=${story.Id}" class="button">
+              <img src="/content/images/edit.png" alt="bewerk" />Bewerk
+            </a>
           </td>
         </tr>
       <?brail 

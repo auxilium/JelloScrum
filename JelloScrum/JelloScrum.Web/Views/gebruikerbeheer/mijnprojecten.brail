@@ -30,7 +30,9 @@
 									<td>${projectShortList.Project.Id}</td>
 									<td>${projectShortList.Project.Name}</td>
 									<td>
-										<a href="ProjectVerwijderenVanShortList.rails?id=${projectShortList.Id}" class="button verwijderen">Verwijderen</a>
+										<a href="ProjectVerwijderenVanShortList.rails?id=${projectShortList.Id}" class="button">
+										  <img src="/content/images/trash.png" alt="Remove" />Verwijderen
+										</a>
 									</td>
 								</tr>
 								<?brail end?>

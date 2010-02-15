@@ -6,6 +6,8 @@
   <td>${story.productBacklogPriority}</td>
   <td>${OpmaakHelper.Tijd(story.Estimation)}</td>
   <td>
-    <a href="KoppelStoryAanSprint.rails?sprintId=${gekozenSprint.Id}&storyId=${story.Id}" class="button naarSprint">naar sprint</a>
+    <a href="KoppelStoryAanSprint.rails?sprintId=${gekozenSprint.Id}&storyId=${story.Id}" class="button">
+      <img src="/content/images/go-next.png" alt="Naar sprint" />naar sprint
+    </a>
   </td>  
 </tr>

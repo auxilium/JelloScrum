@@ -35,16 +35,21 @@
         <td>${TimeSpanHelper.TimeSpanInMinuten(story.Story.Estimation)}</td>
         <td>${story.Story.Tasks.Count}</td>
         <td style="text-align:center;">
-          <a href="/Story/Bewerk.rails?storyId=${story.Story.Id}&sprintId=${sprint.Id}" class="button wijzigen">Bewerk</a>
+          <a href="/Story/Bewerk.rails?storyId=${story.Story.Id}&sprintId=${sprint.Id}" class="button">
+            <img src="/content/images/edit.png" alt="Bewerk"/>Bewerk
+          </a>
         </td>
       </tr>
       <?brail end end?>
     </tbody>
   </table>
-  <div id="newProjectButtonContainer" style="width: 60px; margin: 0px; margin-top: 10px;">
-    <a href="ExportSprintBackLog.rails?sprintId=${sprint.Id}" id="voegToe" class="button excel">Excel</a>
+  
+  <div id="newProjectButtonContainer" style="width: 60px; margin: 0px;">
+    <a href="ExportSprintBackLog.rails?sprintId=${sprint.Id}" id="voegToe" class="button" style="margin: 0px;">
+      <img src="/content/images/excel.gif" alt="Bewerk"/>Excel
+    </a>
   </div>
-  <br class="clear"/>
+  
   <?brail OutputSubView("/subviews/pager") ?>
 
   <script type="text/javascript" src="/views/sprint/sprintbacklog.js"></script>

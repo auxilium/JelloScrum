@@ -65,11 +65,11 @@
 					</h1>
 					<hr/>
 					<div id="dashboardLeft">
-						<div id="dashboardmenu">
-							<div id="dashboardmenuTop">
+						<div class="dashboardmenu">
+							<div class="dashboardmenuTop">
 								Sprint menu
 							</div>
-							<div id="dashboardmenuContent">
+							<div class="dashboardmenuContent">
 								<a href="/sprint/sprint.rails?sprintId=${sprint.Id}" class="newButton" id="takenoverzicht">Taken overzicht</a>
 								<a href="/sprint/sprintbacklog.rails?sprintId=${sprint.Id}" class="newButton" id="sprintbacklog">Sprint backlog</a>
 								<a href="/sprint/sprintplanning.rails?sprintId=${sprint.Id}" class="newButton" id="sprintplanning">Planning</a>
@@ -79,11 +79,11 @@
 								<a href="/sprint/urenregistreren.rails?sprintId=${sprint.Id}&maandag=${DateHelper.GetMonday(DateTime.Now).ToString("dd-MM-yyyy")}" class="newButton" id="urenregistreren">Uren registreren</a>
 							</div>
 						</div>
-						<div id="dashboardStatus">
-							<div id="dashboardStatusTop">
+						<div class="dashboardmenu">
+							<div class="dashboardmenuTop">
 								Sprint status
 							</div>
-							<div id="dashboardStatusContent">
+							<div class="dashboardmenuContent">
 								<?brail OutputSubView("/sprint/health", {"sprintId" : sprint.Id, "taskProgress": SprintHealthHelper.GetTaskProgress(sprint), "velocity": SprintHealthHelper.GetVelocity(sprint)}); ?>
 							</div>
 						</div>

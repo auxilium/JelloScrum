@@ -2,7 +2,7 @@
 table.tablesorter {
 	font-family:arial;
 	background-color: #CCC;
-	margin-top: 7px;
+	/*margin-top: 7px;*/
 	margin-bottom: 3px;
 	font-size: 12px;
 	text-align: left;
@@ -163,4 +163,10 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	float:right;
 	padding-top:10px;
 
+}
+
+#pager
+{
+	/*float: left;
+	overflow: auto;*/
 }

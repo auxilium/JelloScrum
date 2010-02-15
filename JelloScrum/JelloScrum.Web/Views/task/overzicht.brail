@@ -15,7 +15,9 @@
     end
   ?>
   <!-- NOTE: een nieuw taskedit block wordt met jQuery hiervoor gedropt -->
-  <a href="" id="addtask" class="button nieuw">Voeg een taak toe</a>
+  <a href="" id="addtask" class="button">
+    <img src="/content/images/list-add.png" alt="add a task"/>Voeg een taak toe
+  </a>
 
 </div>
 

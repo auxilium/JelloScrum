@@ -74,20 +74,29 @@
 	</div>
 	<br class="clear"/>
 	<div style="margin-top: 12px;" class="gegevensBlock">
-		
-		${Form.Submit("Opslaan", {@class: 'button opslaan'})}
-		<?brail 
-        if story.Id == 0:
-      ?>
-		<input type="button" class="button opslaan" id="OpslaanVolgende"  value="Opslaan en nieuwe story"/>
+			
+		<button class="button" type="submit">
+		  <img src="/content/images/save.png" alt="Opslaan"/>Opslaan
+		</button>
+				
 		<?brail
-        end
-      ?>
+      if story.Id == 0:
+    ?>
+		  <button id="OpslaanVolgende" class="button" >
+		    <img src="/content/images/save.png" alt="Opslaan en nieuwe story"/>Opslaan en nieuwe story
+		  </button>
+		<?brail
+      end
+    ?>
 		<input type="hidden" id="Opslaan_Volgende_Hidden" name="OpslaanVolgendeHidden"  value="false"/>
 		<?brail if IsDefined("sprint"):?>
-		<a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button reset">Annuleren</a>
+		<a href="/Sprint/SprintBacklog.rails?sprintId=${sprint.Id}" class="button">
+		  <img src="/content/images/view-refresh.png" alt="Cancel" />Annuleren
+		</a>
 		<?brail else: ?>
-		<a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button reset">Annuleren</a>
+		<a href="/Project/ProductBacklog.rails?projectId=${story.Project.Id}" class="button">
+		  <img src="/content/images/view-refresh.png" alt="Cancel" />Annuleren
+		</a>
 		<?brail end ?>
 		<br class="clear"/>
 	</div>

@@ -123,7 +123,7 @@ namespace JelloScrum.Web.Components
         private void RenderSaveButton()
         {
             this.component.Append("<div id='opslaan' style='float:right;'>");
-            this.component.Append("<input type='submit' value='Opslaan' class='button opslaan'/>");
+            this.component.Append("<button class='button'><img src='/content/images/save.png' alt='Save' />Opslaan</button>");
             this.component.Append("</div>");
         }
 

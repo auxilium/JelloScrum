@@ -23,7 +23,9 @@ img
 body
 {
 	background: #272D32 none repeat scroll 0 0;
-	font-family: "Lucida Grande" ,Geneva,Arial,Verdana,sans-serif;
+	/*font-family: "Lucida Grande" ,Geneva,Arial,Verdana,sans-serif;*/
+	/*font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;*/
+	font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #333333;
 	font-size: 12px;
 	line-height: 1.5;
@@ -80,6 +82,7 @@ h5
 	line-height: 1.2em;
 	font-weight: bold;
 	padding-bottom: 3px;
+	margin: 0px;
 }
 .center
 {
@@ -89,18 +92,16 @@ h5
 {
 	cursor: pointer;
 }
+/*
 .button
 {
 	display: inline;
 	cursor: pointer;
 	font-weight: bold;
 	padding: 4px;
-}
-.button:hover
-{
-	background-color: #49494A;
-	color: #ffffff;
-}
+}*/
+
+
 .activeButton
 {
 	background-color: #49494A;
@@ -139,8 +140,7 @@ ul#topnav
 	border-style: none solid solid solid;
 	border-width: 1px;
 	/*background: #E8F1FF;*/
-	background: url("/content/images/bg.png") repeat scroll 0 0 transparent;
-	
+	background: url("/content/images/bg.png") repeat scroll 0 0 transparent;	
 	padding: 2px 5px 2px 5px;
 	float: right;
 	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.2);
@@ -460,7 +460,7 @@ li.task .taskDetails
 /*#########*/
 /* Buttons */
 /*#########*/
-button
+/*button
 {
 	border: 1px solid #AAA;
 	padding: 3px;
@@ -468,23 +468,82 @@ button
 	color: #000;
 	background-color: #DDD !important;
 	cursor: pointer;
-}
+}*/
 
 .button
 {
-	border: 1px solid #AAA;
+	font-size: 11px;
+	/*border: 1px solid #AAA;
 	padding: 3px;
 	height: 23px;
 	color: #000;
-	background-color: #DDD !important;
+	
 	cursor: pointer;
+	url("/content/images/bg.png") repeat scroll 0 0 transparent*/
+	
+	background:url(/content/images/overlay.png) repeat-x scroll 0 0 #E7F0FF;
+	
+	display: inline-block;
+ 
+/*	padding: 5px 10px 6px;*/
+	color: #272d32;
+	text-decoration: none;
+	 
+	
+	
+	line-height: 1;
+ 
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+
+
+	position: relative;
+	cursor: pointer;
+	/*background-color: #e8f1ff;*/
 }
 
-
-
-a.button
+.button:hover
 {
-	border: 1px solid #AAA;
+	background-color: #6C6C6C;
+	color: #ffffff;
+}
+
+a.button 
+{
+	padding: 1px 3px;
+}
+
+button
+{
+	border: 0;
+	font-size: 11px;
+	line-height: 1;
+	font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	/*height: 28px;*/
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	/*background:url("/content/images/overlay.png") repeat-x scroll 0 0 #222222;*/
+	
+}
+
+button:hover 
+{
+	/*color: Red;*/
+}
+
+.button img 
+{
+	vertical-align:text-bottom;
+	padding-right: 5px;
+}
+
+a.button:hover
+{
+	text-decoration: none;
+/*	border: 1px solid #AAA;
 	height: 15px;
 	color: #000;
 	background-color: #DDD;
@@ -492,9 +551,10 @@ a.button
 	cursor: pointer;
 	padding: 3px;
 	padding-left: 20px;
-	vertical-align: top;
+	vertical-align: top;*/
 }
 
+/*
 .login
 {
 	background: url( "/content/images/login.gif" ) no-repeat 3px 3px;
@@ -567,6 +627,7 @@ a.button
 	background: url( "/content/images/excel.gif" ) no-repeat 3px 3px;
 	padding-left: 20px;
 }
+*/
 
 #newProjectButtonContainer
 {
@@ -586,7 +647,7 @@ a.button
 	float: left;
 }
 
-
+/*
 button#closesprint
 {
 	float: none;
@@ -605,6 +666,7 @@ button#closesprint img
 {
 	float: left;
 }
+*/
 
 /******************
  *LOGIN           *
@@ -970,27 +1032,31 @@ li.active div.outContent
 	float: left;
 }
 
-#dashboardmenu
+.dashboardmenu
 {
 	width: 170px;
-	margin-top: 12px;
+	/*margin-top: 12px;*/
 	margin-right: 12px;
-	background-image: url('/Content/images/submenuBackground.gif' );
-	border-bottom: solid 1px #cccccc;
+	background: #fff;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;	
+	margin-bottom: 10px;
 }
 
-#dashboardmenuTop
+.dashboardmenuTop
 {
+	background-image: url('/Content/images/tabbackground.gif');
 	height: 24px;
 	padding-left: 9px;
 	background-color: #0089b3;
 	font-size: 14px;
-	color: #ffffff;
+	color: #000000;
 	line-height: 24px;
 	font-weight: bold;
 }
 
-#dashboardmenuContent
+.dashboardmenuContent
 {
 	padding: 7px;
 }
